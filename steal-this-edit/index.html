@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steal This Edit — faceless AI tutorials for creators, made with Picsart</title>
+<meta name="description" content="One-pager: what the Steal This Edit channel concept is, why we chose it, how it is made by automation, why it is good for Picsart, and how we will know if it works.">
+<style>
+  @font-face{font-family:"Gilroy";font-weight:400;src:url("https://pastatic.picsart.com/cms-pastatic/d018cb40-40a8-4efa-a202-947285ae8329.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:500;src:url("https://pastatic.picsart.com/cms-pastatic/3de40576-a960-483a-a3ab-a1743e3c4ba6.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:600;src:url("https://pastatic.picsart.com/cms-pastatic/eae6e1ea-9319-406c-a3de-00431f8f03f4.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:700;src:url("https://pastatic.picsart.com/cms-pastatic/0ea441d6-d0d4-4236-b649-67a987887865.woff2") format("woff2");font-display:swap}
+  :root{--magenta:#F40BF4;--magenta-soft:#FF47FF;--ink:#0B0B0B;--paper:#FFFCF8;--muted:#5b5b60;--line:#e6e2dc;--card:#fff;--tint:#fbf3fb;
+    --grad:linear-gradient(225deg,#00ffed 0%,#19d7e7 22.96%,#7f4ad9 45.31%,#af1fc6 66.73%,#df02c0 100%);--ok:#1f9d55;--warn:#b26a00}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 "Gilroy",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  a{color:#9a06a0}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  header.hero{background:var(--ink);color:#fff;padding:32px 0 26px;border-bottom:6px solid transparent;border-image:var(--grad) 1}
+  .brand{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .brand h1{font-size:clamp(32px,6vw,52px);margin:0;line-height:1.05}
+  .brand .tag{color:#d9d9de;font-size:17px;margin:4px 0 0}
+  .meta{color:#a9a9b2;font-size:14px;margin-top:14px}
+  main{padding:4px 0 48px}
+  section{margin:30px 0}
+  h2{font-size:24px;margin:0 0 8px;line-height:1.2}
+  h3{font-size:17px;margin:16px 0 6px}
+  p{margin:8px 0}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .box.summary{border:2px solid var(--magenta);background:var(--tint)}
+  .summary dl{display:grid;grid-template-columns:130px 1fr;gap:6px 14px;margin:0}
+  .summary dt{font-weight:700;color:#7a047e}.summary dd{margin:0}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0}
+  th,td{text-align:left;vertical-align:top;padding:7px 9px;border-bottom:1px solid var(--line)}
+  th{font-weight:700;background:#f6f2ee}
+  .num{white-space:nowrap;font-weight:600}
+  .note{color:var(--muted);font-size:13.5px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}.summary dl{grid-template-columns:1fr}.summary dt{margin-top:6px}table{display:block;overflow-x:auto}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .cardh{margin:0 0 6px;font-size:16px}
+  .ex{background:var(--ink);color:#fff;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+  .ex video,.ex img{width:100%;border-radius:10px;display:block;background:#000}
+  .ex .lbl{font-size:13px;color:#c9c9d0}
+  .ex .lbl b{color:#fff}
+  .ex .lbl i{color:#ffb3ff;font-style:normal}
+  .slides{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .slides img{width:100%;border-radius:8px;display:block}
+  figure{margin:12px 0}figure svg{width:100%;height:auto;display:block}
+  figcaption{color:var(--muted);font-size:13.5px;margin-top:4px}
+  ul,ol{padding-left:20px;margin:6px 0}li{margin:3px 0}
+  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .kpi .card b{display:block;font-size:24px;line-height:1.1}
+  @media (max-width:720px){.kpi{grid-template-columns:1fr 1fr}}
+  .src{font-size:13px;color:var(--muted)}
+  .verdict{display:flex;gap:10px;align-items:flex-start}.dot{width:12px;height:12px;border-radius:50%;margin-top:6px;flex:0 0 12px}.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}
+  footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);font-size:13.5px}
+  @media print{header.hero{background:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.box,.card,.ex{break-inside:avoid}a{color:inherit;text-decoration:none}video{display:none}section{margin:18px 0}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="brand">
+    <svg width="84" height="84" viewBox="0 0 96 96" aria-label="Steal This Edit logo mark" role="img"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00ffed"/><stop offset=".23" stop-color="#19d7e7"/><stop offset=".45" stop-color="#7f4ad9"/><stop offset=".67" stop-color="#af1fc6"/><stop offset="1" stop-color="#df02c0"/></linearGradient><clipPath id="c"><rect width="96" height="96" rx="21"/></clipPath></defs><g clip-path="url(#c)"><rect width="96" height="96" fill="#1c1c1e"/><rect x="48" width="48" height="96" fill="url(#g)"/><rect x="17" y="17" width="50" height="50" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="10 7"/><path d="M52 48 L80 60 L67 64 L75 78 L69 81 L61 67 L52 76 Z" fill="#fff" stroke="#1c1c1e" stroke-width="2.5" stroke-linejoin="round"/></g></svg>
+    <div><h1>Steal This Edit</h1><p class="tag">Every viral edit, in three steps, in one app. <span style="color:var(--magenta-soft)">made with Picsart</span></p></div>
+  </div>
+  <p class="meta">Channel concept one-pager · Instagram <b>@steal.this.edit</b> · TikTok <b>@stealthisedit</b> (proposed; display name "Steal This Edit · by Picsart") · status: concept designed, six examples produced, pre-launch</p>
+</div></header>
+
+<main class="wrap">
+
+<section class="box summary" id="summary">
+  <h2>If you read only this</h2>
+  <dl>
+    <dt>What</dt><dd>A <b>faceless page</b> (no presenter on camera) of tutorials. Every post opens on an edit people already see in their feed, then shows the exact Picsart tool, path and prompt to make it in minutes.</dd>
+    <dt>Who</dt><dd>People who make their own content: TikTok and Instagram creators, bloggers, small YouTubers. Under every viral AI edit they write the same comment: "how?"</dd>
+    <dt>Why Picsart</dt><dd>Each post ends one tap from the tool it used, with the prompt to paste, so the viewer's first success happens inside Picsart. The page says openly that it belongs to Picsart.</dd>
+    <dt>How</dt><dd>Fully automated. Software spots trends and plans, Picsart's AI tools make every result and step, a renderer cuts the posts, a person only approves. About 5 to 60 <b>credits</b> (Picsart's unit of payment for AI generation) per post.</dd>
+    <dt>Will it work</dt><dd>Main metric: median views per post against our own new-account baseline. Picsart metric: link taps per 1,000 views. Decision after 12 posts over 4 weeks: scale at 3× the baseline, kill under 1.5×.</dd>
+    <dt>Evidence</dt><dd>Strong on demand: the top AI image searches of 2025 were all "make X with AI" recreations. Weak on precedent: every large creative-tutorial page has a presenter; no faceless one exists at scale, so we are first.</dd>
+  </dl>
+</section>
+
+<section id="pillars">
+  <h2>The six post types, with the real examples we made</h2>
+  <p>A <b>pillar</b> is a recurring type of post. One trend gives a <b>thread</b>: the same trend told six ways across a week. Below: the "Save Yourself" thread (a viral edit where you pull yourself up a cliff), as the pipeline produced it. The <b>hook</b> is the line on screen in the first second. People and dog are AI-generated and labelled; every result is a real Picsart output.</p>
+  <div class="grid3">
+    <div class="ex">
+      <video controls muted loop playsinline preload="metadata" poster="assets/trend-steal.jpg" src="assets/trend-steal.mp4"></video>
+      <div class="lbl"><b>1 · Trend Steal, 25 s.</b> The reach. A trend rebuilt within 72 hours in AI Playground (Picsart's hub of AI models): selfie, scene with the Nano Banana Pro image model, motion with the Kling V3 video model. Caption ends "Comment STEAL and I'll send both prompts. made with Picsart".</div>
+    </div>
+    <div class="ex">
+      <video controls muted loop playsinline preload="metadata" poster="assets/three-step-fix.jpg" src="assets/three-step-fix.mp4"></video>
+      <div class="lbl"><b>2 · 3-Step Fix, 17 s.</b> The search. An everyday job people search for, here "remove sunglasses from a photo": before/after, one edit prompt, then Enhance. Caption ends "Save this for your next trend."</div>
+    </div>
+    <div class="ex">
+      <div class="slides">
+        <img src="assets/prompt-drop-01.jpg" alt="Carousel cover: Steal the save yourself prompts"><img src="assets/prompt-drop-03.jpg" alt="Slide: the full scene prompt to copy"><img src="assets/prompt-drop-05.jpg" alt="Slide: neon rooftop remix">
+      </div>
+      <div class="lbl"><b>3 · Prompt Drop, 7 slides.</b> The save. A <b>carousel</b> (images swiped sideways): the result, the trick, both prompts in full, two remixes, the Recipe Card.</div>
+    </div>
+    <div class="ex">
+      <video controls muted loop playsinline preload="metadata" poster="assets/model-fight.jpg" src="assets/model-fight.mp4"></video>
+      <div class="lbl"><b>4 · Model Fight, 23 s.</b> The debate. Same picture and prompt in four video models inside AI Playground, credits shown for each. Caption: "Which one wins? Comment 1, 2, 3 or 4."</div>
+    </div>
+    <div class="ex">
+      <video controls muted loop playsinline preload="metadata" poster="assets/build-once.jpg" src="assets/build-once.mp4"></video>
+      <div class="lbl"><b>5 · Build Once, 21 s.</b> The upgrade. The edit as a <b>Flow</b> (Picsart's canvas where you connect steps once, then rerun them on new photos), run on three people. <i>The canvas here is a drawing of the chain; a real Flow capture replaces it before launch.</i></div>
+    </div>
+    <div class="ex">
+      <video controls muted loop playsinline preload="metadata" poster="assets/you-asked.jpg" src="assets/you-asked.mp4"></video>
+      <div class="lbl"><b>6 · You Asked, 23 s.</b> The conversation. Answers the week's top "can I do this with…?" comment: here a dog does the rescue. <i>Posted only as a TikTok reply to a real viewer comment.</i></div>
+    </div>
+  </div>
+  <p class="note">Every post ends on the <b>Recipe Card</b>: tool and path, steps, time, credits, how easy the start is, a "works as of" date, the comment keyword.</p>
+</section>
+
+<section id="why">
+  <h2>Who it is for, and the market</h2>
+  <div class="kpi">
+    <div class="card"><b>49%</b>of US consumers have used TikTok as a search engine, up from 41% in 2024; 65% of Gen Z. People look up "how to make this" where they saw it. <span class="src"><a href="https://www.adobe.com/express/learn/blog/using-tiktok-as-a-search-engine">Adobe, Feb 2026</a> (807 people) · Gen Z figure via <a href="https://www.searchenginejournal.com/gen-z-preference-for-tiktok-over-google-drops-50-data-shows/568267/">SEJ, Feb 2026</a></span></div>
+    <div class="card"><b>#1, #2, #5</b>"AI action figure", "AI Barbie" and "AI Polaroid" in Google's 2025 US AI-image trend searches. Every top query was a "make X with AI" recreation. <span class="src"><a href="https://www.searchenginejournal.com/google-reveals-the-top-searches-of-2025/563738/">Google Year in Search via SEJ, Dec 2025</a></span></div>
+    <div class="card"><b>500M+</b>images and 23 million first-time users in about two weeks after one image model's launch (Nano Banana, Sep 2025). Trend waves are huge and short. <span class="src"><a href="https://techcrunch.com/2025/09/16/gemini-tops-the-app-store-thanks-to-new-ai-image-model-nano-banana/">TechCrunch, Sep 2025</a></span></div>
+  </div>
+  <p><b>Why they come back.</b> Trends change weekly, so "how do I make this?" never runs out, and each answer works on the viewer's own photo. In the 2025 waves, tutorials posted 2 to 7 days after a trend began caught the peak (our read of public post dates, estimate). Between waves, the everyday fixes keep the page useful.</p>
+  <p><b>Competitors and the gap.</b> The fastest-growing tutorial pages recreate viral effects, but all have a presenter and push other tools: <a href="https://www.instagram.com/stevenwommack/">@stevenwommack</a> (about 6.7M Instagram), <a href="https://www.instagram.com/withgeorgy/">@withgeorgy</a> (about 901K, roughly double an earlier reported 422K), <a href="https://www.instagram.com/blake.ridder/">@blake.ridder</a> (about 864K). The big faceless AI pages, <a href="https://www.instagram.com/evolving.ai/">@evolving.ai</a> (about 4.8M) and <a href="https://www.instagram.com/chatgptricks/">@chatgptricks</a> (about 2.7M), post AI news, not how-to (all read 2 Oct 2026). Tool brands pay outside creators for tutorials. Picsart's own <a href="https://www.youtube.com/@picsart/videos">YouTube</a> result-first AI tutorials reach 55K to 137K views, while its recent Shorts get about 3K to 7K (read 2 Oct 2026): the format works, the short version is missing. Nobody runs a faceless, numbered tutorial page where every step happens in one app.</p>
+</section>
+
+<section id="picsart">
+  <h2>Why this concept for Picsart</h2>
+  <p>The post's job is the viewer's first success inside Picsart. Each Recipe Card says how easy the start is: one tap (a trend preset Picsart already offers), one tool, one model, or one Flow. New viewers get the easy levels first. Credits are what our example run cost.</p>
+  <table>
+    <tr><th>Post type</th><th>Picsart tools in the post</th><th>Example produced</th><th>Credits, est.</th></tr>
+    <tr><td><b>Trend Steal</b></td><td>AI Playground: Nano Banana Pro (image), Kling V3 (video)</td><td>Save Yourself cliff rescue from one selfie</td><td class="num">~26</td></tr>
+    <tr><td><b>3-Step Fix</b></td><td>AI Playground edit, Enhance; other weeks AI Replace, Remove Background, Change Background</td><td>sunglasses selfie made trend-ready</td><td class="num">~7</td></tr>
+    <tr><td><b>Prompt Drop</b></td><td>AI Playground image models, Text to Image</td><td>both prompts plus rooftop and frozen-lake remixes</td><td class="num">~10</td></tr>
+    <tr><td><b>Model Fight</b></td><td>AI Playground: four video models side by side</td><td>one picture, four rescues, viewers vote</td><td class="num">~66</td></tr>
+    <tr><td><b>Build Once</b></td><td>Flow: image model, then Image to Video</td><td>the same chain run on three people</td><td class="num">~26 per run</td></tr>
+    <tr><td><b>You Asked</b></td><td>whatever the request needs</td><td>the dog version</td><td class="num">~26</td></tr>
+  </table>
+  <figure>
+    <svg viewBox="0 0 880 150" role="img" aria-label="Six-step path from watching a post to using Picsart">
+      <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9a9aa0"/></marker></defs>
+      <g font-family="Gilroy,sans-serif">
+        <rect x="10" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="75" y="66" text-anchor="middle" font-weight="700" font-size="14">1 Watch</text><text x="75" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">the edit in 2 seconds</text>
+        <rect x="155" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="220" y="66" text-anchor="middle" font-weight="700" font-size="14">2 Believe</text><text x="220" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">real steps, real cost</text>
+        <rect x="300" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="365" y="66" text-anchor="middle" font-weight="700" font-size="14">3 Comment STEAL</text><text x="365" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">reply sends link + prompt</text>
+        <rect x="445" y="40" width="130" height="60" rx="12" fill="#fde6fd" stroke="#F40BF4" stroke-width="2"/><text x="510" y="66" text-anchor="middle" font-weight="700" font-size="14">4 Open the tool</text><text x="510" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">paste the prompt</text>
+        <rect x="590" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="655" y="66" text-anchor="middle" font-weight="700" font-size="14">5 First result</text><text x="655" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">posts their own version</text>
+        <rect x="735" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="800" y="66" text-anchor="middle" font-weight="700" font-size="14">6 Come back</text><text x="800" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">next trend, next week</text>
+        <g stroke="#9a9aa0" stroke-width="2" fill="none"><path d="M140 70 H153" marker-end="url(#a2)"/><path d="M285 70 H298" marker-end="url(#a2)"/><path d="M430 70 H443" marker-end="url(#a2)"/><path d="M575 70 H588" marker-end="url(#a2)"/><path d="M720 70 H733" marker-end="url(#a2)"/><path d="M800 100 V130 H75 V102" stroke-dasharray="5 5" marker-end="url(#a2)"/></g>
+      </g>
+    </svg>
+    <figcaption>The path from viewer to Picsart user. On Instagram an automatic private reply to "STEAL" carries the link and the prompt; on TikTok, where comments cannot carry links, the reply points to a bio page listing every tutorial's link. A post with high views and no link taps counts as a failed post.</figcaption>
+  </figure>
+</section>
+
+<section id="how">
+  <h2>How it is made</h2>
+  <figure>
+    <svg viewBox="0 0 880 385" role="img" aria-label="Pipeline from trend to learning, with the tool at each step">
+      <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9a9aa0"/></marker></defs>
+      <g font-family="Gilroy,sans-serif">
+        <rect x="10" y="10" width="860" height="110" rx="12" fill="#f6f2ee"/><text x="22" y="30" font-size="12" font-weight="700" fill="#5b5b60">SOFTWARE, LOCAL AND FREE</text>
+        <rect x="10" y="135" width="860" height="110" rx="12" fill="#fde6fd"/><text x="22" y="155" font-size="12" font-weight="700" fill="#7a047e">PICSART AI TOOLS (spend credits)</text>
+        <rect x="10" y="260" width="860" height="110" rx="12" fill="#eef5ee"/><text x="22" y="280" font-size="12" font-weight="700" fill="#1f6e3b">A PERSON DECIDES</text>
+        <g stroke="#c9c4bc" fill="#fff"><rect x="22" y="46" width="118" height="58" rx="10"/><rect x="300" y="46" width="128" height="58" rx="10"/><rect x="440" y="46" width="128" height="58" rx="10"/><rect x="580" y="46" width="128" height="58" rx="10"/><rect x="720" y="46" width="140" height="58" rx="10"/></g>
+        <g font-size="12" text-anchor="middle">
+          <text x="81" y="68" font-weight="700">1 Spot</text><text x="81" y="86" fill="#5b5b60">trend scan, comments</text>
+          <text x="364" y="68" font-weight="700">3 Cut</text><text x="364" y="86" fill="#5b5b60">video and slide renderer</text>
+          <text x="504" y="68" font-weight="700">4 Quality check</text><text x="504" y="86" fill="#5b5b60">tool names, AI label</text>
+          <text x="644" y="68" font-weight="700">5 Caption</text><text x="644" y="86" fill="#5b5b60">templates, 5 hashtags</text>
+          <text x="790" y="68" font-weight="700">8 Learn</text><text x="790" y="86" fill="#5b5b60">weekly review, tests</text>
+        </g>
+        <rect x="160" y="171" width="128" height="58" rx="10" fill="#fff" stroke="#F40BF4" stroke-width="2"/><text x="224" y="193" font-size="12" font-weight="700" text-anchor="middle">2 Generate</text><text x="224" y="211" font-size="12" fill="#5b5b60" text-anchor="middle">AI Playground, Flow</text>
+        <g stroke="#c9c4bc" fill="#fff"><rect x="440" y="296" width="128" height="58" rx="10"/><rect x="580" y="296" width="128" height="58" rx="10"/></g>
+        <g font-size="12" text-anchor="middle"><text x="504" y="318" font-weight="700">6 Approve</text><text x="504" y="336" fill="#5b5b60">weekly, plus trend lane</text><text x="644" y="318" font-weight="700">7 Schedule</text><text x="644" y="336" fill="#5b5b60">scheduling tool, typed OK</text></g>
+        <g stroke="#9a9aa0" stroke-width="2" fill="none"><path d="M140 75 H150 V200 H158" marker-end="url(#a3)"/><path d="M288 200 H294 V75 H298" marker-end="url(#a3)"/><path d="M428 75 H438" marker-end="url(#a3)"/><path d="M568 75 H578" marker-end="url(#a3)"/><path d="M644 104 V294" marker-end="url(#a3)"/><path d="M580 325 H570" marker-end="url(#a3)"/><path d="M504 296 V250 M504 250 H520 V104" stroke-dasharray="5 5" marker-end="url(#a3)"/><path d="M708 325 H790 V106" marker-end="url(#a3)"/><path d="M790 46 V30 H81 V44" marker-end="url(#a3)"/></g>
+        <text x="520" y="268" font-size="11" fill="#5b5b60">hold: fix and recut</text>
+      </g>
+    </svg>
+    <figcaption>Software does everything that can be tested: spotting trends (Picsart's public trend articles, new models, our comments), planning, cutting, checking that each tool name exists and each prompt reproduces the result, writing captions. Picsart's AI tools make every result and step. A person approves the week from a preview sheet; trend posts get a 72-hour fast lane. Nothing is scheduled without a typed OK.</figcaption>
+  </figure>
+  <div class="grid3">
+    <div class="card"><h3 class="cardh">Per post</h3>1 result + 2 to 4 steps + Recipe Card · about 5 to 60 credits (fixes cheapest, model comparisons most) · 2 to 3 human minutes.</div>
+    <div class="card"><h3 class="cardh">Per week</h3>10 posts per platform, same assets: 3 Trend Steal, 2 Fix, 2 Prompt Drop, 1 each of the rest. About 200 to 300 credits (estimate), 20 human minutes plus replies.</div>
+    <div class="card"><h3 class="cardh">Rules on every post</h3>AI label in frame and the platform's AI flag set · caption ends "made with Picsart" · at most five hashtags · Picsart ownership in name and bio · "works as of" date · no reposted clips, no real people's faces, no copyrighted characters.</div>
+  </div>
+</section>
+
+<section id="work" class="box">
+  <h2>Will it work, and how we'll know</h2>
+  <p><b>Hypothesis.</b> Creators will follow, save and share a faceless page that shows a viral edit and the exact Picsart steps, and a meaningful share will tap through and make their own version.</p>
+  <table>
+    <tr><th>Metric</th><th>Why</th><th>Target to scale</th></tr>
+    <tr><td><b>Median views per post</b> (main)</td><td>the floor; TikTok posts median around 500 views across Buffer's accounts, mostly small businesses (<a href="https://www.searchenginejournal.com/study-shows-2-5-weekly-tiktoks-deliver-biggest-view-increase/558641/">Buffer, 11.4M videos, Oct 2025</a>)</td><td>above 3× our own new-account baseline</td></tr>
+    <tr><td><b>Link taps per 1,000 views</b> (Picsart usage)</td><td>the only number that proves the path to the product works</td><td>tracked from day one; rising week over week</td></tr>
+    <tr><td>Saves per 1,000 views</td><td>a tutorial worth keeping gets saved; carousels lead Instagram engagement, 0.55% against 0.52% for Reels (<a href="https://www.socialinsider.io/social-media-benchmarks/instagram">Socialinsider, 35M posts, Feb 2026</a>)</td><td>rising week over week</td></tr>
+    <tr><td>Shares per 1,000 views</td><td>Instagram's stated non-follower signal is sends (<a href="https://www.socialmediatoday.com/news/instagram-shares-algorithm-insights-2025/738034/">Mosseri, Jan 2025</a>)</td><td>rising week over week</td></tr>
+    <tr><td>Follows per 1,000 views</td><td>viewers must become an audience</td><td>positive follower delta</td></tr>
+  </table>
+  <p><b>First experiment.</b> Call to action on Prompt Drop: "Comment STEAL for the prompts" against "Save this". Six posts per arm, metric link taps per 1,000 views, guardrail saves, pre-registered. Next, once product allows: drawn step panels against real screen captures of Picsart.</p>
+  <div class="grid2">
+    <div class="card verdict"><span class="dot ok"></span><div><b>Scale</b> when, after at least 12 posts over 4 weeks, median views exceed 3× the baseline and followers are growing: move toward two posts a day.</div></div>
+    <div class="card verdict"><span class="dot warn"></span><div><b>Kill</b> when, after 12 posts, median views are under 1.5× the baseline and no post reached 10× the page's own median: archive the kit, keep the account, replace from the backlog within a week.</div></div>
+  </div>
+  <p class="note">No tuning before the 12-post read except fixing broken AI disclosures. Honest read: demand is strong and the examples cost little; the view floor is a guess until week two and the comment-to-link reply is not set up yet.</p>
+</section>
+
+
+<section id="sources">
+  <h2>Sources</h2>
+  <p class="src">Opened 1 to 2 Oct 2026. <a href="https://www.adobe.com/express/learn/blog/using-tiktok-as-a-search-engine">Adobe TikTok search survey</a> and <a href="https://www.searchenginejournal.com/gen-z-preference-for-tiktok-over-google-drops-50-data-shows/568267/">SEJ on its Gen Z figure</a> · <a href="https://www.searchenginejournal.com/google-reveals-the-top-searches-of-2025/563738/">Google Year in Search 2025 via SEJ</a> · <a href="https://techcrunch.com/2025/09/16/gemini-tops-the-app-store-thanks-to-new-ai-image-model-nano-banana/">TechCrunch on Nano Banana</a> · <a href="https://www.socialinsider.io/social-media-benchmarks/instagram">Socialinsider Instagram benchmarks</a> · <a href="https://www.socialmediatoday.com/news/instagram-shares-algorithm-insights-2025/738034/">Instagram signals 2025</a> · <a href="https://www.socialmediatoday.com/news/instagram-updates-algorithm-to-benefit-original-creators/819016/">Instagram originality update</a> · <a href="https://www.searchenginejournal.com/study-shows-2-5-weekly-tiktoks-deliver-biggest-view-increase/558641/">Buffer cadence study</a> · <a href="https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials">FTC reviews rule</a> · <a href="https://www.youtube.com/@picsart/videos">Picsart YouTube</a> · <a href="https://picsart.com/ai-playground/">AI Playground</a> · <a href="https://picsart.com/flow">Flow</a> · Instagram profiles above. Follower counts are public profile readings or indexed snippets, about ±10%. Trend timing is our estimate from public post dates. The 65% Gen Z figure is not visible on Adobe's own page (weak). Credit costs are what our example run cost and may differ in the app.</p>
+</section>
+
+</main>
+<footer><div class="wrap">Steal This Edit · channel concept one-pager · Picsart Social automation project · October 2026.</div></footer>
+</body>
+</html>
