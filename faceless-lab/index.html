@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faceless Lab — faceless content that earns, made with Picsart</title>
+<meta name="description" content="One-pager: what the Faceless Lab channel concept is, why we chose it, how it is made by automation, why it is good for Picsart, and how we will know if it works.">
+<style>
+  @font-face{font-family:"Gilroy";font-weight:400;src:url("https://pastatic.picsart.com/cms-pastatic/d018cb40-40a8-4efa-a202-947285ae8329.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:500;src:url("https://pastatic.picsart.com/cms-pastatic/3de40576-a960-483a-a3ab-a1743e3c4ba6.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:600;src:url("https://pastatic.picsart.com/cms-pastatic/eae6e1ea-9319-406c-a3de-00431f8f03f4.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:700;src:url("https://pastatic.picsart.com/cms-pastatic/0ea441d6-d0d4-4236-b649-67a987887865.woff2") format("woff2");font-display:swap}
+  :root{--magenta:#F40BF4;--magenta-soft:#FF47FF;--ink:#0B0B0B;--paper:#FFFCF8;--muted:#5b5b60;--line:#e6e2dc;--card:#fff;--tint:#fbf3fb;
+    --grad:linear-gradient(225deg,#00ffed 0%,#19d7e7 22.96%,#7f4ad9 45.31%,#af1fc6 66.73%,#df02c0 100%);--ok:#1f9d55;--warn:#b26a00}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 "Gilroy",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  a{color:#9a06a0}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  header.hero{background:var(--ink);color:#fff;padding:32px 0 26px;border-bottom:6px solid transparent;border-image:var(--grad) 1}
+  .brand{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .brand h1{font-size:clamp(32px,6vw,52px);margin:0;line-height:1.05}
+  .brand .tag{color:#d9d9de;font-size:17px;margin:4px 0 0}
+  .meta{color:#a9a9b2;font-size:14px;margin-top:14px}
+  main{padding:4px 0 48px}
+  section{margin:30px 0}
+  h2{font-size:24px;margin:0 0 8px;line-height:1.2}
+  h3{font-size:17px;margin:16px 0 6px}
+  p{margin:8px 0}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .box.summary{border:2px solid var(--magenta);background:var(--tint)}
+  .summary dl{display:grid;grid-template-columns:130px 1fr;gap:6px 14px;margin:0}
+  .summary dt{font-weight:700;color:#7a047e}.summary dd{margin:0}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0}
+  th,td{text-align:left;vertical-align:top;padding:7px 9px;border-bottom:1px solid var(--line)}
+  th{font-weight:700;background:#f6f2ee}
+  .num{white-space:nowrap;font-weight:600}
+  .note{color:var(--muted);font-size:13.5px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}.summary dl{grid-template-columns:1fr}.summary dt{margin-top:6px}table{display:block;overflow-x:auto}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .cardh{margin:0 0 6px;font-size:16px}
+  .ex{background:var(--ink);color:#fff;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+  .ex video,.ex img{width:100%;border-radius:10px;display:block;background:#000}
+  .ex video{max-height:520px;object-fit:contain}
+  .ex .lbl{font-size:13px;color:#c9c9d0}
+  .ex .lbl b{color:#fff}
+  .slides{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .slides img{width:100%;border-radius:8px;display:block}
+  figure{margin:12px 0}figure svg{width:100%;height:auto;display:block}
+  figcaption{color:var(--muted);font-size:13.5px;margin-top:4px}
+  ul,ol{padding-left:20px;margin:6px 0}li{margin:3px 0}
+  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .kpi .card b{display:block;font-size:24px;line-height:1.1}
+  @media (max-width:720px){.kpi{grid-template-columns:1fr 1fr}}
+  .src{font-size:13px;color:var(--muted)}
+  .verdict{display:flex;gap:10px;align-items:flex-start}.dot{width:12px;height:12px;border-radius:50%;margin-top:6px;flex:0 0 12px}.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}
+  footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);font-size:13.5px}
+  @media print{header.hero{background:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.box,.card,.ex{break-inside:avoid}a{color:inherit;text-decoration:none}video{display:none}section{margin:18px 0}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="brand">
+    <svg width="84" height="84" viewBox="0 0 96 96" aria-label="Faceless Lab logo mark" role="img"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00ffed"/><stop offset=".23" stop-color="#19d7e7"/><stop offset=".45" stop-color="#7f4ad9"/><stop offset=".67" stop-color="#af1fc6"/><stop offset="1" stop-color="#df02c0"/></linearGradient><clipPath id="c"><rect width="96" height="96" rx="21"/></clipPath></defs><g clip-path="url(#c)"><rect width="96" height="96" fill="#1c1c1e"/><path d="M0 70 L96 52 V96 H0 Z" fill="url(#g)"/><circle cx="48" cy="34" r="15" fill="none" stroke="#fff" stroke-width="7"/><path d="M24 76 C26 58 70 58 72 76" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/></g></svg>
+    <div><h1>Faceless Lab</h1><p class="tag">Faceless content that earns. Built in one app. Receipts included. <span style="color:var(--magenta-soft)">made with Picsart</span></p></div>
+  </div>
+  <p class="meta">Channel concept one-pager · Instagram <b>@faceless.lab</b> · TikTok <b>@facelesslab</b> (proposed) · status: concept drafted, first week of posts produced, pre-launch</p>
+</div></header>
+
+<main class="wrap">
+
+<section class="box summary" id="summary">
+  <h2>If you read only this</h2>
+  <dl>
+    <dt>What</dt><dd>A <b>faceless page</b> (no presenter on camera) about making money with AI content. Each post shows something that can earn, how it was made in Picsart, and a <b>Receipt</b>: real cost, tools, the rule that decides if it pays.</dd>
+    <dt>Who</dt><dd>People who want to earn from content without showing their face. Earning means posting every week, so they need the tools every week.</dd>
+    <dt>Why Picsart</dt><dd>A faceless video usually needs four paid apps; Picsart does every step in one. Each post hands the viewer the exact prompts to run there.</dd>
+    <dt>How</dt><dd>Every Monday an AI agent picks the week's viral AI formats; Picsart's AI makes the assets; software cuts the posts; a person approves. About 20 to 60 <b>credits</b> (Picsart's unit of payment for AI) per video.</dd>
+    <dt>Will it work</dt><dd>Main metric: median views against our new-account baseline. Picsart metric: guide requests per 1,000 views; decision after 12 posts over 4 weeks.</dd>
+    <dt>Evidence</dt><dd>Strong on demand and the gap: in our scan, no honest "make money with AI" page above about 150K followers. Weak on money from views alone, so every post shows the real payout path, never a promise.</dd>
+  </dl>
+</section>
+
+<section id="pillars">
+  <h2>The five post types, with the real examples we made</h2>
+  <p>A <b>pillar</b> is a recurring type of post. A <b>Reel</b> is a short vertical video, a <b>carousel</b> a swipeable set of images, the <b>hook</b> the line on screen in the first second. All five examples were made with Picsart's AI; every caption ends "made with Picsart".</p>
+  <div class="grid2">
+    <div class="ex">
+      <video controls muted loop playsinline preload="metadata" poster="assets/build-it-momo.jpg" src="assets/build-it-momo.mp4"></video>
+      <div class="lbl"><b>1 · Build It, Reel, 35 s.</b> The how: the finished episode first, then each step with its real output, then the Receipt. "AI monkey vlog, start to finish", 64 credits. Ends "Comment BUILD and I'll send you the template".</div>
+    </div>
+    <div class="ex">
+      <video controls muted loop playsinline preload="metadata" poster="assets/works-right-now-drama.jpg" src="assets/works-right-now-drama.mp4"></video>
+      <div class="lbl"><b>2 · Works Right Now, Reel, 30 s.</b> The reach: this week's viral AI format, remade with our own characters. A houseplant soap opera, episode 1. Ends "Follow, tutorial tomorrow": the episode and its tutorial form a <b>thread</b>.</div>
+    </div>
+    <div class="ex">
+      <video controls muted loop playsinline preload="metadata" poster="assets/earn-drop.jpg" src="assets/earn-drop.mp4"></video>
+      <div class="lbl"><b>3 · Earn Drop, Reel, 22 s.</b> The first dollar: <a href="https://picsart.com/earn/" style="color:#fff">Earn with Picsart</a> pays creators for posts made with Picsart, with no follower minimum. We show a live brief, an example entry and how to enter. Runs only when a brief is live; this one is modelled on a past brief.</div>
+    </div>
+    <div class="ex">
+      <div class="slides"><img src="assets/does-it-pay-1.jpg" alt="Slide 1: Faceless Shorts can pay as little as $0.01 per 1,000 views. So who's earning?"><img src="assets/does-it-pay-3.jpg" alt="Slide 3: one million Shorts views pay about $10 to $130"><img src="assets/does-it-pay-6.jpg" alt="Slide 6: verdict amber, Shorts alone won't pay you"></div>
+      <div class="lbl"><b>4 · Does It Pay?, carousel, 7 slides.</b> The trust: real numbers, the rules, a green, amber or red verdict, a source on every slide.</div>
+    </div>
+    <div class="ex">
+      <div class="slides"><img src="assets/one-app-1.jpg" alt="Slide 1: 4 subscriptions. Or 1 app."><img src="assets/one-app-4.jpg" alt="Slide 4: every job of a faceless Short mapped to a Picsart tool"><img src="assets/one-app-5.jpg" alt="Slide 5: episode 1 cost 64 credits"></div>
+      <div class="lbl"><b>5 · One App, carousel, 6 slides.</b> The switch: the eight jobs behind one faceless video, all in one Picsart wallet, with our real credit total.</div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <h2>Who it is for, and the market</h2>
+  <div class="kpi">
+    <div class="card"><b>+488%</b>Fiverr searches for "faceless YouTube video creator" in six months. On Upwork, AI video is the fastest-growing creative skill (+329%). <span class="src"><a href="https://www.globenewswire.com/news-release/2025/12/10/3203122/0/en/Demand-for-AI-Video-Creators-Surges-66-As-Businesses-Race-to-Scale-Marketing-Campaigns.html">Fiverr, Dec 2025</a> · <a href="https://finance.yahoo.com/news/upwork-demand-skills-2026-demand-140000289.html">Upwork, Feb 2026</a></span></div>
+    <div class="card"><b>$0.01–0.16</b>per 1,000 views is roughly what Shorts pay (estimate). The money is elsewhere: one faceless AI network earns about $700K a year from long videos (Fortune saw the payouts). <span class="src"><a href="https://www.kajabi.com/blog/how-much-does-youtube-pay-for-shorts">Kajabi, Sep 2024</a> · <a href="https://fortune.com/2025/12/30/ai-slop-faceless-youtube-accounts-adavia-davis-user-generated-content/">Fortune, Dec 2025</a></span></div>
+    <div class="card"><b>275.8M</b>views in one week for one mascot channel; an AI fruit soap opera passed 300M views. Reach is there; a clear money path is missing. <span class="src"><a href="https://www.tubefilter.com/2026/09/28/top-50-most-viewed-youtube-channels-week-of-09-27-2026/">Tubefilter, Sep 2026</a> · <a href="https://en.wikipedia.org/wiki/Fruit_Love_Island">Wikipedia, Aug 2026</a></span></div>
+  </div>
+  <p><b>Why they come back.</b> They need a new format every week; we give them one, with the honest numbers hype pages leave out.</p>
+  <p><b>Competitors and the gap.</b> The big AI pages sell news, not results: <a href="https://www.instagram.com/evolving.ai/">@evolving.ai</a> (about 4.8M, Oct 2026), <a href="https://creatordb.app/creatorstats/airesearches/">@airesearches</a> (about 1.4M, Sep 2026). "Make money with AI" pages are small and sell courses with income screenshots. Nobody shows a real result with its real cost and rule. That spot is open.</p>
+</section>
+
+<section id="picsart">
+  <h2>Why this concept for Picsart</h2>
+  <p>Every money format we teach is made end to end in Picsart. All five were produced for week one.</p>
+  <table>
+    <tr><th>Money format</th><th>Picsart tools in the post</th><th>Example produced</th><th>Credits, est.</th></tr>
+    <tr><td><b>AI ads</b> sold to brands</td><td>Change Background, Image to Video (Kling V3)</td><td>a perfume ad from one phone photo</td><td class="num">~18</td></tr>
+    <tr><td><b>AI drama series</b></td><td>Text to Image (Nano Banana Pro), Image to Video, AI voices (ElevenLabs)</td><td>"Leaf Me Alone", episode 1</td><td class="num">~67</td></tr>
+    <tr><td><b>Mascot Shorts</b></td><td>Text to Image, Image to Video</td><td>Pip the axolotl tries the tiniest pancake</td><td class="num">~38</td></tr>
+    <tr><td><b>AI characters</b></td><td>Text to Image, Image to Video</td><td>Gustave, an 80-year-old who breakdances in grand buildings</td><td class="num">~43</td></tr>
+    <tr><td><b>AI music</b></td><td>AI music with vocals (Lyria 3 Pro), Image to Video</td><td>Noor, an AI singer, and her first song</td><td class="num">~34</td></tr>
+  </table>
+  <figure>
+    <svg viewBox="0 0 880 150" role="img" aria-label="Six-step path from watching a post to using Picsart">
+      <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9a9aa0"/></marker></defs>
+      <g font-family="Gilroy,sans-serif">
+        <rect x="10" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="75" y="66" text-anchor="middle" font-weight="700" font-size="14">1 See</text><text x="75" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">the result, second one</text>
+        <rect x="155" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="220" y="66" text-anchor="middle" font-weight="700" font-size="14">2 Believe</text><text x="220" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">how it pays + Receipt</text>
+        <rect x="300" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="365" y="66" text-anchor="middle" font-weight="700" font-size="14">3 Ask</text><text x="365" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">comment the keyword</text>
+        <rect x="445" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="510" y="66" text-anchor="middle" font-weight="700" font-size="14">4 Get the guide</text><text x="510" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">exact prompts + steps</text>
+        <rect x="590" y="40" width="130" height="60" rx="12" fill="#fde6fd" stroke="#F40BF4" stroke-width="2"/><text x="655" y="66" text-anchor="middle" font-weight="700" font-size="14">5 Run it in Picsart</text><text x="655" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">first result in minutes</text>
+        <rect x="735" y="40" width="130" height="60" rx="12" fill="#fff" stroke="#c9c4bc"/><text x="800" y="66" text-anchor="middle" font-weight="700" font-size="14">6 Come back</text><text x="800" y="84" text-anchor="middle" font-size="11" fill="#5b5b60">next week's format</text>
+        <g stroke="#9a9aa0" stroke-width="2" fill="none"><path d="M140 70 H153" marker-end="url(#a2)"/><path d="M285 70 H298" marker-end="url(#a2)"/><path d="M430 70 H443" marker-end="url(#a2)"/><path d="M575 70 H588" marker-end="url(#a2)"/><path d="M720 70 H733" marker-end="url(#a2)"/><path d="M800 100 V130 H75 V102" stroke-dasharray="5 5" marker-end="url(#a2)"/></g>
+      </g>
+    </svg>
+    <figcaption>The guide holds the exact prompts and steps. Instagram sends it by automatic reply; TikTok points to the bio link. High views with no guide requests = a failed post.</figcaption>
+  </figure>
+</section>
+
+<section id="how">
+  <h2>How it is made</h2>
+  <figure>
+    <svg viewBox="0 0 880 385" role="img" aria-label="Pipeline from trend research to learning, with the tool at each step">
+      <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9a9aa0"/></marker></defs>
+      <g font-family="Gilroy,sans-serif">
+        <rect x="10" y="10" width="860" height="110" rx="12" fill="#f6f2ee"/><text x="22" y="30" font-size="12" font-weight="700" fill="#5b5b60">SOFTWARE AND AN AI AGENT (no credits)</text>
+        <rect x="10" y="135" width="860" height="110" rx="12" fill="#fde6fd"/><text x="22" y="155" font-size="12" font-weight="700" fill="#7a047e">PICSART AI TOOLS (spend credits)</text>
+        <rect x="10" y="260" width="860" height="110" rx="12" fill="#eef5ee"/><text x="22" y="280" font-size="12" font-weight="700" fill="#1f6e3b">A PERSON DECIDES</text>
+        <g stroke="#c9c4bc" fill="#fff"><rect x="22" y="46" width="124" height="58" rx="10"/><rect x="160" y="46" width="124" height="58" rx="10"/><rect x="440" y="46" width="128" height="58" rx="10"/><rect x="580" y="46" width="128" height="58" rx="10"/><rect x="720" y="46" width="140" height="58" rx="10"/></g>
+        <g font-size="12" text-anchor="middle">
+          <text x="84" y="68" font-weight="700">1 Find trends</text><text x="84" y="86" fill="#5b5b60">Mondays, last 14 days</text>
+          <text x="222" y="68" font-weight="700">2 Plan</text><text x="222" y="86" fill="#5b5b60">7 posts, scored</text>
+          <text x="504" y="68" font-weight="700">4 Cut + check</text><text x="504" y="86" fill="#5b5b60">renderer, sources, label</text>
+          <text x="644" y="68" font-weight="700">5 Caption + guide</text><text x="644" y="86" fill="#5b5b60">templates, 5 hashtags</text>
+          <text x="790" y="68" font-weight="700">8 Learn</text><text x="790" y="86" fill="#5b5b60">results feed Monday</text>
+        </g>
+        <rect x="300" y="171" width="128" height="58" rx="10" fill="#fff" stroke="#F40BF4" stroke-width="2"/><text x="364" y="193" font-size="12" font-weight="700" text-anchor="middle">3 Generate</text><text x="364" y="211" font-size="12" fill="#5b5b60" text-anchor="middle">images, video, voice</text>
+        <g stroke="#c9c4bc" fill="#fff"><rect x="580" y="296" width="128" height="58" rx="10"/><rect x="720" y="296" width="140" height="58" rx="10"/></g>
+        <g font-size="12" text-anchor="middle"><text x="644" y="318" font-weight="700">6 Approve</text><text x="644" y="336" fill="#5b5b60">credits + week preview</text><text x="790" y="318" font-weight="700">7 Schedule</text><text x="790" y="336" fill="#5b5b60">a scheduling tool</text></g>
+        <g stroke="#9a9aa0" stroke-width="2" fill="none"><path d="M146 75 H158" marker-end="url(#a3)"/><path d="M284 75 H292 V200 H298" marker-end="url(#a3)"/><path d="M428 200 H434 V75 H438" marker-end="url(#a3)"/><path d="M568 75 H578" marker-end="url(#a3)"/><path d="M644 104 V294" marker-end="url(#a3)"/><path d="M708 325 H718" marker-end="url(#a3)"/><path d="M790 296 V106" marker-end="url(#a3)"/><path d="M790 46 V30 H84 V44" marker-end="url(#a3)"/><path d="M580 340 H504 V106" stroke-dasharray="5 5" marker-end="url(#a3)"/></g>
+        <text x="512" y="268" font-size="11" fill="#5b5b60">hold: fix and recut</text>
+      </g>
+    </svg>
+    <figcaption>The agent scores each viral format on six points (views, trend, how clearly it pays, can Picsart make it, safety, novelty). Nothing is scheduled before a person approves the credits and previews.</figcaption>
+  </figure>
+  <div class="grid3">
+    <div class="card"><h3 class="cardh">Per post</h3>Reel: about 20 to 60 credits (estimate). Carousel: 0 to 5.</div>
+    <div class="card"><h3 class="cardh">Per week</h3>7 posts on Instagram and TikTok: 5 Reels (Build It, Works Right Now, Earn Drop when a brief is live) and 2 carousels (Does It Pay?, One App). About 150 to 250 credits, 10 human minutes.</div>
+    <div class="card"><h3 class="cardh">Rules on every post</h3>AI label on · "made with Picsart" · a source on every number · never "you will make $X" · no real people, celebrities or kids.</div>
+  </div>
+</section>
+
+<section id="work" class="box">
+  <h2>Will it work, and how we'll know</h2>
+  <p><b>Hypothesis.</b> Would-be faceless creators will follow a page that shows real results with real costs, and many will ask for the guide and run it in Picsart.</p>
+  <table>
+    <tr><th>Metric</th><th>Target to scale</th></tr>
+    <tr><td><b>Median views per post</b> (main)</td><td>above 3× our own new-account baseline</td></tr>
+    <tr><td><b>Guide requests + link taps per 1,000 views</b> (Picsart usage)</td><td>rising week over week</td></tr>
+    <tr><td>Sends per reach (<a href="https://www.socialmediatoday.com/news/instagram-shares-algorithm-insights-2025/738034/">Instagram's top signal</a>) and follows per 1,000 views</td><td>rising; positive follower delta</td></tr>
+  </table>
+  <p><b>First experiment.</b> "Comment the keyword for the guide" against "Follow, tutorial tomorrow": six posts each, measured in guide requests plus follows per 1,000 views.</p>
+  <div class="grid2">
+    <div class="card verdict"><span class="dot ok"></span><div><b>Scale</b> after at least 12 posts over 4 weeks if median views beat 3× the baseline and followers grow: move toward two posts a day.</div></div>
+    <div class="card verdict"><span class="dot warn"></span><div><b>Kill</b> after 12 posts if median views stay under 1.5× the baseline and no post hit 10× the page's median: replace it from the backlog within a week.</div></div>
+  </div>
+  <p class="note">Honest read: demand and the gap are well evidenced; the risk is trust. It only works if every claim is sourced and some verdicts say "this does not pay".</p>
+</section>
+
+<section id="risks">
+  <h2>Risks, launch, open questions</h2>
+  <table>
+    <tr><th>Risk</th><th>How we handle it</th></tr>
+    <tr><td>Reads as hype or breaks income-claim rules (<a href="https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers">FTC</a>, <a href="https://transparency.meta.com/policies/community-standards/prohibited-commercial-practices">Meta</a>)</td><td>A source on every claim, never a promise, red verdicts too.</td></tr>
+    <tr><td>Originality and AI-label rules (<a href="https://techcrunch.com/2026/04/30/instagram-restricts-reach-of-content-aggregators-in-new-crackdown/">Instagram</a>, <a href="https://www.socialmediatoday.com/news/youtube-clarifies-monetization-update-inauthentic-repeated-content/752892/">YouTube</a>)</td><td>Everything made for that post; AI label always; original series only.</td></tr>
+    <tr><td>"Comment the keyword" reads as engagement bait</td><td>At most 3 of 7 posts; the guide always arrives.</td></tr>
+    <tr><td>A trend dies before we post</td><td>Plan Monday, post within 48 hours.</td></tr>
+    <tr><td>AI glitches</td><td>Every clip checked before approval; weak ones re-rendered or held.</td></tr>
+  </table>
+  <div class="grid2">
+    <div class="card"><h3 class="cardh">Launch plan</h3>
+      <ul>
+        <li><b>Weeks 1 to 2:</b> accounts, guide page, comment-reply automation, first week approved.</li>
+        <li><b>Week 3:</b> daily posting and the first test start.</li>
+        <li><b>End of week 7:</b> kill-or-scale decision. Launches after Listed.</li>
+      </ul></div>
+    <div class="card"><h3 class="cardh">Decisions needed</h3>
+      <ul>
+        <li>Name and handles; trademark check.</li>
+        <li>Legal wording for money posts.</li>
+        <li>Can product count sign-ups from our guides?</li>
+        <li>Sign-off for Earn Drop posts, and a heads-up when briefs go live.</li>
+        <li>Which tool sends the guide on Instagram.</li>
+        <li>Monthly credit budget (about 1,000, estimate); 5 Reels + 2 carousels or 7 Reels.</li>
+      </ul></div>
+  </div>
+</section>
+
+<section id="sources">
+  <h2>Sources</h2>
+  <p class="src">Opened 1 to 2 Oct 2026. <a href="https://www.globenewswire.com/news-release/2025/12/10/3203122/0/en/Demand-for-AI-Video-Creators-Surges-66-As-Businesses-Race-to-Scale-Marketing-Campaigns.html">Fiverr Business Trends Index</a> · <a href="https://finance.yahoo.com/news/upwork-demand-skills-2026-demand-140000289.html">Upwork in-demand skills 2026</a> · <a href="https://www.kajabi.com/blog/how-much-does-youtube-pay-for-shorts">Kajabi Shorts pay</a> · <a href="https://fortune.com/2025/12/30/ai-slop-faceless-youtube-accounts-adavia-davis-user-generated-content/">Fortune</a> · <a href="https://www.tubefilter.com/2026/09/28/top-50-most-viewed-youtube-channels-week-of-09-27-2026/">Tubefilter weekly top 50</a> · <a href="https://en.wikipedia.org/wiki/Fruit_Love_Island">Fruit Love Island</a> · <a href="https://www.instagram.com/evolving.ai/">@evolving.ai on Instagram</a> · <a href="https://creatordb.app/creatorstats/airesearches/">CreatorDB @airesearches</a> · <a href="https://techcrunch.com/2026/04/30/instagram-restricts-reach-of-content-aggregators-in-new-crackdown/">Instagram aggregator rule</a> · <a href="https://www.socialmediatoday.com/news/youtube-clarifies-monetization-update-inauthentic-repeated-content/752892/">YouTube inauthentic content</a> · <a href="https://www.socialmediatoday.com/news/instagram-shares-algorithm-insights-2025/738034/">Instagram signals 2025</a> · <a href="https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers">FTC</a> · <a href="https://picsart.com/ai-playground/">Picsart AI Playground</a> · <a href="https://picsart.com/earn/">Earn with Picsart</a> · <a href="https://techcrunch.com/2026/04/06/ai-design-platform-picsart-launches-a-creator-monetization-program/">TechCrunch on its launch, Apr 2026</a>. Follower counts are public profile readings or analytics sites, about ±10%. Fiverr's figures count searches, not hires. Shorts pay rates are estimates and vary by source ($0.01 to $0.16). The "no verified honest page above 150K" line is our own scan of public profiles, not a census. Credit costs are estimates from our first-week production runs.</p>
+</section>
+
+</main>
+<footer><div class="wrap">Faceless Lab · channel concept one-pager · Picsart Social automation project · October 2026.</div></footer>
+</body>
+</html>
