@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our New Pages</title>
+<meta name="description" content="The Picsart Social team's new faceless pages: two live on Instagram, one ready to launch, with three real posts from each.">
+<style>
+  @font-face{font-family:"Gilroy";font-weight:400;src:url("https://pastatic.picsart.com/cms-pastatic/d018cb40-40a8-4efa-a202-947285ae8329.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:600;src:url("https://pastatic.picsart.com/cms-pastatic/eae6e1ea-9319-406c-a3de-00431f8f03f4.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:700;src:url("https://pastatic.picsart.com/cms-pastatic/0ea441d6-d0d4-4236-b649-67a987887865.woff2") format("woff2");font-display:swap}
+  :root{--magenta:#F40BF4;--ink:#0B0B0B;--paper:#FFFCF8;--muted:#5b5b60;--line:#e6e2dc;--card:#fff;--tint:#fbf3fb;--link:#9a06a0;--ok:#11703a;--warn:#874f00;
+    --grad:linear-gradient(225deg,#00ffed 0%,#19d7e7 22.96%,#7f4ad9 45.31%,#af1fc6 66.73%,#df02c0 100%)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 "Gilroy",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  a{color:var(--link)}
+  .wrap{max-width:960px;margin:0 auto;padding:0 16px}
+  header{background:var(--ink);color:#fff;padding:36px 0 28px;border-bottom:6px solid transparent;border-image:var(--grad) 1}
+  h1{font-size:clamp(30px,6vw,46px);margin:0;line-height:1.1}
+  header p{color:#d9d9de;margin:8px 0 0;font-size:17px;max-width:640px}
+  .logos{display:flex;gap:10px;margin-top:18px}
+  .logos img{width:44px;height:44px;border-radius:50%}
+  main{padding:8px 0 40px}
+  section.page{margin:30px 0 0;padding-top:4px}
+  .profile{display:grid;grid-template-columns:96px 1fr auto;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .profile img{width:96px;height:96px;border-radius:50%;display:block}
+  .profile h2{margin:0;font-size:24px;line-height:1.15}
+  .handle{font-weight:600;color:var(--muted);margin-top:2px}
+  .bio{margin:8px 0 0;white-space:pre-line;font-size:15px}
+  .bio .mwp{color:var(--link);font-weight:600}
+  .who{margin:8px 0 0;color:var(--muted);font-size:14.5px}
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;margin-left:8px;vertical-align:middle}
+  .status::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+  .status.live{color:var(--ok);background:#e9f7ef}
+  .status.soon{color:var(--warn);background:#fdf3e4}
+  .actions{display:flex;flex-direction:column;gap:8px;align-self:start}
+  .btn{display:inline-block;text-align:center;font-weight:700;font-size:14px;text-decoration:none;padding:9px 14px;border-radius:10px;white-space:nowrap}
+  .btn.primary{background:var(--ink);color:#fff}
+  .btn.ghost{border:1px solid var(--line);color:var(--ink);background:var(--card)}
+  .btn.off{background:#efece8;color:var(--muted);cursor:default}
+  .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .post{background:var(--ink);color:#fff;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px}
+  .post video{width:100%;aspect-ratio:9/16;border-radius:10px;display:block;background:#000;object-fit:cover}
+  .post .t{font-size:12.5px;font-weight:700;color:#e9a6ff;text-transform:uppercase;letter-spacing:.04em}
+  .post .h{font-weight:700;font-size:15px;line-height:1.3}
+  .post .d{font-size:13px;color:#c9c9d0}
+  @media (max-width:760px){
+    .profile{grid-template-columns:72px 1fr;align-items:start}
+    .profile img{width:72px;height:72px}
+    .actions{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}
+    .posts{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:460px){.posts{grid-template-columns:1fr}}
+  .note{color:var(--muted);font-size:14px;margin-top:28px}
+  footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);font-size:13.5px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Our new pages</h1>
+  <p>Three faceless pages made with Picsart. Two are live on Instagram; the third is ready to launch. Below: each page and three of its real posts.</p>
+  <div class="logos"><img src="assets/logo-listed.png" alt=""><img src="assets/logo-faceless.png" alt=""><img src="assets/logo-ai-tutorials.png" alt=""></div>
+</div></header>
+<main><div class="wrap">
+
+  <section class="page" id="listed">
+    <div class="profile">
+      <img src="assets/logo-listed.png" alt="Listed logo">
+      <div>
+        <h2>Listed <span class="status live">Live on Instagram</span></h2>
+        <div class="handle">@listed.hq</div>
+        <p class="bio">Better listings from the photo you already have.
+<span class="mwp">made with Picsart</span></p>
+        <p class="who">For online sellers: a messy phone photo becomes a clean listing photo, and the post shows exactly which Picsart tools did it.</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="https://www.instagram.com/listed.hq/" target="_blank" rel="noopener">Open on Instagram</a>
+        <a class="btn ghost" href="../listed/">Concept one-pager</a>
+      </div>
+    </div>
+    <div class="posts">
+      <div class="post">
+        <video src="assets/listed-1-mug-before-after.mp4" poster="assets/listed-1-mug-before-after.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">Before / After · 7 s</span>
+        <span class="h">Same mug. Same phone. One Picsart edit.</span>
+        <span class="d">Messy counter in, clean listing photo out with Remove Background, Edit with AI and AI Enhance.</span>
+      </div>
+      <div class="post">
+        <video src="assets/listed-2-mug-tutorial.mp4" poster="assets/listed-2-mug-tutorial.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">Tutorial · 18 s</span>
+        <span class="h">Messy background? Fixed in Picsart in 3 taps.</span>
+        <span class="d">The result first, then every tool with its real output and exact path in the app.</span>
+      </div>
+      <div class="post">
+        <video src="assets/listed-3-candle-before-after.mp4" poster="assets/listed-3-candle-before-after.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">Before / After · 7 s</span>
+        <span class="h">Same soy candle. Staged like a studio shoot.</span>
+        <span class="d">Moved onto a marble shelf with Remove Background, Edit with AI and Relight Studio. No studio, no props.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="faceless">
+    <div class="profile">
+      <img src="assets/logo-faceless.png" alt="Faceless Monetization logo">
+      <div>
+        <h2>Faceless Monetization | AI <span class="status live">Live on Instagram</span></h2>
+        <div class="handle">@faceless_monetization</div>
+        <p class="bio">Faceless AI videos that can earn.
+Built in Picsart, receipts included.
+Comment the keyword, get the exact prompts.
+<span class="mwp">made with Picsart</span></p>
+        <p class="who">For people who want to earn from content without showing their face: each post shows a format that pays, how it was made in Picsart, and a Receipt with the real cost.</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="https://www.instagram.com/faceless_monetization/" target="_blank" rel="noopener">Open on Instagram</a>
+        <a class="btn ghost" href="../faceless-lab/">Concept one-pager</a>
+      </div>
+    </div>
+    <div class="posts">
+      <div class="post">
+        <video src="assets/faceless-1-ai-singer-noor.mp4" poster="assets/faceless-1-ai-singer-noor.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">AI music · 24 s</span>
+        <span class="h">An AI song hit the Billboard Global 200. Meet Noor.</span>
+        <span class="d">An original AI singer and her first song, how AI music earns royalties, and the Receipt: 34 credits.</span>
+      </div>
+      <div class="post">
+        <video src="assets/faceless-2-ai-model-mara.mp4" poster="assets/faceless-2-ai-model-mara.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">AI model · 30 s</span>
+        <span class="h">Brands book AI models now. Meet Mara.</span>
+        <span class="d">One original character, two campaign looks, and how AI model shoots sell as a service.</span>
+      </div>
+      <div class="post">
+        <video src="assets/faceless-3-80s-tape.mp4" poster="assets/faceless-3-80s-tape.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">Photo service · 29 s</span>
+        <span class="h">One selfie in, a 1988 home video out.</span>
+        <span class="d">A restyle people sell as a service, built step by step in Picsart for 29 credits.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="ai-tutorials">
+    <div class="profile">
+      <img src="assets/logo-ai-tutorials.png" alt="AI Tutorials logo">
+      <div>
+        <h2>AI Tutorials | Steal This Edit <span class="status soon">Ready to launch</span></h2>
+        <div class="handle">@ai.tutorials (proposed)</div>
+        <p class="bio">Viral edits, 3 steps, one app.
+Picsart's tutorial page. Comment the word, get the link.
+<span class="mwp">made with Picsart</span></p>
+        <p class="who">For creators asking "how did they make this?": each post opens on a viral edit, then shows the exact Picsart tool, path and prompt. Content is ready; the account opens as soon as its email is set up.</p>
+      </div>
+      <div class="actions">
+        <span class="btn off">Account coming soon</span>
+        <a class="btn ghost" href="../steal-this-edit/">Concept one-pager</a>
+      </div>
+    </div>
+    <div class="posts">
+      <div class="post">
+        <video src="assets/tutorials-1-trend-steal.mp4" poster="assets/tutorials-1-trend-steal.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">Trend Steal · 25 s</span>
+        <span class="h">The "save yourself" edit. 3 steps.</span>
+        <span class="d">One selfie, one scene prompt, one video model in AI Playground, with both prompts on screen.</span>
+      </div>
+      <div class="post">
+        <video src="assets/tutorials-2-model-fight.mp4" poster="assets/tutorials-2-model-fight.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">Model Fight · 23 s</span>
+        <span class="h">Same photo. 4 video models. Which one wins?</span>
+        <span class="d">Kling V3, Seedance 2.5, Veo 3.1 Lite and Wan 3.0 side by side in AI Playground, credits shown for each.</span>
+      </div>
+      <div class="post">
+        <video src="assets/tutorials-3-build-once.mp4" poster="assets/tutorials-3-build-once.jpg" controls muted playsinline preload="none"></video>
+        <span class="t">Build Once · 21 s</span>
+        <span class="h">One Flow. Anyone gets saved.</span>
+        <span class="d">The same edit built once as a Picsart Flow, then run on three different people.</span>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">Every person and character in these posts is AI-generated and labelled as AI. Every caption ends with "made with Picsart". Full concept details: <a href="../">the three concept one-pagers</a>.</p>
+</div></main>
+<footer><div class="wrap">Picsart Social automation project · October 2026 · made with Picsart</div></footer>
+</body>
+</html>
