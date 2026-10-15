@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Microdramas</title>
+<meta name="description" content="@microdramas.ai: four AI microdrama series, every part with its status and Instagram + TikTok numbers.">
+<style>
+  @font-face{font-family:"Gilroy";font-weight:400;src:url("https://pastatic.picsart.com/cms-pastatic/d018cb40-40a8-4efa-a202-947285ae8329.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:600;src:url("https://pastatic.picsart.com/cms-pastatic/eae6e1ea-9319-406c-a3de-00431f8f03f4.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Gilroy";font-weight:700;src:url("https://pastatic.picsart.com/cms-pastatic/0ea441d6-d0d4-4236-b649-67a987887865.woff2") format("woff2");font-display:swap}
+  :root{--ink:#141414;--paper:#f7f4ee;--muted:#6b6b70;--line:#e3ded5;--card:#fff;--accent:#5C4636;--ok:#1d6b3a;--okbg:#e7f3ea;--warn:#8a5a00;--warnbg:#fbf1dc;--off:#555;--offbg:#ebe8e2}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 "Gilroy",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  a{color:var(--accent)}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+  header{padding:44px 0 28px}
+  .profile{display:grid;grid-template-columns:112px 1fr auto;gap:24px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .profile img{width:112px;height:112px;border-radius:50%;display:block;object-fit:cover}
+  .profile h1{margin:0;font-size:30px;line-height:1.1;letter-spacing:-.02em}
+  .handle{font-weight:600;color:var(--muted);margin-top:4px}
+  .bio{margin:10px 0 0;font-size:15px}
+  .who{margin:8px 0 0;color:var(--muted);font-size:14.5px;max-width:640px}
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;margin-left:8px;vertical-align:middle;color:var(--ok);background:var(--okbg)}
+  .status::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+  .actions{display:flex;flex-direction:column;gap:8px}
+  .btn{display:inline-block;text-align:center;font-weight:700;font-size:14px;text-decoration:none;padding:10px 16px;border-radius:10px;white-space:nowrap}
+  .btn.primary{background:var(--ink);color:#fff}
+  .btn.ghost{border:1px solid var(--line);color:var(--ink);background:var(--card)}
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .kpi h3{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .kpi .row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .kpi .row div b{display:block;font-size:22px;line-height:1.1;letter-spacing:-.01em}
+  .kpi .row div span{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .summary{color:var(--muted);font-size:14.5px;margin:14px 0 0}
+  .series{margin-top:44px;padding-top:36px;border-top:1px solid var(--line)}
+  .show{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
+  .show img{width:100%;border-radius:14px;display:block;border:1px solid var(--line)}
+  .show h2{margin:0;font-size:30px;letter-spacing:-.02em;line-height:1.05}
+  .show .meta{color:var(--muted);font-size:14px;margin:6px 0 0}
+  .show .brief{margin:14px 0 0;font-size:16px;max-width:700px}
+  .show .counts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .show .counts span{font-size:13px;font-weight:700;padding:5px 11px;border-radius:999px}
+  .posts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+  .post{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:7px}
+  .post video{width:100%;aspect-ratio:9/16;border-radius:10px;display:block;background:#111;object-fit:cover}
+  .car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:6px;border-radius:10px;aspect-ratio:4/5;background:#111;scrollbar-width:none}
+  .car::-webkit-scrollbar{display:none}
+  .car img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start;border-radius:10px}
+  .post .t{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+  .post .h{font-weight:700;font-size:15px;line-height:1.3}
+  .post .d{font-size:13px;color:var(--muted)}
+  .post .st{font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;align-self:start;margin-top:auto}
+  .live{color:var(--ok);background:var(--okbg)}
+  .soon{color:var(--warn);background:var(--warnbg)}
+  .made{color:var(--off);background:var(--offbg)}
+  .stats{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px}
+  .stat i{font-style:normal;font-weight:700;color:var(--ink);display:inline-block;min-width:66px}
+  .stat b{color:var(--ink)}
+  .stat a{margin-left:4px;font-weight:600}
+  .note{color:var(--muted);font-size:14px;margin-top:36px}
+  footer{border-top:1px solid var(--line);padding:18px 0 48px;color:var(--muted);font-size:13.5px}
+  @media (max-width:980px){.posts{grid-template-columns:repeat(3,1fr)}.show{grid-template-columns:220px 1fr}}
+  @media (max-width:760px){
+    .profile{grid-template-columns:72px 1fr}.profile img{width:72px;height:72px}
+    .actions{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}
+    .kpis{grid-template-columns:1fr}.kpi .row{grid-template-columns:repeat(3,1fr)}
+    .show{grid-template-columns:1fr}.show img{max-width:320px}
+    .posts{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:460px){.posts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main><div class="wrap">
+<header>
+  <div class="profile">
+    <img src="assets/logo-microdramas.jpg" alt="microdramas.ai profile picture">
+    <div>
+      <h1>Microdramas · AI love stories <span class="status">Live on Instagram + TikTok</span></h1>
+      <div class="handle">@microdramas.ai</div>
+      <p class="bio">Tiny love stories, big 90s drama 🎬&nbsp; New part every week. An official Picsart channel, made with Picsart AI.</p>
+      <p class="who">Serialized AI microdramas shot like a 1990s film: one scene, one twist, 30 to 60 seconds per part. Four series so far, each with its own cast. Every part goes to Instagram and TikTok at the same time.</p>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="https://www.instagram.com/microdramas.ai/" target="_blank" rel="noopener">Open on Instagram</a>
+      <a class="btn ghost" href="https://www.tiktok.com/@microdramas.ai" target="_blank" rel="noopener">Open on TikTok</a>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><h3>Instagram</h3><div class="row">
+      <div><b>7</b><span>followers</span></div>
+      <div><b>8</b><span>posts live</span></div>
+      <div><b>1,454</b><span>views</span></div>
+      <div><b>64</b><span>likes</span></div>
+      <div><b>54</b><span>saves</span></div>
+    </div></div>
+    <div class="kpi"><h3>TikTok</h3><div class="row">
+      <div><b>1</b><span>followers</span></div>
+      <div><b>8</b><span>posts live</span></div>
+      <div><b>1,240</b><span>views</span></div>
+      <div><b>30</b><span>likes</span></div>
+      <div><b>7</b><span>saves</span></div>
+    </div></div>
+  </div>
+  <p class="summary">4 series · 20 parts made · 8 live · 6 scheduled · 6 made but not scheduled yet. Channel opened Oct 13.</p>
+</header>
+
+  <section class="series" id="speak-now">
+    <div class="show">
+      <img src="assets/keyart-speak-now.jpg" alt="SPEAK NOW key art">
+      <div>
+        <h2>SPEAK NOW</h2>
+        <p class="meta">Romance · 1990s Manhattan · 8 of 8 parts made · season complete</p>
+        <p class="brief">At a 1990s Manhattan church wedding the bride objects to her own marriage, and every guest has a secret about why. One rainy afternoon and the morning after, in eight parts: hidden letters, a husband nobody mentioned, a sister nobody knew about, and a ring bought forty years ago.</p>
+        <div class="counts"><span class="live">6 live</span><span class="soon">2 scheduled</span></div>
+      </div>
+    </div>
+    <div class="posts">
+      <article class="post">
+        <video src="assets/speak-now-1.mp4" poster="assets/speak-now-1.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 1 · 28 s</span>
+        <span class="h">Everyone looked at the wrong woman.</span>
+        <span class="d">A church wedding. The bride objects to her own marriage, a soaked stranger walks in, and the groom's mother says one word: "Finally."</span>
+        <span class="st live">Live · Instagram + TikTok · Oct 13 · 18:50</span>
+<div class="stats"><div class="stat"><i>Instagram</i><b>156</b> views · <b>9</b> likes · <b>7</b> saves · <b>2</b> shares · <b>0</b> comments <a href="https://www.instagram.com/reel/DecEFyPArT-/" target="_blank" rel="noopener">open</a></div><div class="stat"><i>TikTok</i><b>160</b> views · <b>8</b> likes · <b>1</b> saves · <b>1</b> shares · <b>0</b> comments <a href="https://www.tiktok.com/@microdramas.ai/video/7696430784336432391?utm_campaign=tt4d_open_api&utm_source=7608030276714774544" target="_blank" rel="noopener">open</a></div></div>      </article>
+      <article class="post">
+        <video src="assets/speak-now-2.mp4" poster="assets/speak-now-2.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 2 · The Letters · 26 s</span>
+        <span class="h">Twelve letters. Not one arrived.</span>
+        <span class="d">Luca wrote every month for a year. Claire never got a single letter. Her bridesmaid goes pale.</span>
+        <span class="st live">Live · Instagram + TikTok · Oct 13 · 21:00</span>
+<div class="stats"><div class="stat"><i>Instagram</i><b>139</b> views · <b>10</b> likes · <b>7</b> saves · <b>2</b> shares · <b>0</b> comments <a href="https://www.instagram.com/reel/DecTMRiguSv/" target="_blank" rel="noopener">open</a></div><div class="stat"><i>TikTok</i><b>160</b> views · <b>4</b> likes · <b>1</b> saves · <b>1</b> shares · <b>0</b> comments <a href="https://www.tiktok.com/@microdramas.ai/video/7696442100425952519?utm_campaign=tt4d_open_api&utm_source=7608030276714774544" target="_blank" rel="noopener">open</a></div></div>      </article>
+      <article class="post">
+        <video src="assets/speak-now-3.mp4" poster="assets/speak-now-3.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 3 · Second Time · 28 s</span>
+        <span class="h">Second time's the charm… if she says yes.</span>
+        <span class="d">The letters were hidden by the bridesmaid who loves the groom. Claire leaves with Luca; Julian walks into the rain toward Vivienne.</span>
+        <span class="st live">Live · Instagram + TikTok · Oct 14 · 12:00</span>
+<div class="stats"><div class="stat"><i>Instagram</i><b>182</b> views · <b>9</b> likes · <b>6</b> saves · <b>4</b> shares · <b>0</b> comments <a href="https://www.instagram.com/reel/Ded5_OuFk1q/" target="_blank" rel="noopener">open</a></div><div class="stat"><i>TikTok</i><b>202</b> views · <b>5</b> likes · <b>1</b> saves · <b>1</b> shares · <b>0</b> comments <a href="https://www.tiktok.com/@microdramas.ai/video/7696445956996336903?utm_campaign=tt4d_open_api&utm_source=7608030276714774544" target="_blank" rel="noopener">open</a></div></div>      </article>
+      <article class="post">
+        <video src="assets/speak-now-4.mp4" poster="assets/speak-now-4.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 4 · Tomorrow · 29 s</span>
+        <span class="h">She said ask me tomorrow. She didn't say what he'd find.</span>
+        <span class="d">A thirteenth letter, hidden a year ago. Julian kneels on Vivienne's stoop. Across the street a man says: "You're still my wife."</span>
+        <span class="st live">Live · Instagram + TikTok · Oct 14 · 18:00</span>
+<div class="stats"><div class="stat"><i>Instagram</i><b>202</b> views · <b>6</b> likes · <b>6</b> saves · <b>3</b> shares · <b>0</b> comments <a href="https://www.instagram.com/reel/DeejQW2jKwp/" target="_blank" rel="noopener">open</a></div><div class="stat"><i>TikTok</i><b>203</b> views · <b>3</b> likes · <b>1</b> saves · <b>0</b> shares · <b>0</b> comments <a href="https://www.tiktok.com/@microdramas.ai/video/7696523524562767122?utm_campaign=tt4d_open_api&utm_source=7608030276714774544" target="_blank" rel="noopener">open</a></div></div>      </article>
+      <article class="post">
+        <video src="assets/speak-now-5.mp4" poster="assets/speak-now-5.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 5 · The Husband · 28 s</span>
+        <span class="h">He waited all night. She waited a whole year.</span>
+        <span class="d">Mateo crosses the street. Vivienne's letter is finally read. He will let her go on one condition: "Say you never loved me."</span>
+        <span class="st live">Live · Instagram + TikTok · Oct 14 · 19:00</span>
+<div class="stats"><div class="stat"><i>Instagram</i><b>345</b> views · <b>7</b> likes · <b>7</b> saves · <b>0</b> shares · <b>0</b> comments <a href="https://www.instagram.com/reel/DeeqJoQgWG3/" target="_blank" rel="noopener">open</a></div><div class="stat"><i>TikTok</i><b>175</b> views · <b>4</b> likes · <b>0</b> saves · <b>0</b> shares · <b>0</b> comments <a href="https://www.tiktok.com/@microdramas.ai/video/7696538735227325702?utm_campaign=tt4d_open_api&utm_source=7608030276714774544" target="_blank" rel="noopener">open</a></div></div>      </article>
+      <article class="post">
+        <video src="assets/speak-now-6.mp4" poster="assets/speak-now-6.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 6 · The Sister · 26 s</span>
+        <span class="h">Everyone has a secret. Hers was in the same family all along.</span>
+        <span class="d">Vivienne can't say it. Rosalind tells Claire why she helped: "Because I'm your sister." That night, the ring disappears.</span>
+        <span class="st live">Live · Instagram + TikTok · Oct 15 · 12:00</span>
+<div class="stats"><div class="stat"><i>Instagram</i><b>140</b> views · <b>6</b> likes · <b>7</b> saves · <b>3</b> shares · <b>0</b> comments <a href="https://www.instagram.com/reel/DegfDMQj7hN/" target="_blank" rel="noopener">open</a></div><div class="stat"><i>TikTok</i><b>1</b> views · <b>0</b> likes · <b>0</b> saves · <b>0</b> shares · <b>0</b> comments <a href="https://www.tiktok.com/@microdramas.ai/video/7696802194204658951?utm_campaign=tt4d_open_api&utm_source=7608030276714774544" target="_blank" rel="noopener">open</a></div></div>      </article>
+      <article class="post">
+        <video src="assets/speak-now-7.mp4" poster="assets/speak-now-7.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 7 · The Ring · 29 s</span>
+        <span class="h">Forty years ago he bought a ring. She said no. He never asked again.</span>
+        <span class="d">Sloane returns the ring to the priest. It was never Julian's: Harold bought it for Eleanor forty years ago. Mateo signs the papers.</span>
+        <span class="st soon">Scheduled · Instagram + TikTok · Oct 15 · 18:00</span>
+      </article>
+      <article class="post">
+        <video src="assets/speak-now-8.mp4" poster="assets/speak-now-8.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 8 · Speak Now. Again. · 30 s</span>
+        <span class="h">Forty years ago she said no. Today he asked again.</span>
+        <span class="d">Season finale. Same church, a new wedding, "If anyone objects…" Eleanor stands, turns to Harold: "Ask me again."</span>
+        <span class="st soon">Scheduled · Instagram + TikTok · Oct 15 · 19:00</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="series" id="the-last-bite">
+    <div class="show">
+      <img src="assets/keyart-last-bite.jpg" alt="THE LAST BITE key art">
+      <div>
+        <h2>THE LAST BITE</h2>
+        <p class="meta">Gothic romance · a modern city at night · 4 of 8 parts made</p>
+        <p class="brief">A young woman survives a vampire attack and starts remembering murders from eight centuries before her birth. The immortal who protects her, the friend who swears she is still human and the Regent who hunts her are all afraid of the same thing: what she remembers next.</p>
+        <div class="counts"><span class="live">2 live</span><span class="soon">1 scheduled</span><span class="made">1 made, not scheduled</span></div>
+      </div>
+    </div>
+    <div class="posts">
+      <article class="post">
+        <video src="assets/last-bite-1.mp4" poster="assets/last-bite-1.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 1 · The Reflection · 45 s</span>
+        <span class="h">She survived the attack. Her reflection didn't.</span>
+        <span class="d">Elara washes pink water from her face. Her reflection keeps staring after she turns away. The phone: "Don't let them see your eyes."</span>
+        <span class="st live">Live · Instagram + TikTok · Oct 14 · 18:30</span>
+<div class="stats"><div class="stat"><i>Instagram</i><b>152</b> views · <b>8</b> likes · <b>7</b> saves · <b>0</b> shares · <b>0</b> comments <a href="https://www.instagram.com/reel/Deemn2mgFvN/" target="_blank" rel="noopener">open</a></div><div class="stat"><i>TikTok</i><b>338</b> views · <b>5</b> likes · <b>2</b> saves · <b>0</b> shares · <b>0</b> comments <a href="https://www.tiktok.com/@microdramas.ai/video/7696531020878712084?utm_campaign=tt4d_open_api&utm_source=7608030276714774544" target="_blank" rel="noopener">open</a></div></div>      </article>
+      <article class="post">
+        <video src="assets/last-bite-2.mp4" poster="assets/last-bite-2.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 2 · Someone Else's Death · 39 s</span>
+        <span class="h">The knock didn't come from the door.</span>
+        <span class="d">One drop of blood and she is running through a candlelit castle as a terrified woman, eight centuries ago. The dead woman's face is hers.</span>
+        <span class="st live">Live · Instagram + TikTok · Oct 14 · 19:30</span>
+<div class="stats"><div class="stat"><i>Instagram</i><b>138</b> views · <b>9</b> likes · <b>7</b> saves · <b>7</b> shares · <b>0</b> comments <a href="https://www.instagram.com/reel/DeeteXwCe2d/" target="_blank" rel="noopener">open</a></div><div class="stat"><i>TikTok</i><b>1</b> views · <b>1</b> likes · <b>1</b> saves · <b>0</b> shares · <b>0</b> comments <a href="https://www.tiktok.com/@microdramas.ai/video/7696546481502735637?utm_campaign=tt4d_open_api&utm_source=7608030276714774544" target="_blank" rel="noopener">open</a></div></div>      </article>
+      <article class="post">
+        <video src="assets/last-bite-3.mp4" poster="assets/last-bite-3.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 3 · The Man Who Knows Her · 52 s</span>
+        <span class="h">He caught the blade with his bare hand. And the cut closed.</span>
+        <span class="d">Damian under the streetlamp names the attacker and offers to teach her. "How do you know my name?" "Because I watched you die the first time."</span>
+        <span class="st soon">Scheduled · Instagram + TikTok · Oct 15 · 21:00</span>
+      </article>
+      <article class="post">
+        <video src="assets/last-bite-4.mp4" poster="assets/last-bite-4.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 4 · The Council · 57 s</span>
+        <span class="h">An entire council of immortals just knelt to her. And she doesn't know why.</span>
+        <span class="d">Damian brings her to the candlelit hall. The Regent's ring drops and rings on the marble; every vampire kneels. "The first mother has returned."</span>
+        <span class="st made">Made, not scheduled yet</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="series" id="family-portrait">
+    <div class="show">
+      <img src="assets/keyart-family-portrait.jpg" alt="FAMILY PORTRAIT key art">
+      <div>
+        <h2>FAMILY PORTRAIT</h2>
+        <p class="meta">Family drama · Connecticut, autumn 1995 · 4 of 8 parts made</p>
+        <p class="brief">A lakeside house, a perfect family, and a seven-year-old who keeps drawing a fifth figure outside the garden gate: a lady with yellow hair who waves at his little sister. She is the children's mother, declared drowned five years ago by the grandmother who paid her to disappear. The wife who raised them has known for three years.</p>
+        <div class="counts"><span class="live">0 live</span><span class="soon">3 scheduled</span><span class="made">1 made, not scheduled</span></div>
+      </div>
+    </div>
+    <div class="posts">
+      <article class="post">
+        <video src="assets/family-portrait-1.mp4" poster="assets/family-portrait-1.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 1 · The Drawing · 49 s</span>
+        <span class="h">Every family portrait has someone standing just outside the frame.</span>
+        <span class="d">Sunday breakfast. Oliver's drawing has a fifth figure. Rosie waves at the empty gate; a green ribbon on the post. In the car Constance unfolds the drawing: "She came back."</span>
+        <span class="st soon">Scheduled · Instagram + TikTok · Oct 16 · 12:00</span>
+      </article>
+      <article class="post">
+        <video src="assets/family-portrait-2.mp4" poster="assets/family-portrait-2.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 2 · The School Gate · 40 s</span>
+        <span class="h">Rosie knows the lady at the gate. Margot doesn't. Yet.</span>
+        <span class="d">A blonde in a camel coat across the street at pickup. That night in the study: the wedding album, one page torn out, a photograph of Theo with another woman and a newborn.</span>
+        <span class="st soon">Scheduled · Instagram + TikTok · Oct 16 · 17:00</span>
+      </article>
+      <article class="post">
+        <video src="assets/family-portrait-3.mp4" poster="assets/family-portrait-3.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 3 · The First Wife · 40 s</span>
+        <span class="h">Her name was Laurel. They never found her. So who is standing at the gate?</span>
+        <span class="d">The dock at dusk. Theo: "She drowned the autumn Rosie was born." At the gate, in the rain, Margot and Laurel face to face: "You have my ribbon."</span>
+        <span class="st soon">Scheduled · Instagram + TikTok · Oct 17 · 12:00</span>
+      </article>
+      <article class="post">
+        <video src="assets/family-portrait-4.mp4" poster="assets/family-portrait-4.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 4 · Sunday Lunch · 38 s</span>
+        <span class="h">Sunday lunch at Constance's. Candles, pearls, the perfect family. Then the door opens.</span>
+        <span class="d">Laurel walks in. Rosie: "The lady!" Constance's glass stops halfway. "It's been five years, Constance." Theo stands: "Mother. What did you do?"</span>
+        <span class="st made">Made, not scheduled yet</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="series" id="remember-me">
+    <div class="show">
+      <img src="assets/keyart-remember-me.jpg" alt="REMEMBER ME? key art">
+      <div>
+        <h2>REMEMBER ME?</h2>
+        <p class="meta">Glow-up revenge · Newport, 1996 · 4 of 8 parts made</p>
+        <p class="brief">Carmela Vane, the plain heiress everyone laughed at, vanishes after a cruel bet at a charity ball and returns a year later with a new face and a new name. The man who laughed loudest falls for her, his fiancée who bullied her starts to suspect, and the only person who recognises her is the one who was kind.</p>
+        <div class="counts"><span class="live">0 live</span><span class="made">4 made, not scheduled</span></div>
+      </div>
+    </div>
+    <div class="posts">
+      <article class="post">
+        <video src="assets/remember-me-1.mp4" poster="assets/remember-me-1.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 1 · The Bet · 39 s</span>
+        <span class="h">He danced with her for a hundred dollars.</span>
+        <span class="d">Dorian asks Carmela to dance; mid-waltz he lets go of her hand and the room laughs. Bianca hands him the banknote. In the rain, Gabriel puts his jacket on her shoulders without a word.</span>
+        <span class="st made">Made, not scheduled yet</span>
+      </article>
+      <article class="post">
+        <video src="assets/remember-me-2.mp4" poster="assets/remember-me-2.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 2 · The Mirror · 41 s</span>
+        <span class="h">She asked for a new face. She got a new name.</span>
+        <span class="d">The clinic. Weeks pass in cuts. The bandages come off and Dr Ash holds up the hand mirror. "What is your name now?" "Carmen."</span>
+        <span class="st made">Made, not scheduled yet</span>
+      </article>
+      <article class="post">
+        <video src="assets/remember-me-3.mp4" poster="assets/remember-me-3.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 3 · The Return · 38 s</span>
+        <span class="h">One year later. Same ball. Nobody knows her. One man looks at the pearls.</span>
+        <span class="d">Carmen enters in oxblood velvet; every head turns; Dorian abandons Bianca mid-sentence. Across the room Gabriel looks not at her face but at the pearls.</span>
+        <span class="st made">Made, not scheduled yet</span>
+      </article>
+      <article class="post">
+        <video src="assets/remember-me-4.mp4" poster="assets/remember-me-4.jpg" controls playsinline preload="none"></video>
+        <span class="t">Part 4 · The Dinner · 43 s</span>
+        <span class="h">He told her the funniest story he knew. She let him pour.</span>
+        <span class="d">Dorian brags about "a girl at a ball once, a bet, you should have seen her". Carmen smiles. Under the table her hand is shaking; she steadies it on the pearls.</span>
+        <span class="st made">Made, not scheduled yet</span>
+      </article>
+    </div>
+  </section>
+
+  <p class="note">Numbers come from the broker's analytics for each post (Instagram and TikTok), last synced 2026-10-15 12:46:39 UTC, follower counts from Oct 15. Statuses and dates come from the scheduling ledgers. Every post is labelled as AI on the platform and every caption ends with "made with Picsart". Back to <a href="../">the concept pages</a>.</p>
+</div></main>
+<footer><div class="wrap">Picsart Social automation project · October 2026 · made with Picsart</div></footer>
+</body>
+</html>
