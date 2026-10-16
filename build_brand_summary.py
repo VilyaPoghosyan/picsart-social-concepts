@@ -554,6 +554,176 @@ def build_dwell():
     print(f"dwell summary: IG/TT live {overall['pub']} sched {overall['sched']} views {reach_views} · pins {len(pins)} impr {imp}")
 
 
+# Reelo "tiny worlds" videos we made (Tigran's format, Gemini 3 Pro Image stills + Veo 3.1 + ElevenLabs voice),
+# from context/reports/reelo-content-runs.md. Most are balance-confirmed (balance before -> after = the
+# logged credits; the six of 2026-10-09 sum to the batch drop 4,724 -> 2,183). Matched to posts by caption.
+REELO_COST = {  # slug: (caption keyword, credits)
+    "tiny-carousel-restore": ("tiny carousel", 426), "tiny-fire-station-restore": ("fire station", 421),
+    "tiny-bicycle-shop-restore": ("bicycle shop", 421), "tiny-bathhouse-restore": ("bathhouse", 426),
+    "tiny-gas-station-restore": ("gas station", 421), "tiny-cable-car-restore": ("cable car", 416),
+    "tiny-apiary-restore": ("apiary", 421), "tiny-bowling-alley-restore": ("bowling", 436),
+    "tiny-ferris-wheel-restore": ("ferris wheel", 426), "tiny-tram-depot-restore": ("tram depot", 416),
+    "tiny-laundromat-restore": ("laundromat", 426), "tiny-bell-tower-restore": ("bell tower", 431),
+    "tiny-mine-entrance-restore": ("tiny mine", 416), "tiny-puppet-theatre-restore": ("puppet theatre", 426),
+}
+REELO_SINCE = "2026-10-03"  # our first post; earlier posts came from the earlier pipeline, no cost log here
+CARTOON_COST = [110, 110, 110, 120]  # the first four cartoon reels, out/reelo/2026-10-19-*/run.json
+
+REELO_PLATFORM = {
+    "instagram": dict(name="Instagram", fmt="Reels", handle="@reelo.hq", url="https://www.instagram.com/reelo.hq/",
+                      concept="One reel a day at 18:00 Yerevan, the same video as TikTok. Instagram has been the weaker "
+                              "feed for this format: low views and {likes} likes across {posts} posts, one reason the content "
+                              "changes to family cartoons from Oct 17."),
+    "tiktok": dict(name="TikTok", fmt="Videos", handle="@reelostudio", url="https://www.tiktok.com/@reelostudio",
+                   concept="The stronger feed: the same videos at the same time get a median of {median} views here, "
+                           "against {ig_median} on Instagram."),
+}
+
+
+def clean_title(t):
+    for cut in (". A new tiny world", " Follow", " Would you try this?", " #", " Made with Picsart", " Here is how", " Step by step"):
+        t = t.split(cut)[0]
+    return t.strip().rstrip(".")
+
+
+def reelo_slug(title):
+    t = title.lower()
+    return next((s for s, (kw, _) in REELO_COST.items() if kw in t), None)
+
+
+def build_reelo():
+    feed = json.loads((HERE / "reelo/feed.json").read_text())
+    A = "../../reelo/assets"
+    mature_cut = (NOW - timedelta(hours=24)).astimezone(timezone.utc).isoformat()
+    ig_median = ""
+    cards, ov = "", dict(pub=0, sched=0, views=0, likes=0, comments=0, shares=0, saves=0, fol=0)
+    for plat, P in REELO_PLATFORM.items():
+        F = feed[plat]
+        ps = F["posts"]
+        tot = {k: sum(int(p.get(k) or 0) for p in ps) for k in ("views", "likes", "comments", "shares", "saves")}
+        acts = tot["likes"] + tot["comments"] + tot["shares"] + tot["saves"]
+        ov["pub"] += len(ps)
+        ov["sched"] += F["scheduled"]
+        ov["fol"] += F["followers"]
+        for k in tot:
+            ov[k] += tot[k]
+        mat = [p for p in ps if (p["publishedAt"] or "") <= mature_cut]
+        v = [int(p["views"]) for p in mat]
+        lk = [int(p["likes"]) for p in mat]
+        er = [(p["likes"] + p["comments"] + p["shares"] + p["saves"]) / p["views"] for p in mat if p["views"]]
+        ours = [p for p in ps if (p["publishedAt"] or "") >= REELO_SINCE and reelo_slug(p["title"])]
+        ov_ = [int(p["views"]) for p in ours if p in mat]
+        best = ""
+        for r, p in enumerate(sorted(ps, key=lambda p: (p["views"], p["likes"]), reverse=True)[:3], start=1):
+            slug = reelo_slug(p["title"]) if (p["publishedAt"] or "") >= REELO_SINCE else None
+            posted = datetime.fromisoformat(p["publishedAt"].replace("Z", "+00:00")).astimezone(YEREVAN)
+            if slug and (HERE / f"reelo/assets/{slug}.mp4").exists():
+                media = f'<video src="{A}/{slug}.mp4" poster="{A}/{slug}.jpg" controls playsinline preload="none"></video>'
+            elif p.get("asset"):
+                media = f'<a class="thumb" href="{E(p["url"])}" target="_blank" rel="noopener"><img class="pv vid" src="{A}/{p["asset"]}" alt="" loading="lazy"><span class="play"></span></a>'
+            else:
+                media = f'<a class="thumb blank" href="{E(p["url"])}" target="_blank" rel="noopener"><span class="play"></span><span class="lbl">Preview not available · watch on {P["name"]}</span></a>'
+            cost = f" · {n(REELO_COST[slug][1])} credits" if slug else ""
+            best += f"""<div class="ex">
+          {media}
+          <span class="rank">#{r} · {posted:%b %-d}</span>
+          <span class="h">{E(clean_title(p['title']))}</span>
+          <span class="m">{n(p['views'])} views · {n(p['likes'])} likes · {n(p['shares'])} shares · {n(p['saves'])} saves{cost} · <a href="{E(p['url'])}" target="_blank" rel="noopener">open on {P['name']} →</a></span>
+        </div>"""
+        c = [REELO_COST[reelo_slug(p["title"])][1] for p in ours]
+        ours_views = sum(int(p["views"]) for p in ours)
+        P = dict(P, concept=P["concept"].format(likes=n(tot["likes"]), posts=n(len(ps)), median=n(median(v)),
+                                                ig_median=ig_median))
+        ig_median = n(median(v))
+        cards += card(plat, P,
+                      [("Published", n(len(ps))), ("Scheduled", n(F["scheduled"])), ("Followers", n(F["followers"])),
+                       ("Views", n(tot["views"])), ("Likes", n(tot["likes"])), ("Comments", n(tot["comments"])),
+                       ("Shares", n(tot["shares"])), ("Saves", n(tot["saves"])),
+                       ("Engagement", f"{acts / tot['views']:.1%}" if tot["views"] else "n/a")],
+                      f"Per post · {len(mat)} posts live 24 h or more",
+                      [("Views range", rng(v)), ("Median views", n(median(v)) if v else "n/a"), ("Likes range", rng(lk)),
+                       ("Engagement range", rng(er, lambda x: f"{x:.1%}")),
+                       ("Since Oct 3, median", n(median(ov_)) if ov_ else "n/a")],
+                      "", best,
+                      [("Credits / post, avg", n(mean(c))), ("Median", n(median(c))), ("Range", rng(c)),
+                       ("Credits / 1K views", n(sum(c) / (ours_views / 1000)) if ours_views else "n/a")],
+                      f"Cost of the {len(c)} tiny-world videos we posted from Oct 3 (logged per video; 10 of the 13 are confirmed "
+                      f"by the account balance, six of them as one batch total). Same file on Instagram and TikTok, so the second post adds 0 credits. Credits / 1K views = "
+                      f"their cost ÷ their {P['name']} views alone. Posts before Oct 3 came from the earlier pipeline and have no "
+                      f"cost log here, so they are counted in the numbers but not in the cost.")
+
+    eng = (ov["likes"] + ov["comments"] + ov["shares"] + ov["saves"]) / ov["views"] if ov["views"] else 0
+    first = min(p["publishedAt"] for pl in REELO_PLATFORM for p in feed[pl]["posts"])[:10]
+    synced = max((p.get("lastUpdated") or "" for pl in REELO_PLATFORM for p in feed[pl]["posts"]), default="")[:16]
+    page = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reelo Brand Summary</title>
+<meta name="description" content="Reelo: concept, live platforms (Instagram, TikTok), numbers, best posts and credits per post.">
+<style>{CSS}
+  .ex .thumb{{position:relative; display:block}}
+  .ex img.pv.vid{{width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:10px; display:block; border:1px solid var(--line)}}
+  .ex .thumb.blank{{aspect-ratio:9/16; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); background-image:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); font-family:var(--mono); font-size:.62rem; color:var(--accent-ink)}}
+  .ex .thumb.blank .lbl{{position:absolute; left:0; right:0; bottom:12px; text-align:center; padding:0 8px}}
+  .ex .play{{position:absolute; inset:0; display:grid; place-items:center}}
+  .ex .play::before{{content:""; width:40px; height:40px; border-radius:50%; background:rgba(0,0,0,.55)}}
+  .ex .play::after{{content:""; position:absolute; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; margin-left:3px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Picsart Social · brand summary</div>
+  <div class="hero">
+    <img src="{A}/logo-reelo.jpg" alt="Reelo profile picture">
+    <div>
+      <h1>Reelo</h1>
+      <div class="handle">@reelo.hq · @reelostudio · Instagram + TikTok</div>
+    </div>
+  </div>
+  <p class="dek">Short AI videos that stop the scroll. Live since {first}: first AI-trend explainers and miniature
+    clips, then from September "tiny worlds", a ruined miniature place restored in one video a day. From Oct 17 the
+    channel switches to 15-second Pixar-style family cartoons, four a day.</p>
+
+  <div class="sec-label">Key concept</div>
+  <div class="card">
+    <div class="concept">
+      <div><b>Live now · tiny worlds</b><span>25–28 s restorations of a ruined miniature (a fire station, a cable car) with a voiceover and captions. One a day.</span></div>
+      <div><b>From Oct 17 · cartoons</b><span>15 s micro-stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. A cast of 11, shuffled.</span></div>
+      <div><b>Engine</b><span>Tiny worlds: Gemini 3 Pro Image stills, Veo 3.1 clips, ElevenLabs voice. Cartoons: Gemini 3 Pro Image keyframe, Seedance 2.5 with native sound.</span></div>
+    </div>
+    <p class="note">Cartoons go out at 12:00, 13:30, 18:00 and 19:30 Yerevan; the first four are scheduled for Oct 17 and
+      cost {rng(CARTOON_COST)} credits each, against 416–436 for a tiny-world video. Reelo's Pinterest and X accounts are not
+      posting and are left out.</p>
+  </div>
+
+  <div class="sec-label">Overall</div>
+  <div class="card">
+    <div class="counts">{tiles([("Platforms", "2"), ("Published", n(ov['pub'])), ("Scheduled", n(ov['sched'])),
+                                ("Views", n(ov['views'])), ("Likes", n(ov['likes'])), ("Comments", n(ov['comments'])),
+                                ("Shares", n(ov['shares'])), ("Saves", n(ov['saves'])), ("Engagement", f"{eng:.1%}"),
+                                ("Followers", n(ov['fol']))])}</div>
+    <p class="note">Published counts posts (one video on two platforms = 2 posts). Engagement = (likes + comments + shares + saves) / views.</p>
+  </div>
+
+  <div class="sec-label">Platforms, by the numbers</div>
+{cards}
+
+  <footer>Numbers come from Instagram and TikTok through the publishing rail, pulled {E(feed['pulledAt'])} Yerevan
+    (platform data last synced {E(synced)} UTC). Posts published in the last few hours still show low numbers.
+    Picsart Social automation project · made with Picsart</footer>
+</main>
+</body>
+</html>
+"""
+    out = HERE / "summary/reelo/index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page)
+    print(f"reelo summary: {ov}")
+
+
 if __name__ == "__main__":
-    build_microdramas()
-    build_dwell()
+    import sys
+    for b in sys.argv[1:] or ["microdramas", "dwell", "reelo"]:
+        globals()[f"build_{b}"]()

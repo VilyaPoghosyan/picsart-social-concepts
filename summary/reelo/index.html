@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reelo Brand Summary</title>
+<meta name="description" content="Reelo: concept, live platforms (Instagram, TikTok), numbers, best posts and credits per post.">
+<style>
+  :root{
+    --bg:#F7F7F9; --surface:#FFFFFF; --surface-2:#FBFAFC;
+    --ink:#16151B; --muted:#6A6875; --faint:#9A98A5; --line:#EAEAEF;
+    --accent:#C40F6B; --accent-ink:#A50C59; --accent-soft:#FBE9F2;
+    --good:#0E8A54; --good-soft:#E6F4EC;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --shadow:0 1px 2px rgba(20,18,28,.05),0 12px 34px rgba(20,18,28,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#101015; --surface:#18181F; --surface-2:#1E1E26;
+      --ink:#F3F2F7; --muted:#A19FAD; --faint:#6C6A78; --line:#28282F;
+      --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2A1420;
+      --good:#37C98A; --good-soft:#122720;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101015; --surface:#18181F; --surface-2:#1E1E26; --ink:#F3F2F7; --muted:#A19FAD; --faint:#6C6A78;
+    --line:#28282F; --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2A1420;
+    --good:#37C98A; --good-soft:#122720; --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:840px; margin:0 auto; padding:clamp(40px,7vw,80px) clamp(16px,5vw,40px) 72px}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+  .eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-ink); font-weight:600}
+  .hero{display:flex; gap:1.3rem; align-items:center; margin-top:.9rem}
+  .hero img{width:76px; height:76px; border-radius:50%; object-fit:cover; flex:none; border:1px solid var(--line)}
+  h1{font-size:clamp(2rem,6vw,3.1rem); line-height:1.03; letter-spacing:-.03em; font-weight:800; margin:0; text-wrap:balance}
+  .handle{font-family:var(--mono); font-size:.8rem; color:var(--muted); margin-top:.35rem}
+  .dek{font-size:clamp(1.02rem,2.3vw,1.2rem); color:var(--muted); margin:1.2rem 0 0; max-width:60ch; line-height:1.5}
+  .sec-label{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:3rem 0 1rem; display:flex; align-items:center; gap:.7rem}
+  .sec-label::after{content:""; flex:1; height:1px; background:var(--line)}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:1.3rem 1.4rem 1.4rem; box-shadow:var(--shadow); margin-bottom:1rem}
+  .card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+  .brand{font-size:1.22rem; font-weight:800; letter-spacing:-.01em}
+  .brand .niche{font-weight:500; color:var(--faint); font-size:.86rem; margin-left:.5rem}
+  .pill{display:inline-flex; align-items:center; gap:.4em; font-family:var(--mono); font-size:.64rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; padding:.3em .65em; border-radius:999px; white-space:nowrap; color:var(--good); background:var(--good-soft)}
+  .pill .dot{width:.5em; height:.5em; border-radius:50%; background:currentColor}
+  .concept{display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1.1rem}
+  .concept div{background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:.8rem .9rem}
+  .concept b{display:block; font-family:var(--mono); font-size:.63rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-ink); margin-bottom:.3rem}
+  .concept span{font-size:.92rem; color:var(--muted); line-height:1.45; display:block}
+  .counts{display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:.55rem; margin-top:1rem}
+  .cnt{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:.75rem .6rem; text-align:center}
+  .cnt .n{font-size:1.4rem; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1}
+  .cnt .k{font-family:var(--mono); font-size:.6rem; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-top:.45rem}
+  .note{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:.8rem; line-height:1.55}
+  .pconcept{color:var(--muted); font-size:.95rem; margin:.7rem 0 0; max-width:66ch}
+  .sub{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:1.4rem 0 .6rem}
+  .best{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem}
+  .ex{display:flex; flex-direction:column; gap:.35rem}
+  .ex video{width:100%; aspect-ratio:9/16; border-radius:10px; display:block; background:#111; object-fit:cover; border:1px solid var(--line)}
+  .ex .rank{font-family:var(--mono); font-size:.62rem; color:var(--accent-ink); font-weight:700; letter-spacing:.06em; text-transform:uppercase}
+  .ex .h{font-weight:700; font-size:.88rem; line-height:1.3}
+  .ex .m{font-family:var(--mono); font-size:.66rem; color:var(--muted); line-height:1.5}
+  .ex .m a{color:var(--accent-ink)}
+  .cost{display:grid; grid-template-columns:repeat(3,1fr); gap:.55rem; margin-top:.2rem}
+  .cost .cnt{background:var(--accent-soft); border-color:transparent}
+  .cost .cnt .n{color:var(--accent-ink)}
+  .visits{display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.1rem}
+  .visit{display:inline-flex; align-items:center; gap:.5rem; font-family:var(--mono); font-size:.75rem; font-weight:600; padding:.5rem .85rem; border:1px solid var(--line); border-radius:999px; color:var(--accent-ink); background:var(--surface-2)}
+  .visit:hover{border-color:var(--accent); background:var(--accent-soft)}
+  .visit .plat{color:var(--faint)}
+  table{width:100%; border-collapse:collapse; font-size:.86rem; margin-top:.3rem}
+  th,td{text-align:left; padding:.45rem .3rem; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
+  th{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600}
+  td.r,th.r{text-align:right}
+  footer{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:3rem; line-height:1.6}
+  @media(max-width:640px){
+    .concept{grid-template-columns:1fr}
+    .best{grid-template-columns:repeat(3,minmax(0,1fr)); gap:.45rem}
+    .ex .h{font-size:.78rem}
+    .cost{grid-template-columns:1fr 1fr}
+    .hero img{width:60px; height:60px}
+  }
+
+  .ex .thumb{position:relative; display:block}
+  .ex img.pv.vid{width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:10px; display:block; border:1px solid var(--line)}
+  .ex .thumb.blank{aspect-ratio:9/16; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); background-image:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); font-family:var(--mono); font-size:.62rem; color:var(--accent-ink)}
+  .ex .thumb.blank .lbl{position:absolute; left:0; right:0; bottom:12px; text-align:center; padding:0 8px}
+  .ex .play{position:absolute; inset:0; display:grid; place-items:center}
+  .ex .play::before{content:""; width:40px; height:40px; border-radius:50%; background:rgba(0,0,0,.55)}
+  .ex .play::after{content:""; position:absolute; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; margin-left:3px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Picsart Social · brand summary</div>
+  <div class="hero">
+    <img src="../../reelo/assets/logo-reelo.jpg" alt="Reelo profile picture">
+    <div>
+      <h1>Reelo</h1>
+      <div class="handle">@reelo.hq · @reelostudio · Instagram + TikTok</div>
+    </div>
+  </div>
+  <p class="dek">Short AI videos that stop the scroll. Live since 2026-07-31: first AI-trend explainers and miniature
+    clips, then from September "tiny worlds", a ruined miniature place restored in one video a day. From Oct 17 the
+    channel switches to 15-second Pixar-style family cartoons, four a day.</p>
+
+  <div class="sec-label">Key concept</div>
+  <div class="card">
+    <div class="concept">
+      <div><b>Live now · tiny worlds</b><span>25–28 s restorations of a ruined miniature (a fire station, a cable car) with a voiceover and captions. One a day.</span></div>
+      <div><b>From Oct 17 · cartoons</b><span>15 s micro-stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. A cast of 11, shuffled.</span></div>
+      <div><b>Engine</b><span>Tiny worlds: Gemini 3 Pro Image stills, Veo 3.1 clips, ElevenLabs voice. Cartoons: Gemini 3 Pro Image keyframe, Seedance 2.5 with native sound.</span></div>
+    </div>
+    <p class="note">Cartoons go out at 12:00, 13:30, 18:00 and 19:30 Yerevan; the first four are scheduled for Oct 17 and
+      cost 110–120 credits each, against 416–436 for a tiny-world video. Reelo's Pinterest and X accounts are not
+      posting and are left out.</p>
+  </div>
+
+  <div class="sec-label">Overall</div>
+  <div class="card">
+    <div class="counts"><div class="cnt"><div class="n">2</div><div class="k">Platforms</div></div><div class="cnt"><div class="n">161</div><div class="k">Published</div></div><div class="cnt"><div class="n">10</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">22,329</div><div class="k">Views</div></div><div class="cnt"><div class="n">117</div><div class="k">Likes</div></div><div class="cnt"><div class="n">3</div><div class="k">Comments</div></div><div class="cnt"><div class="n">1</div><div class="k">Shares</div></div><div class="cnt"><div class="n">9</div><div class="k">Saves</div></div><div class="cnt"><div class="n">0.6%</div><div class="k">Engagement</div></div><div class="cnt"><div class="n">13</div><div class="k">Followers</div></div></div>
+    <p class="note">Published counts posts (one video on two platforms = 2 posts). Engagement = (likes + comments + shares + saves) / views.</p>
+  </div>
+
+  <div class="sec-label">Platforms, by the numbers</div>
+
+  <article class="card" id="instagram">
+    <div class="card-top">
+      <div class="brand">Instagram<span class="niche">Reels · @reelo.hq</span></div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">One reel a day at 18:00 Yerevan, the same video as TikTok. Instagram has been the weaker feed for this format: low views and 20 likes across 80 posts, one reason the content changes to family cartoons from Oct 17.</p>
+    <div class="counts"><div class="cnt"><div class="n">80</div><div class="k">Published</div></div><div class="cnt"><div class="n">5</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">6</div><div class="k">Followers</div></div><div class="cnt"><div class="n">3,928</div><div class="k">Views</div></div><div class="cnt"><div class="n">20</div><div class="k">Likes</div></div><div class="cnt"><div class="n">0</div><div class="k">Comments</div></div><div class="cnt"><div class="n">0</div><div class="k">Shares</div></div><div class="cnt"><div class="n">1</div><div class="k">Saves</div></div><div class="cnt"><div class="n">0.5%</div><div class="k">Engagement</div></div></div>
+    <div class="sub">Per post · 79 posts live 24 h or more</div>
+    <div class="counts"><div class="cnt"><div class="n">1–199</div><div class="k">Views range</div></div><div class="cnt"><div class="n">29</div><div class="k">Median views</div></div><div class="cnt"><div class="n">0–4</div><div class="k">Likes range</div></div><div class="cnt"><div class="n">0.0%–10.0%</div><div class="k">Engagement range</div></div><div class="cnt"><div class="n">21</div><div class="k">Since Oct 3, median</div></div></div>
+    <div class="sub">3 best posts on Instagram · by views</div>
+    <div class="best"><div class="ex">
+          <a class="thumb" href="https://www.instagram.com/reel/Dcv1TNskQ4f/" target="_blank" rel="noopener"><img class="pv vid" src="../../reelo/assets/instagram-top1.jpg" alt="" loading="lazy"><span class="play"></span></a>
+          <span class="rank">#1 · Sep 1</span>
+          <span class="h">The reveal: the tiniest fishing boat, fully restored</span>
+          <span class="m">199 views · 2 likes · 0 shares · 0 saves · <a href="https://www.instagram.com/reel/Dcv1TNskQ4f/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <a class="thumb" href="https://www.instagram.com/reel/DdWc59rEWOs/" target="_blank" rel="noopener"><img class="pv vid" src="../../reelo/assets/instagram-top2.jpg" alt="" loading="lazy"><span class="play"></span></a>
+          <span class="rank">#2 · Sep 16</span>
+          <span class="h">This tiny diner was a total wreck</span>
+          <span class="m">157 views · 0 likes · 0 shares · 0 saves · <a href="https://www.instagram.com/reel/DdWc59rEWOs/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../../reelo/assets/tiny-gas-station-restore.mp4" poster="../../reelo/assets/tiny-gas-station-restore.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#3 · Oct 7</span>
+          <span class="h">This tiny gas station was left behind by the highway</span>
+          <span class="m">147 views · 0 likes · 0 shares · 0 saves · 421 credits · <a href="https://www.instagram.com/reel/DeMhp0xD4Yt/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div></div>
+    <div class="sub">Cost per post</div>
+    <div class="cost"><div class="cnt"><div class="n">422</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">421</div><div class="k">Median</div></div><div class="cnt"><div class="n">416–431</div><div class="k">Range</div></div><div class="cnt"><div class="n">11,539</div><div class="k">Credits / 1K views</div></div></div>
+    <p class="note">Cost of the 13 tiny-world videos we posted from Oct 3 (logged per video; 10 of the 13 are confirmed by the account balance, six of them as one batch total). Same file on Instagram and TikTok, so the second post adds 0 credits. Credits / 1K views = their cost ÷ their Instagram views alone. Posts before Oct 3 came from the earlier pipeline and have no cost log here, so they are counted in the numbers but not in the cost.</p>
+    <div class="visits"><a class="visit" href="https://www.instagram.com/reelo.hq/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @reelo.hq →</a></div>
+  </article>
+  <article class="card" id="tiktok">
+    <div class="card-top">
+      <div class="brand">TikTok<span class="niche">Videos · @reelostudio</span></div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">The stronger feed: the same videos at the same time get a median of 236 views here, against 29 on Instagram.</p>
+    <div class="counts"><div class="cnt"><div class="n">81</div><div class="k">Published</div></div><div class="cnt"><div class="n">5</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">7</div><div class="k">Followers</div></div><div class="cnt"><div class="n">18,401</div><div class="k">Views</div></div><div class="cnt"><div class="n">97</div><div class="k">Likes</div></div><div class="cnt"><div class="n">3</div><div class="k">Comments</div></div><div class="cnt"><div class="n">1</div><div class="k">Shares</div></div><div class="cnt"><div class="n">8</div><div class="k">Saves</div></div><div class="cnt"><div class="n">0.6%</div><div class="k">Engagement</div></div></div>
+    <div class="sub">Per post · 80 posts live 24 h or more</div>
+    <div class="counts"><div class="cnt"><div class="n">0–419</div><div class="k">Views range</div></div><div class="cnt"><div class="n">236</div><div class="k">Median views</div></div><div class="cnt"><div class="n">0–7</div><div class="k">Likes range</div></div><div class="cnt"><div class="n">0.0%–2.3%</div><div class="k">Engagement range</div></div><div class="cnt"><div class="n">172</div><div class="k">Since Oct 3, median</div></div></div>
+    <div class="sub">3 best posts on TikTok · by views</div>
+    <div class="best"><div class="ex">
+          <a class="thumb blank" href="https://www.tiktok.com/@reelostudio/video/7669063493949181202" target="_blank" rel="noopener"><span class="play"></span><span class="lbl">Preview not available · watch on TikTok</span></a>
+          <span class="rank">#1 · Aug 1</span>
+          <span class="h">Those satisfying tiny restoration videos, made with AI</span>
+          <span class="m">419 views · 4 likes · 0 shares · 1 saves · <a href="https://www.tiktok.com/@reelostudio/video/7669063493949181202" target="_blank" rel="noopener">open on TikTok →</a></span>
+        </div><div class="ex">
+          <a class="thumb blank" href="https://www.tiktok.com/@reelostudio/video/7669434968501652737" target="_blank" rel="noopener"><span class="play"></span><span class="lbl">Preview not available · watch on TikTok</span></a>
+          <span class="rank">#2 · Aug 2</span>
+          <span class="h">A giant hand helping a tiny world is the new viral AI niche</span>
+          <span class="m">386 views · 2 likes · 0 shares · 0 saves · <a href="https://www.tiktok.com/@reelostudio/video/7669434968501652737" target="_blank" rel="noopener">open on TikTok →</a></span>
+        </div><div class="ex">
+          <video src="../../reelo/assets/tiny-fire-station-restore.mp4" poster="../../reelo/assets/tiny-fire-station-restore.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#3 · Oct 4</span>
+          <span class="h">This tiny fire station lost its last alarm call</span>
+          <span class="m">365 views · 0 likes · 0 shares · 0 saves · 421 credits · <a href="https://www.tiktok.com/@reelostudio/video/7692812539041680647" target="_blank" rel="noopener">open on TikTok →</a></span>
+        </div></div>
+    <div class="sub">Cost per post</div>
+    <div class="cost"><div class="cnt"><div class="n">422</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">421</div><div class="k">Median</div></div><div class="cnt"><div class="n">416–431</div><div class="k">Range</div></div><div class="cnt"><div class="n">2,087</div><div class="k">Credits / 1K views</div></div></div>
+    <p class="note">Cost of the 13 tiny-world videos we posted from Oct 3 (logged per video; 10 of the 13 are confirmed by the account balance, six of them as one batch total). Same file on Instagram and TikTok, so the second post adds 0 credits. Credits / 1K views = their cost ÷ their TikTok views alone. Posts before Oct 3 came from the earlier pipeline and have no cost log here, so they are counted in the numbers but not in the cost.</p>
+    <div class="visits"><a class="visit" href="https://www.tiktok.com/@reelostudio" target="_blank" rel="noopener"><span class="plat">TikTok</span> @reelostudio →</a></div>
+  </article>
+
+  <footer>Numbers come from Instagram and TikTok through the publishing rail, pulled 2026-10-16 16:40 Yerevan
+    (platform data last synced 2026-10-16 12:29 UTC). Posts published in the last few hours still show low numbers.
+    Picsart Social automation project · made with Picsart</footer>
+</main>
+</body>
+</html>
