@@ -14,10 +14,10 @@ from __future__ import annotations
 
 import html
 import json
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from statistics import mean, median
 
-from build_showcase import HERE, NOW, OUT, microdrama_series, sched, when_of
+from build_showcase import HERE, NOW, OUT, YEREVAN, dwell_posts, microdrama_series, sched, when_of
 
 # Credits per episode, everything spent to get the posted cut (casting, keyframes, voices, takes,
 # retakes and any discarded first version). Source: each episode's run.json + the production chat.
@@ -328,5 +328,232 @@ def build_microdramas():
     print(f"microdramas summary: live eps {len(live_eps)} {sorted(live_eps)} · {overall} · live credits {sum(live_c)}")
 
 
+# Dwell IG + TikTok credits per post. W42: per-post logs whose sum (822) equals the batch's balance
+# drop 2,043 -> 1,221, so each is exact. W43: per-post logs (1,586) vs batch balance drop 1,597.
+# Colour pairs and mouldings: call prices (the account was shared during those runs).
+DWELL_COST = {
+    "dwell-W42-01-parisian-salon": 143, "dwell-W42-02-old-world-house": 175, "dwell-W42-03-bedroom-trends-2027": 77,
+    "dwell-W42-04-ivory-closet-reveal": 131, "dwell-W42-05-japandi-headboard-swap": 67,
+    "dwell-W42-06-mediterranean-villa-set": 45, "dwell-W42-07-night-penthouse": 184,
+    "dwell-colour-pairs": 440, "dwell-power-of-moulding": 180,
+    "dwell-W43-01-wabi-sabi-spa-bath": 150, "dwell-W43-02-kitchen-trends-2027": 65, "dwell-W43-03-alpine-chalet": 174,
+    "dwell-W43-04-scandi-fireplace-swap": 75, "dwell-W43-05-midcentury-conversation-pit": 173,
+    "dwell-W43-06-desert-adobe-set": 40, "dwell-W43-07-industrial-loft": 140, "dwell-W43-08-coastal-beach-house": 175,
+    "dwell-W43-09-dining-chandelier-swap": 67, "dwell-W43-10-living-room-trends-2027": 77,
+    "dwell-W43-11-tuscan-farmhouse-kitchen": 139, "dwell-W43-12-art-deco-apartment": 131,
+    "dwell-W43-13-attic-bedroom": 140, "dwell-W43-14-moroccan-riad-set": 40,
+}
+# Pinterest: our two pin runs on 2026-10-02 (dwell-content-runs.md): 70 pins, 185 + 180 = 365 credits,
+# confirmed by the balance (5,730 -> 5,545 -> 5,365). 5 credits per image; 3 pins needed one reroll (10).
+PIN_RUNS = dict(pins=70, credits=365, per_pin=[5] * 67 + [10] * 3, since="2026-10-03")
+
+DWELL_PLATFORM = {
+    "instagram": dict(name="Instagram", fmt="Reels + carousels", handle="@dwell.rooms",
+                      url="https://www.instagram.com/dwell.rooms/",
+                      concept="Two posts a day at 18:00 and 21:00 Yerevan: before/after match cuts, statement tours, walkthrough "
+                              "reveals, variation swaps, colour pairs and trend carousels. Saves are the signal: designers keep "
+                              "the room for later."),
+    "tiktok": dict(name="TikTok", fmt="Videos + photo carousels", handle="@dwellrooms",
+                   url="https://www.tiktok.com/@dwellrooms",
+                   concept="The same posts at the same times, cross-posted, so they cost no extra credits. The reveal has to "
+                           "land early, because the For You feed decides reach on watch time."),
+    "pinterest": dict(name="Pinterest", fmt="Image pins", handle="@dwellrooms",
+                      url="https://www.pinterest.com/dwellrooms/",
+                      concept="Pinterest is a search engine, so each pin is a 2:3 editorial room photo titled like a search "
+                              "(\"Midcentury living ideas\"), filed on a room board, with a link to Picsart. Five pins a day. "
+                              "Pins keep getting found for months, so older pins still collect impressions."),
+}
+
+
+def card(plat, P, counts, per_post_label, per_post, low, best, cost, cost_note):
+    return f"""
+  <article class="card" id="{plat}">
+    <div class="card-top">
+      <div class="brand">{P['name']}<span class="niche">{P['fmt']} · {P['handle']}</span></div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">{E(P['concept'])}</p>
+    <div class="counts">{tiles(counts)}</div>
+    <div class="sub">{per_post_label}</div>
+    <div class="counts">{tiles(per_post)}</div>
+    <div class="sub">3 best posts on {P['name']} · {'by impressions' if plat == 'pinterest' else 'by views'}</div>
+    {low}<div class="best">{best}</div>
+    <div class="sub">Cost per post</div>
+    <div class="cost">{tiles(cost)}</div>
+    <p class="note">{cost_note}</p>
+    <div class="visits"><a class="visit" href="{P['url']}" target="_blank" rel="noopener"><span class="plat">{P['name']}</span> {P['handle']} →</a></div>
+  </article>"""
+
+
+def build_dwell():
+    stats = json.loads((HERE / "dwell/stats.json").read_text())
+    fol = stats.pop("_followers", {})
+    pin = json.loads((HERE / "dwell/pinterest.json").read_text())
+    A = "../../dwell/assets"
+    mature_cut = NOW - timedelta(hours=24)
+
+    posts = []
+    for ledger, key, asset, kind, slides, label, hook, _desc in dwell_posts():
+        for plat in ("instagram", "tiktok"):
+            e = ledger.get(f"{key}:{plat}")
+            if e:
+                posts.append(dict(platform=plat, postId=e["postId"], when=when_of(e), asset=asset, kind=kind,
+                                  label=label, hook=hook))
+
+    cards, overall = "", dict(pub=0, sched=0, eng=0)
+    reach_views = 0
+    for plat in ("instagram", "tiktok"):
+        P = DWELL_PLATFORM[plat]
+        mine = [p for p in posts if p["platform"] == plat]
+        live = [p for p in mine if p["when"] and p["when"] <= NOW]
+        soon = [p for p in mine if p["when"] and p["when"] > NOW]
+        num = [(p, stats[p["postId"]]) for p in live if (stats.get(p["postId"]) or {}).get("views") is not None]
+        tot = {k: sum(int(s.get(k) or 0) for _, s in num) for k in ("views", "likes", "comments", "shares", "saves")}
+        acts = tot["likes"] + tot["comments"] + tot["shares"] + tot["saves"]
+        overall["pub"] += len(live)
+        overall["sched"] += len(soon)
+        overall["eng"] += acts
+        reach_views += tot["views"]
+        mat = [s for p, s in num if p["when"] <= mature_cut]
+        v = [int(s["views"]) for s in mat]
+        lk = [int(s.get("likes") or 0) for s in mat]
+        sv = [int(s.get("saves") or 0) for s in mat]
+        er = [(int(s.get("likes") or 0) + int(s.get("comments") or 0) + int(s.get("shares") or 0)
+               + int(s.get("saves") or 0)) / s["views"] for s in mat if s["views"]]
+        best = ""
+        for r, (p, s) in enumerate(sorted(num, key=lambda ps: (ps[1].get("views") or 0, ps[1].get("likes") or 0),
+                                          reverse=True)[:3], start=1):
+            media = (f'<video src="{A}/{p["asset"]}.mp4" poster="{A}/{p["asset"]}.jpg" controls playsinline preload="none"></video>'
+                     if p["kind"] == "reel" else f'<img class="pv" src="{A}/{p["asset"]}-slide1.jpg" alt="" loading="lazy">')
+            link = f' · <a href="{E(s["url"].split("?")[0])}" target="_blank" rel="noopener">open on {P["name"]} →</a>' if s.get("url") else ""
+            best += f"""<div class="ex">
+          {media}
+          <span class="rank">#{r} · {E(p['label'])}</span>
+          <span class="h">{E(p['hook'])}</span>
+          <span class="m">{n(s['views'])} views · {n(s.get('likes') or 0)} likes · {n(s.get('shares') or 0)} shares · {n(s.get('saves') or 0)} saves · {n(DWELL_COST[p['asset']])} credits{link}</span>
+        </div>"""
+        c = [DWELL_COST[p["asset"]] for p in live]
+        cpk = sum(c) / (tot["views"] / 1000) if tot["views"] else 0
+        cards += card(plat, P,
+                      [("Published", n(len(live))), ("Scheduled", n(len(soon))), ("Followers", n(fol.get(plat, 0))),
+                       ("Views", n(tot["views"])), ("Likes", n(tot["likes"])), ("Comments", n(tot["comments"])),
+                       ("Shares", n(tot["shares"])), ("Saves", n(tot["saves"])),
+                       ("Engagement", f"{acts / tot['views']:.1%}" if tot["views"] else "n/a")],
+                      f"Per post · {len(mat)} posts live 24 h or more",
+                      [("Views range", rng(v)), ("Median views", n(median(v)) if v else "n/a"), ("Likes range", rng(lk)),
+                       ("Saves range", rng(sv)), ("Engagement range", rng(er, lambda x: f"{x:.1%}"))],
+                      "", best,
+                      [("Credits / post, avg", n(mean(c))), ("Median", n(median(c))), ("Range", rng(c)),
+                       ("Credits / 1K views", n(cpk))],
+                      f"Same file on both Instagram and TikTok, so posting it here as well adds 0 credits. Reels cost more than "
+                      f"carousels (one frame per slide, no video). Credits / 1K views = full cost of the {len(c)} live posts ÷ "
+                      f"{P['name']} views alone.")
+
+    # Pinterest
+    P = DWELL_PLATFORM["pinterest"]
+    pins = pin["pins"]
+    imp = sum(p["impressions"] for p in pins)
+    saves = sum(p["saves"] for p in pins)
+    clicks = sum(p["clicks"] for p in pins)
+    mat = [p for p in pins if p["publishedAt"] and p["publishedAt"] <= mature_cut.astimezone(timezone.utc).isoformat()]
+    pi = [p["impressions"] for p in mat]
+    seen = sum(1 for p in pins if p["impressions"])
+    ours = [p for p in pins if p["publishedAt"] >= PIN_RUNS["since"]]
+    first = min(p["publishedAt"] for p in pins)[:10]
+    best = ""
+    for r, p in enumerate(sorted(pins, key=lambda p: (p["impressions"], p["saves"], p["clicks"]), reverse=True)[:3], start=1):
+        posted = datetime.fromisoformat(p["publishedAt"].replace("Z", "+00:00")).astimezone(YEREVAN)
+        best += f"""<div class="ex">
+          <a href="{E(p['url'])}" target="_blank" rel="noopener"><img class="pv pin" src="{A}/{p['asset']}" alt="{E(p['title'])}" loading="lazy"></a>
+          <span class="rank">#{r} · pin · {posted:%b %-d}</span>
+          <span class="h">{E(p['title'])}</span>
+          <span class="m">{n(p['impressions'])} impressions · {n(p['saves'])} saves · {n(p['clicks'])} clicks · <a href="{E(p['url'])}" target="_blank" rel="noopener">open on Pinterest →</a></span>
+        </div>"""
+    pc = PIN_RUNS["per_pin"]
+    cards += card("pinterest", P,
+                  [("Published", n(len(pins))), ("Scheduled", n(pin["scheduled"])), ("Followers", n(pin["followers"])),
+                   ("Impressions", n(imp)), ("Saves", n(saves)), ("Clicks", n(clicks)),
+                   ("Engagement", f"{(saves + clicks) / imp:.1%}" if imp else "n/a")],
+                  f"Per pin · {len(mat)} pins live 24 h or more",
+                  [("Impressions range", rng(pi)), ("Median impressions", n(median(pi)) if pi else "n/a"),
+                   ("Pins with 1+ impression", f"{seen} of {len(pins)}"), ("Avg impressions", f"{mean(pi):.1f}" if pi else "n/a")],
+                  f'<p class="note">For pins the publishing rail gets impressions, saves and clicks from Pinterest; there are no views, likes or comments. '
+                  f'Live since {first}: {len(ours)} of the {len(pins)} pins went out from Oct 3, after our team took over.</p>',
+                  best,
+                  [("Credits / pin, avg", f"{PIN_RUNS['credits'] / PIN_RUNS['pins']:.1f}"), ("Median", n(median(pc))),
+                   ("Range", rng(pc)), ("Credits / 1K impr.", n(PIN_RUNS["credits"] / (sum(p["impressions"] for p in ours) / 1000))
+                    if any(p["impressions"] for p in ours) else "n/a")],
+                  f"Exact: the {PIN_RUNS['pins']} pins made for Oct 3 onward cost {n(PIN_RUNS['credits'])} credits, confirmed by "
+                  f"the account balance. One pin is one Gemini 3 Pro Image at 2K (5 credits); 3 pins needed one reroll (10). "
+                  f"Pins posted before Oct 3 came from the earlier pipeline and are not in our cost logs, so they are left out "
+                  f"of the cost. Credits / 1K impr. = {n(PIN_RUNS['credits'])} ÷ impressions on those {len(ours)} pins.")
+
+    live_c = [DWELL_COST[a] for a in {p["asset"] for p in posts if p["when"] and p["when"] <= NOW}]
+    synced = max((s.get("lastUpdated") or "" for s in stats.values()), default="")[:16]
+    page = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dwell Brand Summary</title>
+<meta name="description" content="Dwell: concept, live platforms (Instagram, TikTok, Pinterest), numbers, best posts and credits per post.">
+<style>{CSS}
+  .ex img.pv{{width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:10px; display:block; border:1px solid var(--line)}}
+  .ex img.pv.pin{{aspect-ratio:2/3}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Picsart Social · brand summary</div>
+  <div class="hero">
+    <img src="{A}/logo-dwell.jpg" alt="Dwell profile picture">
+    <div>
+      <h1>Dwell</h1>
+      <div class="handle">@dwell.rooms · @dwellrooms · Instagram + TikTok + Pinterest</div>
+    </div>
+  </div>
+  <p class="dek">Interiors, decoded. Empty rooms turned into modern, old-money and chic luxury interiors for designers and
+    people collecting ideas. Every room is made with Picsart AI.</p>
+
+  <div class="sec-label">Key concept</div>
+  <div class="card">
+    <div class="concept">
+      <div><b>Format</b><span>15–23 s reels and 7–8 slide carousels on Instagram and TikTok; 2:3 room photos on Pinterest.</span></div>
+      <div><b>Look</b><span>Marble, plaster, lacquer, travertine and brass, warm-neutral light, one palette per post, small spaced Gilroy capitals.</span></div>
+      <div><b>Engine</b><span>Rooms on Gemini 3 Pro Image, camera moves on MiniMax and Kling V3, beat-synced ElevenLabs music, the linen and walnut Picsart end card.</span></div>
+    </div>
+    <p class="note">Live on 3 of Dwell's 4 platforms; the X account is not posting and is left out.</p>
+  </div>
+
+  <div class="sec-label">Overall</div>
+  <div class="card">
+    <div class="counts">{tiles([("Platforms", "3"), ("Published", n(overall['pub'] + len(pins))),
+                                ("Scheduled", n(overall['sched'] + pin['scheduled'])),
+                                ("IG + TikTok views", n(reach_views)), ("Pinterest impr.", n(imp)),
+                                ("Followers", n(sum(fol.values()) + pin['followers']))])}</div>
+    <div class="sub">Cost · {len(live_c)} live Instagram + TikTok posts, {PIN_RUNS['pins']} pins</div>
+    <div class="cost">{tiles([("Credits, IG + TikTok", n(sum(live_c))), ("Credits, pins", n(PIN_RUNS['credits'])),
+                              ("Avg / IG + TikTok post", n(mean(live_c))), ("Avg / pin", f"{PIN_RUNS['credits'] / PIN_RUNS['pins']:.1f}")])}</div>
+    <p class="note">Published counts posts (one Instagram + TikTok post = 2). Views and impressions are kept apart: Pinterest
+      only reports impressions.</p>
+  </div>
+
+  <div class="sec-label">Platforms, by the numbers</div>
+{cards}
+
+  <footer>Numbers come from Instagram, TikTok and Pinterest through the publishing rail, pulled {E(pin['pulledAt'])} Yerevan
+    (platform data last synced {E(synced)} UTC). Posts published in the last few hours still show low numbers.
+    Picsart Social automation project · made with Picsart</footer>
+</main>
+</body>
+</html>
+"""
+    out = HERE / "summary/dwell/index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page)
+    print(f"dwell summary: IG/TT live {overall['pub']} sched {overall['sched']} views {reach_views} · pins {len(pins)} impr {imp}")
+
+
 if __name__ == "__main__":
     build_microdramas()
+    build_dwell()

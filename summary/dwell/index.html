@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dwell Brand Summary</title>
+<meta name="description" content="Dwell: concept, live platforms (Instagram, TikTok, Pinterest), numbers, best posts and credits per post.">
+<style>
+  :root{
+    --bg:#F7F7F9; --surface:#FFFFFF; --surface-2:#FBFAFC;
+    --ink:#16151B; --muted:#6A6875; --faint:#9A98A5; --line:#EAEAEF;
+    --accent:#C40F6B; --accent-ink:#A50C59; --accent-soft:#FBE9F2;
+    --good:#0E8A54; --good-soft:#E6F4EC;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --shadow:0 1px 2px rgba(20,18,28,.05),0 12px 34px rgba(20,18,28,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#101015; --surface:#18181F; --surface-2:#1E1E26;
+      --ink:#F3F2F7; --muted:#A19FAD; --faint:#6C6A78; --line:#28282F;
+      --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2A1420;
+      --good:#37C98A; --good-soft:#122720;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101015; --surface:#18181F; --surface-2:#1E1E26; --ink:#F3F2F7; --muted:#A19FAD; --faint:#6C6A78;
+    --line:#28282F; --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2A1420;
+    --good:#37C98A; --good-soft:#122720; --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:840px; margin:0 auto; padding:clamp(40px,7vw,80px) clamp(16px,5vw,40px) 72px}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+  .eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-ink); font-weight:600}
+  .hero{display:flex; gap:1.3rem; align-items:center; margin-top:.9rem}
+  .hero img{width:76px; height:76px; border-radius:50%; object-fit:cover; flex:none; border:1px solid var(--line)}
+  h1{font-size:clamp(2rem,6vw,3.1rem); line-height:1.03; letter-spacing:-.03em; font-weight:800; margin:0; text-wrap:balance}
+  .handle{font-family:var(--mono); font-size:.8rem; color:var(--muted); margin-top:.35rem}
+  .dek{font-size:clamp(1.02rem,2.3vw,1.2rem); color:var(--muted); margin:1.2rem 0 0; max-width:60ch; line-height:1.5}
+  .sec-label{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:3rem 0 1rem; display:flex; align-items:center; gap:.7rem}
+  .sec-label::after{content:""; flex:1; height:1px; background:var(--line)}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:1.3rem 1.4rem 1.4rem; box-shadow:var(--shadow); margin-bottom:1rem}
+  .card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+  .brand{font-size:1.22rem; font-weight:800; letter-spacing:-.01em}
+  .brand .niche{font-weight:500; color:var(--faint); font-size:.86rem; margin-left:.5rem}
+  .pill{display:inline-flex; align-items:center; gap:.4em; font-family:var(--mono); font-size:.64rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; padding:.3em .65em; border-radius:999px; white-space:nowrap; color:var(--good); background:var(--good-soft)}
+  .pill .dot{width:.5em; height:.5em; border-radius:50%; background:currentColor}
+  .concept{display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1.1rem}
+  .concept div{background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:.8rem .9rem}
+  .concept b{display:block; font-family:var(--mono); font-size:.63rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-ink); margin-bottom:.3rem}
+  .concept span{font-size:.92rem; color:var(--muted); line-height:1.45; display:block}
+  .counts{display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:.55rem; margin-top:1rem}
+  .cnt{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:.75rem .6rem; text-align:center}
+  .cnt .n{font-size:1.4rem; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1}
+  .cnt .k{font-family:var(--mono); font-size:.6rem; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-top:.45rem}
+  .note{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:.8rem; line-height:1.55}
+  .pconcept{color:var(--muted); font-size:.95rem; margin:.7rem 0 0; max-width:66ch}
+  .sub{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:1.4rem 0 .6rem}
+  .best{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem}
+  .ex{display:flex; flex-direction:column; gap:.35rem}
+  .ex video{width:100%; aspect-ratio:9/16; border-radius:10px; display:block; background:#111; object-fit:cover; border:1px solid var(--line)}
+  .ex .rank{font-family:var(--mono); font-size:.62rem; color:var(--accent-ink); font-weight:700; letter-spacing:.06em; text-transform:uppercase}
+  .ex .h{font-weight:700; font-size:.88rem; line-height:1.3}
+  .ex .m{font-family:var(--mono); font-size:.66rem; color:var(--muted); line-height:1.5}
+  .ex .m a{color:var(--accent-ink)}
+  .cost{display:grid; grid-template-columns:repeat(3,1fr); gap:.55rem; margin-top:.2rem}
+  .cost .cnt{background:var(--accent-soft); border-color:transparent}
+  .cost .cnt .n{color:var(--accent-ink)}
+  .visits{display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.1rem}
+  .visit{display:inline-flex; align-items:center; gap:.5rem; font-family:var(--mono); font-size:.75rem; font-weight:600; padding:.5rem .85rem; border:1px solid var(--line); border-radius:999px; color:var(--accent-ink); background:var(--surface-2)}
+  .visit:hover{border-color:var(--accent); background:var(--accent-soft)}
+  .visit .plat{color:var(--faint)}
+  table{width:100%; border-collapse:collapse; font-size:.86rem; margin-top:.3rem}
+  th,td{text-align:left; padding:.45rem .3rem; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
+  th{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600}
+  td.r,th.r{text-align:right}
+  footer{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:3rem; line-height:1.6}
+  @media(max-width:640px){
+    .concept{grid-template-columns:1fr}
+    .best{grid-template-columns:repeat(3,minmax(0,1fr)); gap:.45rem}
+    .ex .h{font-size:.78rem}
+    .cost{grid-template-columns:1fr 1fr}
+    .hero img{width:60px; height:60px}
+  }
+
+  .ex img.pv{width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:10px; display:block; border:1px solid var(--line)}
+  .ex img.pv.pin{aspect-ratio:2/3}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Picsart Social · brand summary</div>
+  <div class="hero">
+    <img src="../../dwell/assets/logo-dwell.jpg" alt="Dwell profile picture">
+    <div>
+      <h1>Dwell</h1>
+      <div class="handle">@dwell.rooms · @dwellrooms · Instagram + TikTok + Pinterest</div>
+    </div>
+  </div>
+  <p class="dek">Interiors, decoded. Empty rooms turned into modern, old-money and chic luxury interiors for designers and
+    people collecting ideas. Every room is made with Picsart AI.</p>
+
+  <div class="sec-label">Key concept</div>
+  <div class="card">
+    <div class="concept">
+      <div><b>Format</b><span>15–23 s reels and 7–8 slide carousels on Instagram and TikTok; 2:3 room photos on Pinterest.</span></div>
+      <div><b>Look</b><span>Marble, plaster, lacquer, travertine and brass, warm-neutral light, one palette per post, small spaced Gilroy capitals.</span></div>
+      <div><b>Engine</b><span>Rooms on Gemini 3 Pro Image, camera moves on MiniMax and Kling V3, beat-synced ElevenLabs music, the linen and walnut Picsart end card.</span></div>
+    </div>
+    <p class="note">Live on 3 of Dwell's 4 platforms; the X account is not posting and is left out.</p>
+  </div>
+
+  <div class="sec-label">Overall</div>
+  <div class="card">
+    <div class="counts"><div class="cnt"><div class="n">3</div><div class="k">Platforms</div></div><div class="cnt"><div class="n">396</div><div class="k">Published</div></div><div class="cnt"><div class="n">29</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4,033</div><div class="k">IG + TikTok views</div></div><div class="cnt"><div class="n">575</div><div class="k">Pinterest impr.</div></div><div class="cnt"><div class="n">17</div><div class="k">Followers</div></div></div>
+    <div class="sub">Cost · 9 live Instagram + TikTok posts, 70 pins</div>
+    <div class="cost"><div class="cnt"><div class="n">1,442</div><div class="k">Credits, IG + TikTok</div></div><div class="cnt"><div class="n">365</div><div class="k">Credits, pins</div></div><div class="cnt"><div class="n">160</div><div class="k">Avg / IG + TikTok post</div></div><div class="cnt"><div class="n">5.2</div><div class="k">Avg / pin</div></div></div>
+    <p class="note">Published counts posts (one Instagram + TikTok post = 2). Views and impressions are kept apart: Pinterest
+      only reports impressions.</p>
+  </div>
+
+  <div class="sec-label">Platforms, by the numbers</div>
+
+  <article class="card" id="instagram">
+    <div class="card-top">
+      <div class="brand">Instagram<span class="niche">Reels + carousels · @dwell.rooms</span></div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">Two posts a day at 18:00 and 21:00 Yerevan: before/after match cuts, statement tours, walkthrough reveals, variation swaps, colour pairs and trend carousels. Saves are the signal: designers keep the room for later.</p>
+    <div class="counts"><div class="cnt"><div class="n">9</div><div class="k">Published</div></div><div class="cnt"><div class="n">14</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">11</div><div class="k">Followers</div></div><div class="cnt"><div class="n">1,691</div><div class="k">Views</div></div><div class="cnt"><div class="n">93</div><div class="k">Likes</div></div><div class="cnt"><div class="n">2</div><div class="k">Comments</div></div><div class="cnt"><div class="n">44</div><div class="k">Shares</div></div><div class="cnt"><div class="n">67</div><div class="k">Saves</div></div><div class="cnt"><div class="n">12.2%</div><div class="k">Engagement</div></div></div>
+    <div class="sub">Per post · 7 posts live 24 h or more</div>
+    <div class="counts"><div class="cnt"><div class="n">65–292</div><div class="k">Views range</div></div><div class="cnt"><div class="n">227</div><div class="k">Median views</div></div><div class="cnt"><div class="n">7–18</div><div class="k">Likes range</div></div><div class="cnt"><div class="n">5–9</div><div class="k">Saves range</div></div><div class="cnt"><div class="n">7.9%–21.5%</div><div class="k">Engagement range</div></div></div>
+    <div class="sub">3 best posts on Instagram · by views</div>
+    <div class="best"><div class="ex">
+          <video src="../../dwell/assets/dwell-W42-04-ivory-closet-reveal.mp4" poster="../../dwell/assets/dwell-W42-04-ivory-closet-reveal.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Walkthrough reveal · 19 s</span>
+          <span class="h">Wait for the closet.</span>
+          <span class="m">292 views · 11 likes · 6 shares · 8 saves · 131 credits · <a href="https://www.instagram.com/reel/DeejgnfjYSa/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../../dwell/assets/dwell-W42-01-parisian-salon.mp4" poster="../../dwell/assets/dwell-W42-01-parisian-salon.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#2 · Before / after · 19 s</span>
+          <span class="h">Some rooms never go out of style.</span>
+          <span class="m">261 views · 18 likes · 15 shares · 7 saves · 143 credits · <a href="https://www.instagram.com/reel/DeZgyrZAaCu/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../../dwell/assets/dwell-power-of-moulding.mp4" poster="../../dwell/assets/dwell-power-of-moulding.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#3 · Mouldings · 23 s</span>
+          <span class="h">The power of moulding. Same rooms, same paint, a completely different level.</span>
+          <span class="m">228 views · 11 likes · 0 shares · 9 saves · 180 credits · <a href="https://www.instagram.com/reel/DeeHyPZEWgM/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div></div>
+    <div class="sub">Cost per post</div>
+    <div class="cost"><div class="cnt"><div class="n">160</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">143</div><div class="k">Median</div></div><div class="cnt"><div class="n">45–440</div><div class="k">Range</div></div><div class="cnt"><div class="n">852</div><div class="k">Credits / 1K views</div></div></div>
+    <p class="note">Same file on both Instagram and TikTok, so posting it here as well adds 0 credits. Reels cost more than carousels (one frame per slide, no video). Credits / 1K views = full cost of the 9 live posts ÷ Instagram views alone.</p>
+    <div class="visits"><a class="visit" href="https://www.instagram.com/dwell.rooms/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @dwell.rooms →</a></div>
+  </article>
+  <article class="card" id="tiktok">
+    <div class="card-top">
+      <div class="brand">TikTok<span class="niche">Videos + photo carousels · @dwellrooms</span></div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">The same posts at the same times, cross-posted, so they cost no extra credits. The reveal has to land early, because the For You feed decides reach on watch time.</p>
+    <div class="counts"><div class="cnt"><div class="n">9</div><div class="k">Published</div></div><div class="cnt"><div class="n">14</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div><div class="cnt"><div class="n">2,342</div><div class="k">Views</div></div><div class="cnt"><div class="n">61</div><div class="k">Likes</div></div><div class="cnt"><div class="n">0</div><div class="k">Comments</div></div><div class="cnt"><div class="n">0</div><div class="k">Shares</div></div><div class="cnt"><div class="n">16</div><div class="k">Saves</div></div><div class="cnt"><div class="n">3.3%</div><div class="k">Engagement</div></div></div>
+    <div class="sub">Per post · 7 posts live 24 h or more</div>
+    <div class="counts"><div class="cnt"><div class="n">185–631</div><div class="k">Views range</div></div><div class="cnt"><div class="n">212</div><div class="k">Median views</div></div><div class="cnt"><div class="n">2–15</div><div class="k">Likes range</div></div><div class="cnt"><div class="n">0–5</div><div class="k">Saves range</div></div><div class="cnt"><div class="n">1.0%–4.9%</div><div class="k">Engagement range</div></div></div>
+    <div class="sub">3 best posts on TikTok · by views</div>
+    <div class="best"><div class="ex">
+          <video src="../../dwell/assets/dwell-W42-01-parisian-salon.mp4" poster="../../dwell/assets/dwell-W42-01-parisian-salon.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Before / after · 19 s</span>
+          <span class="h">Some rooms never go out of style.</span>
+          <span class="m">631 views · 15 likes · 0 shares · 5 saves · 143 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7695796967913442566" target="_blank" rel="noopener">open on TikTok →</a></span>
+        </div><div class="ex">
+          <img class="pv" src="../../dwell/assets/dwell-W42-03-bedroom-trends-2027-slide1.jpg" alt="" loading="lazy">
+          <span class="rank">#2 · Trend carousel</span>
+          <span class="h">5 bedroom trends we&#x27;re betting on for 2027.</span>
+          <span class="m">255 views · 8 likes · 0 shares · 2 saves · 77 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7696198934749908242" target="_blank" rel="noopener">open on TikTok →</a></span>
+        </div><div class="ex">
+          <video src="../../dwell/assets/dwell-W42-07-night-penthouse.mp4" poster="../../dwell/assets/dwell-W42-07-night-penthouse.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#3 · Statement tour · 20 s</span>
+          <span class="h">This is what quiet money looks like.</span>
+          <span class="m">221 views · 5 likes · 0 shares · 3 saves · 184 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7696941078959705352" target="_blank" rel="noopener">open on TikTok →</a></span>
+        </div></div>
+    <div class="sub">Cost per post</div>
+    <div class="cost"><div class="cnt"><div class="n">160</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">143</div><div class="k">Median</div></div><div class="cnt"><div class="n">45–440</div><div class="k">Range</div></div><div class="cnt"><div class="n">615</div><div class="k">Credits / 1K views</div></div></div>
+    <p class="note">Same file on both Instagram and TikTok, so posting it here as well adds 0 credits. Reels cost more than carousels (one frame per slide, no video). Credits / 1K views = full cost of the 9 live posts ÷ TikTok views alone.</p>
+    <div class="visits"><a class="visit" href="https://www.tiktok.com/@dwellrooms" target="_blank" rel="noopener"><span class="plat">TikTok</span> @dwellrooms →</a></div>
+  </article>
+  <article class="card" id="pinterest">
+    <div class="card-top">
+      <div class="brand">Pinterest<span class="niche">Image pins · @dwellrooms</span></div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">Pinterest is a search engine, so each pin is a 2:3 editorial room photo titled like a search (&quot;Midcentury living ideas&quot;), filed on a room board, with a link to Picsart. Five pins a day. Pins keep getting found for months, so older pins still collect impressions.</p>
+    <div class="counts"><div class="cnt"><div class="n">378</div><div class="k">Published</div></div><div class="cnt"><div class="n">1</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">2</div><div class="k">Followers</div></div><div class="cnt"><div class="n">575</div><div class="k">Impressions</div></div><div class="cnt"><div class="n">3</div><div class="k">Saves</div></div><div class="cnt"><div class="n">16</div><div class="k">Clicks</div></div><div class="cnt"><div class="n">3.3%</div><div class="k">Engagement</div></div></div>
+    <div class="sub">Per pin · 374 pins live 24 h or more</div>
+    <div class="counts"><div class="cnt"><div class="n">0–117</div><div class="k">Impressions range</div></div><div class="cnt"><div class="n">0</div><div class="k">Median impressions</div></div><div class="cnt"><div class="n">123 of 378</div><div class="k">Pins with 1+ impression</div></div><div class="cnt"><div class="n">1.5</div><div class="k">Avg impressions</div></div></div>
+    <div class="sub">3 best posts on Pinterest · by impressions</div>
+    <p class="note">For pins the publishing rail gets impressions, saves and clicks from Pinterest; there are no views, likes or comments. Live since 2026-07-31: 68 of the 378 pins went out from Oct 3, after our team took over.</p><div class="best"><div class="ex">
+          <a href="https://www.pinterest.com/pin/1114429870329909456/" target="_blank" rel="noopener"><img class="pv pin" src="../../dwell/assets/pin-1114429870329909456.jpg" alt="Modern rustic living ideas" loading="lazy"></a>
+          <span class="rank">#1 · pin · Oct 3</span>
+          <span class="h">Modern rustic living ideas</span>
+          <span class="m">117 impressions · 1 saves · 5 clicks · <a href="https://www.pinterest.com/pin/1114429870329909456/" target="_blank" rel="noopener">open on Pinterest →</a></span>
+        </div><div class="ex">
+          <a href="https://www.pinterest.com/pin/1114429870329298899/" target="_blank" rel="noopener"><img class="pv pin" src="../../dwell/assets/pin-1114429870329298899.jpg" alt="Midcentury living ideas" loading="lazy"></a>
+          <span class="rank">#2 · pin · Sep 26</span>
+          <span class="h">Midcentury living ideas</span>
+          <span class="m">105 impressions · 1 saves · 2 clicks · <a href="https://www.pinterest.com/pin/1114429870329298899/" target="_blank" rel="noopener">open on Pinterest →</a></span>
+        </div><div class="ex">
+          <a href="https://www.pinterest.com/pin/1114429870328398143/" target="_blank" rel="noopener"><img class="pv pin" src="../../dwell/assets/pin-1114429870328398143.jpg" alt="Attic slope bedroom ideas" loading="lazy"></a>
+          <span class="rank">#3 · pin · Sep 15</span>
+          <span class="h">Attic slope bedroom ideas</span>
+          <span class="m">21 impressions · 0 saves · 0 clicks · <a href="https://www.pinterest.com/pin/1114429870328398143/" target="_blank" rel="noopener">open on Pinterest →</a></span>
+        </div></div>
+    <div class="sub">Cost per post</div>
+    <div class="cost"><div class="cnt"><div class="n">5.2</div><div class="k">Credits / pin, avg</div></div><div class="cnt"><div class="n">5</div><div class="k">Median</div></div><div class="cnt"><div class="n">5–10</div><div class="k">Range</div></div><div class="cnt"><div class="n">1,862</div><div class="k">Credits / 1K impr.</div></div></div>
+    <p class="note">Exact: the 70 pins made for Oct 3 onward cost 365 credits, confirmed by the account balance. One pin is one Gemini 3 Pro Image at 2K (5 credits); 3 pins needed one reroll (10). Pins posted before Oct 3 came from the earlier pipeline and are not in our cost logs, so they are left out of the cost. Credits / 1K impr. = 365 ÷ impressions on those 68 pins.</p>
+    <div class="visits"><a class="visit" href="https://www.pinterest.com/dwellrooms/" target="_blank" rel="noopener"><span class="plat">Pinterest</span> @dwellrooms →</a></div>
+  </article>
+
+  <footer>Numbers come from Instagram, TikTok and Pinterest through the publishing rail, pulled 2026-10-16 16:30 Yerevan
+    (platform data last synced 2026-10-16 11:43 UTC). Posts published in the last few hours still show low numbers.
+    Picsart Social automation project · made with Picsart</footer>
+</main>
+</body>
+</html>

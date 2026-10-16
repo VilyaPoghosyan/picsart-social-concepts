@@ -323,12 +323,11 @@ def build_microdramas():
 # =====================================================================================
 # DWELL
 # =====================================================================================
-def build_dwell():
-    stats = json.loads((HERE / "dwell/stats.json").read_text())
-    fol = stats.pop("_followers", {})
+def dwell_posts() -> list[tuple]:
+    """Dwell IG + TikTok posts: (ledger, key, asset, kind, slides, label, hook, description)."""
     w42, w43 = sched(OUT / "dwell/2026-W42/schedule.json"), sched(OUT / "dwell/2026-W43/schedule.json")
     cp, pm = sched(OUT / "dwell/colour-pairs-2026-10-14/schedule.json"), sched(OUT / "dwell/power-of-moulding-2026-10-14/schedule.json")
-    POSTS = [
+    return [
         (w42, "01-parisian-salon", "dwell-W42-01-parisian-salon", "reel", 0, "Before / after · 19 s", "Some rooms never go out of style.", "Raw plaster to a Parisian salon on one match cut: same walls, same light."),
         (w42, "02-old-world-house", "dwell-W42-02-old-world-house", "reel", 0, "Statement tour · 17 s", "The best homes look collected, not decorated.", "Old books, older paintings and a fire that's always lit."),
         (w42, "03-bedroom-trends-2027", "dwell-W42-03-bedroom-trends-2027", "car", 7, "Trend carousel", "5 bedroom trends we're betting on for 2027.", "Limewash walls, upholstered walls, burgundy accents, sculptural lighting, canopy alcoves."),
@@ -353,6 +352,12 @@ def build_dwell():
         (w43, "13-attic-bedroom", "dwell-W43-13-attic-bedroom", "reel", 0, "Before / after · 19 s", "Every house has a secret room.", "A dusty attic becomes a cosy bedroom under the roof."),
         (w43, "14-moroccan-riad-set", "dwell-W43-14-moroccan-riad-set", "car", 8, "Photo-set carousel", "Cedar, tadelakt and a courtyard full of light.", "One Moroccan riad, room by room."),
     ]
+
+
+def build_dwell():
+    stats = json.loads((HERE / "dwell/stats.json").read_text())
+    fol = stats.pop("_followers", {})
+    POSTS = dwell_posts()
     rows = []
     for ledger, key, asset, kind, slides, label, hook, desc in POSTS:
         ig, tt = ledger.get(f"{key}:instagram"), ledger.get(f"{key}:tiktok")
