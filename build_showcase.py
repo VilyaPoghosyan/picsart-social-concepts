@@ -198,15 +198,9 @@ def page(title, desc, body, synced):
 """
 
 
-# =====================================================================================
-# MICRODRAMAS
-# =====================================================================================
-def build_microdramas():
-    stats = json.loads((HERE / "microdramas/stats.json").read_text())
-    fol = stats.pop("_followers", {})
-    led = {s: sched(OUT / f"microdrama/{s}/schedule.json") for s in ("speak-now", "the-last-bite", "family-portrait", "remember-me")}
-
-    SERIES = [
+def microdrama_series() -> list[dict]:
+    """The four microdrama series and their episodes (asset slug, label, tease, description)."""
+    return [
         dict(slug="speak-now", title="SPEAK NOW", genre="Romance · 1990s Manhattan", art="keyart-speak-now",
              brief="At a 1990s Manhattan church wedding the bride objects to her own marriage, and every guest has a secret about why. One rainy afternoon and the morning after, in eight parts: hidden letters, a husband nobody mentioned, a sister nobody knew about, and a ring bought forty years ago.",
              key=lambda i: f"speak-now-part-{i}", total=8, episodes=[
@@ -250,6 +244,17 @@ def build_microdramas():
                  ("remember-me-6", "Part 6 · The Ring · 44 s", "He asked in front of everyone. One man left the table.", "At the Whitlock family dinner Dorian breaks with Bianca and proposes to Carmen in front of everyone. She says yes. Gabriel leaves the table. Bianca, at the door, is holding the photo."),
              ]),
     ]
+
+
+# =====================================================================================
+# MICRODRAMAS
+# =====================================================================================
+def build_microdramas():
+    stats = json.loads((HERE / "microdramas/stats.json").read_text())
+    fol = stats.pop("_followers", {})
+    led = {s: sched(OUT / f"microdrama/{s}/schedule.json") for s in ("speak-now", "the-last-bite", "family-portrait", "remember-me")}
+
+    SERIES = microdrama_series()
 
     all_ids, sections = [], ""
     grand = {"live": 0, "soon": 0, "made": 0, "eps": 0}
