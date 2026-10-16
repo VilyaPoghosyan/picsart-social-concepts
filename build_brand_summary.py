@@ -723,7 +723,149 @@ def build_reelo():
     print(f"reelo summary: {ov}")
 
 
+# Faceless (Instagram only). Credits per post from each week's assets/manifest.json, every asset assigned to
+# the post that first used it (rerolls included). Week totals: W41 211; W42 128 (balance 5,257 -> 5,130);
+# W43 186 (balance 5,130 -> 4,944). Tutorials and "does it pay?" posts reuse earlier assets: 0 extra credits.
+FACELESS_COST = {
+    "2026-W41/1_mon_persona_gustave": 43, "2026-W41/2_tue_microdrama_ep1": 67, "2026-W41/3_wed_microdrama_tutorial": 0,
+    "2026-W41/4_thu_product_ad": 18, "2026-W41/5_fri_mascot_pip": 38, "2026-W41/6_sat_ai_singer_noor": 42,
+    "2026-W41/7_sun_money_truth_animals": 3,
+    "2026-W42/1_mon_mascot_tutorial": 3, "2026-W42/2_tue_pets_phone_call": 37, "2026-W42/3_wed_pet_tutorial": 0,
+    "2026-W42/4_thu_80s_tape_service": 32, "2026-W42/5_fri_halloween_merch": 29.5, "2026-W42/6_sat_merch_tutorial": 0,
+    "2026-W42/7_sun_money_truth_sleep": 26,
+    "2026-W43/1_mon_ai_model_mara": 50, "2026-W43/2_tue_does_it_pay_ai_models": 8, "2026-W43/3_wed_gord_ep1": 48,
+    "2026-W43/4_thu_ai_horror_trailer": 47, "2026-W43/5_fri_trailer_tutorial": 0, "2026-W43/6_sat_one_app_gord_ep2": 33,
+    "2026-W43/7_sun_does_it_pay_ai_films": 0,
+}
+FACELESS_KIND = {"tutorial": "How-to", "money_truth": "Does it pay?", "does_it_pay": "Does it pay?", "one_app": "One app"}
+
+
+def faceless_kind(slug):
+    return next((v for k, v in FACELESS_KIND.items() if k in slug), "Build it")
+
+
+def build_faceless():
+    stats = json.loads((HERE / "faceless/stats.json").read_text())
+    fol = stats.pop("_followers", {})
+    A = "../../faceless/assets"
+    weeks = OUT.parent / "projects/faceless-lab/weeks"
+    posts = []
+    for w in sorted(weeks.glob("2026-W*")):
+        plan = json.loads((w / "plan.json").read_text())
+        led = json.loads((w / "instagram.json").read_text()) if (w / "instagram.json").exists() else {}
+        for it in plan["items"]:
+            e = next((v for k, v in led.items() if k.split(":")[0] == it["slug"]), None)
+            if e:
+                posts.append(dict(key=f"{w.name}/{it['slug']}", asset=f"{w.name}-{it['slug']}", when=when_of(e),
+                                  postId=e["postId"], caption=it["caption"].split("\n")[0], kind=faceless_kind(it["slug"])))
+    live = [p for p in posts if p["when"] <= NOW]
+    soon = [p for p in posts if p["when"] > NOW]
+    num = [(p, stats[p["postId"]]) for p in live if (stats.get(p["postId"]) or {}).get("views") is not None]
+    synced_n = len(num)
+    c = [FACELESS_COST[p["key"]] for p in live]
+    cf = lambda x: f"{x:g}"  # noqa: E731
+    paid = [x for x in c if x]
+
+    if num:
+        ranked = sorted(num, key=lambda ps: (ps[1].get("views") or 0, ps[1].get("likes") or 0), reverse=True)[:3]
+        best_label = "3 best posts on Instagram · by views"
+    else:
+        ranked = [(p, {}) for p in sorted(live, key=lambda p: p["when"], reverse=True)[:3]]
+        best_label = "3 latest posts on Instagram · best-by-views appears once Instagram numbers sync"
+    best = ""
+    for r, (p, st) in enumerate(ranked, start=1):
+        m = (f"{n(st['views'])} views · {n(st.get('likes') or 0)} likes · {n(st.get('shares') or 0)} shares · "
+             f"{n(st.get('saves') or 0)} saves · " if st else "")
+        link = (f' · <a href="{E(st["url"].split("?")[0])}" target="_blank" rel="noopener">open on Instagram →</a>'
+                if st.get("url") else "")
+        best += f"""<div class="ex">
+          <video src="{A}/{p['asset']}.mp4" poster="{A}/{p['asset']}.jpg" controls playsinline preload="none"></video>
+          <span class="rank">{'#' + str(r) + ' · ' if num else ''}{E(p['kind'])} · {p['when']:%b %-d}</span>
+          <span class="h">{E(p['caption'])}</span>
+          <span class="m">{m}{cf(FACELESS_COST[p['key']])} credits{link}</span>
+        </div>"""
+
+    if num:
+        tot = {k: sum(int(s.get(k) or 0) for _, s in num) for k in ("views", "likes", "comments", "shares", "saves")}
+        nums = [("Views", n(tot["views"])), ("Likes", n(tot["likes"])), ("Comments", n(tot["comments"])),
+                ("Shares", n(tot["shares"])), ("Saves", n(tot["saves"]))]
+        sync_note = ""
+    else:
+        nums = [("Views", "not synced"), ("Likes", "not synced"), ("Saves", "not synced")]
+        sync_note = (f'<p class="note">Instagram numbers for this account have not reached the publishing rail yet: '
+                     f'it returns "sync pending" for all {len(live)} live posts, so views, likes and saves are shown as '
+                     f'not synced rather than as 0.</p>')
+    P = dict(name="Instagram", fmt="Reels", handle="@faceless_monetization",
+             url="https://www.instagram.com/faceless_monetization/",
+             concept="One reel a day at 18:00 Yerevan. Build-it reels open on the finished faceless asset, then show the "
+                     "recipe in Picsart and end on a receipt card: time, credits, tools, the platform's pay rule. On "
+                     "keyword posts, commenting the word sends the exact prompts by DM.")
+    cards = card("instagram", P,
+                 [("Published", n(len(live))), ("Scheduled", n(len(soon))), ("Followers", n(fol.get("instagram", 0)))] + nums,
+                 "Per post", [("Posts synced", f"{synced_n} of {len(live)}")],
+                 sync_note, best,
+                 [("Credits / post, avg", cf(round(mean(c), 1))), ("Median", cf(median(c))), ("Range", rng(c, cf)),
+                  ("Avg, new builds only", cf(round(mean(paid), 1)))],
+                 f"From each week's asset log, rerolls included; the logs add up to the account balance drop "
+                 f"(W42 128 vs 127, W43 186 vs 186). {len(c) - len(paid)} of the {len(c)} live posts are how-tos or "
+                 f"money breakdowns that reuse an earlier post's assets, so they cost 0 extra credits. The receipt card "
+                 f"inside a post can be a few credits lower, because it leaves out rerolls.")
+    page = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faceless Brand Summary</title>
+<meta name="description" content="Faceless Monetization: concept, live platform (Instagram), numbers, posts and credits per post.">
+<style>{CSS}</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Picsart Social · brand summary</div>
+  <div class="hero">
+    <img src="{A}/logo-faceless.jpg" alt="Faceless Monetization profile picture">
+    <div>
+      <h1>Faceless</h1>
+      <div class="handle">@faceless_monetization · Instagram</div>
+    </div>
+  </div>
+  <p class="dek">Faceless AI videos that can earn, built in Picsart with the receipt included: what it cost, which tools,
+    and how the money really works on each platform. Live since Oct 5.</p>
+
+  <div class="sec-label">Key concept</div>
+  <div class="card">
+    <div class="concept">
+      <div><b>Build it</b><span>A finished faceless asset (an AI character, a microdrama, a product ad, merch), then every step in Picsart.</span></div>
+      <div><b>How-to + does it pay?</b><span>The next day, the full tutorial. Breakdowns give sourced numbers and a verdict, never income promises.</span></div>
+      <div><b>Engine</b><span>Nano Banana Pro and Nano Banana 2 images, Kling V3 clips, ElevenLabs and Lyria audio, the receipt end card.</span></div>
+    </div>
+    <p class="note">Live on Instagram only; other platforms are not connected yet.</p>
+  </div>
+
+  <div class="sec-label">Overall</div>
+  <div class="card">
+    <div class="counts">{tiles([("Platforms", "1"), ("Published", n(len(live))), ("Scheduled", n(len(soon))),
+                                ("Followers", n(fol.get("instagram", 0)))])}</div>
+    <div class="sub">Cost · {len(live)} live posts</div>
+    <div class="cost">{tiles([("Credits spent", cf(sum(c))), ("Avg / post", cf(round(mean(c), 1))), ("Range", rng(c, cf))])}</div>
+  </div>
+
+  <div class="sec-label">Platform, by the numbers</div>
+{cards.replace('3 best posts on Instagram · by views', best_label)}
+
+  <footer>Counts and followers come from the publishing rail, pulled {NOW:%Y-%m-%d %H:%M} Yerevan.
+    Picsart Social automation project · made with Picsart</footer>
+</main>
+</body>
+</html>
+"""
+    out = HERE / "summary/faceless/index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page)
+    print(f"faceless summary: live {len(live)} sched {len(soon)} synced {synced_n} credits {sum(c)}")
+
+
 if __name__ == "__main__":
     import sys
-    for b in sys.argv[1:] or ["microdramas", "dwell", "reelo"]:
+    for b in sys.argv[1:] or ["microdramas", "dwell", "reelo", "faceless"]:
         globals()[f"build_{b}"]()
