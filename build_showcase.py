@@ -203,6 +203,7 @@ def page(title, desc, body, synced):
 # =====================================================================================
 def build_microdramas():
     stats = json.loads((HERE / "microdramas/stats.json").read_text())
+    fol = stats.pop("_followers", {})
     led = {s: sched(OUT / f"microdrama/{s}/schedule.json") for s in ("speak-now", "the-last-bite", "family-portrait", "remember-me")}
 
     SERIES = [
@@ -225,6 +226,8 @@ def build_microdramas():
                  ("last-bite-2", "Part 2 · Someone Else's Death · 39 s", "The knock didn't come from the door.", "One drop of blood and she is running through a candlelit castle as a terrified woman, eight centuries ago. The dead woman's face is hers."),
                  ("last-bite-3", "Part 3 · The Man Who Knows Her · 52 s", "He caught the blade with his bare hand. And the cut closed.", "Damian under the streetlamp names the attacker and offers to teach her. \"How do you know my name?\" \"Because I watched you die the first time.\""),
                  ("last-bite-4", "Part 4 · The Council · 57 s", "An entire council of immortals just knelt to her. And she doesn't know why.", "Damian brings her to the candlelit hall. The Regent's ring drops and rings on the marble; every vampire kneels. \"The first mother has returned.\""),
+                 ("last-bite-5", "Part 5 · The Missing Years · 53 s", "The warning on the back of the photograph is in her best friend's handwriting.", "Mara's photograph has changed: a new woman stands beside Elara's mother, the woman from the visions. Mara locks the door and picks up the phone: \"She's remembering. What do I do now?\""),
+                 ("last-bite-6", "Part 6 · The First Betrayal · 46 s", "He put a blade through her heart. She remembers asking him to.", "Damian confesses he helped imprison the woman Elara used to be. She takes his hand and sees it: his blade, her heart. \"If you remember why, you'll beg me to do it again.\""),
              ]),
         dict(slug="family-portrait", title="FAMILY PORTRAIT", genre="Family drama · Connecticut, autumn 1995", art="keyart-family-portrait",
              brief="A lakeside house, a perfect family, and a seven-year-old who keeps drawing a fifth figure outside the garden gate: a lady with yellow hair who waves at his little sister. She is the children's mother, declared drowned five years ago by the grandmother who paid her to disappear. The wife who raised them has known for three years.",
@@ -233,6 +236,8 @@ def build_microdramas():
                  ("family-portrait-2", "Part 2 · The School Gate · 40 s", "Rosie knows the lady at the gate. Margot doesn't. Yet.", "A blonde in a camel coat across the street at pickup. That night in the study: the wedding album, one page torn out, a photograph of Theo with another woman and a newborn."),
                  ("family-portrait-3", "Part 3 · The First Wife · 40 s", "Her name was Laurel. They never found her. So who is standing at the gate?", "The dock at dusk. Theo: \"She drowned the autumn Rosie was born.\" At the gate, in the rain, Margot and Laurel face to face: \"You have my ribbon.\""),
                  ("family-portrait-4", "Part 4 · Sunday Lunch · 38 s", "Sunday lunch at Constance's. Candles, pearls, the perfect family. Then the door opens.", "Laurel walks in. Rosie: \"The lady!\" Constance's glass stops halfway. \"It's been five years, Constance.\" Theo stands: \"Mother. What did you do?\""),
+                 ("family-portrait-5", "Part 5 · The Deal · 42 s", "\"A dead mother can't leave twice.\"", "The terrace, the same night. Constance finally tells the truth: the coat on the dock, the boat adrift, the clinic in Switzerland, the money. Margot, listening at the French doors, closes her eyes. She is not surprised."),
+                 ("family-portrait-6", "Part 6 · The Letter · 39 s", "\"I let you love me.\"", "The next night, Margot's turn: a letter came from Switzerland three years ago. She read it. She burned it. Rosie at the bedroom door: \"Mommy, is the lady my other mommy?\""),
              ]),
         dict(slug="remember-me", title="REMEMBER ME?", genre="Glow-up revenge · Newport, 1996", art="keyart-remember-me",
              brief="Carmela Vane, the plain heiress everyone laughed at, vanishes after a cruel bet at a charity ball and returns a year later with a new face and a new name. The man who laughed loudest falls for her, his fiancée who bullied her starts to suspect, and the only person who recognises her is the one who was kind.",
@@ -241,6 +246,8 @@ def build_microdramas():
                  ("remember-me-2", "Part 2 · The Mirror · 41 s", "She asked for a new face. She got a new name.", "The clinic. Weeks pass in cuts. The bandages come off and Dr Ash holds up the hand mirror. \"What is your name now?\" \"Carmen.\""),
                  ("remember-me-3", "Part 3 · The Return · 38 s", "One year later. Same ball. Nobody knows her. One man looks at the pearls.", "Carmen enters in oxblood velvet; every head turns; Dorian abandons Bianca mid-sentence. Across the room Gabriel looks not at her face but at the pearls."),
                  ("remember-me-4", "Part 4 · The Dinner · 43 s", "He told her the funniest story he knew. She let him pour.", "Dorian brags about \"a girl at a ball once, a bet, you should have seen her\". Carmen smiles. Under the table her hand is shaking; she steadies it on the pearls."),
+                 ("remember-me-5", "Part 5 · The Photograph · 43 s", "He never asked who she was. She never had to tell him.", "Bianca digs through the society pages and finds the 1994 photo: a plain girl in the same two-strand pearls. On the terrace Carmen tells Gabriel: \"Someone gave me a jacket once.\" He says nothing. He knows."),
+                 ("remember-me-6", "Part 6 · The Ring · 44 s", "He asked in front of everyone. One man left the table.", "At the Whitlock family dinner Dorian breaks with Bianca and proposes to Carmen in front of everyone. She says yes. Gabriel leaves the table. Bianca, at the door, is holding the photo."),
              ]),
     ]
 
@@ -299,7 +306,7 @@ def build_microdramas():
     </div>
   </div>
   <div class="kpis">
-{kpi_block("Instagram", 7, t["instagram"])}{kpi_block("TikTok", 1, t["tiktok"])}  </div>
+{kpi_block("Instagram", fol.get("instagram"), t["instagram"])}{kpi_block("TikTok", fol.get("tiktok"), t["tiktok"])}  </div>
   <p class="summary">4 series · {grand['eps']} parts made · {grand['live']} live · {grand['soon']} scheduled · {grand['made']} made but not scheduled yet. Channel opened Oct 13.</p>
 </header>
 {sections}"""
@@ -313,6 +320,7 @@ def build_microdramas():
 # =====================================================================================
 def build_dwell():
     stats = json.loads((HERE / "dwell/stats.json").read_text())
+    fol = stats.pop("_followers", {})
     w42, w43 = sched(OUT / "dwell/2026-W42/schedule.json"), sched(OUT / "dwell/2026-W43/schedule.json")
     cp, pm = sched(OUT / "dwell/colour-pairs-2026-10-14/schedule.json"), sched(OUT / "dwell/power-of-moulding-2026-10-14/schedule.json")
     POSTS = [
@@ -368,7 +376,7 @@ def build_dwell():
     </div>
   </div>
   <div class="kpis">
-{kpi_block("Instagram", 11, t["instagram"])}{kpi_block("TikTok", 4, t["tiktok"])}  </div>
+{kpi_block("Instagram", fol.get("instagram"), t["instagram"])}{kpi_block("TikTok", fol.get("tiktok"), t["tiktok"])}  </div>
   <p class="summary">{len(POSTS)} posts built · {counts['live']} live · {counts['soon']} scheduled through Oct 22. Instagram and TikTok restarted Oct 12.</p>
 </header>
   <section class="series">
