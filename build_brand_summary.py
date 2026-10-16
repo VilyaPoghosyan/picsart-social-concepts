@@ -865,7 +865,144 @@ def build_faceless():
     print(f"faceless summary: live {len(live)} sched {len(soon)} synced {synced_n} credits {sum(c)}")
 
 
+LISTED = OUT.parent / "projects/listed"
+LISTED_PILLAR = {"flip": "Before / after", "tutorial": "Tutorial", "carousel": "Carousel"}
+
+
+def listed_thread_credits(slug):
+    """Sum of the credits each connector call in the thread logged (rejected takes included)."""
+    f = LISTED / "threads" / slug / "thread.json"
+    return sum(x.get("credits") or 0 for x in json.loads(f.read_text())["credits"]) if f.exists() else 0
+
+
+def build_listed():
+    stats = json.loads((HERE / "listed/stats.json").read_text())
+    fol = stats.pop("_followers", {})
+    A = "../../listed/assets"
+    posts = []
+    for w in sorted((LISTED / "plans").glob("2026-*")):
+        plan = json.loads((w / "plan.json").read_text())
+        led = json.loads((w / "instagram.json").read_text()) if (w / "instagram.json").exists() else {}
+        for it in plan["items"]:
+            e = led.get(f"{it['slug']}:{it['pillar']}")
+            if not e:
+                continue
+            # a thread's credits sit on its before/after post; the tutorial and the carousel reuse those assets
+            cr = listed_thread_credits(it["slug"]) if it["pillar"] == "flip" else 0
+            asset = (f"{it['slug']}-p1_before_after" if it["pillar"] == "flip" else
+                     f"{it['slug']}-p2_tutorial" if it["pillar"] == "tutorial" else f"{it['slug']}-slide1")
+            posts.append(dict(slug=it["slug"], pillar=it["pillar"], when=when_of(e), postId=e["postId"], credits=cr,
+                              asset=asset, caption=it["caption"].split(" Comment FIX")[0].split(" The exact path:")[0].split("\n")[0]))
+    live = [p for p in posts if p["when"] <= NOW]
+    soon = [p for p in posts if p["when"] > NOW]
+    num = [(p, stats[p["postId"]]) for p in live if (stats.get(p["postId"]) or {}).get("views") is not None]
+    c = [p["credits"] for p in live]
+    threads_live = [p["credits"] for p in live if p["pillar"] == "flip"]
+    cf = lambda x: f"{x:g}"  # noqa: E731
+
+    if num:
+        ranked = sorted(num, key=lambda ps: (ps[1].get("views") or 0, ps[1].get("likes") or 0), reverse=True)[:3]
+        best_label = "3 best posts on Instagram · by views"
+    else:
+        ranked = [(p, {}) for p in sorted(live, key=lambda p: p["when"], reverse=True)[:3]]
+        best_label = "3 latest posts on Instagram · best-by-views appears once Instagram numbers sync"
+    best = ""
+    for r, (p, st) in enumerate(ranked, start=1):
+        media = (f'<img class="pv" src="{A}/{p["asset"]}.jpg" alt="" loading="lazy">' if p["pillar"] == "carousel" else
+                 f'<video src="{A}/{p["asset"]}.mp4" poster="{A}/{p["asset"]}.jpg" controls playsinline preload="none"></video>')
+        m = (f"{n(st['views'])} views · {n(st.get('likes') or 0)} likes · {n(st.get('saves') or 0)} saves · " if st else "")
+        link = (f' · <a href="{E(st["url"].split("?")[0])}" target="_blank" rel="noopener">open on Instagram →</a>'
+                if st.get("url") else "")
+        best += f"""<div class="ex">
+          {media}
+          <span class="rank">{'#' + str(r) + ' · ' if num else ''}{LISTED_PILLAR[p['pillar']]} · {p['when']:%b %-d}</span>
+          <span class="h">{E(p['caption'])}</span>
+          <span class="m">{m}{cf(p['credits'])} credits{link}</span>
+        </div>"""
+
+    if num:
+        tot = {k: sum(int(s.get(k) or 0) for _, s in num) for k in ("views", "likes", "comments", "shares", "saves")}
+        nums = [("Views", n(tot["views"])), ("Likes", n(tot["likes"])), ("Comments", n(tot["comments"])),
+                ("Shares", n(tot["shares"])), ("Saves", n(tot["saves"]))]
+        sync_note = ""
+    else:
+        nums = [("Views", "not synced"), ("Likes", "not synced"), ("Saves", "not synced")]
+        sync_note = (f'<p class="note">Instagram numbers for this account have not reached the publishing rail yet: '
+                     f'it returns "sync pending" for all {len(live)} live posts, so views, likes and saves are shown as '
+                     f'not synced rather than as 0.</p>')
+    P = dict(name="Instagram", fmt="Reels + carousels", handle="@listed.hq", url="https://www.instagram.com/listed.hq/",
+             concept="One post a day at 18:00 Yerevan, in threads: a product's before/after, the next day its tutorial "
+                     "with the exact path in Picsart, and a Sunday carousel of the week's three products. Every post ends "
+                     "on \"Comment FIX\", and the comment sends the step-by-step by DM with a button to open Picsart.")
+    cards = card("instagram", P,
+                 [("Published", n(len(live))), ("Scheduled", n(len(soon))), ("Followers", n(fol.get("instagram", 0)))] + nums,
+                 "Per post", [("Posts synced", f"{len(num)} of {len(live)}")],
+                 sync_note, best,
+                 [("Credits / post, avg", cf(round(mean(c), 1))), ("Median", cf(median(c))), ("Range", rng(c, cf)),
+                  ("Credits / product", f"{cf(round(mean(threads_live), 1))} avg")],
+                 f"From each product thread's call log, rejected takes included. One product = 2 posts: the "
+                 f"before/after carries the thread's credits ({rng(threads_live, cf)} per product, {len(threads_live)} "
+                 f"products live) and the tutorial reuses the same files; the Sunday carousel reuses all three. The "
+                 f"one-off sound kit (54 credits of music and effects shared by every video) is not in the per-post figure.")
+    page = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listed Brand Summary</title>
+<meta name="description" content="Listed: concept, live platform (Instagram), numbers, posts and credits per post.">
+<style>{CSS}
+  .ex img.pv{{width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:10px; display:block; border:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Picsart Social · brand summary</div>
+  <div class="hero">
+    <img src="{A}/logo-listed.jpg" alt="Listed profile picture">
+    <div>
+      <h1>Listed</h1>
+      <div class="handle">@listed.hq · Instagram</div>
+    </div>
+  </div>
+  <p class="dek">For online sellers: make your next product listing look better, using the photo you already have.
+    Every fix is made in Picsart, with the exact path shown. Live since Oct 5.</p>
+
+  <div class="sec-label">Key concept</div>
+  <div class="card">
+    <div class="concept">
+      <div><b>Before / after</b><span>An everyday phone-style photo of a product (AI-made), then the listing photo or short video ad made from it.</span></div>
+      <div><b>Tutorial</b><span>Result first, then every step with the exact tool path on picsart.com/create. Sunday: a carousel of the week.</span></div>
+      <div><b>Seller jobs</b><span>Fix, Stage, Multiply, Animate, Create: Remove Background, Edit with AI, Relight Studio, AI Replace, AI Playground.</span></div>
+    </div>
+    <p class="note">Live on Instagram only; other platforms are not connected yet.</p>
+  </div>
+
+  <div class="sec-label">Overall</div>
+  <div class="card">
+    <div class="counts">{tiles([("Platforms", "1"), ("Published", n(len(live))), ("Scheduled", n(len(soon))),
+                                ("Followers", n(fol.get("instagram", 0)))])}</div>
+    <div class="sub">Cost · {len(live)} live posts, {len(threads_live)} products</div>
+    <div class="cost">{tiles([("Credits spent", cf(sum(c))), ("Avg / post", cf(round(mean(c), 1))),
+                              ("Avg / product", cf(round(mean(threads_live), 1))), ("Range / product", rng(threads_live, cf))])}</div>
+  </div>
+
+  <div class="sec-label">Platform, by the numbers</div>
+{cards.replace('3 best posts on Instagram · by views', best_label)}
+
+  <footer>Counts and followers come from the publishing rail, pulled {NOW:%Y-%m-%d %H:%M} Yerevan.
+    Picsart Social automation project · made with Picsart</footer>
+</main>
+</body>
+</html>
+"""
+    out = HERE / "summary/listed/index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page)
+    print(f"listed summary: live {len(live)} sched {len(soon)} synced {len(num)} credits {sum(c)} threads {threads_live}")
+
+
 if __name__ == "__main__":
     import sys
-    for b in sys.argv[1:] or ["microdramas", "dwell", "reelo", "faceless"]:
+    for b in sys.argv[1:] or ["microdramas", "dwell", "reelo", "faceless", "listed"]:
         globals()[f"build_{b}"]()
