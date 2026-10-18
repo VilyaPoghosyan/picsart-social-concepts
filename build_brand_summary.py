@@ -238,6 +238,30 @@ def cr_txt(v, f=None) -> str:
     return f"{(f or n)(v)} credits" if v is not None else "credits not logged"
 
 
+# Live Instagram views (bin/live_views.py reads the public reels grid; the rail lags by hours).
+LIVE = sched(HERE / "live_views.json")
+
+
+def live_ig(url):
+    m = re.search(r"/(?:reel|p)/([^/?#]+)", url or "")
+    return LIVE.get("instagram", {}).get(m.group(1)) if m else None
+
+
+def apply_live(rows):
+    """Replace Instagram views with the live count where the public grid has the post."""
+    for row in rows:
+        if isinstance(row, dict) and "instagram.com" in (row.get("url") or ""):
+            v = live_ig(row.get("url"))
+            if v is not None:
+                row["views"] = v
+                row["live"] = True
+
+
+def live_note():
+    return (f"Instagram views of the newest reels are read live from the public profiles ({LIVE['pulledAt']} Yerevan); "
+            f"everything else comes from the publishing rail." if LIVE.get("pulledAt") else "")
+
+
 # Things a weekly run could not fill in by itself; printed by build_all for the run report.
 GAPS: list[str] = []
 
@@ -293,6 +317,7 @@ def micro_cr(asset):
 def build_microdramas():
     stats = json.loads((HERE / "microdramas/stats.json").read_text())
     fol = stats.pop("_followers", {})
+    apply_live(stats.values())
     posts = micro_posts()
     A = "../../microdramas/assets"
     mature_cut = NOW - timedelta(hours=24)
@@ -419,7 +444,7 @@ def build_microdramas():
 {plat_cards}
 
   <footer>Views, likes and the rest come from Instagram and TikTok through the publishing rail, pulled {NOW:%Y-%m-%d %H:%M} Yerevan
-    (platform data last synced {E(synced)} UTC). Posts published in the last few hours still show low numbers. Picsart Social automation project · made with Picsart</footer>
+    (platform data last synced {E(synced)} UTC). Posts published in the last few hours still show low numbers. {live_note()} Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>
 </html>
@@ -496,6 +521,7 @@ def card(plat, P, counts, per_post_label, per_post, low, best, cost, cost_note):
 def build_dwell():
     stats = json.loads((HERE / "dwell/stats.json").read_text())
     fol = stats.pop("_followers", {})
+    apply_live(stats.values())
     pin = json.loads((HERE / "dwell/pinterest.json").read_text())
     A = "../../dwell/assets"
     mature_cut = NOW - timedelta(hours=24)
@@ -672,7 +698,7 @@ def build_dwell():
 
   <footer>Numbers come from Instagram, TikTok and Pinterest through the publishing rail, pulled {E(pin['pulledAt'])} Yerevan
     (platform data last synced {E(synced)} UTC). Posts published in the last few hours still show low numbers.
-    Picsart Social automation project · made with Picsart</footer>
+    {live_note()} Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>
 </html>
@@ -765,6 +791,7 @@ def reelo_post_info(p, cartoons):
 
 def build_reelo():
     feed = json.loads((HERE / "reelo/feed.json").read_text())
+    apply_live(feed["instagram"]["posts"])
     A = "../../reelo/assets"
     mature_cut = (NOW - timedelta(hours=24)).astimezone(timezone.utc).isoformat()
     cartoons = cartoon_ledger()
@@ -888,7 +915,7 @@ def build_reelo():
 
   <footer>Numbers come from Instagram and TikTok through the publishing rail, pulled {E(feed['pulledAt'])} Yerevan
     (platform data last synced {E(synced)} UTC). Posts published in the last few hours still show low numbers.
-    Picsart Social automation project · made with Picsart</footer>
+    {live_note()} Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>
 </html>
@@ -928,6 +955,7 @@ def faceless_kind(slug):
 def build_faceless():
     stats = json.loads((HERE / "faceless/stats.json").read_text())
     fol = stats.pop("_followers", {})
+    apply_live(stats.values())
     A = "../../faceless/assets"
     weeks = OUT.parent / "projects/faceless-lab/weeks"
     posts = []
@@ -962,8 +990,8 @@ def build_faceless():
         best_label = "3 latest posts on Instagram · best-by-views appears once Instagram numbers sync"
     best = ""
     for r, (p, st) in enumerate(ranked, start=1):
-        m = (f"{n(st['views'])} views · {n(st.get('likes') or 0)} likes · {n(st.get('shares') or 0)} shares · "
-             f"{n(st.get('saves') or 0)} saves · " if st else "")
+        m = ("" if not st else f"{n(st['views'])} views · " if st.get("likes") is None else
+             f"{n(st['views'])} views · {n(st.get('likes') or 0)} likes · {n(st.get('saves') or 0)} saves · ")
         link = (f' · <a href="{E(st["url"].split("?")[0])}" target="_blank" rel="noopener">open on Instagram →</a>'
                 if st.get("url") else "")
         best += f"""<div class="ex">
@@ -973,11 +1001,19 @@ def build_faceless():
           <span class="m">{m}{cr_txt(p['cr'], cf)}{link}</span>
         </div>"""
 
-    if num:
-        tot = {k: sum(int(s.get(k) or 0) for _, s in num) for k in ("views", "likes", "comments", "shares", "saves")}
+    eng_known = any(s.get("likes") is not None for _, s in num)
+    tot = {k: sum(int(s.get(k) or 0) for _, s in num) for k in ("views", "likes", "comments", "shares", "saves")}
+    if num and eng_known:
         nums = [("Views", n(tot["views"])), ("Likes", n(tot["likes"])), ("Comments", n(tot["comments"])),
                 ("Shares", n(tot["shares"])), ("Saves", n(tot["saves"]))]
         sync_note = ""
+    elif num:
+        vv = [int(s["views"]) for _, s in num]
+        nums = [("Views", n(tot["views"])), ("Median views", med(vv)), ("Views range", rng(vv)),
+                ("Likes", "not synced"), ("Saves", "not synced")]
+        sync_note = (f'<p class="note">Views for {len(num)} of the {len(live)} live posts are read live from the public '
+                     f'Instagram profile (the newest reels; carousels and older posts are not shown there). Likes and saves '
+                     f'have not reached the publishing rail yet, so they are left out rather than shown as 0.</p>')
     else:
         nums = [("Views", "not synced"), ("Likes", "not synced"), ("Saves", "not synced")]
         sync_note = (f'<p class="note">Instagram numbers for this account have not reached the publishing rail yet: '
@@ -990,7 +1026,7 @@ def build_faceless():
                      "keyword posts, commenting the word sends the exact prompts by DM.")
     cards = card("instagram", P,
                  [("Published", n(len(live))), ("Scheduled", n(len(soon))), ("Followers", n(fol.get("instagram", 0)))] + nums,
-                 "Per post", [("Posts synced", f"{synced_n} of {len(live)}")],
+                 "Per post", [("Posts with views", f"{synced_n} of {len(live)}")],
                  sync_note, best,
                  [("Credits / post, avg", cf(round(mean(c), 1))), ("Median", cf(median(c))), ("Range", rng(c, cf)),
                   ("Avg, new builds only", cf(round(mean(paid), 1)))],
@@ -1042,7 +1078,7 @@ def build_faceless():
 {cards.replace('3 best posts on Instagram · by views', best_label)}
 
   <footer>Counts and followers come from the publishing rail, pulled {NOW:%Y-%m-%d %H:%M} Yerevan.
-    Picsart Social automation project · made with Picsart</footer>
+    {live_note()} Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>
 </html>
@@ -1052,7 +1088,7 @@ def build_faceless():
     out.write_text(page)
     print(f"faceless summary: live {len(live)} sched {len(soon)} synced {synced_n} credits {sum(c)}")
     return dict(brand="Faceless", slug="faceless", what="Faceless AI income formats", platforms="Instagram",
-                pub=len(live), sched=len(soon), reach="not synced yet", fol=fol.get("instagram", 0),
+                pub=len(live), sched=len(soon), reach=f"{n(tot['views'])} views" if num else "not synced yet", fol=fol.get("instagram", 0),
                 unit="post", per=cf(round(mean(c), 1)), per_rng=rng(c, cf), spent=cf(sum(c)),
                 note=f"new builds {cf(round(mean(paid), 1))}")
 
@@ -1070,6 +1106,7 @@ def listed_thread_credits(slug):
 def build_listed():
     stats = json.loads((HERE / "listed/stats.json").read_text())
     fol = stats.pop("_followers", {})
+    apply_live(stats.values())
     A = "../../listed/assets"
     posts = []
     for w in sorted((LISTED / "plans").glob("2026-*")):
@@ -1104,7 +1141,8 @@ def build_listed():
     for r, (p, st) in enumerate(ranked, start=1):
         media = media_tile("listed", p["asset"], (st.get("url") or "").split("?")[0],
                            "image" if p["pillar"] == "carousel" else "video", p["src"])
-        m = (f"{n(st['views'])} views · {n(st.get('likes') or 0)} likes · {n(st.get('saves') or 0)} saves · " if st else "")
+        m = ("" if not st else f"{n(st['views'])} views · " if st.get("likes") is None else
+             f"{n(st['views'])} views · {n(st.get('likes') or 0)} likes · {n(st.get('saves') or 0)} saves · ")
         link = (f' · <a href="{E(st["url"].split("?")[0])}" target="_blank" rel="noopener">open on Instagram →</a>'
                 if st.get("url") else "")
         best += f"""<div class="ex">
@@ -1114,11 +1152,19 @@ def build_listed():
           <span class="m">{m}{cf(p['credits'])} credits{link}</span>
         </div>"""
 
-    if num:
-        tot = {k: sum(int(s.get(k) or 0) for _, s in num) for k in ("views", "likes", "comments", "shares", "saves")}
+    eng_known = any(s.get("likes") is not None for _, s in num)
+    tot = {k: sum(int(s.get(k) or 0) for _, s in num) for k in ("views", "likes", "comments", "shares", "saves")}
+    if num and eng_known:
         nums = [("Views", n(tot["views"])), ("Likes", n(tot["likes"])), ("Comments", n(tot["comments"])),
                 ("Shares", n(tot["shares"])), ("Saves", n(tot["saves"]))]
         sync_note = ""
+    elif num:
+        vv = [int(s["views"]) for _, s in num]
+        nums = [("Views", n(tot["views"])), ("Median views", med(vv)), ("Views range", rng(vv)),
+                ("Likes", "not synced"), ("Saves", "not synced")]
+        sync_note = (f'<p class="note">Views for {len(num)} of the {len(live)} live posts are read live from the public '
+                     f'Instagram profile (the newest reels; carousels and older posts are not shown there). Likes and saves '
+                     f'have not reached the publishing rail yet, so they are left out rather than shown as 0.</p>')
     else:
         nums = [("Views", "not synced"), ("Likes", "not synced"), ("Saves", "not synced")]
         sync_note = (f'<p class="note">Instagram numbers for this account have not reached the publishing rail yet: '
@@ -1130,7 +1176,7 @@ def build_listed():
                      "on \"Comment FIX\", and the comment sends the step-by-step by DM with a button to open Picsart.")
     cards = card("instagram", P,
                  [("Published", n(len(live))), ("Scheduled", n(len(soon))), ("Followers", n(fol.get("instagram", 0)))] + nums,
-                 "Per post", [("Posts synced", f"{len(num)} of {len(live)}")],
+                 "Per post", [("Posts with views", f"{len(num)} of {len(live)}")],
                  sync_note, best,
                  [("Credits / post, avg", cf(round(mean(c), 1))), ("Median", cf(median(c))), ("Range", rng(c, cf)),
                   ("Credits / product", f"{cf(round(mean(threads_live), 1))} avg")],
@@ -1185,7 +1231,7 @@ def build_listed():
 {cards.replace('3 best posts on Instagram · by views', best_label)}
 
   <footer>Counts and followers come from the publishing rail, pulled {NOW:%Y-%m-%d %H:%M} Yerevan.
-    Picsart Social automation project · made with Picsart</footer>
+    {live_note()} Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>
 </html>
@@ -1195,7 +1241,7 @@ def build_listed():
     out.write_text(page)
     print(f"listed summary: live {len(live)} sched {len(soon)} synced {len(num)} credits {sum(c)} threads {threads_live}")
     return dict(brand="Listed", slug="listed", what="Product photos for sellers", platforms="Instagram",
-                pub=len(live), sched=len(soon), reach="not synced yet", fol=fol.get("instagram", 0),
+                pub=len(live), sched=len(soon), reach=f"{n(tot['views'])} views" if num else "not synced yet", fol=fol.get("instagram", 0),
                 unit="product (2 posts)", per=cf(round(mean(threads_live), 1)), per_rng=rng(threads_live, cf),
                 spent=cf(sum(c)))
 
@@ -1246,12 +1292,12 @@ def build_all():
     </table></div>
     <p class="note">Published counts posts (one video on two platforms = 2 posts). Credits per post = what it took to
       make it, rerolls included; the same file on a second platform costs 0. Credits spent = live posts with a cost log
-      (Dwell includes its Pinterest pins; Reelo counts only posts made since Oct 3). Faceless and Listed views are not
+      (Dwell includes its Pinterest pins; Reelo counts only posts made since Oct 3). Faceless and Listed likes and saves are not
       synced from Instagram yet.</p>
   </div>
 
   <footer>Numbers come from Instagram, TikTok and Pinterest through the publishing rail, pulled {NOW:%Y-%m-%d %H:%M} Yerevan.
-    Posts published in the last few hours still show low numbers. Picsart Social automation project · made with Picsart</footer>
+    Posts published in the last few hours still show low numbers. {live_note()} Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>
 </html>
