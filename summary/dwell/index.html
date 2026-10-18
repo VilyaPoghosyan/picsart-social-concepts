@@ -77,6 +77,12 @@
   th,td{text-align:left; padding:.45rem .3rem; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
   th{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600}
   td.r,th.r{text-align:right}
+  .ex .thumb{position:relative; display:block}
+  .ex .thumb.blank{position:relative; display:block; aspect-ratio:9/16; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); background-image:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); font-family:var(--mono); font-size:.62rem; color:var(--accent-ink)}
+  .ex .thumb.blank .lbl{position:absolute; left:0; right:0; bottom:12px; text-align:center; padding:0 8px}
+  .ex .play{position:absolute; inset:0; display:grid; place-items:center}
+  .ex .play::before{content:""; width:40px; height:40px; border-radius:50%; background:rgba(0,0,0,.55)}
+  .ex .play::after{content:""; position:absolute; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; margin-left:3px}
   footer{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:3rem; line-height:1.6}
   @media(max-width:640px){
     .concept{grid-template-columns:1fr}
@@ -115,9 +121,9 @@
 
   <div class="sec-label">Overall</div>
   <div class="card">
-    <div class="counts"><div class="cnt"><div class="n">3</div><div class="k">Platforms</div></div><div class="cnt"><div class="n">406</div><div class="k">Published</div></div><div class="cnt"><div class="n">20</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">5,668</div><div class="k">IG + TikTok views</div></div><div class="cnt"><div class="n">585</div><div class="k">Pinterest impr.</div></div><div class="cnt"><div class="n">18</div><div class="k">Followers</div></div></div>
-    <div class="sub">Cost · 13 live Instagram + TikTok posts, 70 pins</div>
-    <div class="cost"><div class="cnt"><div class="n">1,906</div><div class="k">Credits, IG + TikTok</div></div><div class="cnt"><div class="n">365</div><div class="k">Credits, pins</div></div><div class="cnt"><div class="n">146</div><div class="k">Avg / IG + TikTok post</div></div><div class="cnt"><div class="n">5.2</div><div class="k">Avg / pin</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">3</div><div class="k">Platforms</div></div><div class="cnt"><div class="n">410</div><div class="k">Published</div></div><div class="cnt"><div class="n">16</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">5,829</div><div class="k">IG + TikTok views</div></div><div class="cnt"><div class="n">587</div><div class="k">Pinterest impr.</div></div><div class="cnt"><div class="n">19</div><div class="k">Followers</div></div></div>
+    <div class="sub">Cost · 15 live Instagram + TikTok posts, 70 pins</div>
+    <div class="cost"><div class="cnt"><div class="n">2,119</div><div class="k">Credits, IG + TikTok</div></div><div class="cnt"><div class="n">365</div><div class="k">Credits, pins</div></div><div class="cnt"><div class="n">141</div><div class="k">Avg / IG + TikTok post</div></div><div class="cnt"><div class="n">5.2</div><div class="k">Avg / pin</div></div></div>
     <p class="note">Published counts posts (one Instagram + TikTok post = 2). Views and impressions are kept apart: Pinterest
       only reports impressions.</p>
   </div>
@@ -130,15 +136,15 @@
       <span class="pill"><span class="dot"></span>Live</span>
     </div>
     <p class="pconcept">Two posts a day at 18:00 and 21:00 Yerevan: before/after match cuts, statement tours, walkthrough reveals, variation swaps, colour pairs and trend carousels. Saves are the signal: designers keep the room for later.</p>
-    <div class="counts"><div class="cnt"><div class="n">13</div><div class="k">Published</div></div><div class="cnt"><div class="n">10</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">12</div><div class="k">Followers</div></div><div class="cnt"><div class="n">2,403</div><div class="k">Views</div></div><div class="cnt"><div class="n">116</div><div class="k">Likes</div></div><div class="cnt"><div class="n">3</div><div class="k">Comments</div></div><div class="cnt"><div class="n">56</div><div class="k">Shares</div></div><div class="cnt"><div class="n">80</div><div class="k">Saves</div></div><div class="cnt"><div class="n">10.6%</div><div class="k">Engagement</div></div></div>
-    <div class="sub">Per post · 11 posts live 24 h or more</div>
-    <div class="counts"><div class="cnt"><div class="n">40–412</div><div class="k">Views range</div></div><div class="cnt"><div class="n">203</div><div class="k">Median views</div></div><div class="cnt"><div class="n">3–18</div><div class="k">Likes range</div></div><div class="cnt"><div class="n">3–9</div><div class="k">Saves range</div></div><div class="cnt"><div class="n">6.1%–31.9%</div><div class="k">Engagement range</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">15</div><div class="k">Published</div></div><div class="cnt"><div class="n">8</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">12</div><div class="k">Followers</div></div><div class="cnt"><div class="n">2,466</div><div class="k">Views</div></div><div class="cnt"><div class="n">116</div><div class="k">Likes</div></div><div class="cnt"><div class="n">3</div><div class="k">Comments</div></div><div class="cnt"><div class="n">56</div><div class="k">Shares</div></div><div class="cnt"><div class="n">80</div><div class="k">Saves</div></div><div class="cnt"><div class="n">10.3%</div><div class="k">Engagement</div></div></div>
+    <div class="sub">Per post · 13 posts live 24 h or more</div>
+    <div class="counts"><div class="cnt"><div class="n">40–417</div><div class="k">Views range</div></div><div class="cnt"><div class="n">199</div><div class="k">Median views</div></div><div class="cnt"><div class="n">3–18</div><div class="k">Likes range</div></div><div class="cnt"><div class="n">0–9</div><div class="k">Saves range</div></div><div class="cnt"><div class="n">3.2%–31.9%</div><div class="k">Engagement range</div></div></div>
     <div class="sub">3 best posts on Instagram · by views</div>
     <div class="best"><div class="ex">
           <video src="../../dwell/assets/dwell-W43-01-wabi-sabi-spa-bath.mp4" poster="../../dwell/assets/dwell-W43-01-wabi-sabi-spa-bath.jpg" controls playsinline preload="none"></video>
           <span class="rank">#1 · Before / after · 19 s</span>
           <span class="h">Slow mornings start in the right room.</span>
-          <span class="m">412 views · 10 likes · 8 shares · 7 saves · 150 credits · <a href="https://www.instagram.com/reel/Dejs5QPEoEf/" target="_blank" rel="noopener">open on Instagram →</a></span>
+          <span class="m">417 views · 10 likes · 8 shares · 7 saves · 150 credits · <a href="https://www.instagram.com/reel/Dejs5QPEoEf/" target="_blank" rel="noopener">open on Instagram →</a></span>
         </div><div class="ex">
           <video src="../../dwell/assets/dwell-W42-04-ivory-closet-reveal.mp4" poster="../../dwell/assets/dwell-W42-04-ivory-closet-reveal.jpg" controls playsinline preload="none"></video>
           <span class="rank">#2 · Walkthrough reveal · 19 s</span>
@@ -151,8 +157,8 @@
           <span class="m">262 views · 18 likes · 15 shares · 7 saves · 143 credits · <a href="https://www.instagram.com/reel/DeZgyrZAaCu/" target="_blank" rel="noopener">open on Instagram →</a></span>
         </div></div>
     <div class="sub">Cost per post</div>
-    <div class="cost"><div class="cnt"><div class="n">146</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">143</div><div class="k">Median</div></div><div class="cnt"><div class="n">45–440</div><div class="k">Range</div></div><div class="cnt"><div class="n">793</div><div class="k">Credits / 1K views</div></div></div>
-    <p class="note">Same file on both Instagram and TikTok, so posting it here as well adds 0 credits. Reels cost more than carousels (one frame per slide, no video). Credits / 1K views = full cost of the 13 live posts ÷ Instagram views alone.</p>
+    <div class="cost"><div class="cnt"><div class="n">141</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">143</div><div class="k">Median</div></div><div class="cnt"><div class="n">40–440</div><div class="k">Range</div></div><div class="cnt"><div class="n">859</div><div class="k">Credits / 1K views</div></div></div>
+    <p class="note">Same file on both Instagram and TikTok, so posting it here as well adds 0 credits. Reels cost more than carousels (one frame per slide, no video). Credits / 1K views = full cost of the 15 live posts ÷ Instagram views alone.</p>
     <div class="visits"><a class="visit" href="https://www.instagram.com/dwell.rooms/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @dwell.rooms →</a></div>
   </article>
   <article class="card" id="tiktok">
@@ -161,29 +167,29 @@
       <span class="pill"><span class="dot"></span>Live</span>
     </div>
     <p class="pconcept">The same posts at the same times, cross-posted, so they cost no extra credits. The reveal has to land early, because the For You feed decides reach on watch time.</p>
-    <div class="counts"><div class="cnt"><div class="n">13</div><div class="k">Published</div></div><div class="cnt"><div class="n">10</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div><div class="cnt"><div class="n">3,265</div><div class="k">Views</div></div><div class="cnt"><div class="n">77</div><div class="k">Likes</div></div><div class="cnt"><div class="n">0</div><div class="k">Comments</div></div><div class="cnt"><div class="n">1</div><div class="k">Shares</div></div><div class="cnt"><div class="n">16</div><div class="k">Saves</div></div><div class="cnt"><div class="n">2.9%</div><div class="k">Engagement</div></div></div>
-    <div class="sub">Per post · 11 posts live 24 h or more</div>
-    <div class="counts"><div class="cnt"><div class="n">185–789</div><div class="k">Views range</div></div><div class="cnt"><div class="n">217</div><div class="k">Median views</div></div><div class="cnt"><div class="n">1–20</div><div class="k">Likes range</div></div><div class="cnt"><div class="n">0–5</div><div class="k">Saves range</div></div><div class="cnt"><div class="n">0.9%–4.9%</div><div class="k">Engagement range</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">15</div><div class="k">Published</div></div><div class="cnt"><div class="n">8</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">5</div><div class="k">Followers</div></div><div class="cnt"><div class="n">3,363</div><div class="k">Views</div></div><div class="cnt"><div class="n">78</div><div class="k">Likes</div></div><div class="cnt"><div class="n">0</div><div class="k">Comments</div></div><div class="cnt"><div class="n">1</div><div class="k">Shares</div></div><div class="cnt"><div class="n">16</div><div class="k">Saves</div></div><div class="cnt"><div class="n">2.8%</div><div class="k">Engagement</div></div></div>
+    <div class="sub">Per post · 13 posts live 24 h or more</div>
+    <div class="counts"><div class="cnt"><div class="n">178–790</div><div class="k">Views range</div></div><div class="cnt"><div class="n">213</div><div class="k">Median views</div></div><div class="cnt"><div class="n">1–20</div><div class="k">Likes range</div></div><div class="cnt"><div class="n">0–5</div><div class="k">Saves range</div></div><div class="cnt"><div class="n">0.6%–4.8%</div><div class="k">Engagement range</div></div></div>
     <div class="sub">3 best posts on TikTok · by views</div>
     <div class="best"><div class="ex">
           <video src="../../dwell/assets/dwell-W42-01-parisian-salon.mp4" poster="../../dwell/assets/dwell-W42-01-parisian-salon.jpg" controls playsinline preload="none"></video>
           <span class="rank">#1 · Before / after · 19 s</span>
           <span class="h">Some rooms never go out of style.</span>
-          <span class="m">789 views · 20 likes · 0 shares · 5 saves · 143 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7695796967913442566" target="_blank" rel="noopener">open on TikTok →</a></span>
+          <span class="m">790 views · 20 likes · 0 shares · 5 saves · 143 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7695796967913442566" target="_blank" rel="noopener">open on TikTok →</a></span>
         </div><div class="ex">
           <img class="pv" src="../../dwell/assets/dwell-W42-03-bedroom-trends-2027-slide1.jpg" alt="" loading="lazy">
           <span class="rank">#2 · Trend carousel</span>
           <span class="h">5 bedroom trends we&#x27;re betting on for 2027.</span>
-          <span class="m">259 views · 8 likes · 0 shares · 2 saves · 77 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7696198934749908242" target="_blank" rel="noopener">open on TikTok →</a></span>
+          <span class="m">260 views · 8 likes · 0 shares · 2 saves · 77 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7696198934749908242" target="_blank" rel="noopener">open on TikTok →</a></span>
         </div><div class="ex">
           <img class="pv" src="../../dwell/assets/dwell-W42-06-mediterranean-villa-set-slide1.jpg" alt="" loading="lazy">
           <span class="rank">#3 · Photo-set carousel</span>
           <span class="h">Limewash, travertine and one very old olive tree.</span>
-          <span class="m">226 views · 7 likes · 0 shares · 1 saves · 45 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7696894632944307477" target="_blank" rel="noopener">open on TikTok →</a></span>
+          <span class="m">227 views · 7 likes · 0 shares · 1 saves · 45 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7696894632944307477" target="_blank" rel="noopener">open on TikTok →</a></span>
         </div></div>
     <div class="sub">Cost per post</div>
-    <div class="cost"><div class="cnt"><div class="n">146</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">143</div><div class="k">Median</div></div><div class="cnt"><div class="n">45–440</div><div class="k">Range</div></div><div class="cnt"><div class="n">583</div><div class="k">Credits / 1K views</div></div></div>
-    <p class="note">Same file on both Instagram and TikTok, so posting it here as well adds 0 credits. Reels cost more than carousels (one frame per slide, no video). Credits / 1K views = full cost of the 13 live posts ÷ TikTok views alone.</p>
+    <div class="cost"><div class="cnt"><div class="n">141</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">143</div><div class="k">Median</div></div><div class="cnt"><div class="n">40–440</div><div class="k">Range</div></div><div class="cnt"><div class="n">630</div><div class="k">Credits / 1K views</div></div></div>
+    <p class="note">Same file on both Instagram and TikTok, so posting it here as well adds 0 credits. Reels cost more than carousels (one frame per slide, no video). Credits / 1K views = full cost of the 15 live posts ÷ TikTok views alone.</p>
     <div class="visits"><a class="visit" href="https://www.tiktok.com/@dwellrooms" target="_blank" rel="noopener"><span class="plat">TikTok</span> @dwellrooms →</a></div>
   </article>
   <article class="card" id="pinterest">
@@ -192,9 +198,9 @@
       <span class="pill"><span class="dot"></span>Live</span>
     </div>
     <p class="pconcept">Pinterest is a search engine, so each pin is a 2:3 editorial room photo titled like a search (&quot;Midcentury living ideas&quot;), filed on a room board, with a link to Picsart. Five pins a day. Pins keep getting found for months, so older pins still collect impressions.</p>
-    <div class="counts"><div class="cnt"><div class="n">380</div><div class="k">Published</div></div><div class="cnt"><div class="n">0</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">2</div><div class="k">Followers</div></div><div class="cnt"><div class="n">585</div><div class="k">Impressions</div></div><div class="cnt"><div class="n">3</div><div class="k">Saves</div></div><div class="cnt"><div class="n">16</div><div class="k">Clicks</div></div><div class="cnt"><div class="n">3.2%</div><div class="k">Engagement</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">380</div><div class="k">Published</div></div><div class="cnt"><div class="n">0</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">2</div><div class="k">Followers</div></div><div class="cnt"><div class="n">587</div><div class="k">Impressions</div></div><div class="cnt"><div class="n">3</div><div class="k">Saves</div></div><div class="cnt"><div class="n">16</div><div class="k">Clicks</div></div><div class="cnt"><div class="n">3.2%</div><div class="k">Engagement</div></div></div>
     <div class="sub">Per pin · 380 pins live 24 h or more</div>
-    <div class="counts"><div class="cnt"><div class="n">0–118</div><div class="k">Impressions range</div></div><div class="cnt"><div class="n">0</div><div class="k">Median impressions</div></div><div class="cnt"><div class="n">129 of 380</div><div class="k">Pins with 1+ impression</div></div><div class="cnt"><div class="n">1.5</div><div class="k">Avg impressions</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">0–118</div><div class="k">Impressions range</div></div><div class="cnt"><div class="n">0</div><div class="k">Median impressions</div></div><div class="cnt"><div class="n">131 of 380</div><div class="k">Pins with 1+ impression</div></div><div class="cnt"><div class="n">1.5</div><div class="k">Avg impressions</div></div></div>
     <div class="sub">3 best posts on Pinterest · by impressions</div>
     <p class="note">For pins the publishing rail gets impressions, saves and clicks from Pinterest; there are no views, likes or comments. Live since 2026-07-31: 70 of the 380 pins went out from Oct 3, after our team took over.</p><div class="best"><div class="ex">
           <a href="https://www.pinterest.com/pin/1114429870329909456/" target="_blank" rel="noopener"><img class="pv pin" src="../../dwell/assets/pin-1114429870329909456.jpg" alt="Modern rustic living ideas" loading="lazy"></a>
@@ -213,13 +219,13 @@
           <span class="m">21 impressions · 0 saves · 0 clicks · <a href="https://www.pinterest.com/pin/1114429870328398143/" target="_blank" rel="noopener">open on Pinterest →</a></span>
         </div></div>
     <div class="sub">Cost per post</div>
-    <div class="cost"><div class="cnt"><div class="n">5.2</div><div class="k">Credits / pin, avg</div></div><div class="cnt"><div class="n">5</div><div class="k">Median</div></div><div class="cnt"><div class="n">5–10</div><div class="k">Range</div></div><div class="cnt"><div class="n">1,780</div><div class="k">Credits / 1K impr.</div></div></div>
+    <div class="cost"><div class="cnt"><div class="n">5.2</div><div class="k">Credits / pin, avg</div></div><div class="cnt"><div class="n">5</div><div class="k">Median</div></div><div class="cnt"><div class="n">5–10</div><div class="k">Range</div></div><div class="cnt"><div class="n">1,763</div><div class="k">Credits / 1K impr.</div></div></div>
     <p class="note">Exact: the 70 pins made for Oct 3 onward cost 365 credits, confirmed by the account balance. One pin is one Gemini 3 Pro Image at 2K (5 credits); 3 pins needed one reroll (10). Pins posted before Oct 3 came from the earlier pipeline and are not in our cost logs, so they are left out of the cost. Credits / 1K impr. = 365 ÷ impressions on those 70 pins.</p>
     <div class="visits"><a class="visit" href="https://www.pinterest.com/dwellrooms/" target="_blank" rel="noopener"><span class="plat">Pinterest</span> @dwellrooms →</a></div>
   </article>
 
-  <footer>Numbers come from Instagram, TikTok and Pinterest through the publishing rail, pulled 2026-10-18 09:27 Yerevan
-    (platform data last synced 2026-10-18 05:08 UTC). Posts published in the last few hours still show low numbers.
+  <footer>Numbers come from Instagram, TikTok and Pinterest through the publishing rail, pulled 2026-10-18 21:12 Yerevan
+    (platform data last synced 2026-10-18 15:36 UTC). Posts published in the last few hours still show low numbers.
     Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>

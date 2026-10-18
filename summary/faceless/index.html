@@ -77,6 +77,12 @@
   th,td{text-align:left; padding:.45rem .3rem; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
   th{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600}
   td.r,th.r{text-align:right}
+  .ex .thumb{position:relative; display:block}
+  .ex .thumb.blank{position:relative; display:block; aspect-ratio:9/16; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); background-image:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); font-family:var(--mono); font-size:.62rem; color:var(--accent-ink)}
+  .ex .thumb.blank .lbl{position:absolute; left:0; right:0; bottom:12px; text-align:center; padding:0 8px}
+  .ex .play{position:absolute; inset:0; display:grid; place-items:center}
+  .ex .play::before{content:""; width:40px; height:40px; border-radius:50%; background:rgba(0,0,0,.55)}
+  .ex .play::after{content:""; position:absolute; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; margin-left:3px}
   footer{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:3rem; line-height:1.6}
   @media(max-width:640px){
     .concept{grid-template-columns:1fr}
@@ -112,9 +118,9 @@
 
   <div class="sec-label">Overall</div>
   <div class="card">
-    <div class="counts"><div class="cnt"><div class="n">1</div><div class="k">Platforms</div></div><div class="cnt"><div class="n">13</div><div class="k">Published</div></div><div class="cnt"><div class="n">8</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div></div>
-    <div class="sub">Cost · 13 live posts</div>
-    <div class="cost"><div class="cnt"><div class="n">312.5</div><div class="k">Credits spent</div></div><div class="cnt"><div class="n">24</div><div class="k">Avg / post</div></div><div class="cnt"><div class="n">0–67</div><div class="k">Range</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">1</div><div class="k">Platforms</div></div><div class="cnt"><div class="n">14</div><div class="k">Published</div></div><div class="cnt"><div class="n">7</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div></div>
+    <div class="sub">Cost · 14 live posts</div>
+    <div class="cost"><div class="cnt"><div class="n">338.5</div><div class="k">Credits spent</div></div><div class="cnt"><div class="n">24.2</div><div class="k">Avg / post</div></div><div class="cnt"><div class="n">0–67</div><div class="k">Range</div></div></div>
   </div>
 
   <div class="sec-label">Platform, by the numbers</div>
@@ -125,11 +131,16 @@
       <span class="pill"><span class="dot"></span>Live</span>
     </div>
     <p class="pconcept">One reel a day at 18:00 Yerevan. Build-it reels open on the finished faceless asset, then show the recipe in Picsart and end on a receipt card: time, credits, tools, the platform&#x27;s pay rule. On keyword posts, commenting the word sends the exact prompts by DM.</p>
-    <div class="counts"><div class="cnt"><div class="n">13</div><div class="k">Published</div></div><div class="cnt"><div class="n">8</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Views</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Likes</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Saves</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">14</div><div class="k">Published</div></div><div class="cnt"><div class="n">7</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Views</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Likes</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Saves</div></div></div>
     <div class="sub">Per post</div>
-    <div class="counts"><div class="cnt"><div class="n">0 of 13</div><div class="k">Posts synced</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">0 of 14</div><div class="k">Posts synced</div></div></div>
     <div class="sub">3 latest posts on Instagram · best-by-views appears once Instagram numbers sync</div>
-    <p class="note">Instagram numbers for this account have not reached the publishing rail yet: it returns "sync pending" for all 13 live posts, so views, likes and saves are shown as not synced rather than as 0.</p><div class="best"><div class="ex">
+    <p class="note">Instagram numbers for this account have not reached the publishing rail yet: it returns "sync pending" for all 14 live posts, so views, likes and saves are shown as not synced rather than as 0.</p><div class="best"><div class="ex">
+          <video src="../../faceless/assets/2026-W42-7_sun_money_truth_sleep.mp4" poster="../../faceless/assets/2026-W42-7_sun_money_truth_sleep.jpg" controls playsinline preload="none"></video>
+          <span class="rank">Does it pay? · Oct 18</span>
+          <span class="h">Sleep videos made one creator $300K (reported). YouTube now says most of them are spam. Here&#x27;s the difference.</span>
+          <span class="m">26 credits</span>
+        </div><div class="ex">
           <video src="../../faceless/assets/2026-W42-6_sat_merch_tutorial.mp4" poster="../../faceless/assets/2026-W42-6_sat_merch_tutorial.jpg" controls playsinline preload="none"></video>
           <span class="rank">How-to · Oct 17</span>
           <span class="h">Design to hoodie listing in 6 steps, 29 credits. Comment SPOOKY for the prompts and the listing checklist.</span>
@@ -139,19 +150,14 @@
           <span class="rank">Build it · Oct 16</span>
           <span class="h">This hoodie started as one prompt. One Halloween design, 29 credits, ready for print-on-demand. Follow for tomorrow&#x27;s step-by-step.</span>
           <span class="m">29.5 credits</span>
-        </div><div class="ex">
-          <video src="../../faceless/assets/2026-W42-4_thu_80s_tape_service.mp4" poster="../../faceless/assets/2026-W42-4_thu_80s_tape_service.jpg" controls playsinline preload="none"></video>
-          <span class="rank">Build it · Oct 15</span>
-          <span class="h">One selfie in, a 1988 home video out. People sell photo restyles like this as a service. Save it for your first client.</span>
-          <span class="m">32 credits</span>
         </div></div>
     <div class="sub">Cost per post</div>
-    <div class="cost"><div class="cnt"><div class="n">24</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">29.5</div><div class="k">Median</div></div><div class="cnt"><div class="n">0–67</div><div class="k">Range</div></div><div class="cnt"><div class="n">31.2</div><div class="k">Avg, new builds only</div></div></div>
-    <p class="note">From each week's asset log, rerolls included; the logs add up to the account balance drop (W42 128 vs 127, W43 186 vs 186). 3 of the 13 live posts are how-tos or money breakdowns that reuse an earlier post's assets, so they cost 0 extra credits. The receipt card inside a post can be a few credits lower, because it leaves out rerolls.</p>
+    <div class="cost"><div class="cnt"><div class="n">24.2</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">27.75</div><div class="k">Median</div></div><div class="cnt"><div class="n">0–67</div><div class="k">Range</div></div><div class="cnt"><div class="n">30.8</div><div class="k">Avg, new builds only</div></div></div>
+    <p class="note">From each week's asset log, rerolls included; the logs add up to the account balance drop (W42 128 vs 127, W43 186 vs 186). 3 of the 14 live posts are how-tos or money breakdowns that reuse an earlier post's assets, so they cost 0 extra credits. The receipt card inside a post can be a few credits lower, because it leaves out rerolls.</p>
     <div class="visits"><a class="visit" href="https://www.instagram.com/faceless_monetization/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @faceless_monetization →</a></div>
   </article>
 
-  <footer>Counts and followers come from the publishing rail, pulled 2026-10-18 09:32 Yerevan.
+  <footer>Counts and followers come from the publishing rail, pulled 2026-10-18 21:12 Yerevan.
     Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>

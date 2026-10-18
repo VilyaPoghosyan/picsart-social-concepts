@@ -77,6 +77,12 @@
   th,td{text-align:left; padding:.45rem .3rem; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
   th{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600}
   td.r,th.r{text-align:right}
+  .ex .thumb{position:relative; display:block}
+  .ex .thumb.blank{position:relative; display:block; aspect-ratio:9/16; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); background-image:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); font-family:var(--mono); font-size:.62rem; color:var(--accent-ink)}
+  .ex .thumb.blank .lbl{position:absolute; left:0; right:0; bottom:12px; text-align:center; padding:0 8px}
+  .ex .play{position:absolute; inset:0; display:grid; place-items:center}
+  .ex .play::before{content:""; width:40px; height:40px; border-radius:50%; background:rgba(0,0,0,.55)}
+  .ex .play::after{content:""; position:absolute; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; margin-left:3px}
   footer{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:3rem; line-height:1.6}
   @media(max-width:640px){
     .concept{grid-template-columns:1fr}
@@ -114,9 +120,9 @@
 
   <div class="sec-label">Overall</div>
   <div class="card">
-    <div class="counts"><div class="cnt"><div class="n">1</div><div class="k">Platforms</div></div><div class="cnt"><div class="n">13</div><div class="k">Published</div></div><div class="cnt"><div class="n">8</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div></div>
-    <div class="sub">Cost · 13 live posts, 6 products</div>
-    <div class="cost"><div class="cnt"><div class="n">88</div><div class="k">Credits spent</div></div><div class="cnt"><div class="n">6.8</div><div class="k">Avg / post</div></div><div class="cnt"><div class="n">14.7</div><div class="k">Avg / product</div></div><div class="cnt"><div class="n">5–27</div><div class="k">Range / product</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">1</div><div class="k">Platforms</div></div><div class="cnt"><div class="n">14</div><div class="k">Published</div></div><div class="cnt"><div class="n">7</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div></div>
+    <div class="sub">Cost · 14 live posts, 6 products</div>
+    <div class="cost"><div class="cnt"><div class="n">88</div><div class="k">Credits spent</div></div><div class="cnt"><div class="n">6.3</div><div class="k">Avg / post</div></div><div class="cnt"><div class="n">14.7</div><div class="k">Avg / product</div></div><div class="cnt"><div class="n">5–27</div><div class="k">Range / product</div></div></div>
   </div>
 
   <div class="sec-label">Platform, by the numbers</div>
@@ -127,11 +133,16 @@
       <span class="pill"><span class="dot"></span>Live</span>
     </div>
     <p class="pconcept">One post a day at 18:00 Yerevan, in threads: a product&#x27;s before/after, the next day its tutorial with the exact path in Picsart, and a Sunday carousel of the week&#x27;s three products. Every post ends on &quot;Comment FIX&quot;, and the comment sends the step-by-step by DM with a button to open Picsart.</p>
-    <div class="counts"><div class="cnt"><div class="n">13</div><div class="k">Published</div></div><div class="cnt"><div class="n">8</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Views</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Likes</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Saves</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">14</div><div class="k">Published</div></div><div class="cnt"><div class="n">7</div><div class="k">Scheduled</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Views</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Likes</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Saves</div></div></div>
     <div class="sub">Per post</div>
-    <div class="counts"><div class="cnt"><div class="n">0 of 13</div><div class="k">Posts synced</div></div></div>
+    <div class="counts"><div class="cnt"><div class="n">0 of 14</div><div class="k">Posts synced</div></div></div>
     <div class="sub">3 latest posts on Instagram · best-by-views appears once Instagram numbers sync</div>
-    <p class="note">Instagram numbers for this account have not reached the publishing rail yet: it returns "sync pending" for all 13 live posts, so views, likes and saves are shown as not synced rather than as 0.</p><div class="best"><div class="ex">
+    <p class="note">Instagram numbers for this account have not reached the publishing rail yet: it returns "sync pending" for all 14 live posts, so views, likes and saves are shown as not synced rather than as 0.</p><div class="best"><div class="ex">
+          <img class="pv" src="../../listed/assets/carousel-2026-10-12-slide1.jpg" alt="" loading="lazy">
+          <span class="rank">Carousel · Oct 18</span>
+          <span class="h">3 listings fixed this week. Same phones, same products, one app. Swipe to see each before and after.</span>
+          <span class="m">0 credits</span>
+        </div><div class="ex">
           <video src="../../listed/assets/leather-satchel-fix-261005-p2_tutorial.mp4" poster="../../listed/assets/leather-satchel-fix-261005-p2_tutorial.jpg" controls playsinline preload="none"></video>
           <span class="rank">Tutorial · Oct 17</span>
           <span class="h">Dim light? Fixed in 3 steps.</span>
@@ -141,19 +152,14 @@
           <span class="rank">Before / after · Oct 16</span>
           <span class="h">Same leather satchel, same phone. Dim light in, clean listing photo out with Remove Background, Edit with AI and AI Enhance.</span>
           <span class="m">5 credits</span>
-        </div><div class="ex">
-          <video src="../../listed/assets/hair-oil-create-261001-p2_tutorial.mp4" poster="../../listed/assets/hair-oil-create-261001-p2_tutorial.jpg" controls playsinline preload="none"></video>
-          <span class="rank">Tutorial · Oct 15</span>
-          <span class="h">No shelf? No props? Generate them.</span>
-          <span class="m">0 credits</span>
         </div></div>
     <div class="sub">Cost per post</div>
-    <div class="cost"><div class="cnt"><div class="n">6.8</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">0</div><div class="k">Median</div></div><div class="cnt"><div class="n">0–27</div><div class="k">Range</div></div><div class="cnt"><div class="n">14.7 avg</div><div class="k">Credits / product</div></div></div>
+    <div class="cost"><div class="cnt"><div class="n">6.3</div><div class="k">Credits / post, avg</div></div><div class="cnt"><div class="n">0</div><div class="k">Median</div></div><div class="cnt"><div class="n">0–27</div><div class="k">Range</div></div><div class="cnt"><div class="n">14.7 avg</div><div class="k">Credits / product</div></div></div>
     <p class="note">From each product thread's call log, rejected takes included. One product = 2 posts: the before/after carries the thread's credits (5–27 per product, 6 products live) and the tutorial reuses the same files; the Sunday carousel reuses all three. The one-off sound kit (54 credits of music and effects shared by every video) is not in the per-post figure.</p>
     <div class="visits"><a class="visit" href="https://www.instagram.com/listed.hq/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @listed.hq →</a></div>
   </article>
 
-  <footer>Counts and followers come from the publishing rail, pulled 2026-10-18 09:32 Yerevan.
+  <footer>Counts and followers come from the publishing rail, pulled 2026-10-18 21:12 Yerevan.
     Picsart Social automation project · made with Picsart</footer>
 </main>
 </body>
