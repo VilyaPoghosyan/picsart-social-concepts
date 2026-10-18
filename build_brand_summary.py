@@ -734,14 +734,20 @@ def cartoon_ledger():
     """Scheduled cartoon reels: [(when_utc, slug, credits)] from out/reelo/schedule.json + each run.json."""
     rows = {}
     for e in json.loads((REELO_OUT / "schedule.json").read_text()).values():
-        slug = e["dir"].split("-", 3)[3]
-        run = json.loads((REELO_OUT / e["dir"] / "run.json").read_text())
+        # folders are either out/reelo/<date>-<slug>/ or out/reelo/<series>/<slug>/
+        slug = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", e["dir"])
+        d = REELO_OUT / e["dir"]
+        if not d.is_dir():
+            d = next((x for x in REELO_OUT.glob(f"*/{e['dir']}") if x.is_dir()), d)
+        run = sched(d / "run.json")
         cr = run.get("credits")
         cr = cr.get("total") if isinstance(cr, dict) else cr
         if cr is None:
-            gap(f"reelo: no credits in {e['dir']}/run.json")
+            cr = run.get("credits_quoted")
+        if cr is None:
+            gap(f"reelo: no credits in {d.relative_to(REELO_OUT)}/run.json")
         rows[slug] = (when_of(e).astimezone(timezone.utc), slug, cr)
-        CARTOON_SRC[f"cartoon-{slug}"] = REELO_OUT / e["dir"] / f"{slug}.mp4"
+        CARTOON_SRC[f"cartoon-{slug}"] = d / f"{slug}.mp4"
     return list(rows.values())
 
 
