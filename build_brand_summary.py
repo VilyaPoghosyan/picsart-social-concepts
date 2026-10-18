@@ -14,7 +14,10 @@ from __future__ import annotations
 
 import html
 import json
+import re
+import subprocess
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from statistics import mean, median
 
 from build_showcase import HERE, NOW, OUT, YEREVAN, dwell_posts, microdrama_series, sched, when_of
@@ -80,17 +83,41 @@ def secs(ms) -> str:
 
 
 def micro_posts():
-    """Every ledger entry for the brand as dicts: platform, postId, when, episode metadata."""
-    out = []
-    for s in microdrama_series():
+    """Every ledger entry for the brand as dicts: platform, postId, when, episode metadata.
+
+    Episodes on the hand-written series lists (build_showcase.microdrama_series) come first; any other
+    ledger entry (a new episode or a new series) is picked up from schedule.json + schedule_plan.json."""
+    out, used = [], set()
+    series = {s["slug"]: s for s in microdrama_series()}
+    for s in series.values():
         L = sched(OUT / f"microdrama/{s['slug']}/schedule.json")
         for i, (asset, label, tease, _desc) in enumerate(s["episodes"], start=1):
             k = s["key"](i)
             for plat, key in (("instagram", k), ("tiktok", k.replace(":instagram", "") + ":tiktok")):
                 e = L.get(key)
                 if e:
+                    used.add((s["slug"], key))
                     out.append(dict(platform=plat, postId=e["postId"], when=when_of(e), asset=asset,
-                                    series=s["title"], label=label, tease=tease))
+                                    series=s["title"], label=label, tease=tease, src=None))
+    for led in sorted((OUT / "microdrama").glob("*/schedule.json")):
+        d = led.parent
+        plan = sched(d / "schedule_plan.json").get("items", [])
+        by_slug = {it["slug"]: it for it in plan}
+        for key, e in json.loads(led.read_text()).items():
+            if (d.name, key) in used or not e.get("postId"):
+                continue
+            slug, _, plat = key.partition(":")
+            plat = plat or "instagram"
+            m = re.search(r"(?:part-|p)(\d+)$", slug)
+            ep = int(m.group(1)) if m else None
+            it = by_slug.get(slug, {})
+            cap = d / it["caption_file"] if it.get("caption_file") else None
+            tease = cap.read_text().strip().split("\n")[0] if cap and cap.exists() else f"Part {ep}"
+            title = series[d.name]["title"] if d.name in series else d.name.replace("-", " ").upper()
+            prefix = d.name.replace("the-", "", 1) if d.name == "the-last-bite" else d.name
+            out.append(dict(platform=plat, postId=e["postId"], when=when_of(e), asset=f"{prefix}-{ep}" if ep else slug,
+                            series=title, label=f"Part {ep}" if ep else slug, tease=tease,
+                            src=d / it["file"] if it.get("file") else None))
     return out
 
 
@@ -166,6 +193,12 @@ CSS = """
   th,td{text-align:left; padding:.45rem .3rem; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
   th{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600}
   td.r,th.r{text-align:right}
+  .ex .thumb{position:relative; display:block}
+  .ex .thumb.blank{position:relative; display:block; aspect-ratio:9/16; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); background-image:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); font-family:var(--mono); font-size:.62rem; color:var(--accent-ink)}
+  .ex .thumb.blank .lbl{position:absolute; left:0; right:0; bottom:12px; text-align:center; padding:0 8px}
+  .ex .play{position:absolute; inset:0; display:grid; place-items:center}
+  .ex .play::before{content:""; width:40px; height:40px; border-radius:50%; background:rgba(0,0,0,.55)}
+  .ex .play::after{content:""; position:absolute; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; margin-left:3px}
   footer{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:3rem; line-height:1.6}
   @media(max-width:640px){
     .concept{grid-template-columns:1fr}
@@ -186,6 +219,75 @@ def tiles(items) -> str:
 def rng(vals, f=None) -> str:
     f = f or n
     return f"{f(min(vals))}–{f(max(vals))}" if vals else "n/a"
+
+
+def avg(vals, f=None) -> str:
+    return (f or n)(mean(vals)) if vals else "n/a"
+
+
+def med(vals, f=None) -> str:
+    return (f or n)(median(vals)) if vals else "n/a"
+
+
+def known(vals):
+    """Drop posts whose cost is not logged (None) before averaging."""
+    return [v for v in vals if v is not None]
+
+
+def cr_txt(v, f=None) -> str:
+    return f"{(f or n)(v)} credits" if v is not None else "credits not logged"
+
+
+# Things a weekly run could not fill in by itself; printed by build_all for the run report.
+GAPS: list[str] = []
+
+
+def gap(msg):
+    if msg not in GAPS:
+        GAPS.append(msg)
+
+
+def make_asset(src: Path, dest: Path, kind: str) -> bool:
+    """720p mp4 + poster (video) or a 720 px jpg (image) from a source file. Returns True when dest exists."""
+    if kind == "video":
+        if dest.with_suffix(".mp4").exists():
+            return True
+        if not src or not Path(src).exists():
+            return False
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vf", "scale=720:-2", "-c:v", "libx264",
+                        "-crf", "28", "-preset", "veryfast", "-c:a", "aac", "-b:a", "96k", "-movflags", "+faststart",
+                        str(dest.with_suffix(".mp4"))], check=True)
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "1.5", "-i", str(src), "-frames:v", "1", "-vf",
+                        "scale=720:-2", "-q:v", "4", str(dest.with_suffix(".jpg"))], check=True)
+        return True
+    if dest.with_suffix(".jpg").exists():
+        return True
+    if not src or not Path(src).exists():
+        return False
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vf", "scale=720:-2", "-q:v", "4",
+                    str(dest.with_suffix(".jpg"))], check=True)
+    return True
+
+
+def media_tile(brand, asset, url="", kind="video", src=None, platform="Instagram") -> str:
+    """The preview for a best-post tile: the local video/image (made from src if missing), else a link tile."""
+    A = f"../../{brand}/assets"
+    if asset and make_asset(src, HERE / brand / "assets" / asset, kind):
+        if kind == "video":
+            return f'<video src="{A}/{asset}.mp4" poster="{A}/{asset}.jpg" controls playsinline preload="none"></video>'
+        return f'<img class="pv" src="{A}/{asset}.jpg" alt="" loading="lazy">'
+    gap(f"{brand}: no preview file for {asset or url} (link tile shown)")
+    return (f'<a class="thumb blank" href="{E(url)}" target="_blank" rel="noopener"><span class="play"></span>'
+            f'<span class="lbl">Preview not available · open on {platform}</span></a>')
+
+
+def micro_cr(asset):
+    x = MICRO_COST.get(asset)
+    if not x:
+        gap(f"microdramas: no credit entry for {asset} (add it to MICRO_COST from its run.json)")
+    return x["calls"] if x else None
 
 
 def build_microdramas():
@@ -228,13 +330,13 @@ def build_microdramas():
         for r, (p, s) in enumerate(best, start=1):
             link = f' · <a href="{E(s["url"].split("?")[0])}" target="_blank" rel="noopener">watch on {P["name"]} →</a>' if s.get("url") else ""
             ex += f"""<div class="ex">
-          <video src="{A}/{p['asset']}.mp4" poster="{A}/{p['asset']}.jpg" controls playsinline preload="none"></video>
+          {media_tile("microdramas", p["asset"], (s.get("url") or "").split("?")[0], "video", p.get("src"), P["name"])}
           <span class="rank">#{r} · {E(p['series'])} · {E(p['label'].split(' · ')[0])}</span>
           <span class="h">{E(p['tease'])}</span>
-          <span class="m">{n(s['views'])} views · {n(s.get('likes') or 0)} likes · {n(s.get('shares') or 0)} shares · {n(s.get('saves') or 0)} saves · {n(MICRO_COST[p['asset']]['calls'])} credits{link}</span>
+          <span class="m">{n(s['views'])} views · {n(s.get('likes') or 0)} likes · {n(s.get('shares') or 0)} shares · {n(s.get('saves') or 0)} saves · {cr_txt(micro_cr(p['asset']))}{link}</span>
         </div>"""
 
-        c = [MICRO_COST[p["asset"]]["calls"] for p in live]
+        c = known([micro_cr(p["asset"]) for p in live])
         cpk = sum(c) / (tot["views"] / 1000) if tot["views"] else 0
         plat_cards += f"""
   <article class="card" id="{plat}">
@@ -253,7 +355,7 @@ def build_microdramas():
     <div class="sub">3 best posts on {P['name']} · by views</div>
     {low}<div class="best">{ex}</div>
     <div class="sub">Cost per post · {len(c)} live posts</div>
-    <div class="cost">{tiles([("Credits / post, avg", n(mean(c))), ("Median", n(median(c))), ("Range", rng(c)),
+    <div class="cost">{tiles([("Credits / post, avg", avg(c)), ("Median", med(c)), ("Range", rng(c)),
                               ("Credits / 1K views", n(cpk))])}</div>
     <p class="note">Same file on both platforms, so posting it here as well adds 0 credits. Credits / 1K views = full cost of the
       {len(c)} live episodes ÷ {P['name']} views alone (if {P['name']} carried the whole cost).</p>
@@ -262,7 +364,7 @@ def build_microdramas():
 
     eng_all = ((overall["likes"] + overall["comments"] + overall["shares"] + overall["saves"]) / overall["views"]
                if overall["views"] else 0)
-    live_c = [MICRO_COST[a]["calls"] for a in live_eps]
+    live_c = known([micro_cr(a) for a in live_eps])
     cpk_all = sum(live_c) / (overall["views"] / 1000) if overall["views"] else 0
 
     series = microdrama_series()
@@ -307,7 +409,7 @@ def build_microdramas():
                                 ("Views", n(overall['views'])), ("Likes", n(overall['likes'])), ("Comments", n(overall['comments'])),
                                 ("Shares", n(overall['shares'])), ("Saves", n(overall['saves'])), ("Engagement", f"{eng_all:.1%}")])}</div>
     <div class="sub">Cost · {len(live_eps)} live episodes</div>
-    <div class="cost">{tiles([("Credits spent", n(sum(live_c))), ("Avg / episode", n(mean(live_c))),
+    <div class="cost">{tiles([("Credits spent", n(sum(live_c))), ("Avg / episode", avg(live_c)),
                               ("Range", rng(live_c)), ("Credits / 1K views", n(cpk_all))])}</div>
     <p class="note">Published counts posts (one episode on two platforms = 2 posts). Engagement = (likes + comments + shares + saves) / views.
       Credits / 1K views = credits for the live episodes ÷ views on both platforms.</p>
@@ -328,7 +430,7 @@ def build_microdramas():
     print(f"microdramas summary: live eps {len(live_eps)} {sorted(live_eps)} · {overall} · live credits {sum(live_c)}")
     return dict(brand="Microdramas", slug="microdramas", what="AI love-story series", platforms="Instagram, TikTok",
                 pub=overall["pub"], sched=overall["sched"], reach=f"{n(overall['views'])} views",
-                fol=sum(fol.values()), unit="episode", per=n(mean(live_c)), per_rng=rng(live_c), spent=n(sum(live_c)))
+                fol=sum(fol.values()), unit="episode", per=avg(live_c), per_rng=rng(live_c), spent=n(sum(live_c)))
 
 
 # Dwell IG + TikTok credits per post. W42: per-post logs whose sum (822) equals the batch's balance
@@ -349,6 +451,9 @@ DWELL_COST = {
 # Pinterest: our two pin runs on 2026-10-02 (dwell-content-runs.md): 70 pins, 185 + 180 = 365 credits,
 # confirmed by the balance (5,730 -> 5,545 -> 5,365). 5 credits per image; 3 pins needed one reroll (10).
 PIN_RUNS = dict(pins=70, credits=365, per_pin=[5] * 67 + [10] * 3, since="2026-10-03")
+
+DWELL_FORMAT = {"A": "Before / after", "B": "Statement tour", "C": "Walkthrough reveal", "D": "Variation swap",
+                "E": "Trend carousel", "F": "Photo-set carousel", "G": "Colour pairs", "H": "Mouldings"}
 
 DWELL_PLATFORM = {
     "instagram": dict(name="Instagram", fmt="Reels + carousels", handle="@dwell.rooms",
@@ -395,13 +500,33 @@ def build_dwell():
     A = "../../dwell/assets"
     mature_cut = NOW - timedelta(hours=24)
 
-    posts = []
+    posts, seen = [], set()
     for ledger, key, asset, kind, slides, label, hook, _desc in dwell_posts():
         for plat in ("instagram", "tiktok"):
             e = ledger.get(f"{key}:{plat}")
             if e:
+                seen.add(e["postId"])
                 posts.append(dict(platform=plat, postId=e["postId"], when=when_of(e), asset=asset, kind=kind,
-                                  label=label, hook=hook))
+                                  label=label, hook=hook, cr=DWELL_COST.get(asset), src=None))
+    # batches not on the hand-written list: plan.json + schedule.json + each post's run.json
+    for led in sorted((OUT / "dwell").glob("*/schedule.json")):
+        d = led.parent
+        items = {it["slug"]: it for it in sched(d / "plan.json").get("items", [])}
+        for k, e in json.loads(led.read_text()).items():
+            if e.get("postId") in seen or ":" not in k:
+                continue
+            slug, plat = k.rsplit(":", 1)
+            it = items.get(slug, {})
+            kind = "car" if it.get("kind") == "carousel" else "reel"
+            run = sched(d / slug / "run.json")
+            cr = run.get("credits_total", run.get("total_credits"))
+            asset = f"dwell-{d.name}-{slug}" + ("-slide1" if kind == "car" else "")
+            src = d / slug / (f"{slug}.mp4" if kind == "reel" else "carousel/slide1.jpg")
+            posts.append(dict(platform=plat, postId=e["postId"], when=when_of(e), asset=asset, kind=kind,
+                              label=DWELL_FORMAT.get(it.get("format"), "Post"), hook=(it.get("caption") or "").split("\n")[0],
+                              cr=cr, src=src))
+            if cr is None:
+                gap(f"dwell: no credit total in {d.name}/{slug}/run.json")
 
     cards, overall = "", dict(pub=0, sched=0, eng=0)
     reach_views = 0
@@ -426,16 +551,17 @@ def build_dwell():
         best = ""
         for r, (p, s) in enumerate(sorted(num, key=lambda ps: (ps[1].get("views") or 0, ps[1].get("likes") or 0),
                                           reverse=True)[:3], start=1):
-            media = (f'<video src="{A}/{p["asset"]}.mp4" poster="{A}/{p["asset"]}.jpg" controls playsinline preload="none"></video>'
-                     if p["kind"] == "reel" else f'<img class="pv" src="{A}/{p["asset"]}-slide1.jpg" alt="" loading="lazy">')
+            media = media_tile("dwell", p["asset"] if p["kind"] == "reel" or p["asset"].endswith("-slide1")
+                               else f'{p["asset"]}-slide1', (s.get("url") or "").split("?")[0],
+                               "video" if p["kind"] == "reel" else "image", p["src"], P["name"])
             link = f' · <a href="{E(s["url"].split("?")[0])}" target="_blank" rel="noopener">open on {P["name"]} →</a>' if s.get("url") else ""
             best += f"""<div class="ex">
           {media}
           <span class="rank">#{r} · {E(p['label'])}</span>
           <span class="h">{E(p['hook'])}</span>
-          <span class="m">{n(s['views'])} views · {n(s.get('likes') or 0)} likes · {n(s.get('shares') or 0)} shares · {n(s.get('saves') or 0)} saves · {n(DWELL_COST[p['asset']])} credits{link}</span>
+          <span class="m">{n(s['views'])} views · {n(s.get('likes') or 0)} likes · {n(s.get('shares') or 0)} shares · {n(s.get('saves') or 0)} saves · {cr_txt(p['cr'])}{link}</span>
         </div>"""
-        c = [DWELL_COST[p["asset"]] for p in live]
+        c = known([p["cr"] for p in live])
         cpk = sum(c) / (tot["views"] / 1000) if tot["views"] else 0
         cards += card(plat, P,
                       [("Published", n(len(live))), ("Scheduled", n(len(soon))), ("Followers", n(fol.get(plat, 0))),
@@ -446,7 +572,7 @@ def build_dwell():
                       [("Views range", rng(v)), ("Median views", n(median(v)) if v else "n/a"), ("Likes range", rng(lk)),
                        ("Saves range", rng(sv)), ("Engagement range", rng(er, lambda x: f"{x:.1%}"))],
                       "", best,
-                      [("Credits / post, avg", n(mean(c))), ("Median", n(median(c))), ("Range", rng(c)),
+                      [("Credits / post, avg", avg(c)), ("Median", med(c)), ("Range", rng(c)),
                        ("Credits / 1K views", n(cpk))],
                       f"Same file on both Instagram and TikTok, so posting it here as well adds 0 credits. Reels cost more than "
                       f"carousels (one frame per slide, no video). Credits / 1K views = full cost of the {len(c)} live posts ÷ "
@@ -491,7 +617,7 @@ def build_dwell():
                   f"Pins posted before Oct 3 came from the earlier pipeline and are not in our cost logs, so they are left out "
                   f"of the cost. Credits / 1K impr. = {n(PIN_RUNS['credits'])} ÷ impressions on those {len(ours)} pins.")
 
-    live_c = [DWELL_COST[a] for a in {p["asset"] for p in posts if p["when"] and p["when"] <= NOW}]
+    live_c = known(list({p["asset"]: p["cr"] for p in posts if p["when"] and p["when"] <= NOW}.values()))
     synced = max((s.get("lastUpdated") or "" for s in stats.values()), default="")[:16]
     page = f"""<!doctype html>
 <html lang="en">
@@ -558,7 +684,7 @@ def build_dwell():
     return dict(brand="Dwell", slug="dwell", what="Luxury interiors", platforms="Instagram, TikTok, Pinterest",
                 pub=overall["pub"] + len(pins), sched=overall["sched"] + pin["scheduled"],
                 reach=f"{n(reach_views)} views<br><span class='nt'>+ {n(imp)} pin impressions</span>", fol=sum(fol.values()) + pin["followers"],
-                unit="reel or carousel", per=n(mean(live_c)), per_rng=rng(live_c),
+                unit="reel or carousel", per=avg(live_c), per_rng=rng(live_c),
                 spent=n(sum(live_c) + PIN_RUNS["credits"]),
                 note=f"pins {PIN_RUNS['credits'] / PIN_RUNS['pins']:.1f} each")
 
@@ -601,6 +727,7 @@ def reelo_slug(title):
 
 
 REELO_OUT = OUT / "reelo"
+CARTOON_SRC: dict[str, Path] = {}
 
 
 def cartoon_ledger():
@@ -611,7 +738,10 @@ def cartoon_ledger():
         run = json.loads((REELO_OUT / e["dir"] / "run.json").read_text())
         cr = run.get("credits")
         cr = cr.get("total") if isinstance(cr, dict) else cr
+        if cr is None:
+            gap(f"reelo: no credits in {e['dir']}/run.json")
         rows[slug] = (when_of(e).astimezone(timezone.utc), slug, cr)
+        CARTOON_SRC[f"cartoon-{slug}"] = REELO_OUT / e["dir"] / f"{slug}.mp4"
     return list(rows.values())
 
 
@@ -658,7 +788,7 @@ def build_reelo():
         for r, p in enumerate(sorted(ps, key=lambda p: (p["views"], p["likes"]), reverse=True)[:3], start=1):
             fmt_, asset, cr = info[p["url"]]
             posted = datetime.fromisoformat(p["publishedAt"].replace("Z", "+00:00")).astimezone(YEREVAN)
-            if asset and (HERE / f"reelo/assets/{asset}.mp4").exists():
+            if asset and make_asset(CARTOON_SRC.get(asset), HERE / "reelo/assets" / asset, "video"):
                 media = f'<video src="{A}/{asset}.mp4" poster="{A}/{asset}.jpg" controls playsinline preload="none"></video>'
             elif p.get("asset"):
                 media = f'<a class="thumb" href="{E(p["url"])}" target="_blank" rel="noopener"><img class="pv vid" src="{A}/{p["asset"]}" alt="" loading="lazy"><span class="play"></span></a>'
@@ -671,9 +801,9 @@ def build_reelo():
           <span class="h">{E(clean_title(p['title']))}</span>
           <span class="m">{n(p['views'])} views · {n(p['likes'])} likes · {n(p['shares'])} shares · {n(p['saves'])} saves{cost} · <a href="{E(p['url'])}" target="_blank" rel="noopener">open on {P['name']} →</a></span>
         </div>"""
-        cc = [info[p["url"]][2] for p in cart]
-        spent.update({info[p["url"]][1]: info[p["url"]][2] for p in cart + tiny})
-        tc = [info[p["url"]][2] for p in tiny]
+        cc = known([info[p["url"]][2] for p in cart])
+        spent.update({info[p["url"]][1]: info[p["url"]][2] for p in cart + tiny if info[p["url"]][2] is not None})
+        tc = known([info[p["url"]][2] for p in tiny])
         cv = sum(int(p["views"]) for p in cart)
         P = dict(P, concept=P["concept"].format(c_med=c_med, t_med=t_med))
         cards += card(plat, P,
@@ -801,13 +931,20 @@ def build_faceless():
         for it in plan["items"]:
             e = next((v for k, v in led.items() if k.split(":")[0] == it["slug"]), None)
             if e:
+                car = it.get("pillar") == "carousel"
                 posts.append(dict(key=f"{w.name}/{it['slug']}", asset=f"{w.name}-{it['slug']}", when=when_of(e),
-                                  postId=e["postId"], caption=it["caption"].split("\n")[0], kind=faceless_kind(it["slug"])))
+                                  postId=e["postId"], caption=it["caption"].split("\n")[0], kind=faceless_kind(it["slug"]),
+                                  media="image" if car else "video",
+                                  src=w / it["files"][0] if it.get("files") else None,
+                                  cr=FACELESS_COST.get(f"{w.name}/{it['slug']}")))
     live = [p for p in posts if p["when"] <= NOW]
     soon = [p for p in posts if p["when"] > NOW]
     num = [(p, stats[p["postId"]]) for p in live if (stats.get(p["postId"]) or {}).get("views") is not None]
     synced_n = len(num)
-    c = [FACELESS_COST[p["key"]] for p in live]
+    for p in live:
+        if p["cr"] is None:
+            gap(f"faceless: no credit entry for {p['key']} (add it to FACELESS_COST from the week's assets/manifest.json)")
+    c = known([p["cr"] for p in live])
     cf = lambda x: f"{x:g}"  # noqa: E731
     paid = [x for x in c if x]
 
@@ -824,10 +961,10 @@ def build_faceless():
         link = (f' · <a href="{E(st["url"].split("?")[0])}" target="_blank" rel="noopener">open on Instagram →</a>'
                 if st.get("url") else "")
         best += f"""<div class="ex">
-          <video src="{A}/{p['asset']}.mp4" poster="{A}/{p['asset']}.jpg" controls playsinline preload="none"></video>
+          {media_tile("faceless", p["asset"], (st.get("url") or "").split("?")[0], p["media"], p["src"])}
           <span class="rank">{'#' + str(r) + ' · ' if num else ''}{E(p['kind'])} · {p['when']:%b %-d}</span>
           <span class="h">{E(p['caption'])}</span>
-          <span class="m">{m}{cf(FACELESS_COST[p['key']])} credits{link}</span>
+          <span class="m">{m}{cr_txt(p['cr'], cf)}{link}</span>
         </div>"""
 
     if num:
@@ -940,7 +1077,9 @@ def build_listed():
             cr = listed_thread_credits(it["slug"]) if it["pillar"] == "flip" else 0
             asset = (f"{it['slug']}-p1_before_after" if it["pillar"] == "flip" else
                      f"{it['slug']}-p2_tutorial" if it["pillar"] == "tutorial" else f"{it['slug']}-slide1")
-            posts.append(dict(slug=it["slug"], pillar=it["pillar"], when=when_of(e), postId=e["postId"], credits=cr,
+            src = (LISTED / "threads" / it["slug"] / "out" / ("p1_before_after.mp4" if it["pillar"] == "flip" else "p2_tutorial.mp4")
+                   if it["pillar"] != "carousel" else w / "carousel" / "slide_01.jpg")
+            posts.append(dict(slug=it["slug"], pillar=it["pillar"], when=when_of(e), postId=e["postId"], credits=cr, src=src,
                               asset=asset, caption=it["caption"].split(" Comment FIX")[0].split(" The exact path:")[0].split("\n")[0]))
     live = [p for p in posts if p["when"] <= NOW]
     soon = [p for p in posts if p["when"] > NOW]
@@ -957,8 +1096,8 @@ def build_listed():
         best_label = "3 latest posts on Instagram · best-by-views appears once Instagram numbers sync"
     best = ""
     for r, (p, st) in enumerate(ranked, start=1):
-        media = (f'<img class="pv" src="{A}/{p["asset"]}.jpg" alt="" loading="lazy">' if p["pillar"] == "carousel" else
-                 f'<video src="{A}/{p["asset"]}.mp4" poster="{A}/{p["asset"]}.jpg" controls playsinline preload="none"></video>')
+        media = media_tile("listed", p["asset"], (st.get("url") or "").split("?")[0],
+                           "image" if p["pillar"] == "carousel" else "video", p["src"])
         m = (f"{n(st['views'])} views · {n(st.get('likes') or 0)} likes · {n(st.get('saves') or 0)} saves · " if st else "")
         link = (f' · <a href="{E(st["url"].split("?")[0])}" target="_blank" rel="noopener">open on Instagram →</a>'
                 if st.get("url") else "")
@@ -1114,6 +1253,9 @@ def build_all():
     out = HERE / "summary/index.html"
     out.write_text(page)
     print(f"all brands: {out.relative_to(HERE)} · {pub} posts · {fol} followers")
+    for g in GAPS:
+        print(f"GAP {g}")
+    return GAPS
 
 
 if __name__ == "__main__":
