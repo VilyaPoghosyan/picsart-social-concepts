@@ -248,18 +248,31 @@ def live_ig(url):
 
 
 def apply_live(rows):
-    """Replace Instagram views with the live count where the public grid has the post."""
+    """Replace rail numbers with live ones: Instagram views (public grid), TikTok plays/likes/... (video page)."""
     for row in rows:
-        if isinstance(row, dict) and "instagram.com" in (row.get("url") or ""):
-            v = live_ig(row.get("url"))
+        if not isinstance(row, dict):
+            continue
+        url = row.get("url") or ""
+        if "instagram.com" in url:
+            v = live_ig(url)
             if v is not None:
                 row["views"] = v
                 row["live"] = True
+        elif "tiktok.com" in url:
+            m = re.search(r"/(?:video|photo)/(\d+)", url)
+            t = LIVE.get("tiktok", {}).get(m.group(1)) if m else None
+            if t:
+                row.update(t)
+                row["live"] = True
+
+
+def live_fol(platform, handle, fallback):
+    return LIVE.get("followers", {}).get(platform, {}).get(handle, fallback)
 
 
 def live_note():
-    return (f"Instagram views of the newest reels are read live from the public profiles ({LIVE['pulledAt']} Yerevan); "
-            f"everything else comes from the publishing rail." if LIVE.get("pulledAt") else "")
+    return (f"Followers, TikTok numbers and the newest Instagram reels' views are read live from the public profiles "
+            f"({LIVE['pulledAt']} Yerevan); the rest comes from the publishing rail." if LIVE.get("pulledAt") else "")
 
 
 # Things a weekly run could not fill in by itself; printed by build_all for the run report.
@@ -317,6 +330,8 @@ def micro_cr(asset):
 def build_microdramas():
     stats = json.loads((HERE / "microdramas/stats.json").read_text())
     fol = stats.pop("_followers", {})
+    fol = {"instagram": live_fol("instagram", "microdramas.ai", fol.get("instagram")),
+           "tiktok": live_fol("tiktok", "microdramas.ai", fol.get("tiktok"))}
     apply_live(stats.values())
     posts = micro_posts()
     A = "../../microdramas/assets"
@@ -521,6 +536,8 @@ def card(plat, P, counts, per_post_label, per_post, low, best, cost, cost_note):
 def build_dwell():
     stats = json.loads((HERE / "dwell/stats.json").read_text())
     fol = stats.pop("_followers", {})
+    fol = {"instagram": live_fol("instagram", "dwell.rooms", fol.get("instagram")),
+           "tiktok": live_fol("tiktok", "dwellrooms", fol.get("tiktok"))}
     apply_live(stats.values())
     pin = json.loads((HERE / "dwell/pinterest.json").read_text())
     A = "../../dwell/assets"
@@ -792,6 +809,9 @@ def reelo_post_info(p, cartoons):
 def build_reelo():
     feed = json.loads((HERE / "reelo/feed.json").read_text())
     apply_live(feed["instagram"]["posts"])
+    apply_live(feed["tiktok"]["posts"])
+    feed["instagram"]["followers"] = live_fol("instagram", "reelo.hq", feed["instagram"]["followers"])
+    feed["tiktok"]["followers"] = live_fol("tiktok", "reelostudio", feed["tiktok"]["followers"])
     A = "../../reelo/assets"
     mature_cut = (NOW - timedelta(hours=24)).astimezone(timezone.utc).isoformat()
     cartoons = cartoon_ledger()
@@ -955,6 +975,7 @@ def faceless_kind(slug):
 def build_faceless():
     stats = json.loads((HERE / "faceless/stats.json").read_text())
     fol = stats.pop("_followers", {})
+    fol = {"instagram": live_fol("instagram", "faceless_monetization", fol.get("instagram"))}
     apply_live(stats.values())
     A = "../../faceless/assets"
     weeks = OUT.parent / "projects/faceless-lab/weeks"
@@ -1106,6 +1127,7 @@ def listed_thread_credits(slug):
 def build_listed():
     stats = json.loads((HERE / "listed/stats.json").read_text())
     fol = stats.pop("_followers", {})
+    fol = {"instagram": live_fol("instagram", "listed.hq", fol.get("instagram"))}
     apply_live(stats.values())
     A = "../../listed/assets"
     posts = []
