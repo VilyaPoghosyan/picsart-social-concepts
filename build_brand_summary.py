@@ -267,7 +267,11 @@ def apply_live(rows):
 
 
 def live_fol(platform, handle, fallback):
-    return LIVE.get("followers", {}).get(platform, {}).get(handle, fallback)
+    """Followers: the higher of the public profile count and the rail's count (the public Instagram page can be
+    served from a cache, the rail can lag; a count only drops on unfollows, so the higher one is the fresher)."""
+    live = LIVE.get("followers", {}).get(platform, {}).get(handle)
+    vals = [v for v in (live, fallback) if v is not None]
+    return max(vals) if vals else None
 
 
 def live_note():
@@ -798,7 +802,7 @@ def reelo_post_info(p, cartoons):
     """(format, asset, credits) for a feed post: our cartoon, our tiny world, or an earlier post (no cost log)."""
     pub = datetime.fromisoformat(p["publishedAt"].replace("Z", "+00:00"))
     for when, slug, cr in cartoons:
-        if abs((pub - when).total_seconds()) <= 30 * 60:
+        if abs((pub - when).total_seconds()) <= 10 * 60:
             return "cartoon", f"cartoon-{slug}", cr
     slug = reelo_slug(p["title"]) if p["publishedAt"] >= REELO_SINCE else None
     if slug:
