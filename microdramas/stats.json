@@ -319,6 +319,18 @@
   "lastUpdated": "2026-10-23T07:18:53Z",
   "sync": "synced"
  },
+ "6adb25ee2bc53c5957129c7e": {
+  "platform": "instagram",
+  "url": null,
+  "views": null,
+  "sync": "http 202"
+ },
+ "6adb25f52bc53c5957129d1a": {
+  "platform": "tiktok",
+  "url": null,
+  "views": null,
+  "sync": "http 202"
+ },
  "6ad0d8fab5d2910e957e7cb7": {
   "platform": "instagram",
   "url": "https://www.instagram.com/reel/DejN8MrFK60/",
@@ -992,7 +1004,7 @@
   "sync": "synced"
  },
  "_followers": {
-  "instagram": 25,
+  "instagram": 89,
   "tiktok": 3
  }
 }
