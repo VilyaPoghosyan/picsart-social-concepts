@@ -702,14 +702,30 @@
  "6ad762525e790e861a32fee6": {
   "platform": "instagram",
   "url": "https://www.instagram.com/reel/De1FZR7jY34/",
-  "views": null,
-  "sync": "http 202"
+  "publishedAt": "2026-10-23T08:03:56.835Z",
+  "views": 7,
+  "likes": 0,
+  "comments": 0,
+  "shares": 0,
+  "saves": 0,
+  "reach": 1,
+  "avgWatchMs": 1387,
+  "lastUpdated": "2026-10-23T08:25:51Z",
+  "sync": "synced"
  },
  "6ad762566ff9a2383f9b9138": {
   "platform": "tiktok",
-  "url": "https://www.tiktok.com/@dwellrooms/video/7699769158501780788",
-  "views": null,
-  "sync": "http 202"
+  "url": "https://www.tiktok.com/@dwellrooms/video/7699769158501780788?utm_campaign=tt4d_open_api&utm_source=7608030276714774544",
+  "publishedAt": "2026-10-23T08:03:46.830Z",
+  "views": 10,
+  "likes": 1,
+  "comments": 0,
+  "shares": 0,
+  "saves": 0,
+  "reach": 0,
+  "avgWatchMs": 3120,
+  "lastUpdated": "2026-10-23T08:25:34Z",
+  "sync": "synced"
  },
  "6acf4a67ddbc9bed96072942": {
   "platform": "instagram",
