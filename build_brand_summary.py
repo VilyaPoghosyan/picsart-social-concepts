@@ -66,8 +66,11 @@ MICRO_COST = {
     "one-year-no-love-2": dict(calls=1754, drop=None, basis="calls", note="v2 THE WEDDING 1,600 + hand-kiss fix 154"),
     "one-year-no-love-3": dict(calls=1636, drop=1636, basis="exact", note="v2 SEPARATE ROOMS (3,073 -> 1,437)"),
     "one-year-no-love-4": dict(calls=1260, drop=1260, basis="exact", note="v2 THE INTERVIEW 1,102 + glass-door ending re-made 158"),
-    # made 2026-10-23, not scheduled yet (waiting for a credit top-up): counted in ALL_IN["microdramas"]["unposted"]
-    # v2 P5 THE VISIT ~2,550 (balance 15,147 -> 12,598), P6 THE EX ~1,850, P7 OPENING NIGHT ~1,513, P8 THE FILE 2,690 (max-based)
+    # v2 P5–P8 made 2026-10-23, scheduled 2026-10-26 (12:00, 15:00, 19:00, 22:00 Yerevan); credits from run.json, max-based
+    "one-year-no-love-5": dict(calls=2550, drop=2550, basis="exact", note="v2 THE VISIT (15,147 -> 12,598); officer close-up re-made ~340, refused takes ~220"),
+    "one-year-no-love-6": dict(calls=1850, drop=1850, basis="exact", note="v2 THE EX (12,598 -> 10,748); re-framed hall + 4 re-done takes ~300"),
+    "one-year-no-love-7": dict(calls=1513, drop=1513, basis="exact", note="v2 OPENING NIGHT (10,748 -> 9,235); 7 shots reused from the first cut"),
+    "one-year-no-love-8": dict(calls=2690, drop=None, basis="calls", note="v2 THE FILE, all-in estimate incl. t01/t02/t12 re-runs and the rejected t19"),
 }
 
 # ALL-IN credits per brand (audited 2026-10-23 from every run log, run.json and balance drop, including work
@@ -76,9 +79,9 @@ MICRO_COST = {
 # account was shared are NOT used: they include other brands' work. Microdramas max per episode: highest
 # logged 2,743 (REMEMBER ME P7), quoted as up to 3,200 for unlogged retries (Vilya 2026-10-23).
 ALL_IN = {
-    "microdramas": dict(total=80297, waste=16123, unposted=8603, per_max=3200, unit="episode",
+    "microdramas": dict(total=80297, waste=16123, unposted=0, per_max=3200, unit="episode",
         waste_note="discarded, redone and deleted episodes, standalone tests and remakes never posted, casting and look tests",
-        unposted_note="ONE YEAR, NO LOVE parts 5–8, made Oct 23 and waiting for a credit top-up before they are scheduled"),
+        unposted_note="made, not posted yet"),
     "dwell": dict(total=5434, waste=302, unposted=0, per_max=440, unit="reel or carousel",
         waste_note="format test reel never posted (132) and the Oct 23 realism proof, a before/after of one real-looking room made for the design review (170)",
         extra="pins up to 10 each; 545 credits on 105 pins"),
