@@ -58,7 +58,53 @@ MICRO_COST = {
     "remember-me-4": dict(calls=1875, drop=4899, basis="calls", note="v1 1,101 + v2 re-shoot"),
     "remember-me-5": dict(calls=1271, drop=None, basis="calls", note="pool topped up mid-run"),
     "remember-me-6": dict(calls=1535, drop=3485, basis="calls", note="incl. 4 re-shoots"),
+    "remember-me-7": dict(calls=2743, drop=None, basis="calls", note="incl. T1/T2/T6/T7 re-fires"),
+    "remember-me-8": dict(calls=1073, drop=None, basis="calls", note="logged total in run.json"),
+    "last-bite-8": dict(calls=1300, drop=2958, basis="calls", note="call list ~1,300; drop includes other users"),
+    "family-portrait-8": dict(calls=1617, drop=None, basis="calls", note="logged total in run.json"),
+    "one-year-no-love-1": dict(calls=1450, drop=1380, basis="calls", note="v2 THE DEAL incl. the re-made opening"),
+    "one-year-no-love-2": dict(calls=1754, drop=None, basis="calls", note="v2 THE WEDDING 1,600 + hand-kiss fix 154"),
+    "one-year-no-love-3": dict(calls=1636, drop=1636, basis="exact", note="v2 SEPARATE ROOMS (3,073 -> 1,437)"),
+    "one-year-no-love-4": dict(calls=1260, drop=1260, basis="exact", note="v2 THE INTERVIEW 1,102 + glass-door ending re-made 158"),
+    # made 2026-10-23, not scheduled yet (waiting for a credit top-up): counted in ALL_IN["microdramas"]["unposted"]
+    # v2 P5 THE VISIT ~2,550 (balance 15,147 -> 12,598), P6 THE EX ~1,850, P7 OPENING NIGHT ~1,513, P8 THE FILE 2,690 (max-based)
 }
+
+# ALL-IN credits per brand (audited 2026-10-23 from every run log, run.json and balance drop, including work
+# that was never posted). Per-post figures quote the TOP of the range (Vilya 2026-10-23: never the minimum).
+# Each run counts its own logged credits (rerolls, retries, fixes included). Balance drops from runs while the
+# account was shared are NOT used: they include other brands' work. Microdramas max per episode: highest
+# logged 2,743 (REMEMBER ME P7), quoted as up to 3,200 for unlogged retries (Vilya 2026-10-23).
+ALL_IN = {
+    "microdramas": dict(total=80297, waste=16123, unposted=8603, per_max=3200, unit="episode",
+        waste_note="discarded, redone and deleted episodes, standalone tests and remakes never posted, casting and look tests",
+        unposted_note="ONE YEAR, NO LOVE parts 5–8, made Oct 23 and waiting for a credit top-up before they are scheduled"),
+    "dwell": dict(total=5434, waste=302, unposted=0, per_max=440, unit="reel or carousel",
+        waste_note="format test reel never posted (132) and the Oct 23 realism proof, a before/after of one real-looking room made for the design review (170)",
+        extra="pins up to 10 each; 545 credits on 105 pins"),
+    "reelo": dict(total=14516, waste=3755, unposted=220, per_max=230, unit="cartoon reel",
+        waste_note="7 tiny-world videos built and never posted (2,977), cartoon format test, cast sheets, a rejected reel, a failed render, loop tests, unlogged retries in the Oct 23 batch of 30 (139)",
+        unposted_note="one Halloween-week reel (Weekend with Max) held for garbled lettering",
+        extra="the older tiny-world videos cost up to 436 each"),
+    "faceless": dict(total=524.5, waste=0, unposted=0, per_max=67, unit="post",
+        waste_note="no remakes logged; Price Tag posts reuse other brands' videos (0 extra)"),
+    "listed": dict(total=137, waste=11, unposted=0, per_max=28, unit="product",
+        waste_note="tests and redone steps"),
+}
+
+
+def allin_card(slug):
+    a = ALL_IN[slug]
+    t = [("All-in credits spent", f"{a['total']:,.0f}"), ("On remakes, fixes, tests", f"{a['waste']:,.0f}"),
+         (f"Max per {a['unit']}", f"{a['per_max']:,}")]
+    if a.get("unposted"):
+        t.insert(2, ("Made, not posted yet", f"{a['unposted']:,}"))
+    note = (f"All-in = every credit this brand has used, posted or not. Remakes, fixes and tests: {a['waste_note']}."
+            + (f" {a['extra'][0].upper() + a['extra'][1:]}." if a.get("extra") else "")
+            + " Each run counts its own logged credits with every reroll, retry and fix; the max per post is rounded up.")
+    return (f'<div class="sec-label">Cost · all in</div>\n  <div class="card">\n    <div class="cost">{tiles(t)}</div>\n'
+            f'    <p class="note">{E(note)}</p>\n  </div>\n\n  ')
+
 
 PLATFORM = {
     "instagram": dict(name="Instagram", fmt="Reels", url="https://www.instagram.com/microdramas.ai/",
@@ -104,7 +150,7 @@ def micro_posts():
         plan = sched(d / "schedule_plan.json").get("items", [])
         by_slug = {it["slug"]: it for it in plan}
         for key, e in json.loads(led.read_text()).items():
-            if (d.name, key) in used or not e.get("postId"):
+            if (d.name, key) in used or not e.get("postId") or e.get("status") == "deleted":
                 continue
             slug, _, plat = key.partition(":")
             plat = plat or "instagram"
@@ -412,6 +458,12 @@ def build_microdramas():
     cpk_all = sum(live_c) / (overall["views"] / 1000) if overall["views"] else 0
 
     series = microdrama_series()
+    _mp = sorted(micro_posts(), key=lambda p: str(p["when"]))
+    series_titles = list(dict.fromkeys(p["series"] for p in _mp))
+    _eps = {}
+    for p in _mp:
+        _eps.setdefault(p["series"], set()).add(p["asset"])
+    complete = [t for t in series_titles if len(_eps[t]) >= 8]
     synced = max((s.get("lastUpdated") or "" for s in stats.values()), default="")[:16]
 
     page = f"""<!doctype html>
@@ -434,17 +486,18 @@ def build_microdramas():
       <div class="handle">@microdramas.ai · Instagram + TikTok</div>
     </div>
   </div>
-  <p class="dek">Serialized AI love stories shot like a 1990s Hollywood film: 26–57 second episodes with spoken dialogue
-    and cliffhanger endings, new parts most days. Every frame, voice and cut is made with Picsart AI.</p>
+  <p class="dek">Serialized AI drama: 26–57 second episodes with spoken dialogue and cliffhanger endings, new parts most days.
+    The first four series were shot like a 1990s Hollywood film; since Oct 21 (ONE YEAR, NO LOVE) a glossy, realistic TV-drama look
+    with subtitles on every line. Every frame, voice and cut is made with Picsart AI.</p>
 
   <div class="sec-label">Key concept</div>
   <div class="card">
     <div class="concept">
       <div><b>Format</b><span>Vertical 9:16 episodes of 8-part series. Each part ends on a question, so viewers come back for the next one.</span></div>
-      <div><b>Look</b><span>35 mm film, candlelight, satin and tuxedos, rainy streets. A recurring cast with fixed faces and voices per series.</span></div>
+      <div><b>Look</b><span>Series 1–4: 35 mm film, candlelight, satin and tuxedos, rainy streets. Since Oct 21: prime-time TV-drama realism, tight close-ups, burned-in subtitles. Each series has its own cast with fixed faces and voices.</span></div>
       <div><b>Engine</b><span>Keyframes on Nano Banana Pro and Seedream, continuous takes with native dialogue on Seedance 2.5, finished with the Picsart end card.</span></div>
     </div>
-    <p class="note">Series so far: {" · ".join(E(s['title']) for s in series)}. {len(live_eps)} episodes live, one season (SPEAK NOW) complete.</p>
+    <p class="note">Series so far: {" · ".join(E(t) for t in series_titles)}. {len(live_eps)} episodes live; {len(complete)} series complete ({" · ".join(E(t) for t in complete)}).</p>
   </div>
 
   <div class="sec-label">Overall</div>
@@ -472,7 +525,7 @@ def build_microdramas():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page)
     print(f"microdramas summary: live eps {len(live_eps)} {sorted(live_eps)} · {overall} · live credits {sum(live_c)}")
-    return dict(brand="Microdramas", slug="microdramas", what="AI love-story series", platforms="Instagram, TikTok",
+    return dict(brand="Microdramas", slug="microdramas", what="AI drama series", platforms="Instagram, TikTok",
                 pub=overall["pub"], sched=overall["sched"], reach=f"{n(overall['views'])} views",
                 fol=sum(fol.values()), unit="episode", per=avg(live_c), per_rng=rng(live_c), spent=n(sum(live_c)))
 
@@ -492,9 +545,9 @@ DWELL_COST = {
     "dwell-W43-11-tuscan-farmhouse-kitchen": 139, "dwell-W43-12-art-deco-apartment": 131,
     "dwell-W43-13-attic-bedroom": 140, "dwell-W43-14-moroccan-riad-set": 40,
 }
-# Pinterest: our two pin runs on 2026-10-02 (dwell-content-runs.md): 70 pins, 185 + 180 = 365 credits,
+# Pinterest: our three pin runs (2026-10-02 x2, 2026-10-20) (dwell-content-runs.md): 70 pins, 185 + 180 = 365 credits,
 # confirmed by the balance (5,730 -> 5,545 -> 5,365). 5 credits per image; 3 pins needed one reroll (10).
-PIN_RUNS = dict(pins=70, credits=365, per_pin=[5] * 67 + [10] * 3, since="2026-10-03")
+PIN_RUNS = dict(pins=105, credits=545, per_pin=[5] * 101 + [10] * 4, since="2026-10-03")  # + 2026-10-20 run: 35 pins, 180 cr, 1 reroll
 
 DWELL_FORMAT = {"A": "Before / after", "B": "Statement tour", "C": "Walkthrough reveal", "D": "Variation swap",
                 "E": "Trend carousel", "F": "Photo-set carousel", "G": "Colour pairs", "H": "Mouldings"}
@@ -698,7 +751,11 @@ def build_dwell():
       <div><b>Look</b><span>Marble, plaster, lacquer, travertine and brass, warm-neutral light, one palette per post, small spaced Gilroy capitals.</span></div>
       <div><b>Engine</b><span>Rooms on Gemini 3 Pro Image, camera moves on MiniMax and Kling V3, beat-synced ElevenLabs music, the linen and walnut Picsart end card.</span></div>
     </div>
-    <p class="note">Live on 3 of Dwell's 4 platforms; the X account is not posting and is left out.</p>
+    <p class="note">Live on 3 of Dwell's 4 platforms; the X account is not posting and is left out. Instagram and TikTok posted two a day
+      Oct 12–24 (four a day Oct 21–24); the next week of reels (Oct 23–29) is planned but not built, waiting for a credit top-up, so
+      nothing is scheduled there after Oct 24. Pinterest keeps five pins a day through Oct 28. A design review on Oct 23 asked for
+      readable, higher-contrast titles, a font per style, more realistic video, a clearer logo and before/afters of the same room;
+      those fixes go into the next batch.</p>
   </div>
 
   <div class="sec-label">Overall</div>
@@ -753,7 +810,7 @@ CARTOON_COST = [110, 110, 110, 120]  # the first four cartoon reels, out/reelo/2
 
 REELO_PLATFORM = {
     "instagram": dict(name="Instagram", fmt="Reels", handle="@reelo.hq", url="https://www.instagram.com/reelo.hq/",
-                      concept="Four cartoon reels a day since Oct 17, the same files as TikTok. Cartoons: median {c_med} "
+                      concept="Cartoon reels since Oct 17: four a day (12:00, 13:30, 18:00, 19:30 Yerevan), two a day Oct 21–22, four a day again since Oct 23; the same files as TikTok. Cartoons: median {c_med} "
                               "views per reel so far, against {t_med} for the tiny-world videos (Oct 3–16)."),
     "tiktok": dict(name="TikTok", fmt="Videos", handle="@reelostudio", url="https://www.tiktok.com/@reelostudio",
                    concept="The same reels at the same times. Cartoons: median {c_med} views per reel so far, against "
@@ -912,13 +969,14 @@ def build_reelo():
       <div class="handle">@reelo.hq · @reelostudio · Instagram + TikTok</div>
     </div>
   </div>
-  <p class="dek">15-second Pixar-style family cartoons, four a day since Oct 17. Before that (from {first}): AI-trend
+  <p class="dek">15-second Pixar-style family cartoons since Oct 17, four a day (two a day on Oct 21–22). 30 reels for Oct 28 to Nov 11 were built on Oct 23;
+    the queue is scheduled through Nov 1. Before that (from {first}): AI-trend
     explainers, then "tiny worlds", a ruined miniature place restored in one video a day.</p>
 
   <div class="sec-label">Key concept</div>
   <div class="card">
     <div class="concept">
-      <div><b>Now · cartoons</b><span>15 s micro-stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. A cast of 11, shuffled. 12:00, 13:30, 18:00, 19:30.</span></div>
+      <div><b>Now · cartoons</b><span>15 s micro-stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. A cast of 11, shuffled. Four a day at 12:00, 13:30, 18:00 and 19:30 Yerevan; the queue runs to Nov 1 and the next build needs a credit top-up.</span></div>
       <div><b>Before · tiny worlds</b><span>25–28 s restorations of a ruined miniature with a voiceover, one a day until Oct 16.</span></div>
       <div><b>Engine</b><span>Cartoons: Gemini 3 Pro Image keyframe, Seedance 2.5 with native sound. Tiny worlds: Gemini 3 Pro Image, Veo 3.1, ElevenLabs.</span></div>
     </div>
@@ -1046,9 +1104,10 @@ def build_faceless():
                      f'not synced rather than as 0.</p>')
     P = dict(name="Instagram", fmt="Reels", handle="@faceless_monetization",
              url="https://www.instagram.com/faceless_monetization/",
-             concept="One reel a day at 18:00 Yerevan. Build-it reels open on the finished faceless asset, then show the "
-                     "recipe in Picsart and end on a receipt card: time, credits, tools, the platform's pay rule. On "
-                     "keyword posts, commenting the word sends the exact prompts by DM.")
+             concept="One reel a day at 18:00 Yerevan. From the Oct 26 week every post is a Price Tag reel: one of our "
+                     "finished videos, what buyers pay for that kind of video, then the receipt of tools and credits. "
+                     "Earlier posts (Oct 5–25) were build-it reels, tutorials and does-it-pay breakdowns. On keyword "
+                     "posts, commenting the word sends the exact prompts by DM.")
     cards = card("instagram", P,
                  [("Published", n(len(live))), ("Scheduled", n(len(soon))), ("Followers", n(fol.get("instagram", 0)))] + nums,
                  "Per post", [("Posts with views", f"{synced_n} of {len(live)}")],
@@ -1078,15 +1137,15 @@ def build_faceless():
       <div class="handle">@faceless_monetization · Instagram</div>
     </div>
   </div>
-  <p class="dek">Faceless AI videos that can earn, built in Picsart with the receipt included: what it cost, which tools,
-    and how the money really works on each platform. Live since Oct 5.</p>
+  <p class="dek">Price Tag reels: a finished AI video, what people pay for that kind of video, and the receipt of what it
+    cost to make in Picsart. Every post since the Oct 26 week; live since Oct 5 with build-it and how-to posts.</p>
 
   <div class="sec-label">Key concept</div>
   <div class="card">
     <div class="concept">
-      <div><b>Build it</b><span>A finished faceless asset (an AI character, a microdrama, a product ad, merch), then every step in Picsart.</span></div>
-      <div><b>How-to + does it pay?</b><span>The next day, the full tutorial. Breakdowns give sourced numbers and a verdict, never income promises.</span></div>
-      <div><b>Engine</b><span>Nano Banana Pro and Nano Banana 2 images, Kling V3 clips, ElevenLabs and Lyria audio, the receipt end card.</span></div>
+      <div><b>Price Tag (now)</b><span>Opens on one of our finished videos (a Reelo cartoon, a microdrama episode or a Dwell interior), then a sourced "people pay $X for this", then the receipt: tools and credits. 3 cartoons, 2 dramas, 2 interiors a week.</span></div>
+      <div><b>Comment for the prompts</b><span>Three posts a week carry a keyword; commenting it sends the exact steps in Picsart by DM. Prices are public listings with the month, never income promises.</span></div>
+      <div><b>Engine</b><span>No new generation: the videos come from the other brands, so a Price Tag post costs 0 extra credits. Before Oct 26: Nano Banana Pro and 2 images, Kling V3 clips, ElevenLabs and Lyria audio.</span></div>
     </div>
     <p class="note">Live on Instagram only; other platforms are not connected yet.</p>
   </div>
@@ -1112,7 +1171,7 @@ def build_faceless():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page)
     print(f"faceless summary: live {len(live)} sched {len(soon)} synced {synced_n} credits {sum(c)}")
-    return dict(brand="Faceless", slug="faceless", what="Faceless AI income formats", platforms="Instagram",
+    return dict(brand="Faceless", slug="faceless", what="Price Tag reels: what AI videos sell for", platforms="Instagram",
                 pub=len(live), sched=len(soon), reach=f"{n(tot['views'])} views" if num else "not synced yet", fol=fol.get("instagram", 0),
                 unit="post", per=cf(round(mean(c), 1)), per_rng=rng(c, cf), spent=cf(sum(c)),
                 note=f"new builds {cf(round(mean(paid), 1))}")
@@ -1241,7 +1300,8 @@ def build_listed():
       <div><b>Tutorial</b><span>Result first, then every step with the exact tool path on picsart.com/create. Sunday: a carousel of the week.</span></div>
       <div><b>Seller jobs</b><span>Fix, Stage, Multiply, Animate, Create: Remove Background, Edit with AI, Relight Studio, AI Replace, AI Playground.</span></div>
     </div>
-    <p class="note">Live on Instagram only; other platforms are not connected yet.</p>
+    <p class="note">Live on Instagram only; other platforms are not connected yet. The daily post ran Oct 5–25 (seven products, three
+      weekly carousels); nothing is scheduled after Oct 25 until the next product threads are approved.</p>
   </div>
 
   <div class="sec-label">Overall</div>
@@ -1275,6 +1335,22 @@ def build_listed():
 def build_all():
     order = ["microdramas", "dwell", "reelo", "faceless", "listed"]
     sums = [globals()[f"build_{b}"]() for b in order]
+    for x in sums:
+        a = ALL_IN.get(x["slug"])
+        if not a:
+            continue
+        x["per"] = f"up to {a['per_max']:,}"
+        lo = str(x.get("per_rng", "")).split("–")[0]
+        if lo and lo[0].isdigit():
+            rest = str(x["per_rng"]).split(" · ", 1)
+            x["per_rng"] = f"{lo}–{a['per_max']:,}" + (f" · {rest[1]}" if len(rest) > 1 else "")
+        x["spent"] = (f"{a['total']:,.0f}<br><span class='nt'>incl. {a['waste']:,.0f} on remakes, fixes, tests</span>")
+        f = HERE / f"summary/{x['slug']}/index.html"
+        if f.exists():
+            h = f.read_text()
+            if "Cost · all in" not in h:
+                h = h.replace('<div class="sec-label">Platform', allin_card(x["slug"]) + '<div class="sec-label">Platform', 1)
+                f.write_text(h)
     rows, nav = "", ""
     for x in sums:
         nav += f'<a class="visit" href="{x["slug"]}/">{x["brand"]} →</a>'
@@ -1316,10 +1392,11 @@ def build_all():
         <th class="r">Followers</th><th class="r">Credits per post</th><th class="r">Credits spent</th></tr></thead>
       <tbody>{rows}</tbody>
     </table></div>
-    <p class="note">Published counts posts (one video on two platforms = 2 posts). Credits per post = what it took to
-      make it, rerolls included; the same file on a second platform costs 0. Credits spent = live posts with a cost log
-      (Dwell includes its Pinterest pins; Reelo counts only posts made since Oct 3). Faceless and Listed likes and saves are not
-      synced from Instagram yet.</p>
+    <p class="note">Published counts posts (one video on two platforms = 2 posts). Credits per post = the most one post has
+      cost, rerolls included (the same file on a second platform costs 0). Credits spent = everything the brand has used,
+      posted or not: remakes, fixes, tests, deleted posts and work never posted included, each run with every reroll,
+      retry and fix it logged. Faceless and Listed likes and saves are not synced from
+      Instagram yet.</p>
   </div>
 
   <footer>Numbers come from Instagram, TikTok and Pinterest through the publishing rail, pulled {NOW:%Y-%m-%d %H:%M} Yerevan.
