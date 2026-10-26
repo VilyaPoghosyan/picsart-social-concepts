@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive Summary · Picsart Social</title>
+<meta name="description" content="Social automation at Picsart: what we are doing, why, the goal, the five brands and the results for Oct 3 to Oct 26.">
+<style>
+  :root{
+    --bg:#F7F7F9; --surface:#FFFFFF; --surface-2:#FBFAFC;
+    --ink:#16151B; --muted:#6A6875; --faint:#9A98A5; --line:#EAEAEF;
+    --accent:#C40F6B; --accent-ink:#A50C59; --accent-soft:#FBE9F2;
+    --good:#0E8A54; --good-soft:#E6F4EC;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --shadow:0 1px 2px rgba(20,18,28,.05),0 12px 34px rgba(20,18,28,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#101015; --surface:#18181F; --surface-2:#1E1E26;
+      --ink:#F3F2F7; --muted:#A19FAD; --faint:#6C6A78; --line:#28282F;
+      --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2A1420;
+      --good:#37C98A; --good-soft:#122720;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101015; --surface:#18181F; --surface-2:#1E1E26; --ink:#F3F2F7; --muted:#A19FAD; --faint:#6C6A78;
+    --line:#28282F; --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2A1420;
+    --good:#37C98A; --good-soft:#122720; --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:840px; margin:0 auto; padding:clamp(40px,7vw,80px) clamp(16px,5vw,40px) 72px}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+  .eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-ink); font-weight:600}
+  .hero{display:flex; gap:1.3rem; align-items:center; margin-top:.9rem}
+  .hero img{width:76px; height:76px; border-radius:50%; object-fit:cover; flex:none; border:1px solid var(--line)}
+  h1{font-size:clamp(2rem,6vw,3.1rem); line-height:1.03; letter-spacing:-.03em; font-weight:800; margin:0; text-wrap:balance}
+  .handle{font-family:var(--mono); font-size:.8rem; color:var(--muted); margin-top:.35rem}
+  .dek{font-size:clamp(1.02rem,2.3vw,1.2rem); color:var(--muted); margin:1.2rem 0 0; max-width:60ch; line-height:1.5}
+  .sec-label{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:3rem 0 1rem; display:flex; align-items:center; gap:.7rem}
+  .sec-label::after{content:""; flex:1; height:1px; background:var(--line)}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:1.3rem 1.4rem 1.4rem; box-shadow:var(--shadow); margin-bottom:1rem}
+  .card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+  .brand{font-size:1.22rem; font-weight:800; letter-spacing:-.01em}
+  .brand .niche{font-weight:500; color:var(--faint); font-size:.86rem; margin-left:.5rem}
+  .pill{display:inline-flex; align-items:center; gap:.4em; font-family:var(--mono); font-size:.64rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; padding:.3em .65em; border-radius:999px; white-space:nowrap; color:var(--good); background:var(--good-soft)}
+  .pill .dot{width:.5em; height:.5em; border-radius:50%; background:currentColor}
+  .concept{display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1.1rem}
+  .concept div{background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:.8rem .9rem}
+  .concept b{display:block; font-family:var(--mono); font-size:.63rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-ink); margin-bottom:.3rem}
+  .concept span{font-size:.92rem; color:var(--muted); line-height:1.45; display:block}
+  .counts{display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:.55rem; margin-top:1rem}
+  .cnt{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:.75rem .6rem; text-align:center}
+  .cnt .n{font-size:1.4rem; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1}
+  .cnt .k{font-family:var(--mono); font-size:.6rem; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-top:.45rem}
+  .note{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:.8rem; line-height:1.55}
+  .pconcept{color:var(--muted); font-size:.95rem; margin:.7rem 0 0; max-width:66ch}
+  .sub{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:1.4rem 0 .6rem}
+  .best{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem}
+  .ex{display:flex; flex-direction:column; gap:.35rem}
+  .ex video{width:100%; aspect-ratio:9/16; border-radius:10px; display:block; background:#111; object-fit:cover; border:1px solid var(--line)}
+  .ex .rank{font-family:var(--mono); font-size:.62rem; color:var(--accent-ink); font-weight:700; letter-spacing:.06em; text-transform:uppercase}
+  .ex .h{font-weight:700; font-size:.88rem; line-height:1.3}
+  .ex .m{font-family:var(--mono); font-size:.66rem; color:var(--muted); line-height:1.5}
+  .ex .m a{color:var(--accent-ink)}
+  .cost{display:grid; grid-template-columns:repeat(3,1fr); gap:.55rem; margin-top:.2rem}
+  .cost .cnt{background:var(--accent-soft); border-color:transparent}
+  .cost .cnt .n{color:var(--accent-ink)}
+  .visits{display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.1rem}
+  .visit{display:inline-flex; align-items:center; gap:.5rem; font-family:var(--mono); font-size:.75rem; font-weight:600; padding:.5rem .85rem; border:1px solid var(--line); border-radius:999px; color:var(--accent-ink); background:var(--surface-2)}
+  .visit:hover{border-color:var(--accent); background:var(--accent-soft)}
+  .visit .plat{color:var(--faint)}
+  table{width:100%; border-collapse:collapse; font-size:.86rem; margin-top:.3rem}
+  th,td{text-align:left; padding:.45rem .3rem; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
+  th{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600}
+  td.r,th.r{text-align:right}
+  .ex .thumb{position:relative; display:block}
+  .ex .thumb.blank{position:relative; display:block; aspect-ratio:9/16; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); background-image:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); font-family:var(--mono); font-size:.62rem; color:var(--accent-ink)}
+  .ex .thumb.blank .lbl{position:absolute; left:0; right:0; bottom:12px; text-align:center; padding:0 8px}
+  .ex .play{position:absolute; inset:0; display:grid; place-items:center}
+  .ex .play::before{content:""; width:40px; height:40px; border-radius:50%; background:rgba(0,0,0,.55)}
+  .ex .play::after{content:""; position:absolute; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; margin-left:3px}
+  footer{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:3rem; line-height:1.6}
+  @media(max-width:640px){
+    .concept{grid-template-columns:1fr}
+    .best{grid-template-columns:repeat(3,minmax(0,1fr)); gap:.45rem}
+    .ex .h{font-size:.78rem}
+    .cost{grid-template-columns:1fr 1fr}
+    .hero img{width:60px; height:60px}
+  }
+
+  .sec-label{margin-top:2.2rem}
+  p.body{color:var(--ink); font-size:1rem; line-height:1.6; margin:0; max-width:72ch}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Picsart Social · Executive summary</div>
+  <h1 style="margin-top:.6rem">Social automation at Picsart</h1>
+  <p class="dek">Status as of 2026-10-26.</p>
+
+  <div class="sec-label">What we are doing</div>
+  <p class="body">Five social media brands run entirely on Picsart GenAI: an automated pipeline writes, generates, quality-checks and publishes four to eight posts a day on Instagram, TikTok and Pinterest, every one labelled &quot;made with Picsart&quot;. One person reviews and approves; no production team. Running since Oct 3.</p>
+
+  <div class="sec-label">Why</div>
+  <p class="body">To grow social channels to millions of engagements without manual work, and to prove at scale what Picsart&#x27;s premium models (Seedance 2.5, Gemini 3 Pro Image, Nano Banana Pro) can produce: five concepts tested side by side show which formats earn reach, which earn engagement, and what each costs.</p>
+
+  <div class="sec-label">The goal</div>
+  <p class="body">Grow these channels to millions of engagements and convert that audience into Picsart users: every post is labelled &quot;made with Picsart&quot;, and keyword posts send viewers the exact Picsart steps by DM. The system should run itself, with human work under 30 minutes a day. Each concept gets a scale-or-stop decision after 12 posts, on fixed dates (Nov 21, Nov 28, Dec 5).</p>
+
+  <div class="sec-label">What we have</div>
+  <div class="card"><div style="overflow-x:auto"><table>
+    <thead><tr><th>Brand</th><th>Concept</th><th>Platforms</th><th>Live since</th><th>Cadence</th></tr></thead>
+    <tbody><tr><td>Reelo</td><td class="r">15-second Pixar-style family cartoons: a toddler, a parent and a pet, no dialogue</td><td>Instagram, TikTok</td><td>Oct 17</td><td class="r">4 a day</td></tr><tr><td>Microdramas</td><td>Serialized AI drama, 30 to 60-second episodes with spoken dialogue, 8 to 9 parts per series</td><td>Instagram, TikTok</td><td>Oct 13</td><td class="r">1 to 4 a day</td></tr><tr><td>Dwell</td><td>Luxury interiors: before/afters, room tours and trend carousels for people collecting ideas</td><td>Instagram, TikTok, Pinterest</td><td>Oct 12 (Pinterest Oct 3)</td><td class="r">2 a day + 5 pins</td></tr><tr><td>Faceless</td><td>&quot;Price Tag&quot; reels: one of our finished videos, what buyers pay for it, and the receipt of tools and credits</td><td>Instagram</td><td>Oct 5</td><td class="r">1 a day</td></tr><tr><td>Listed</td><td>Product photos for online sellers: a phone photo fixed in Picsart, then the tutorial</td><td>Instagram</td><td>Oct 5</td><td class="r">1 a day</td></tr></tbody>
+  </table></div></div>
+
+  <div class="sec-label">Results, Oct 3 to Oct 26</div>
+  <p class="body"><b>254K views and 294 followers in three weeks</b>, up 3.6× in the last week. Four fifths of the reach comes from one brand, Reelo&#x27;s cartoons (202K views in nine days); Microdramas brings the engagement (the most saves and shares, the fastest follower growth); the other three are still at the new-account floor. Credits are all-in, every reroll and test included.</p>
+  <div class="card" style="margin-top:1rem"><div style="overflow-x:auto"><table>
+    <thead><tr><th>Brand</th><th class="r">Views</th><th class="r">Followers</th><th class="r">Saves + shares</th><th class="r">Credits spent (all-in)</th><th class="r">Credits per 1K views</th></tr></thead>
+    <tbody><tr><td>Reelo (cartoons since Oct 17)</td><td class="r">202K</td><td class="r">104</td><td class="r">192</td><td class="r">~4,600</td><td class="r">~23</td></tr><tr><td>Microdramas</td><td class="r">34K</td><td class="r">149</td><td class="r">306</td><td class="r">80,297</td><td class="r">~2,400</td></tr><tr><td>Dwell (Instagram + TikTok; Pinterest 880 impressions)</td><td class="r">13K</td><td class="r">33</td><td class="r">174</td><td class="r">5,434</td><td class="r">~420</td></tr><tr><td>Faceless</td><td class="r">0.6K</td><td class="r">4</td><td class="r">not synced</td><td class="r">525</td><td class="r">~870</td></tr><tr><td>Listed</td><td class="r">0.9K</td><td class="r">4</td><td class="r">9</td><td class="r">137</td><td class="r">~160</td></tr><tr><td style="font-weight:700">All five</td><td style="font-weight:700" class="r">254K</td><td style="font-weight:700" class="r">294</td><td style="font-weight:700" class="r">680+</td><td style="font-weight:700" class="r">~100,900</td><td style="font-weight:700" class="r">~400</td></tr></tbody>
+  </table></div></div>
+
+  <div class="sec-label">More detail</div>
+  <p class="body">The best-performing post of each brand, with its numbers: <a href="../best/" style="color:var(--accent-ink)">Best examples →</a></p>
+
+  <footer>Views are Instagram and TikTok video views; Pinterest reports impressions and is kept apart. Credits are all-in: every reroll,
+    remake, test and unposted asset included. Snapshot of 2026-10-26, built 2026-10-26 17:57 Yerevan. Picsart Social automation project · made with Picsart</footer>
+</main>
+</body>
+</html>
