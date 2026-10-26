@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Best Examples · Picsart Social</title>
+<meta name="description" content="The best-working posts of each Picsart Social brand, with their numbers: Reelo, Microdramas, Dwell, Faceless, Listed.">
+<style>
+  :root{
+    --bg:#F7F7F9; --surface:#FFFFFF; --surface-2:#FBFAFC;
+    --ink:#16151B; --muted:#6A6875; --faint:#9A98A5; --line:#EAEAEF;
+    --accent:#C40F6B; --accent-ink:#A50C59; --accent-soft:#FBE9F2;
+    --good:#0E8A54; --good-soft:#E6F4EC;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --shadow:0 1px 2px rgba(20,18,28,.05),0 12px 34px rgba(20,18,28,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#101015; --surface:#18181F; --surface-2:#1E1E26;
+      --ink:#F3F2F7; --muted:#A19FAD; --faint:#6C6A78; --line:#28282F;
+      --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2A1420;
+      --good:#37C98A; --good-soft:#122720;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101015; --surface:#18181F; --surface-2:#1E1E26; --ink:#F3F2F7; --muted:#A19FAD; --faint:#6C6A78;
+    --line:#28282F; --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2A1420;
+    --good:#37C98A; --good-soft:#122720; --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 40px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:840px; margin:0 auto; padding:clamp(40px,7vw,80px) clamp(16px,5vw,40px) 72px}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+  .eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-ink); font-weight:600}
+  .hero{display:flex; gap:1.3rem; align-items:center; margin-top:.9rem}
+  .hero img{width:76px; height:76px; border-radius:50%; object-fit:cover; flex:none; border:1px solid var(--line)}
+  h1{font-size:clamp(2rem,6vw,3.1rem); line-height:1.03; letter-spacing:-.03em; font-weight:800; margin:0; text-wrap:balance}
+  .handle{font-family:var(--mono); font-size:.8rem; color:var(--muted); margin-top:.35rem}
+  .dek{font-size:clamp(1.02rem,2.3vw,1.2rem); color:var(--muted); margin:1.2rem 0 0; max-width:60ch; line-height:1.5}
+  .sec-label{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:3rem 0 1rem; display:flex; align-items:center; gap:.7rem}
+  .sec-label::after{content:""; flex:1; height:1px; background:var(--line)}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:1.3rem 1.4rem 1.4rem; box-shadow:var(--shadow); margin-bottom:1rem}
+  .card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+  .brand{font-size:1.22rem; font-weight:800; letter-spacing:-.01em}
+  .brand .niche{font-weight:500; color:var(--faint); font-size:.86rem; margin-left:.5rem}
+  .pill{display:inline-flex; align-items:center; gap:.4em; font-family:var(--mono); font-size:.64rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; padding:.3em .65em; border-radius:999px; white-space:nowrap; color:var(--good); background:var(--good-soft)}
+  .pill .dot{width:.5em; height:.5em; border-radius:50%; background:currentColor}
+  .concept{display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1.1rem}
+  .concept div{background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:.8rem .9rem}
+  .concept b{display:block; font-family:var(--mono); font-size:.63rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-ink); margin-bottom:.3rem}
+  .concept span{font-size:.92rem; color:var(--muted); line-height:1.45; display:block}
+  .counts{display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:.55rem; margin-top:1rem}
+  .cnt{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:.75rem .6rem; text-align:center}
+  .cnt .n{font-size:1.4rem; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1}
+  .cnt .k{font-family:var(--mono); font-size:.6rem; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-top:.45rem}
+  .note{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:.8rem; line-height:1.55}
+  .pconcept{color:var(--muted); font-size:.95rem; margin:.7rem 0 0; max-width:66ch}
+  .sub{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:1.4rem 0 .6rem}
+  .best{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem}
+  .ex{display:flex; flex-direction:column; gap:.35rem}
+  .ex video{width:100%; aspect-ratio:9/16; border-radius:10px; display:block; background:#111; object-fit:cover; border:1px solid var(--line)}
+  .ex .rank{font-family:var(--mono); font-size:.62rem; color:var(--accent-ink); font-weight:700; letter-spacing:.06em; text-transform:uppercase}
+  .ex .h{font-weight:700; font-size:.88rem; line-height:1.3}
+  .ex .m{font-family:var(--mono); font-size:.66rem; color:var(--muted); line-height:1.5}
+  .ex .m a{color:var(--accent-ink)}
+  .cost{display:grid; grid-template-columns:repeat(3,1fr); gap:.55rem; margin-top:.2rem}
+  .cost .cnt{background:var(--accent-soft); border-color:transparent}
+  .cost .cnt .n{color:var(--accent-ink)}
+  .visits{display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.1rem}
+  .visit{display:inline-flex; align-items:center; gap:.5rem; font-family:var(--mono); font-size:.75rem; font-weight:600; padding:.5rem .85rem; border:1px solid var(--line); border-radius:999px; color:var(--accent-ink); background:var(--surface-2)}
+  .visit:hover{border-color:var(--accent); background:var(--accent-soft)}
+  .visit .plat{color:var(--faint)}
+  table{width:100%; border-collapse:collapse; font-size:.86rem; margin-top:.3rem}
+  th,td{text-align:left; padding:.45rem .3rem; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
+  th{font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600}
+  td.r,th.r{text-align:right}
+  .ex .thumb{position:relative; display:block}
+  .ex .thumb.blank{position:relative; display:block; aspect-ratio:9/16; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); background-image:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); font-family:var(--mono); font-size:.62rem; color:var(--accent-ink)}
+  .ex .thumb.blank .lbl{position:absolute; left:0; right:0; bottom:12px; text-align:center; padding:0 8px}
+  .ex .play{position:absolute; inset:0; display:grid; place-items:center}
+  .ex .play::before{content:""; width:40px; height:40px; border-radius:50%; background:rgba(0,0,0,.55)}
+  .ex .play::after{content:""; position:absolute; border-style:solid; border-width:8px 0 8px 13px; border-color:transparent transparent transparent #fff; margin-left:3px}
+  footer{font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:3rem; line-height:1.6}
+  @media(max-width:640px){
+    .concept{grid-template-columns:1fr}
+    .best{grid-template-columns:repeat(3,minmax(0,1fr)); gap:.45rem}
+    .ex .h{font-size:.78rem}
+    .cost{grid-template-columns:1fr 1fr}
+    .hero img{width:60px; height:60px}
+  }
+
+  ul.common{margin:.6rem 0 0; padding-left:1.2rem; color:var(--muted); font-size:.95rem}
+  ul.common li{margin:.35rem 0}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Picsart Social · Best examples</div>
+  <h1 style="margin-top:.6rem">What works, brand by brand</h1>
+  <p class="dek">Five AI-run brands, 254K views and 294 followers since the Oct 3 takeover. For each brand: its pages, its key
+    numbers and the posts that worked best, with the platform's own counts. Numbers as of 2026-10-26.</p>
+
+  <div class="sec-label">At a glance</div>
+  <div class="card">
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Brand</th><th>Pages</th><th>Live since</th><th class="r">Views</th><th class="r">Followers</th><th class="r">Saves + shares</th></tr></thead>
+      <tbody><tr><td><a href="#reelo"><b>Reelo</b></a></td><td><a href="https://www.instagram.com/reelo.hq/" target="_blank" rel="noopener" style="color:var(--accent-ink)">Instagram</a> · <a href="https://www.tiktok.com/@reelostudio" target="_blank" rel="noopener" style="color:var(--accent-ink)">TikTok</a></td><td>Oct 17</td><td class="r">202K</td><td class="r">104</td><td class="r">192</td></tr><tr><td><a href="#microdramas"><b>Microdramas</b></a></td><td><a href="https://www.instagram.com/microdramas.ai/" target="_blank" rel="noopener" style="color:var(--accent-ink)">Instagram</a> · <a href="https://www.tiktok.com/@microdramas.ai" target="_blank" rel="noopener" style="color:var(--accent-ink)">TikTok</a></td><td>Oct 13</td><td class="r">34K</td><td class="r">149</td><td class="r">306</td></tr><tr><td><a href="#dwell"><b>Dwell</b></a></td><td><a href="https://www.instagram.com/dwell.rooms/" target="_blank" rel="noopener" style="color:var(--accent-ink)">Instagram</a> · <a href="https://www.tiktok.com/@dwellrooms" target="_blank" rel="noopener" style="color:var(--accent-ink)">TikTok</a> · <a href="https://www.pinterest.com/dwellrooms/" target="_blank" rel="noopener" style="color:var(--accent-ink)">Pinterest</a></td><td>Oct 12 · Pinterest Oct 3</td><td class="r">13K</td><td class="r">33</td><td class="r">174</td></tr><tr><td><a href="#faceless"><b>Faceless</b></a></td><td><a href="https://www.instagram.com/faceless_monetization/" target="_blank" rel="noopener" style="color:var(--accent-ink)">Instagram</a></td><td>Oct 5</td><td class="r">0.6K</td><td class="r">4</td><td class="r">not synced</td></tr><tr><td><a href="#listed"><b>Listed</b></a></td><td><a href="https://www.instagram.com/listed.hq/" target="_blank" rel="noopener" style="color:var(--accent-ink)">Instagram</a></td><td>Oct 5</td><td class="r">0.9K</td><td class="r">4</td><td class="r">9</td></tr></tbody>
+    </table></div>
+    <p class="note">Views are Instagram and TikTok video views since the takeover (Pinterest reports impressions, kept apart: 880 on 401
+      pins). One video posted on both platforms counts on each. Credits per post are all-in, rerolls included.</p>
+  </div>
+
+  <div class="sec-label">Brand by brand</div>
+  
+  <article class="card" id="reelo">
+    <div class="card-top">
+      <div class="hero" style="margin-top:0">
+        <img src="../reelo/assets/logo-reelo.jpg" alt="Reelo profile picture" style="width:52px;height:52px">
+        <div><div class="brand">Reelo<span class="niche">35 reels on each platform</span></div>
+        <div class="handle">@reelo.hq · @reelostudio</div></div>
+      </div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">15-second Pixar-style stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. Four reels a day on Instagram and TikTok, the same file on both. Median reel 2,400 views on Instagram and 340 on TikTok; followers from 21 to 104 in nine days. One keyframe on Gemini 3 Pro Image, one 15-second Seedance 2.5 take with native sound.</p>
+    <div class="counts"><div class="cnt"><div class="n">Oct 17</div><div class="k">Live since</div></div><div class="cnt"><div class="n">202K</div><div class="k">Views</div></div><div class="cnt"><div class="n">104</div><div class="k">Followers</div></div><div class="cnt"><div class="n">192</div><div class="k">Saves + shares</div></div><div class="cnt"><div class="n">110–220</div><div class="k">Credits per post</div></div></div>
+    <div class="sub">Best posts</div>
+    <div class="best"><div class="ex">
+          <video src="../reelo/assets/cartoon-sky-car-wash.mp4" poster="../reelo/assets/cartoon-sky-car-wash.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · cartoon · Oct 19</span>
+          <span class="h">Who opened the windows? Nobody. Obviously 🫧</span>
+          <span class="m">35,741 views · 140 likes · 17 shares · 20 saves · 110 credits · <a href="https://www.instagram.com/reel/Der23p6Aiz-/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../reelo/assets/cartoon-sky-traffic.mp4" poster="../reelo/assets/cartoon-sky-traffic.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#2 · cartoon · Oct 19</span>
+          <span class="h">2028 fixed flying cars. It did not fix traffic 🚦</span>
+          <span class="m">24,330 views · 122 likes · 0 shares · 10 saves · 220 credits · <a href="https://www.instagram.com/reel/DerzNerjBxl/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../reelo/assets/cartoon-pacifier-hunt.mp4" poster="../reelo/assets/cartoon-pacifier-hunt.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#3 · cartoon · Oct 23</span>
+          <span class="h">We searched for 40 minutes. The cat had it 🍼</span>
+          <span class="m">10,800 views · 57 likes · 1 shares · 8 saves · 115 credits · <a href="https://www.instagram.com/reel/De2DAtBjEiW/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div></div>
+    <p class="note">What the winners share: One visible gag in the first two seconds, a child&#x27;s face reacting, and a caption that asks for a one-word comment.</p>
+    <div class="visits"><a class="visit" href="https://www.instagram.com/reelo.hq/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @reelo.hq →</a><a class="visit" href="https://www.tiktok.com/@reelostudio" target="_blank" rel="noopener"><span class="plat">TikTok</span> @reelostudio →</a></div>
+  </article>
+  <article class="card" id="microdramas">
+    <div class="card-top">
+      <div class="hero" style="margin-top:0">
+        <img src="../microdramas/assets/logo-microdramas.jpg" alt="Microdramas profile picture" style="width:52px;height:52px">
+        <div><div class="brand">Microdramas<span class="niche">36 episodes on each platform</span></div>
+        <div class="handle">@microdramas.ai</div></div>
+      </div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">Serialized AI drama: 30 to 60-second episodes with spoken dialogue, 8 to 9 parts per series, every part ending on a question. Five series live. The most engaged audience of the five brands: 179 saves and 127 shares. The realistic TV-drama style used since Oct 21 (ONE YEAR, NO LOVE) averages 2,300 views per episode on Instagram with 26 seconds of watch time, against about 200 views and 8 seconds for the earlier series.</p>
+    <div class="counts"><div class="cnt"><div class="n">Oct 13</div><div class="k">Live since</div></div><div class="cnt"><div class="n">34K</div><div class="k">Views</div></div><div class="cnt"><div class="n">149</div><div class="k">Followers</div></div><div class="cnt"><div class="n">306</div><div class="k">Saves + shares</div></div><div class="cnt"><div class="n">1,100–2,700</div><div class="k">Credits per post</div></div></div>
+    <div class="sub">Best posts</div>
+    <div class="best"><div class="ex">
+          <video src="../microdramas/assets/one-year-no-love-1.mp4" poster="../microdramas/assets/one-year-no-love-1.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · ONE YEAR NO LOVE · Part 1</span>
+          <span class="h">ONE YEAR, NO LOVE – PART 1</span>
+          <span class="m">13,600 views · 153 likes · 6 shares · 29 saves · 1,450 credits · <a href="https://www.instagram.com/reel/DezDEZPAJYV/" target="_blank" rel="noopener">watch on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../microdramas/assets/one-year-no-love-4.mp4" poster="../microdramas/assets/one-year-no-love-4.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#2 · ONE YEAR NO LOVE · Part 4</span>
+          <span class="h">ONE YEAR, NO LOVE – PART 4</span>
+          <span class="m">2,418 views · 24 likes · 0 shares · 5 saves · 1,260 credits · <a href="https://www.instagram.com/reel/De1PbWXD86Y/" target="_blank" rel="noopener">watch on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../microdramas/assets/one-year-no-love-3.mp4" poster="../microdramas/assets/one-year-no-love-3.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#3 · ONE YEAR NO LOVE · Part 3</span>
+          <span class="h">ONE YEAR, NO LOVE – PART 3</span>
+          <span class="m">2,181 views · 26 likes · 4 shares · 5 saves · 1,636 credits · <a href="https://www.instagram.com/reel/DezXgXrlIxL/" target="_blank" rel="noopener">watch on Instagram →</a></span>
+        </div></div>
+    <p class="note">What the winners share: The premise is said out loud in the first five seconds, subtitles on every line, and a cliffhanger that makes the next part the obvious click.</p>
+    <div class="visits"><a class="visit" href="https://www.instagram.com/microdramas.ai/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @microdramas.ai →</a><a class="visit" href="https://www.tiktok.com/@microdramas.ai" target="_blank" rel="noopener"><span class="plat">TikTok</span> @microdramas.ai →</a></div>
+  </article>
+  <article class="card" id="dwell">
+    <div class="card-top">
+      <div class="hero" style="margin-top:0">
+        <img src="../dwell/assets/logo-dwell.jpg" alt="Dwell profile picture" style="width:52px;height:52px">
+        <div><div class="brand">Dwell<span class="niche">32 posts on each platform + 105 pins</span></div>
+        <div class="handle">@dwell.rooms · @dwellrooms</div></div>
+      </div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">Empty rooms turned into modern, old-money and chic luxury interiors: before/after match cuts, room tours, variation swaps and trend carousels, two a day on Instagram and TikTok, plus five editorial room photos a day on Pinterest. The highest saves per view of the five brands; Pinterest returns little so far (880 impressions on 401 pins). A design review on Oct 23 set the next fixes: readable titles, a font per style, same-room before/afters, more realistic video.</p>
+    <div class="counts"><div class="cnt"><div class="n">Oct 12 · Pinterest Oct 3</div><div class="k">Live since</div></div><div class="cnt"><div class="n">13K</div><div class="k">Views</div></div><div class="cnt"><div class="n">33</div><div class="k">Followers</div></div><div class="cnt"><div class="n">174</div><div class="k">Saves + shares</div></div><div class="cnt"><div class="n">40–190 · pins 5</div><div class="k">Credits per post</div></div></div>
+    <div class="sub">Best posts</div>
+    <div class="best"><div class="ex">
+          <video src="../dwell/assets/dwell-batch-refs-2026-10-20-04-old-money-interiors.mp4" poster="../dwell/assets/dwell-batch-refs-2026-10-20-04-old-money-interiors.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Post</span>
+          <span class="h">Old money interiors.</span>
+          <span class="m">977 views · 26 likes · 1 shares · 7 saves · 187 credits · <a href="https://www.instagram.com/reel/De1FZR7jY34/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../dwell/assets/dwell-W43-01-wabi-sabi-spa-bath.mp4" poster="../dwell/assets/dwell-W43-01-wabi-sabi-spa-bath.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#2 · Before / after · 19 s</span>
+          <span class="h">Slow mornings start in the right room.</span>
+          <span class="m">426 views · 12 likes · 8 shares · 7 saves · 150 credits · <a href="https://www.instagram.com/reel/Dejs5QPEoEf/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../dwell/assets/dwell-W42-01-parisian-salon.mp4" poster="../dwell/assets/dwell-W42-01-parisian-salon.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Before / after · 19 s</span>
+          <span class="h">Some rooms never go out of style.</span>
+          <span class="m">795 views · 20 likes · 0 shares · 5 saves · 143 credits · <a href="https://www.tiktok.com/@dwellrooms/video/7695796967913442566" target="_blank" rel="noopener">open on TikTok →</a></span>
+        </div></div>
+    <p class="note">What the winners share: A named style people search for (old money, quiet luxury) and a reveal in the first three seconds.</p>
+    <div class="visits"><a class="visit" href="https://www.instagram.com/dwell.rooms/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @dwell.rooms →</a><a class="visit" href="https://www.tiktok.com/@dwellrooms" target="_blank" rel="noopener"><span class="plat">TikTok</span> @dwellrooms →</a><a class="visit" href="https://www.pinterest.com/dwellrooms/" target="_blank" rel="noopener"><span class="plat">Pinterest</span> @dwellrooms →</a></div>
+  </article>
+  <article class="card" id="faceless">
+    <div class="card-top">
+      <div class="hero" style="margin-top:0">
+        <img src="../faceless/assets/logo-faceless.jpg" alt="Faceless profile picture" style="width:52px;height:52px">
+        <div><div class="brand">Faceless<span class="niche">21</span></div>
+        <div class="handle">@faceless_monetization</div></div>
+      </div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">&quot;Price Tag&quot; reels: one of our finished videos, what buyers pay for that kind of video, and the receipt of tools and credits. Instagram only, one post a day. Still at the new-account floor; from Oct 26 every post reuses the other brands&#x27; best videos, so a post costs 0 extra credits.</p>
+    <div class="counts"><div class="cnt"><div class="n">Oct 5</div><div class="k">Live since</div></div><div class="cnt"><div class="n">0.6K</div><div class="k">Views</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div><div class="cnt"><div class="n">not synced</div><div class="k">Saves + shares</div></div><div class="cnt"><div class="n">0–67</div><div class="k">Credits per post</div></div></div>
+    <div class="sub">Best posts</div>
+    <div class="best"><div class="ex">
+          <video src="../faceless/assets/2026-W43-3_wed_gord_ep1.mp4" poster="../faceless/assets/2026-W43-3_wed_gord_ep1.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Build it · Oct 21</span>
+          <span class="h">Small brands pay for skits like this. Meet Gord, episode 1. Comment SKIT for his prompts and the 3-beat episode formula.</span>
+          <span class="m">150 views · 48 credits · <a href="https://www.instagram.com/reel/Dewk0BIk2ex/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../faceless/assets/2026-W43-4_thu_ai_horror_trailer.mp4" poster="../faceless/assets/2026-W43-4_thu_ai_horror_trailer.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#2 · Build it · Oct 22</span>
+          <span class="h">This horror film doesn&#x27;t exist. The trailer cost 47 credits, and X now pays original video once you pass its thresholds. Follow for tomorrow&#x27;s 4-step tutorial.</span>
+          <span class="m">107 views · 47 credits · <a href="https://www.instagram.com/reel/DezJoDKDFkT/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../faceless/assets/2026-W43-5_fri_trailer_tutorial.mp4" poster="../faceless/assets/2026-W43-5_fri_trailer_tutorial.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#3 · How-to · Oct 23</span>
+          <span class="h">A horror trailer in 4 steps, 47 credits. The logline template and every prompt: comment TRAILER.</span>
+          <span class="m">86 views · 0 credits · <a href="https://www.instagram.com/reel/De1vDIqEirI/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div></div>
+    <p class="note">What the winners share: A finished video first (a character skit, a trailer). How-to and price breakdowns on their own stay under 100 views.</p>
+    <div class="visits"><a class="visit" href="https://www.instagram.com/faceless_monetization/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @faceless_monetization →</a></div>
+  </article>
+  <article class="card" id="listed">
+    <div class="card-top">
+      <div class="hero" style="margin-top:0">
+        <img src="../listed/assets/logo-listed.jpg" alt="Listed profile picture" style="width:52px;height:52px">
+        <div><div class="brand">Listed<span class="niche">21 · nine products</span></div>
+        <div class="handle">@listed.hq</div></div>
+      </div>
+      <span class="pill"><span class="dot"></span>Live</span>
+    </div>
+    <p class="pconcept">Product photos for online sellers: an everyday phone photo of a product, fixed in Picsart, then the tutorial with the exact path, and a Sunday carousel of the week. Instagram only, one post a day; median 26 views. Scale-or-stop call at its 12-post read.</p>
+    <div class="counts"><div class="cnt"><div class="n">Oct 5</div><div class="k">Live since</div></div><div class="cnt"><div class="n">0.9K</div><div class="k">Views</div></div><div class="cnt"><div class="n">4</div><div class="k">Followers</div></div><div class="cnt"><div class="n">9</div><div class="k">Saves + shares</div></div><div class="cnt"><div class="n">5–28 per product</div><div class="k">Credits per post</div></div></div>
+    <div class="sub">Best posts</div>
+    <div class="best"><div class="ex">
+          <video src="../listed/assets/leather-keychain-animate-261005-p1_before_after.mp4" poster="../listed/assets/leather-keychain-animate-261005-p1_before_after.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Before / after · Oct 21</span>
+          <span class="h">Same leather keychain photo, now a short video ad for the listing, made with Remove Background, Edit with AI and AI Playground.</span>
+          <span class="m">152 views · 0 likes · 0 saves · 28 credits · <a href="https://www.instagram.com/reel/Dewk2ApiC6R/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../listed/assets/desk-lamp-animate-261001-p1_before_after.mp4" poster="../listed/assets/desk-lamp-animate-261001-p1_before_after.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#2 · Before / after · Oct 9</span>
+          <span class="h">Same desk lamp photo, now a short video ad for the listing, made with Edit with AI and AI Playground.</span>
+          <span class="m">127 views · 3 likes · 1 saves · 18 credits · <a href="https://www.instagram.com/reel/DeRrW4TAmbZ/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div><div class="ex">
+          <video src="../listed/assets/white-sneakers-multiply-261005-p2_tutorial.mp4" poster="../listed/assets/white-sneakers-multiply-261005-p2_tutorial.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#3 · Tutorial · Oct 24</span>
+          <span class="h">Every colour of your white sneakers, one photo.</span>
+          <span class="m">114 views · 0 likes · 0 saves · 0 credits · <a href="https://www.instagram.com/reel/De4TJTFidbe/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        </div></div>
+    <p class="note">What the winners share: A product photo turned into a short video ad does best; static before/afters and tutorials stay under 60 views.</p>
+    <div class="visits"><a class="visit" href="https://www.instagram.com/listed.hq/" target="_blank" rel="noopener"><span class="plat">Instagram</span> @listed.hq →</a></div>
+  </article>
+
+  <div class="sec-label">What the examples have in common</div>
+  <div class="card">
+    <ul class="common"><li>The best post of every brand shows a finished result in the first two to five seconds; explanation comes after, or not at all.</li><li>Short and silent travels furthest (cartoons: about 23 credits per 1,000 views). Dialogue and story travel less far but are saved and shared (drama: 306 saves and shares on 34K views).</li><li>Styles and words people already search for (old money, quiet luxury, &quot;which one would you pick&quot;) outperform invented ones.</li><li>Each file is posted on Instagram and TikTok at the same time; Instagram carries most of the views on every brand.</li></ul>
+    <p class="note">Full numbers per brand and platform, refreshed every Friday:
+      <a href="../summary/" style="color:var(--accent-ink)">Picsart Social brands report →</a></p>
+  </div>
+
+  <footer>Views, likes, saves and shares come from Instagram, TikTok and Pinterest; followers and the newest reels are read from the
+    public profiles. Snapshot of 2026-10-26, built 2026-10-26 17:09 Yerevan. Picsart Social automation project · made with Picsart</footer>
+</main>
+</body>
+</html>
