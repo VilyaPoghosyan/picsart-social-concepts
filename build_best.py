@@ -123,7 +123,7 @@ def main() -> None:
 <main class="wrap">
   <div class="eyebrow">Picsart Social · Best examples</div>
   <h1 style="margin-top:.6rem">What works, brand by brand</h1>
-  <p class="dek">Five AI-run brands, 254K views and 294 followers since the Oct 3 takeover. One brand, one best post, its numbers. As of {AS_OF}.</p>
+  <p class="dek">Five AI-run brands, 254K views and 294 followers from Oct 3 to Oct 26. One brand, one best post, its numbers. As of {AS_OF}.</p>
 
   <div class="sec-label">At a glance</div>
   <div class="card">
@@ -131,7 +131,7 @@ def main() -> None:
       <thead><tr><th>Brand</th><th>Pages</th><th>Live since</th><th class="r">Views</th><th class="r">Followers</th><th class="r">Saves + shares</th></tr></thead>
       <tbody>{glance_rows()}</tbody>
     </table></div>
-    <p class="note">Views = Instagram + TikTok video views since the takeover; Pinterest (880 impressions on 401 pins) kept apart. Credits per post are all-in.</p>
+    <p class="note">Views = Instagram + TikTok video views, Oct 3 to Oct 26; Pinterest (880 impressions on 401 pins) kept apart. Credits per post are all-in.</p>
   </div>
 
   <div class="sec-label">Brand by brand</div>
