@@ -493,7 +493,7 @@ def build_microdramas():
   <div class="sec-label">Key concept</div>
   <div class="card">
     <div class="concept">
-      <div><b>Format</b><span>Vertical 9:16 episodes of 8-part series. Each part ends on a question, so viewers come back for the next one.</span></div>
+      <div><b>Format</b><span>Vertical 9:16 episodes of 8- to 9-part series. Each part ends on a question, so viewers come back for the next one.</span></div>
       <div><b>Look</b><span>Series 1–4: 35 mm film, candlelight, satin and tuxedos, rainy streets. Since Oct 21: prime-time TV-drama realism, tight close-ups, burned-in subtitles. Each series has its own cast with fixed faces and voices.</span></div>
       <div><b>Engine</b><span>Keyframes on Nano Banana Pro and Seedream, continuous takes with native dialogue on Seedance 2.5, finished with the Picsart end card.</span></div>
     </div>
@@ -1300,7 +1300,7 @@ def build_listed():
       <div><b>Tutorial</b><span>Result first, then every step with the exact tool path on picsart.com/create. Sunday: a carousel of the week.</span></div>
       <div><b>Seller jobs</b><span>Fix, Stage, Multiply, Animate, Create: Remove Background, Edit with AI, Relight Studio, AI Replace, AI Playground.</span></div>
     </div>
-    <p class="note">Live on Instagram only; other platforms are not connected yet. The daily post ran Oct 5–25 (seven products, three
+    <p class="note">Live on Instagram only; other platforms are not connected yet. The daily post ran Oct 5–25 (nine products, three
       weekly carousels); nothing is scheduled after Oct 25 until the next product threads are approved.</p>
   </div>
 
