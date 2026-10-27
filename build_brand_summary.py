@@ -96,8 +96,12 @@ ALL_IN = {
         extra="the older tiny-world videos cost up to 436 each"),
     "faceless": dict(total=524.5, waste=0, unposted=0, per_max=67, unit="post",
         waste_note="no remakes logged; Price Tag posts reuse other brands' videos (0 extra)"),
-    "listed": dict(total=137, waste=11, unposted=0, per_max=28, unit="product",
-        waste_note="tests and redone steps"),
+    # Listed: v2 threads 137 (Oct 5-25) + v3 character skits 4,143 (2026-10-27: 25 sketches, 5 examples 1,051,
+    # their fixes 206, cast options 60, the cat CEO post 229, batch 2 of 10 posts 2,572 incl. one redone take)
+    "listed": dict(total=4280, waste=209, unposted=1257, per_max=290, unit="skit",
+        waste_note="v2 tests and redone steps (11), character and look options (85), a redone take and redone after images in the skit batch (113)",
+        unposted_note="the five first example skits, kept as references",
+        extra="v2 before/after threads cost up to 28 per product"),
 }
 
 
@@ -1193,7 +1197,7 @@ def build_faceless():
 
 
 LISTED = OUT.parent / "projects/listed"
-LISTED_PILLAR = {"flip": "Before / after", "tutorial": "Tutorial", "carousel": "Carousel"}
+LISTED_PILLAR = {"flip": "Before / after", "tutorial": "Tutorial", "carousel": "Carousel", "skit": "Character skit"}
 
 
 def listed_thread_credits(slug):
@@ -1209,19 +1213,23 @@ def build_listed():
     apply_live(stats.values())
     A = "../../listed/assets"
     posts = []
-    for w in sorted((LISTED / "plans").glob("2026-*")):
+    # v2 weeks are plans/<monday>/, v3 skit batches plans/v3-<first-date>/
+    for w in sorted((LISTED / "plans").glob("2026-*")) + sorted((LISTED / "plans").glob("v3-*")):
         plan = json.loads((w / "plan.json").read_text())
         led = json.loads((w / "instagram.json").read_text()) if (w / "instagram.json").exists() else {}
         for it in plan["items"]:
             e = led.get(f"{it['slug']}:{it['pillar']}")
             if not e:
                 continue
-            # a thread's credits sit on its before/after post; the tutorial and the carousel reuse those assets
-            cr = listed_thread_credits(it["slug"]) if it["pillar"] == "flip" else 0
-            asset = (f"{it['slug']}-p1_before_after" if it["pillar"] == "flip" else
-                     f"{it['slug']}-p2_tutorial" if it["pillar"] == "tutorial" else f"{it['slug']}-slide1")
-            src = (LISTED / "threads" / it["slug"] / "out" / ("p1_before_after.mp4" if it["pillar"] == "flip" else "p2_tutorial.mp4")
-                   if it["pillar"] != "carousel" else w / "carousel" / "slide_01.jpg")
+            if it["pillar"] == "skit":  # v3: every skit carries its own all-in credits (plan item from brief.json)
+                cr, asset, src = it.get("credits") or 0, f"{it['slug']}-skit", Path(it["files"][0])
+            else:
+                # a thread's credits sit on its before/after post; the tutorial and the carousel reuse those assets
+                cr = listed_thread_credits(it["slug"]) if it["pillar"] == "flip" else 0
+                asset = (f"{it['slug']}-p1_before_after" if it["pillar"] == "flip" else
+                         f"{it['slug']}-p2_tutorial" if it["pillar"] == "tutorial" else f"{it['slug']}-slide1")
+                src = (LISTED / "threads" / it["slug"] / "out" / ("p1_before_after.mp4" if it["pillar"] == "flip" else "p2_tutorial.mp4")
+                       if it["pillar"] != "carousel" else w / "carousel" / "slide_01.jpg")
             posts.append(dict(slug=it["slug"], pillar=it["pillar"], when=when_of(e), postId=e["postId"], credits=cr, src=src,
                               asset=asset, caption=it["caption"].split(" Comment FIX")[0].split(" The exact path:")[0].split("\n")[0]))
     live = [p for p in posts if p["when"] <= NOW]
@@ -1229,6 +1237,9 @@ def build_listed():
     num = [(p, stats[p["postId"]]) for p in live if (stats.get(p["postId"]) or {}).get("views") is not None]
     c = [p["credits"] for p in live]
     threads_live = [p["credits"] for p in live if p["pillar"] == "flip"]
+    skits_all = [p["credits"] for p in posts if p["pillar"] == "skit"]  # made and paid, live or scheduled
+    last_sched = max((p["when"] for p in soon), default=None)
+    sched_note = f", scheduled to {last_sched:%b %-d}" if last_sched else ""
     cf = lambda x: f"{x:g}"  # noqa: E731
 
     if num:
@@ -1271,16 +1282,20 @@ def build_listed():
                      f'it returns "sync pending" for all {len(live)} live posts, so views, likes and saves are shown as '
                      f'not synced rather than as 0.</p>')
     P = dict(name="Instagram", fmt="Reels + carousels", handle="@listed.hq", url="https://www.instagram.com/listed.hq/",
-             concept="One post a day at 18:00 Yerevan, in threads: a product's before/after, the next day its tutorial "
-                     "with the exact path in Picsart, and a Sunday carousel of the week's three products. Every post ends "
-                     "on \"Comment FIX\", and the comment sends the step-by-step by DM with a button to open Picsart.")
+             concept="Since Oct 27, three to four character skits a day: a funny AI character roasts a seller's bad "
+                     "product photo, compares a pro team (money and time) with Picsart, and shows the real result. Before "
+                     "that, one post a day (Oct 5-25): a product's before/after, its tutorial, a Sunday carousel. Every "
+                     "post ends on \"Comment FIX\", and the comment sends the step-by-step by DM with a button to open Picsart.")
     cards = card("instagram", P,
                  [("Published", n(len(live))), ("Scheduled", n(len(soon))), ("Followers", n(fol.get("instagram", 0)))] + nums,
                  "Per post", [("Posts with views", f"{len(num)} of {len(live)}")],
                  sync_note, best,
                  [("Credits / post, avg", cf(round(mean(c), 1))), ("Median", cf(median(c))), ("Range", rng(c, cf)),
-                  ("Credits / product", f"{cf(round(mean(threads_live), 1))} avg")],
-                 f"From each product thread's call log, rejected takes included. One product = 2 posts: the "
+                  ("Credits / product", f"{cf(round(mean(threads_live), 1))} avg" if threads_live else "–"),
+                  ("Credits / skit", f"{cf(round(mean(skits_all), 1))} avg" if skits_all else "–")],
+                 f"Character skits (since Oct 27): each post's own all-in credits, its share of redone takes "
+                 f"included ({rng(skits_all, cf) if skits_all else '–'} per skit). Earlier posts, from each product "
+                 f"thread's call log, rejected takes included. One product = 2 posts: the "
                  f"before/after carries the thread's credits ({rng(threads_live, cf)} per product, {len(threads_live)} "
                  f"products live) and the tutorial reuses the same files; the Sunday carousel reuses all three. The "
                  f"one-off sound kit (54 credits of music and effects shared by every video) is not in the per-post figure.")
@@ -1311,21 +1326,22 @@ def build_listed():
   <div class="sec-label">Key concept</div>
   <div class="card">
     <div class="concept">
-      <div><b>Before / after</b><span>An everyday phone-style photo of a product (AI-made), then the listing photo or short video ad made from it.</span></div>
-      <div><b>Tutorial</b><span>Result first, then every step with the exact tool path on picsart.com/create. Sunday: a carousel of the week.</span></div>
-      <div><b>Seller jobs</b><span>Fix, Stage, Multiply, Animate, Create: Remove Background, Edit with AI, Relight Studio, AI Replace, AI Playground.</span></div>
+      <div><b>Character skits (now)</b><span>A seller posts a bad product photo and gets 0 likes. One of ten AI characters (a sassy grandma, a cat CEO, a strawberry diva…) roasts it, compares a pro team's money and time with Picsart, and the real Picsart result lands with likes. About 32 seconds.</span></div>
+      <div><b>Real tools</b><span>Remove Background, Edit with AI, Relight Studio, AI Enhance, AI Replace, AI Playground, each with the exact path sent by DM.</span></div>
+      <div><b>Before (Oct 5–25)</b><span>A product's before/after, then its tutorial with the exact tool path, and a Sunday carousel of the week.</span></div>
     </div>
-    <p class="note">Live on Instagram only; other platforms are not connected yet. The daily post ran Oct 5–25 (nine products, three
-      weekly carousels); nothing is scheduled after Oct 25 until the next product threads are approved.</p>
+    <p class="note">Live on Instagram only; other platforms are not connected yet. The before/after posts ran Oct 5–25 (nine products,
+      three weekly carousels); character skits since Oct 27, three to four a day{sched_note}.</p>
   </div>
 
   <div class="sec-label">Overall</div>
   <div class="card">
     <div class="counts">{tiles([("Platforms", "1"), ("Published", n(len(live))), ("Scheduled", n(len(soon))),
                                 ("Followers", n(fol.get("instagram", 0)))])}</div>
-    <div class="sub">Cost · {len(live)} live posts, {len(threads_live)} products</div>
-    <div class="cost">{tiles([("Credits spent", cf(sum(c))), ("Avg / post", cf(round(mean(c), 1))),
-                              ("Avg / product", cf(round(mean(threads_live), 1))), ("Range / product", rng(threads_live, cf))])}</div>
+    <div class="sub">Cost · {len(live)} live posts, {len(threads_live)} products, {len(skits_all)} skits made and scheduled</div>
+    <div class="cost">{tiles([("Credits on live posts", cf(sum(c))), ("Avg / post", cf(round(mean(c), 1)) if c else "–"),
+                              ("Avg / product (before)", cf(round(mean(threads_live), 1)) if threads_live else "–"),
+                              ("Avg / skit", cf(round(mean(skits_all), 1)) if skits_all else "–")])}</div>
   </div>
 
   <div class="sec-label">Platform, by the numbers</div>
@@ -1343,7 +1359,7 @@ def build_listed():
     print(f"listed summary: live {len(live)} sched {len(soon)} synced {len(num)} credits {sum(c)} threads {threads_live}")
     return dict(brand="Listed", slug="listed", what="Product photos for sellers", platforms="Instagram",
                 pub=len(live), sched=len(soon), reach=f"{n(tot['views'])} views" if num else "not synced yet", fol=fol.get("instagram", 0),
-                unit="product (2 posts)", per=cf(round(mean(threads_live), 1)), per_rng=rng(threads_live, cf),
+                unit="skit", per=cf(round(mean(skits_all or threads_live), 1)), per_rng=rng(skits_all or threads_live, cf),
                 spent=cf(sum(c)))
 
 
