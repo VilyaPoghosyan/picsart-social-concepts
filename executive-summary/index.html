@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Executive Summary · Picsart Social</title>
-<meta name="description" content="Social automation at Picsart: what we are doing, why, the goal, the five brands and the results for Oct 3 to Oct 26.">
+<meta name="description" content="Social automation at Picsart: what we are doing, the goal, one dashboard of the five brands and the best post of each.">
 <style>
   :root{
     --bg:#F7F7F9; --surface:#FFFFFF; --surface-2:#FBFAFC;
@@ -92,43 +92,97 @@
     .hero img{width:60px; height:60px}
   }
 
-  .sec-label{margin-top:2.2rem}
-  p.body{color:var(--ink); font-size:1rem; line-height:1.6; margin:0; max-width:72ch}
+  .wrap{max-width:1040px}
+  .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; margin-top:1.6rem}
+  .kpi{background:linear-gradient(160deg,var(--accent-soft),var(--surface)); border:1px solid var(--line); border-radius:14px; padding:1rem 1.1rem}
+  .kpi .n{font-size:2rem; font-weight:800; letter-spacing:-.03em; line-height:1; color:var(--accent-ink); font-variant-numeric:tabular-nums}
+  .kpi .k{font-family:var(--mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:.5rem}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem}
+  .two .card{margin:0}
+  .two h3{font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); margin:0 0 .5rem}
+  .two p{margin:0; color:var(--ink); font-size:.97rem; line-height:1.55}
+  .dash{padding:.6rem .4rem .4rem}
+  table.dash-t{font-size:.86rem; table-layout:fixed; min-width:720px}
+  table.dash-t col.w-brand{width:16%} table.dash-t col.w-concept{width:27%} table.dash-t col.w-plat{width:17%}
+  table.dash-t col.w-views{width:15%} table.dash-t col.w-fol{width:8%} table.dash-t col.w-eng{width:8%} table.dash-t col.w-cr{width:9%}
+  table.dash-t th{padding:.6rem .6rem; border-bottom:2px solid var(--line)}
+  table.dash-t td{padding:.75rem .6rem; vertical-align:middle}
+  table.dash-t tbody tr:hover td{background:var(--surface-2)}
+  .bname{display:flex; align-items:center; gap:.6rem; font-weight:800; white-space:nowrap}
+  .bname img{width:34px; height:34px; border-radius:50%; object-fit:cover; border:2px solid var(--hue)}
+  .bname small{display:block; font-family:var(--mono); font-size:.6rem; font-weight:500; color:var(--faint); letter-spacing:.04em}
+  td.c{color:var(--muted); font-size:.82rem; line-height:1.4}
+  td.r{white-space:nowrap}
+  a.plat{display:inline-block; font-family:var(--mono); font-size:.66rem; font-weight:600; padding:.22em .55em; border-radius:999px; border:1px solid var(--line); color:var(--accent-ink); background:var(--surface-2); margin:.1rem .15rem .1rem 0}
+  a.plat:hover{border-color:var(--accent); background:var(--accent-soft)}
+  .v{font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap}
+  .v small{font-weight:500; color:var(--faint); font-size:.68rem}
+  .bar{display:block; height:5px; border-radius:3px; background:var(--line); margin-top:.35rem; margin-left:auto; width:min(110px,100%); position:relative; overflow:hidden}
+  .bar::after{content:""; position:absolute; right:0; top:0; bottom:0; width:var(--w); background:var(--hue); border-radius:3px}
+  tr.tot td{font-weight:800; border-top:2px solid var(--line); border-bottom:0; background:var(--surface-2)}
+  .picks{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:.8rem}
+  .pick{margin:0; display:flex; flex-direction:column; gap:.35rem; border-top:3px solid var(--hue); padding-top:.6rem}
+  .pick .ex{display:flex; flex-direction:column; gap:.35rem}
+  .pick figcaption b{font-size:.8rem}
+  @media(max-width:860px){ .picks{grid-template-columns:repeat(2,minmax(0,1fr))} .two{grid-template-columns:1fr} .kpis{grid-template-columns:1fr 1fr 1fr} td.c{max-width:none} }
+  @media(max-width:520px){ .kpis{grid-template-columns:1fr} .picks{grid-template-columns:1fr 1fr} }
 </style>
 </head>
 <body>
 <main class="wrap">
   <div class="eyebrow">Picsart Social · Executive summary</div>
   <h1 style="margin-top:.6rem">Social automation at Picsart</h1>
-  <p class="dek">Status as of 2026-10-26.</p>
+  <p class="dek">Five AI-run brands, Oct 3 to Oct 27. Numbers from Instagram, TikTok and Pinterest, pulled 2026-10-27 13:03 Yerevan.</p>
 
-  <div class="sec-label">What we are doing</div>
-  <p class="body">Five social media brands run entirely on Picsart GenAI: an automated pipeline writes, generates, quality-checks and publishes four to eight posts a day on Instagram, TikTok and Pinterest, every one labelled &quot;made with Picsart&quot;. One person reviews and approves; no production team. Running since Oct 3.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="n">301K</div><div class="k">Views</div></div>
+    <div class="kpi"><div class="n">362</div><div class="k">Followers</div></div>
+    <div class="kpi"><div class="n">701</div><div class="k">Posts published</div></div>
+  </div>
 
-  <div class="sec-label">Why</div>
-  <p class="body">To grow social channels to millions of engagements without manual work, and to prove at scale what Picsart&#x27;s premium models (Seedance 2.5, Gemini 3 Pro Image, Nano Banana Pro) can produce: five concepts tested side by side show which formats earn reach, which earn engagement, and what each costs.</p>
+  <div class="two">
+    <div class="card"><h3>What we are doing</h3><p>Five social media brands run end to end on Picsart GenAI. An automated pipeline writes, generates, quality-checks and publishes four to eight posts a day on Instagram, TikTok and Pinterest; one person reviews and approves, no production team. Every post carries &quot;made with Picsart&quot;. Running since Oct 3.</p></div>
+    <div class="card"><h3>The goal</h3><p>Millions of engagements, converted into Picsart users: every post is labelled &quot;made with Picsart&quot;, and keyword posts send viewers the exact Picsart steps by DM. Five concepts run side by side to learn which formats earn reach, which earn engagement and what each costs on Picsart&#x27;s premium models (Seedance 2.5, Gemini 3 Pro Image, Nano Banana Pro).</p></div>
+  </div>
 
-  <div class="sec-label">The goal</div>
-  <p class="body">Grow these channels to millions of engagements and convert that audience into Picsart users: every post is labelled &quot;made with Picsart&quot;, and keyword posts send viewers the exact Picsart steps by DM. The system should run itself, with human work under 30 minutes a day. Each concept gets a scale-or-stop decision after 12 posts, on fixed dates (Nov 21, Nov 28, Dec 5).</p>
+  <div class="sec-label">Dashboard</div>
+  <div class="card dash"><div style="overflow-x:auto"><table class="dash-t">
+    <colgroup><col class="w-brand"><col class="w-concept"><col class="w-plat"><col class="w-views"><col class="w-fol"><col class="w-eng"><col class="w-cr"></colgroup>
+    <thead><tr><th>Brand</th><th>Concept</th><th>Platforms</th><th class="r">Views</th><th class="r">Followers</th><th class="r">Saves + shares</th><th class="r">Credits, all-in</th></tr></thead>
+    <tbody><tr><td><a class="bname" href="#reelo" style="--hue:#E8572A"><img src="../reelo/assets/logo-reelo.jpg" alt=""><span>Reelo<small>since Oct 17</small></span></a></td><td class="c">15-second Pixar-style family cartoons, no dialogue. Four a day.</td><td class="p"><a class="plat" href="https://www.instagram.com/reelo.hq/" target="_blank" rel="noopener" title="@reelo.hq">Instagram</a> <a class="plat" href="https://www.tiktok.com/@reelostudio" target="_blank" rel="noopener" title="@reelostudio">TikTok</a></td><td class="r"><div class="v">227K</div><span class="bar" style="--w:100%;--hue:#E8572A"></span></td><td class="r">109</td><td class="r">194</td><td class="r">14,516</td></tr><tr><td><a class="bname" href="#microdramas" style="--hue:#C40F6B"><img src="../microdramas/assets/logo-microdramas.jpg" alt=""><span>Microdramas<small>since Oct 13</small></span></a></td><td class="c">Serialized AI drama: 30 to 60-second episodes with dialogue, 8 to 9 parts a series.</td><td class="p"><a class="plat" href="https://www.instagram.com/microdramas.ai/" target="_blank" rel="noopener" title="@microdramas.ai">Instagram</a> <a class="plat" href="https://www.tiktok.com/@microdramas.ai" target="_blank" rel="noopener" title="@microdramas.ai">TikTok</a></td><td class="r"><div class="v">59K</div><span class="bar" style="--w:26%;--hue:#C40F6B"></span></td><td class="r">212</td><td class="r">422</td><td class="r">89,236</td></tr><tr><td><a class="bname" href="#dwell" style="--hue:#8A6D3B"><img src="../dwell/assets/logo-dwell.jpg" alt=""><span>Dwell<small>since Oct 12 · pins Oct 3</small></span></a></td><td class="c">Luxury interiors: before/afters, room tours and trend carousels, plus Pinterest pins.</td><td class="p"><a class="plat" href="https://www.instagram.com/dwell.rooms/" target="_blank" rel="noopener" title="@dwell.rooms">Instagram</a> <a class="plat" href="https://www.tiktok.com/@dwellrooms" target="_blank" rel="noopener" title="@dwellrooms">TikTok</a> <a class="plat" href="https://www.pinterest.com/dwellrooms/" target="_blank" rel="noopener" title="@dwellrooms">Pinterest</a></td><td class="r"><div class="v">13K <small>+ 939 pin impressions</small></div><span class="bar" style="--w:6%;--hue:#8A6D3B"></span></td><td class="r">33</td><td class="r">174</td><td class="r">7,396</td></tr><tr><td><a class="bname" href="#faceless" style="--hue:#2F6FDE"><img src="../faceless/assets/logo-faceless.jpg" alt=""><span>Faceless<small>since Oct 5</small></span></a></td><td class="c">Price Tag reels: our finished video, what buyers pay for it, the receipt.</td><td class="p"><a class="plat" href="https://www.instagram.com/faceless_monetization/" target="_blank" rel="noopener" title="@faceless_monetization">Instagram</a></td><td class="r"><div class="v">787</div><span class="bar" style="--w:0%;--hue:#2F6FDE"></span></td><td class="r">4</td><td class="r">not synced</td><td class="r">524</td></tr><tr><td><a class="bname" href="#listed" style="--hue:#0E8A54"><img src="../listed/assets/logo-listed.jpg" alt=""><span>Listed<small>since Oct 5</small></span></a></td><td class="c">Product photos for online sellers: a phone photo fixed in Picsart, then the tutorial.</td><td class="p"><a class="plat" href="https://www.instagram.com/listed.hq/" target="_blank" rel="noopener" title="@listed.hq">Instagram</a></td><td class="r"><div class="v">888</div><span class="bar" style="--w:0%;--hue:#0E8A54"></span></td><td class="r">4</td><td class="r">9</td><td class="r">137</td></tr><tr class="tot"><td>All five</td><td></td><td></td><td class="r"><div class="v">301K</div></td><td class="r">362</td><td class="r">799</td><td class="r">111,809</td></tr></tbody>
+  </table></div>
+  <p class="note" style="padding:0 .6rem">Views = Instagram + TikTok video views on posts from Oct 3; Pinterest impressions shown beside Dwell. One video on two platforms counts on each.
+    Credits are all-in: every reroll, remake, test and unposted asset included. Click a platform to open the account.</p></div>
 
-  <div class="sec-label">What we have</div>
-  <div class="card"><div style="overflow-x:auto"><table>
-    <thead><tr><th>Brand</th><th>Concept</th><th>Platforms</th><th>Live since</th><th>Cadence</th></tr></thead>
-    <tbody><tr><td>Reelo</td><td class="r">15-second Pixar-style family cartoons: a toddler, a parent and a pet, no dialogue</td><td>Instagram, TikTok</td><td>Oct 17</td><td class="r">4 a day</td></tr><tr><td>Microdramas</td><td>Serialized AI drama, 30 to 60-second episodes with spoken dialogue, 8 to 9 parts per series</td><td>Instagram, TikTok</td><td>Oct 13</td><td class="r">1 to 4 a day</td></tr><tr><td>Dwell</td><td>Luxury interiors: before/afters, room tours and trend carousels for people collecting ideas</td><td>Instagram, TikTok, Pinterest</td><td>Oct 12 (Pinterest Oct 3)</td><td class="r">2 a day + 5 pins</td></tr><tr><td>Faceless</td><td>&quot;Price Tag&quot; reels: one of our finished videos, what buyers pay for it, and the receipt of tools and credits</td><td>Instagram</td><td>Oct 5</td><td class="r">1 a day</td></tr><tr><td>Listed</td><td>Product photos for online sellers: a phone photo fixed in Picsart, then the tutorial</td><td>Instagram</td><td>Oct 5</td><td class="r">1 a day</td></tr></tbody>
-  </table></div></div>
+  <div class="sec-label">What worked best · one post per brand</div>
+  <div class="card"><div class="picks"><figure class="pick" id="reelo" style="--hue:#E8572A">
+          <video src="../reelo/assets/cartoon-sky-car-wash.mp4" poster="../reelo/assets/cartoon-sky-car-wash.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · cartoon · Oct 19</span>
+          <span class="h">Who opened the windows? Nobody. Obviously 🫧</span>
+          <span class="m">35,768 views · 140 likes · 17 shares · 20 saves · 110 credits · <a href="https://www.instagram.com/reel/Der23p6Aiz-/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        <figcaption><b>Reelo</b></figcaption></figure><figure class="pick" id="microdramas" style="--hue:#C40F6B">
+          <video src="../microdramas/assets/one-year-no-love-1.mp4" poster="../microdramas/assets/one-year-no-love-1.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · ONE YEAR NO LOVE · Part 1</span>
+          <span class="h">ONE YEAR, NO LOVE – PART 1</span>
+          <span class="m">14,100 views · 161 likes · 8 shares · 30 saves · 1,450 credits · <a href="https://www.instagram.com/reel/DezDEZPAJYV/" target="_blank" rel="noopener">watch on Instagram →</a></span>
+        <figcaption><b>Microdramas</b></figcaption></figure><figure class="pick" id="dwell" style="--hue:#8A6D3B">
+          <video src="../dwell/assets/dwell-batch-refs-2026-10-20-04-old-money-interiors.mp4" poster="../dwell/assets/dwell-batch-refs-2026-10-20-04-old-money-interiors.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Post</span>
+          <span class="h">Old money interiors.</span>
+          <span class="m">978 views · 26 likes · 1 shares · 7 saves · 187 credits · <a href="https://www.instagram.com/reel/De1FZR7jY34/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        <figcaption><b>Dwell</b></figcaption></figure><figure class="pick" id="faceless" style="--hue:#2F6FDE">
+          <video src="../faceless/assets/2026-W44-1_mon_cartoon_dog-salon.mp4" poster="../faceless/assets/2026-W44-1_mon_cartoon_dog-salon.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Build it · Oct 26</span>
+          <span class="h">People pay $30+ for a cartoon like this. Mine cost 110 credits in one app, no animation skills.</span>
+          <span class="m">196 views · 0 credits · <a href="https://www.instagram.com/reel/De9cyloGr1K/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        <figcaption><b>Faceless</b></figcaption></figure><figure class="pick" id="listed" style="--hue:#0E8A54">
+          <video src="../listed/assets/leather-keychain-animate-261005-p1_before_after.mp4" poster="../listed/assets/leather-keychain-animate-261005-p1_before_after.jpg" controls playsinline preload="none"></video>
+          <span class="rank">#1 · Before / after · Oct 21</span>
+          <span class="h">Same leather keychain photo, now a short video ad for the listing, made with Remove Background, Edit with AI and AI Playground.</span>
+          <span class="m">153 views · 0 likes · 0 saves · 28 credits · <a href="https://www.instagram.com/reel/Dewk2ApiC6R/" target="_blank" rel="noopener">open on Instagram →</a></span>
+        <figcaption><b>Listed</b></figcaption></figure></div></div>
 
-  <div class="sec-label">Results, Oct 3 to Oct 26</div>
-  <p class="body"><b>254K views and 294 followers in three weeks</b>, up 3.6× in the last week. Four fifths of the reach comes from one brand, Reelo&#x27;s cartoons (202K views in nine days); Microdramas brings the engagement (the most saves and shares, the fastest follower growth); the other three are still at the new-account floor. Credits are all-in, every reroll and test included.</p>
-  <div class="card" style="margin-top:1rem"><div style="overflow-x:auto"><table>
-    <thead><tr><th>Brand</th><th class="r">Views</th><th class="r">Followers</th><th class="r">Saves + shares</th><th class="r">Credits spent (all-in)</th><th class="r">Credits per 1K views</th></tr></thead>
-    <tbody><tr><td>Reelo (cartoons since Oct 17)</td><td class="r">202K</td><td class="r">104</td><td class="r">192</td><td class="r">~4,600</td><td class="r">~23</td></tr><tr><td>Microdramas</td><td class="r">34K</td><td class="r">149</td><td class="r">306</td><td class="r">80,297</td><td class="r">~2,400</td></tr><tr><td>Dwell (Instagram + TikTok; Pinterest 880 impressions)</td><td class="r">13K</td><td class="r">33</td><td class="r">174</td><td class="r">5,434</td><td class="r">~420</td></tr><tr><td>Faceless</td><td class="r">0.6K</td><td class="r">4</td><td class="r">not synced</td><td class="r">525</td><td class="r">~870</td></tr><tr><td>Listed</td><td class="r">0.9K</td><td class="r">4</td><td class="r">9</td><td class="r">137</td><td class="r">~160</td></tr><tr><td style="font-weight:700">All five</td><td style="font-weight:700" class="r">254K</td><td style="font-weight:700" class="r">294</td><td style="font-weight:700" class="r">680+</td><td style="font-weight:700" class="r">~100,900</td><td style="font-weight:700" class="r">~400</td></tr></tbody>
-  </table></div></div>
-
-  <div class="sec-label">More detail</div>
-  <p class="body">The best-performing post of each brand, with its numbers: <a href="../best/" style="color:var(--accent-ink)">Best examples →</a></p>
-
-  <footer>Views are Instagram and TikTok video views; Pinterest reports impressions and is kept apart. Credits are all-in: every reroll,
-    remake, test and unposted asset included. Snapshot of 2026-10-26, built 2026-10-26 17:57 Yerevan. Picsart Social automation project · made with Picsart</footer>
+  <footer>Picsart Social automation project · made with Picsart · built 2026-10-27 13:03 Yerevan</footer>
 </main>
 </body>
 </html>

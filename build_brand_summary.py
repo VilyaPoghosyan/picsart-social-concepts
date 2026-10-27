@@ -71,6 +71,11 @@ MICRO_COST = {
     "one-year-no-love-6": dict(calls=1850, drop=1850, basis="exact", note="v2 THE EX (12,598 -> 10,748); re-framed hall + 4 re-done takes ~300"),
     "one-year-no-love-7": dict(calls=1513, drop=1513, basis="exact", note="v2 OPENING NIGHT (10,748 -> 9,235); 7 shots reused from the first cut"),
     "one-year-no-love-8": dict(calls=2690, drop=None, basis="calls", note="v2 THE FILE, all-in estimate incl. t01/t02/t12 re-runs and the rejected t19"),
+    "one-year-no-love-9": dict(calls=2348, drop=2348, basis="exact", note="v2 CLAUSE NINE finale (21,440 -> 19,092) incl. rejected frames and refused takes"),
+    # HER FATHER (started 2026-10-26): all-in per part from run.json; casting 56 counted on part 1
+    "her-father-1": dict(calls=2444, drop=None, basis="calls", note="THE INTRODUCTION 2,388 + casting 56"),
+    "her-father-2": dict(calls=1964, drop=None, basis="calls", note="THE FITTING"),
+    "her-father-3": dict(calls=2183, drop=None, basis="calls", note="THE DEAL"),
 }
 
 # ALL-IN credits per brand (audited 2026-10-23 from every run log, run.json and balance drop, including work
@@ -79,12 +84,12 @@ MICRO_COST = {
 # account was shared are NOT used: they include other brands' work. Microdramas max per episode: highest
 # logged 2,743 (REMEMBER ME P7), quoted as up to 3,200 for unlogged retries (Vilya 2026-10-23).
 ALL_IN = {
-    "microdramas": dict(total=80297, waste=16123, unposted=0, per_max=3200, unit="episode",
+    "microdramas": dict(total=89236, waste=16123, unposted=0, per_max=3200, unit="episode",
         waste_note="discarded, redone and deleted episodes, standalone tests and remakes never posted, casting and look tests",
         unposted_note="made, not posted yet"),
-    "dwell": dict(total=5434, waste=302, unposted=0, per_max=440, unit="reel or carousel",
+    "dwell": dict(total=7396, waste=302, unposted=0, per_max=560, unit="reel or carousel",
         waste_note="format test reel never posted (132) and the Oct 23 realism proof, a before/after of one real-looking room made for the design review (170)",
-        extra="pins up to 10 each; 545 credits on 105 pins"),
+        extra="pins up to 10 each; 665 credits on 125 pins; the Oct 23 batch of 12 (built Oct 26) is counted at its max, 1,842, with stuck jobs as billed"),
     "reelo": dict(total=14516, waste=3755, unposted=220, per_max=230, unit="cartoon reel",
         waste_note="7 tiny-world videos built and never posted (2,977), cartoon format test, cast sheets, a rejected reel, a failed render, loop tests, unlogged retries in the Oct 23 batch of 30 (139)",
         unposted_note="one Halloween-week reel (Weekend with Max) held for garbled lettering",
@@ -550,7 +555,7 @@ DWELL_COST = {
 }
 # Pinterest: our three pin runs (2026-10-02 x2, 2026-10-20) (dwell-content-runs.md): 70 pins, 185 + 180 = 365 credits,
 # confirmed by the balance (5,730 -> 5,545 -> 5,365). 5 credits per image; 3 pins needed one reroll (10).
-PIN_RUNS = dict(pins=105, credits=545, per_pin=[5] * 101 + [10] * 4, since="2026-10-03")  # + 2026-10-20 run: 35 pins, 180 cr, 1 reroll
+PIN_RUNS = dict(pins=125, credits=665, per_pin=[5] * 117 + [10] * 8, since="2026-10-03")  # + 2026-10-20 run: 35 pins, 180 cr; + 2026-10-26 run: 20 pins, 120 cr
 
 DWELL_FORMAT = {"A": "Before / after", "B": "Statement tour", "C": "Walkthrough reveal", "D": "Variation swap",
                 "E": "Trend carousel", "F": "Photo-set carousel", "G": "Colour pairs", "H": "Mouldings"}
@@ -622,7 +627,10 @@ def build_dwell():
             it = items.get(slug, {})
             kind = "car" if it.get("kind") == "carousel" else "reel"
             run = sched(d / slug / "run.json")
-            cr = run.get("credits_total", run.get("total_credits"))
+            # max-based: a run that may have been billed for stuck jobs counts them
+            vals = [run.get(k) for k in ("credits_total", "total_credits", "total_credits_max", "total_credits_max_if_stuck_billed", "total_credits_known")]
+            vals = [v for v in vals if isinstance(v, (int, float))]
+            cr = max(vals) if vals else None
             asset = f"dwell-{d.name}-{slug}" + ("-slide1" if kind == "car" else "")
             src = d / slug / (f"{slug}.mp4" if kind == "reel" else "carousel/slide1.jpg")
             posts.append(dict(platform=plat, postId=e["postId"], when=when_of(e), asset=asset, kind=kind,
@@ -754,11 +762,11 @@ def build_dwell():
       <div><b>Look</b><span>Marble, plaster, lacquer, travertine and brass, warm-neutral light, one palette per post, small spaced Gilroy capitals.</span></div>
       <div><b>Engine</b><span>Rooms on Gemini 3 Pro Image, camera moves on MiniMax and Kling V3, beat-synced ElevenLabs music, the linen and walnut Picsart end card.</span></div>
     </div>
-    <p class="note">Live on 3 of Dwell's 4 platforms; the X account is not posting and is left out. Instagram and TikTok posted two a day
-      Oct 12–24 (four a day Oct 21–24); the next week of reels (Oct 23–29) is planned but not built, waiting for a credit top-up, so
-      nothing is scheduled there after Oct 24. Pinterest keeps five pins a day through Oct 28. A design review on Oct 23 asked for
-      readable, higher-contrast titles, a font per style, more realistic video, a clearer logo and before/afters of the same room;
-      those fixes go into the next batch.</p>
+    <p class="note">Live on 3 of Dwell's 4 platforms; the X account is not posting and is left out. Instagram and TikTok: two posts a day
+      Oct 12–24 (four a day Oct 21–24), a pause Oct 25–26, then two a day again Oct 27 to Nov 1 with the batch built on Oct 26.
+      Pinterest keeps five pins a day through Nov 1. A design review on Oct 23 asked for readable, higher-contrast titles, a font
+      per style, more realistic video, a clearer logo and before/afters of the same room; the Oct 27 batch is the first built to
+      those rules.</p>
   </div>
 
   <div class="sec-label">Overall</div>
@@ -1029,6 +1037,10 @@ FACELESS_COST = {
     "2026-W43/1_mon_ai_model_mara": 50, "2026-W43/2_tue_does_it_pay_ai_models": 8, "2026-W43/3_wed_gord_ep1": 48,
     "2026-W43/4_thu_ai_horror_trailer": 47, "2026-W43/5_fri_trailer_tutorial": 0, "2026-W43/6_sat_one_app_gord_ep2": 33,
     "2026-W43/7_sun_does_it_pay_ai_films": 0,
+    # W44 = Price Tag week: every post reuses another brand's finished video, 0 new credits
+    "2026-W44/1_mon_cartoon_dog-salon": 0, "2026-W44/2_tue_drama_family-portrait-p5": 0, "2026-W44/3_wed_interior_01-parisian-salon": 0,
+    "2026-W44/4_thu_cartoon_remote-heist": 0, "2026-W44/5_fri_drama_family-portrait-p6": 0, "2026-W44/6_sat_interior_04-ivory-closet-reveal": 0,
+    "2026-W44/7_sun_cartoon_sneeze-chain": 0,
 }
 FACELESS_KIND = {"tutorial": "How-to", "money_truth": "Does it pay?", "does_it_pay": "Does it pay?", "one_app": "One app"}
 
