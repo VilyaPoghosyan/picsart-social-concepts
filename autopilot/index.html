@@ -140,6 +140,23 @@
   /* 4 · economics */
   .two{display:grid; grid-template-columns:1fr 1fr; gap:1rem} .two > *{min-width:0}
 
+  /* 4 · economics */
+  .fmts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem}
+  .fmt{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:1.2rem 1.3rem 1.1rem; box-shadow:var(--shadow); min-width:0; display:flex; flex-direction:column; gap:.3rem}
+  .fmt.premium{background:linear-gradient(170deg,var(--accent-soft),var(--surface) 55%)}
+  .fmt-top{display:flex; justify-content:space-between; align-items:center; gap:.5rem; flex-wrap:wrap}
+  .fmt-len{font-family:var(--mono); font-size:.78rem; color:var(--faint)}
+  .fmt-n{font-family:var(--display); font-size:clamp(2rem,4vw,2.7rem); font-weight:700; letter-spacing:-.03em; line-height:1; color:var(--accent-ink); font-variant-numeric:tabular-nums; margin-top:.7rem}
+  .fmt-n span{color:var(--faint); font-weight:500; padding:0 .08em}
+  .fmt-k{font-family:var(--mono); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--faint)}
+  .fmt-m{font-size:.9rem; color:var(--muted); margin-top:.6rem; padding-top:.6rem; border-top:1px dashed var(--line)} .fmt-m b{color:var(--ink)}
+  .fmt-what{font-size:.86rem; color:var(--muted); line-height:1.45; margin-top:.4rem}
+  .fmt-models{display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.7rem}
+  .fmt-models i{font-style:normal; font-family:var(--mono); font-size:.76rem; font-weight:600; padding:.25em .6em; border-radius:999px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink)}
+  .fits{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.7rem; margin-top:1rem}
+  .fits div{background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:.85rem .95rem; min-width:0}
+  .fits p{margin:.5rem 0 0; font-size:.86rem; color:var(--muted); line-height:1.45}
+
   /* 5 · market */
   .quad{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.7rem; margin-top:1rem}
   .q{border:1px solid var(--line); border-radius:12px; padding:.85rem .95rem; background:var(--surface-2); min-width:0}
@@ -157,9 +174,9 @@
   @media(max-width:900px){
     .loop{grid-template-columns:repeat(3,minmax(0,1fr))} .st:nth-child(3)::after{display:none}
     .journey{grid-template-columns:repeat(3,minmax(0,1fr))} .two,.runs,.back{grid-template-columns:1fr} .build{grid-template-columns:1fr}
-    .layer{grid-template-columns:1fr} .quad{grid-template-columns:1fr 1fr} .rules{grid-template-columns:1fr 1fr} .srcs{columns:1}
+    .layer{grid-template-columns:1fr} .quad{grid-template-columns:1fr 1fr} .rules{grid-template-columns:1fr 1fr} .srcs{columns:1} .fmts{grid-template-columns:1fr} .fits{grid-template-columns:1fr 1fr}
   }
-  @media(max-width:560px){ .loop{grid-template-columns:1fr 1fr} .st:nth-child(3)::after{display:block} .st:nth-child(even)::after{display:none} .journey{grid-template-columns:1fr 1fr} .quad,.rules{grid-template-columns:1fr} }
+  @media(max-width:560px){ .fits{grid-template-columns:1fr} .loop{grid-template-columns:1fr 1fr} .st:nth-child(3)::after{display:block} .st:nth-child(even)::after{display:none} .journey{grid-template-columns:1fr 1fr} .quad,.rules{grid-template-columns:1fr} }
   @media(prefers-reduced-motion:no-preference){ .phone{transition:transform .25s ease} .step:hover .phone{transform:translateY(-3px)} }
 </style>
 </head>
@@ -336,43 +353,78 @@
   <section>
     <h2>What a channel costs to run, in credits</h2>
     <p class="lead">Logged costs from the three formats that already run, all-in: every reroll, retake and failed job counted. Price points are left open on purpose; the cost side is exact.</p>
-    <div class="card scroll">
-      <table>
-        <thead><tr><th>Format</th><th>What the user gets</th><th class="r">Credits per post</th><th class="r">One post a day, per month</th><th>Models</th></tr></thead>
-        <tbody>
-          <tr><td class="k">Short cartoon reel</td><td>15-second story with faces and sound effects, no dialogue</td><td class="r">110–230</td><td class="r">3,300–6,900</td><td>Gemini 3 Pro Image keyframe, Seedance 2.5 with native sound</td></tr>
-          <tr><td class="k">Interior reel or carousel</td><td>Room before/after, statement tour, trend list</td><td class="r">40–184</td><td class="r">1,200–5,500</td><td>Gemini 3 Pro Image sets, camera moves on Kling and Seedance, Lyria music</td></tr>
-          <tr><td class="k">Drama episode</td><td>30 to 60 seconds of spoken dialogue, a series with cliffhangers</td><td class="r">1,040–2,743</td><td class="r">31,000–82,000</td><td>Seedance 2.5 takes with native dialogue, face and voice references</td></tr>
-        </tbody>
-      </table>
-      <p class="note">Ranges from the logged runs of each format. Cartoons and interiors fit a daily plan; drama is a premium tier. Machine time is not billed in credits: a 15-second Seedance reel renders in about eight minutes.</p>
+
+    <div class="fmts">
+      <div class="fmt">
+        <div class="fmt-top"><span class="pill agent">Cartoon reel</span><span class="fmt-len">15 s · no dialogue</span></div>
+        <div class="fmt-n">110<span>–</span>230</div>
+        <div class="fmt-k">credits per post</div>
+        <div class="fmt-m"><b>3,300–6,900</b> a month at one post a day</div>
+        <div class="fmt-what">A story with faces and sound effects: a keyframe, then one Seedance take with native sound.</div>
+        <div class="fmt-models"><i>Gemini 3 Pro Image</i><i>Seedance 2.5</i></div>
+      </div>
+      <div class="fmt">
+        <div class="fmt-top"><span class="pill agent">Interior reel or carousel</span><span class="fmt-len">15–23 s · 7–8 slides</span></div>
+        <div class="fmt-n">40<span>–</span>184</div>
+        <div class="fmt-k">credits per post</div>
+        <div class="fmt-m"><b>1,200–5,500</b> a month at one post a day</div>
+        <div class="fmt-what">Before/after, statement tour or trend list: room stills, a camera move, beat-synced music.</div>
+        <div class="fmt-models"><i>Gemini 3 Pro Image</i><i>Kling · Seedance</i><i>Lyria</i></div>
+      </div>
+      <div class="fmt premium">
+        <div class="fmt-top"><span class="pill agent">Drama episode</span><span class="fmt-len">30–60 s · dialogue</span></div>
+        <div class="fmt-n">1,040<span>–</span>2,743</div>
+        <div class="fmt-k">credits per episode</div>
+        <div class="fmt-m"><b>31,000–82,000</b> a month at one episode a day</div>
+        <div class="fmt-what">Ten takes with native dialogue, face and voice references, subtitles. A premium tier, ten times a cartoon.</div>
+        <div class="fmt-models"><i>Seedance 2.5</i><i>Gemini 3 Pro Image</i><i>ElevenLabs</i></div>
+      </div>
     </div>
 
     <div class="two" style="margin-top:1rem">
       <div class="card">
-        <div class="label" style="margin-bottom:.6rem">Where the price can sit</div>
+        <div class="label" style="margin-bottom:.6rem">The three formats on one scale</div>
         <figure>
-          <svg viewBox="0 0 480 150" role="img" aria-label="Price bands per month: DIY AI tools 15 to 99 dollars, human social media management 500 to 2,500 dollars, and the open band between them for a managed autopilot" style="color:var(--ink)">
-            <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)">
-              <line x1="30" y1="110" x2="460" y2="110" stroke="var(--line)"/>
-              <text x="30" y="128" text-anchor="middle">$0</text><text x="137" y="128" text-anchor="middle">$100</text><text x="245" y="128" text-anchor="middle">$500</text><text x="352" y="128" text-anchor="middle">$1,000</text><text x="460" y="128" text-anchor="middle">$2,500</text>
+          <svg viewBox="0 0 520 190" role="img" aria-label="Credits per post on a logarithmic scale: interiors 40 to 184, cartoons 110 to 230, drama 1,040 to 2,743" style="color:var(--ink)">
+            <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--faint)">
+              <line x1="130" y1="150" x2="500" y2="150" stroke="var(--line)"/>
+              <text x="130" y="170" text-anchor="middle">30</text><text x="223" y="170" text-anchor="middle">100</text><text x="315" y="170" text-anchor="middle">300</text><text x="408" y="170" text-anchor="middle">1,000</text><text x="500" y="170" text-anchor="middle">3,000</text>
+              <text x="315" y="186" text-anchor="middle">credits per post · log scale</text>
+              <g stroke="var(--line)" stroke-dasharray="2 4"><line x1="223" y1="20" x2="223" y2="150"/><line x1="315" y1="20" x2="315" y2="150"/><line x1="408" y1="20" x2="408" y2="150"/></g>
             </g>
-            <rect x="34" y="30" width="103" height="18" rx="4" fill="var(--line)"/><text x="40" y="24" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)">DIY AI tools · $15–99 a month</text>
-            <rect x="245" y="70" width="215" height="18" rx="4" fill="var(--line)"/><text x="250" y="64" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)">Human manager or agency · $500–2,500</text>
-            <rect x="137" y="50" width="135" height="18" rx="4" fill="var(--accent)"/><text x="142" y="44" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" font-weight="600" fill="var(--accent-ink)">Open band · $99–499</text>
+            <!-- x = 130 + (log10(v) - log10(30)) / 2 * 370 -->
+            <g font-family="IBM Plex Sans, system-ui, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">
+              <text x="120" y="40" text-anchor="end">Interiors</text><rect x="153" y="30" width="122" height="14" rx="7" fill="var(--accent)" fill-opacity=".55"/><text x="282" y="41" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)" font-weight="500">40–184</text>
+              <text x="120" y="80" text-anchor="end">Cartoons</text><rect x="234" y="70" width="60" height="14" rx="7" fill="var(--accent)" fill-opacity=".8"/><text x="301" y="81" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)" font-weight="500">110–230</text>
+              <text x="120" y="120" text-anchor="end">Drama</text><rect x="415" y="110" width="78" height="14" rx="7" fill="var(--accent)"/><text x="412" y="121" text-anchor="end" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)" font-weight="500">1,040–2,743</text>
+            </g>
           </svg>
-          <figcaption>Monthly prices from public pricing pages and the Sprout Social 2026 cost guide. No current tool bundles premium video generation with publishing and reporting.</figcaption>
+          <figcaption>Cartoons and interiors sit in the same band; drama is a different product. Ranges are the logged minimum and maximum per post.</figcaption>
         </figure>
       </div>
       <div class="card">
-        <div class="label" style="margin-bottom:.4rem">Why it fits Picsart's model</div>
-        <ul>
-          <li><b>Credits are consumed daily</b>, not once: a cartoon channel uses 3,300 to 6,900 credits a month on Seedance and Gemini without the user opening the editor.</li>
-          <li><b>Premium models by default.</b> Every post runs on Seedance 2.5, Gemini 3 Pro Image and Nano Banana Pro; the user's channel shows the paid stack in public.</li>
-          <li><b>"Made with Picsart" on every post</b> turns each channel into distribution for Picsart.</li>
-          <li><b>Open for the business team:</b> plan price, included posts, overage in credits, and whether drama is a separate tier.</li>
-        </ul>
+        <div class="label" style="margin-bottom:.6rem">Where the price can sit</div>
+        <figure>
+          <svg viewBox="0 0 520 170" role="img" aria-label="Price bands per month: DIY AI tools 15 to 99 dollars, human social media management 500 to 2,500 dollars, and the open band between them for a managed autopilot" style="color:var(--ink)">
+            <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--faint)">
+              <line x1="30" y1="130" x2="500" y2="130" stroke="var(--line)"/>
+              <text x="30" y="150" text-anchor="middle">$0</text><text x="147" y="150" text-anchor="middle">$100</text><text x="265" y="150" text-anchor="middle">$500</text><text x="382" y="150" text-anchor="middle">$1,000</text><text x="500" y="150" text-anchor="middle">$2,500</text>
+              <text x="265" y="166" text-anchor="middle">per month · what the market charges today</text>
+            </g>
+            <rect x="34" y="34" width="113" height="16" rx="8" fill="var(--line)"/><text x="40" y="26" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)">DIY AI tools · $15–99</text>
+            <rect x="265" y="94" width="235" height="16" rx="8" fill="var(--line)"/><text x="270" y="124" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)">Human manager or agency · $500–2,500</text>
+            <rect x="147" y="64" width="150" height="16" rx="8" fill="var(--accent)"/><text x="152" y="56" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" font-weight="600" fill="var(--accent-ink)">Open band · $99–499</text>
+          </svg>
+          <figcaption>Public pricing pages and the Sprout Social 2026 cost guide. No current tool bundles premium video with publishing and reporting.</figcaption>
+        </figure>
       </div>
+    </div>
+
+    <div class="fits">
+      <div><span class="pill agent">Daily, not once</span><p>A cartoon channel spends 3,300 to 6,900 credits a month on Seedance and Gemini without the user opening the editor.</p></div>
+      <div><span class="pill agent">Premium by default</span><p>Every post runs on Seedance 2.5, Gemini 3 Pro Image and Nano Banana Pro; the user's channel shows the paid stack in public.</p></div>
+      <div><span class="pill agent">Distribution</span><p>"Made with Picsart" on every post turns each channel into reach for Picsart.</p></div>
+      <div><span class="pill sys">Open for the business team</span><p>Plan price, included posts, overage in credits, and whether drama is a separate tier.</p></div>
     </div>
   </section>
 
