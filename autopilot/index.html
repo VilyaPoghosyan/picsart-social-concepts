@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Picsart Social Autopilot</title>
+<meta name="description" content="Product proposal: Picsart runs a user's social channel end to end. The loop, the six screens and what runs under them, the architecture by status, costs in credits, the market and a pilot.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  /* One column, 1080px, read top to bottom. Every section opens with its picture. Status colours carry the architecture. */
+  :root{
+    --bg:#F6F5F8; --surface:#FFFFFF; --surface-2:#FAF9FC; --ink:#17161C; --muted:#5F5D6B; --faint:#6E6C7A; --line:#E6E4EC;
+    --accent:#C40F6B; --accent-ink:#A50C59; --accent-soft:#FBE7F0;
+    --ok:#1E8A5A; --ok-soft:#E3F4EA; --warn:#B7791F; --warn-soft:#FBF0DC; --todo:#C8382C; --todo-soft:#FBE6E3;
+    --user:#2F6FDE; --user-soft:#E6EEFC;
+    --display:"Fraunces",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+    --shadow:0 1px 2px rgba(20,18,28,.05),0 6px 16px rgba(20,18,28,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#111016; --surface:#191820; --surface-2:#1F1E27; --ink:#F2F1F6; --muted:#A6A4B1; --faint:#9A98A8; --line:#2A2932;
+      --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2C1522;
+      --ok:#4CC98C; --ok-soft:#14301F; --warn:#E3AD4A; --warn-soft:#332710; --todo:#F0705F; --todo-soft:#3A1915;
+      --user:#7FA6F0; --user-soft:#172238;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 20px rgba(0,0,0,.35); color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111016; --surface:#191820; --surface-2:#1F1E27; --ink:#F2F1F6; --muted:#A6A4B1; --faint:#9A98A8; --line:#2A2932;
+    --accent:#F45FA6; --accent-ink:#F888BE; --accent-soft:#2C1522;
+    --ok:#4CC98C; --ok-soft:#14301F; --warn:#E3AD4A; --warn-soft:#332710; --todo:#F0705F; --todo-soft:#3A1915;
+    --user:#7FA6F0; --user-soft:#172238;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 20px rgba(0,0,0,.35); color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px; margin:0 auto; padding-block:clamp(36px,6vw,72px) 72px; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+  ::selection{background:var(--accent-soft); color:var(--ink)}
+  h1{font-family:var(--display); font-size:clamp(2.3rem,6vw,3.6rem); line-height:1.02; letter-spacing:-.02em; font-weight:700; margin:0; text-wrap:balance}
+  h2{font-family:var(--display); font-size:clamp(1.5rem,3vw,2rem); font-weight:600; letter-spacing:-.01em; line-height:1.15; margin:0 0 .4rem; text-wrap:balance}
+  h3{font-family:var(--sans); font-size:1rem; margin:0 0 .3rem; font-weight:700}
+  .dek{font-size:clamp(1.05rem,2.2vw,1.25rem); color:var(--muted); margin:1.1rem 0 0; max-width:62ch; line-height:1.5}
+  .lead{color:var(--muted); margin:0 0 1.2rem; max-width:70ch}
+  section{margin-top:4rem}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:1.3rem 1.4rem; box-shadow:var(--shadow)}
+  .label{font-family:var(--mono); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-ink); font-weight:600}
+  .pill{display:inline-block; font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; padding:.25em .6em; border-radius:999px; font-weight:600; white-space:nowrap}
+  .pill.ok{background:var(--ok-soft); color:var(--ok)} .pill.warn{background:var(--warn-soft); color:var(--warn)} .pill.todo{background:var(--todo-soft); color:var(--todo)}
+  .pill.user{background:var(--user-soft); color:var(--user)} .pill.agent{background:var(--accent-soft); color:var(--accent-ink)} .pill.sys{background:var(--surface-2); color:var(--muted); border:1px solid var(--line)}
+  ul{margin:.4rem 0 0; padding-left:1.1rem} li{margin:.35rem 0; color:var(--muted)} li b{color:var(--ink)}
+  .note{font-family:var(--mono); font-size:.78rem; color:var(--faint); line-height:1.55; margin-top:.8rem}
+  figure{margin:0} figure svg{width:100%; height:auto; display:block}
+  figcaption{font-family:var(--mono); font-size:.78rem; color:var(--faint); margin-top:.7rem; line-height:1.5}
+  .scroll{overflow-x:auto}
+
+  /* 1 · the loop as a stepper */
+  .loop{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:.6rem; position:relative}
+  .st{position:relative; background:var(--surface-2); border:1px solid var(--line); border-radius:14px; padding:1rem .95rem 1.05rem; min-width:0; display:flex; flex-direction:column; gap:.5rem}
+  .st.user{background:var(--accent-soft); border-color:var(--accent)}
+  .st .num{font-family:var(--mono); font-size:.72rem; font-weight:600; color:var(--faint); letter-spacing:.08em}
+  .st.user .num{color:var(--accent-ink)}
+  .st h3{font-family:var(--display); font-size:1.15rem; font-weight:700; letter-spacing:-.01em; line-height:1.1; margin:0}
+  .st p{margin:0; font-size:.88rem; line-height:1.45; color:var(--muted)}
+  .st .out{margin-top:auto; font-family:var(--mono); font-size:.78rem; color:var(--ink); padding-top:.6rem; border-top:1px dashed var(--line)}
+  .st .out b{color:var(--accent-ink); font-weight:600}
+  .st::after{content:""; position:absolute; right:-.6rem; top:50%; width:.6rem; height:2px; background:var(--faint); transform:translateY(-50%)}
+  .st:last-child::after{display:none}
+  .back{display:grid; grid-template-columns:1fr 1fr; gap:.6rem; margin-top:.6rem}
+  .back div{border:1px dashed var(--faint); border-radius:12px; padding:.7rem 1rem; font-family:var(--mono); font-size:.78rem; color:var(--muted); line-height:1.5}
+  .back b{color:var(--ink); font-weight:600}
+  .roles{display:flex; flex-wrap:wrap; gap:.5rem 1rem; margin-top:1rem; font-size:.86rem; color:var(--muted)}
+
+  /* 2 · screens */
+  .journey{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:.7rem}
+  .step{display:flex; flex-direction:column; gap:.55rem; min-width:0}
+  .phone{aspect-ratio:9/16; border-radius:14px; border:1px solid var(--line); background:var(--surface); padding:.6rem; display:flex; flex-direction:column; gap:.4rem; box-shadow:var(--shadow); position:relative; overflow:hidden}
+  .phone .bar{height:6px; width:34%; border-radius:3px; background:var(--line)}
+  .phone .t{font-family:var(--display); font-weight:700; font-size:.84rem; line-height:1.15; letter-spacing:-.01em}
+  .phone .l{height:5px; border-radius:3px; background:var(--line)} .phone .l.s{width:60%} .phone .l.m{width:80%}
+  .phone .chip{font-family:var(--mono); font-size:.7rem; letter-spacing:.04em; text-transform:uppercase; padding:.22em .5em; border-radius:999px; background:var(--accent-soft); color:var(--accent-ink); align-self:flex-start}
+  .phone .btn{margin-top:auto; font-family:var(--mono); font-size:.7rem; text-align:center; padding:.45em; border-radius:7px; background:var(--accent); color:var(--bg); letter-spacing:.04em}
+  .phone .grid{display:grid; grid-template-columns:1fr 1fr; gap:.3rem} .phone .grid i{display:block; aspect-ratio:9/13; border-radius:5px; background:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); border:1px solid var(--line)}
+  .phone .stat{font-family:var(--mono); font-size:.72rem; color:var(--muted)} .phone .stat b{display:block; font-family:var(--display); font-size:1.05rem; color:var(--accent-ink); line-height:1.1}
+  .step .n{font-family:var(--mono); font-size:.72rem; color:var(--accent-ink); font-weight:600; letter-spacing:.06em}
+  .step .c{font-size:.84rem; line-height:1.4; color:var(--muted)} .step .c b{color:var(--ink)}
+  table{width:100%; border-collapse:collapse; font-size:.9rem; font-variant-numeric:tabular-nums}
+  th,td{text-align:left; padding:.65rem .6rem; border-bottom:1px solid var(--line); vertical-align:top}
+  th{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); font-weight:600; border-bottom:2px solid var(--line)}
+  td.r,th.r{text-align:right; white-space:nowrap}
+  td.k{font-weight:700; white-space:nowrap}
+  td small{display:block; color:var(--faint); font-family:var(--mono); font-size:.78rem; margin-top:.2rem}
+  .hood td{font-size:.86rem; line-height:1.45}
+
+  /* 3 · architecture layers */
+  .layer{display:grid; grid-template-columns:200px 1fr; gap:1rem; padding:1.1rem 0; border-top:1px solid var(--line)}
+  .layer:first-child{border-top:0; padding-top:.2rem}
+  .layer .lh h3{font-family:var(--display); font-size:1.1rem; font-weight:700; margin:0 0 .25rem}
+  .layer .lh p{margin:0; font-size:.84rem; color:var(--muted); line-height:1.45}
+  .boxes{display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:.5rem}
+  .box{border-radius:12px; padding:.75rem .8rem; border:1px solid var(--line); background:var(--surface-2); min-width:0}
+  .box.ok{background:var(--ok-soft); border-color:var(--ok)} .box.warn{background:var(--warn-soft); border-color:var(--warn)} .box.todo{background:var(--todo-soft); border-color:var(--todo)}
+  .box b{display:block; font-family:var(--mono); font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; font-weight:600; margin-bottom:.25rem}
+  .box.ok b{color:var(--ok)} .box.warn b{color:var(--warn)} .box.todo b{color:var(--todo)} .box b{color:var(--ink)}
+  .box span{display:block; font-size:.82rem; color:var(--muted); line-height:1.4}
+  .legend{display:flex; flex-wrap:wrap; gap:.6rem 1.3rem; font-family:var(--mono); font-size:.78rem; color:var(--muted); margin:0 0 1rem}
+  .legend span::before{content:""; display:inline-block; width:.75em; height:.75em; border-radius:3px; margin-right:.45em; vertical-align:-.05em}
+  .legend .ok::before{background:var(--ok)} .legend .warn::before{background:var(--warn)} .legend .todo::before{background:var(--todo)}
+  .build{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin-top:1rem}
+  .build h3{font-family:var(--display); font-size:1.12rem; font-weight:700; margin-top:.4rem}
+  .build p{margin:.3rem 0 0; font-size:.88rem; color:var(--muted); line-height:1.45}
+  .build .meta{font-family:var(--mono); font-size:.78rem; color:var(--faint); margin-top:.7rem}
+  .runs{display:grid; grid-template-columns:1fr 1fr; gap:.8rem}
+  .runs .card h3{font-family:var(--display); font-size:1.12rem; font-weight:700}
+  .runs ol{margin:.4rem 0 0; padding-left:1.1rem} .runs li{margin:.3rem 0; color:var(--muted); font-size:.9rem} .runs li b{color:var(--ink)}
+
+  /* 4 · economics */
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:1rem} .two > *{min-width:0}
+
+  /* 5 · market */
+  .quad{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.7rem; margin-top:1rem}
+  .q{border:1px solid var(--line); border-radius:12px; padding:.85rem .95rem; background:var(--surface-2); min-width:0}
+  .q.hi{background:var(--accent-soft); border-color:var(--accent)}
+  .q b{display:block; font-family:var(--mono); font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; margin-bottom:.3rem; color:var(--ink)} .q.hi b{color:var(--accent-ink)}
+  .q p{margin:0; font-size:.84rem; color:var(--muted); line-height:1.45}
+  .q small{display:block; margin-top:.4rem; font-family:var(--mono); font-size:.78rem; color:var(--faint)}
+
+  .rules{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.7rem}
+  .rule{background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:.85rem .95rem; min-width:0}
+  .rule p{margin:0; font-size:.84rem; color:var(--muted); line-height:1.45}
+  .srcs{font-size:.84rem; color:var(--muted); columns:2; column-gap:2rem} .srcs li{break-inside:avoid; margin:.25rem 0} .srcs a{color:var(--accent-ink); word-break:break-all}
+  footer{font-family:var(--mono); font-size:.78rem; color:var(--faint); margin-top:3.5rem; line-height:1.6}
+
+  @media(max-width:900px){
+    .loop{grid-template-columns:repeat(3,minmax(0,1fr))} .st:nth-child(3)::after{display:none}
+    .journey{grid-template-columns:repeat(3,minmax(0,1fr))} .two,.runs,.back{grid-template-columns:1fr} .build{grid-template-columns:1fr}
+    .layer{grid-template-columns:1fr} .quad{grid-template-columns:1fr 1fr} .rules{grid-template-columns:1fr 1fr} .srcs{columns:1}
+  }
+  @media(max-width:560px){ .loop{grid-template-columns:1fr 1fr} .st:nth-child(3)::after{display:block} .st:nth-child(even)::after{display:none} .journey{grid-template-columns:1fr 1fr} .quad,.rules{grid-template-columns:1fr} }
+  @media(prefers-reduced-motion:no-preference){ .phone{transition:transform .25s ease} .step:hover .phone{transform:translateY(-3px)} }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Picsart Social Autopilot</h1>
+  <p class="dek">A product where Picsart is the user's social media account and content manager. The user describes the channel they want once; Picsart's agents research, create, check, publish and report every day, on Picsart's own models. It is built on the pipeline that already runs Picsart's social brands.</p>
+
+  <!-- 1 · THE LOOP -->
+  <section>
+    <h2>Describe it once; it runs every day</h2>
+    <p class="lead">Six steps, repeated daily. The user owns two of them; agents own the rest. Nothing reaches the user's account without passing the quality gate and the user's approval rule.</p>
+    <div class="card">
+      <div class="loop">
+        <div class="st user"><div class="num">STEP 1 · USER</div><h3>Brief</h3><p>Niche, audience, tone, platforms, and one of the proven formats.</p><div class="out">out: <b>channel playbook</b></div></div>
+        <div class="st"><div class="num">STEP 2 · AGENT</div><h3>Research</h3><p>What is trending in the niche, the facts and sources, what the channel already posted.</p><div class="out">out: <b>today's topic + script</b></div></div>
+        <div class="st"><div class="num">STEP 3 · AGENT</div><h3>Create</h3><p>Frames, video, voice and music on Picsart's models; edit, captions, end card.</p><div class="out">out: <b>finished post</b></div></div>
+        <div class="st"><div class="num">STEP 4 · AGENT</div><h3>Quality gate</h3><p>Scores every axis, checks faces, speech, text, safety and the AI label. Fails are made again.</p><div class="out">out: <b>post that passed</b></div></div>
+        <div class="st user"><div class="num">STEP 5 · USER</div><h3>Approve</h3><p>One tap in the app, or auto-approve switched on. The budget cap always applies.</p><div class="out">out: <b>go</b></div></div>
+        <div class="st"><div class="num">STEP 6 · AGENT</div><h3>Publish + report</h3><p>Posted to the user's own accounts at the best time; numbers read back weekly.</p><div class="out">out: <b>live post · weekly report</b></div></div>
+      </div>
+      <div class="back">
+        <div><b>Loop back, weekly:</b> what performed feeds the next week's research, so the channel improves without the user changing anything.</div>
+        <div><b>Loop back, per post:</b> a post that fails the gate is regenerated, up to the retry limit, and is never shown to the user or posted.</div>
+      </div>
+      <div class="roles"><span class="pill user">User</span> two decisions: the brief and the approval rule <span class="pill agent">Agent</span> everything else, on a schedule <span class="pill sys">Picsart</span> models, credits, accounts</div>
+    </div>
+  </section>
+
+  <!-- 2 · SCREENS + UNDER THE HOOD -->
+  <section>
+    <h2>Six screens, then it runs</h2>
+    <p class="lead">What the user sees, and what runs underneath each screen: which agent does the work, which Picsart or platform system it calls, and what we use for the same step today.</p>
+    <div class="journey">
+      <div class="step"><div class="phone"><div class="bar"></div><div class="t">Sign in with Picsart</div><div class="l m"></div><div class="l s"></div><div class="btn">Continue</div></div><div class="n">1 · SIGN UP</div><div class="c">The Picsart account the user already has; credits already attached.</div></div>
+      <div class="step"><div class="phone"><div class="bar"></div><div class="t">Connect accounts</div><span class="chip">Instagram ✓</span><span class="chip">TikTok ✓</span><span class="chip">YouTube</span><div class="btn">Connect</div></div><div class="n">2 · CONNECT</div><div class="c">The user signs in to each platform; Picsart keeps the permission, never the password.</div></div>
+      <div class="step"><div class="phone"><div class="bar"></div><div class="t">Describe the channel</div><div class="l m"></div><div class="l"></div><div class="l s"></div><span class="chip">cartoons</span><span class="chip">drama</span><span class="chip">interiors</span><div class="btn">Build my plan</div></div><div class="n">3 · BRIEF</div><div class="c">Niche, audience, tone, and a <b>proven format</b> from the menu.</div></div>
+      <div class="step"><div class="phone"><div class="bar"></div><div class="t">Your first week</div><div class="grid"><i></i><i></i><i></i><i></i></div><div class="l s"></div><div class="btn">Approve week</div></div><div class="n">4 · PLAN</div><div class="c">Seven posts with keyframes, captions and times, before any credit is spent on video.</div></div>
+      <div class="step"><div class="phone"><div class="bar"></div><div class="t">Daily approval</div><div class="grid"><i></i><i></i></div><span class="chip">auto-approve off</span><div class="btn">Post today's</div></div><div class="n">5 · APPROVE</div><div class="c">One tap a day, or switch on auto-approve and never open it.</div></div>
+      <div class="step"><div class="phone"><div class="bar"></div><div class="t">Weekly report</div><div class="stat"><b>views</b>this week</div><div class="stat"><b>followers</b>gained</div><div class="l m"></div><div class="btn">Next week's plan</div></div><div class="n">6 · REPORT</div><div class="c">Views, followers, saves, the best post, and what the agents will change next week.</div></div>
+    </div>
+
+    <div class="card scroll" style="margin-top:1rem">
+      <div class="label" style="margin-bottom:.6rem">Under the hood</div>
+      <table class="hood">
+        <thead><tr><th>Screen</th><th>Who does the work</th><th>What it calls</th><th>How the same step runs today, for Picsart's own brands</th></tr></thead>
+        <tbody>
+          <tr><td class="k">1 · Sign up</td><td><span class="pill sys">Picsart</span><br>account and billing</td><td>Picsart login; the user's credit balance becomes the channel's budget.</td><td>One team account with a shared credit pool and a floor below which agents stop.</td></tr>
+          <tr><td class="k">2 · Connect</td><td><span class="pill sys">Picsart</span><br>social connect</td><td>Picsart's social connect panel (OAuth to Instagram, TikTok, YouTube, X, Threads, Bluesky). Posting then goes through each platform's official API: Instagram Graph API, TikTok Content Posting API, YouTube Data API.</td><td><b>Zernio</b>, a third-party scheduling API, holds the team's accounts and posts to Instagram, TikTok and Pinterest for us. The product replaces it with Picsart's own connection, which already exists.</td></tr>
+          <tr><td class="k">3 · Brief</td><td><span class="pill agent">Set-up agent</span><br>to build</td><td>Reads the brief, picks the format's playbook (cartoon, drama, interiors), and writes the channel's own playbook: cast or set, visual style, premise bank, posting times, caption rules. Stored as the channel's configuration.</td><td>Done by hand: each brand has a hand-written skill and playbook. This is the main thing to build.</td></tr>
+          <tr><td class="k">4 · Plan</td><td><span class="pill agent">Research + script agents</span></td><td>Web and platform research for the niche, a no-repeat ledger of past topics, then seven scripts and one keyframe each on Gemini 3 Pro Image (cheap previews, about 5 credits a frame).</td><td>Weekly planner tasks write the week's story sheets; keyframes are checked by eye before video is made.</td></tr>
+          <tr><td class="k">5 · Approve</td><td><span class="pill agent">Generate + QA agents</span> then <span class="pill user">User</span></td><td>Video on Seedance 2.5 with native sound, voice and music where the format needs them, local edit and master; then automatic scores, face and speech checks, text safe zones, AI label. The user's tap, or the auto-approve rule, releases the post to the scheduler.</td><td>Same agents and checks run today on a schedule. Approval is a typed message in chat; two brands already run with no approval at all.</td></tr>
+          <tr><td class="k">6 · Report</td><td><span class="pill agent">Reporting agent</span></td><td>Reads views, followers, saves, shares and watch time from the platform APIs, writes the weekly report and the learnings the research agent uses next week.</td><td>Daily health checks and a weekly report run unattended; numbers come from Zernio's analytics and the public profiles.</td></tr>
+        </tbody>
+      </table>
+      <p class="note">The agents are Claude, running on a schedule with tools: the Picsart GenAI API for every generation, Picsart social connect for posting, the platform APIs for analytics. Today they run as scheduled Claude Code tasks on one machine; in the product they run as Claude Agent SDK workers on Picsart's side, one job per channel per day.</p>
+    </div>
+  </section>
+
+  <!-- 3 · ARCHITECTURE -->
+  <section>
+    <h2>What exists, what to adapt, what to build</h2>
+    <p class="lead">Four layers. Read each row left to right; the colour says how far it is from a product.</p>
+    <div class="card">
+      <div class="legend"><span class="ok">Exists and runs today</span><span class="warn">Exists, needs a user-facing version</span><span class="todo">To build</span></div>
+
+      <div class="layer">
+        <div class="lh"><h3>User layer</h3><p>The Picsart app. What a customer sees and touches.</p></div>
+        <div class="boxes">
+          <div class="box ok"><b>Sign-up</b><span>Picsart account, credits attached</span></div>
+          <div class="box ok"><b>Connect accounts</b><span>Picsart social connect: Instagram, TikTok, YouTube, X, Threads, Bluesky</span></div>
+          <div class="box todo"><b>Channel set-up</b><span>Brief in, channel playbook out</span></div>
+          <div class="box warn"><b>Approve</b><span>Today a chat message; becomes one tap in the app</span></div>
+          <div class="box warn"><b>Report view</b><span>Today a web page; becomes in-app, per user</span></div>
+          <div class="box todo"><b>Budget + billing</b><span>Credit cap per channel, plan and price</span></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lh"><h3>Agent layer</h3><p>Claude agents on a schedule. This is the factory.</p></div>
+        <div class="boxes">
+          <div class="box ok"><b>Research</b><span>Trends, facts, sources, no-repeat ledger</span></div>
+          <div class="box ok"><b>Script + plan</b><span>Format rules, beats, prompts, captions</span></div>
+          <div class="box ok"><b>Generate</b><span>Frames, video, voice, music, edit, master</span></div>
+          <div class="box ok"><b>Quality gate</b><span>Scores, identity, transcript, safety, AI label</span></div>
+          <div class="box warn"><b>Scheduler</b><span>Today Zernio; moves to Picsart social posting</span></div>
+          <div class="box ok"><b>Reporting</b><span>Daily health, weekly numbers, learnings</span></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lh"><h3>Picsart models and tools</h3><p>Where the credits are spent. All in the product today.</p></div>
+        <div class="boxes">
+          <div class="box ok"><b>Seedance 2.5</b><span>Video with native sound and dialogue</span></div>
+          <div class="box ok"><b>Gemini 3 Pro Image</b><span>Keyframes and sets; Nano Banana Pro</span></div>
+          <div class="box ok"><b>ElevenLabs · Lyria</b><span>Voice-over, music, transcription</span></div>
+          <div class="box ok"><b>Scene compositor</b><span>Text, end card, export, no credits</span></div>
+          <div class="box ok"><b>Edit tools</b><span>Remove background, Relight, AI Replace, Enhance</span></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lh"><h3>Platforms</h3><p>The user's own accounts, through official APIs.</p></div>
+        <div class="boxes">
+          <div class="box"><b>Instagram</b><span>Reels and carousels; 100 API posts a day per account</span></div>
+          <div class="box"><b>TikTok</b><span>Direct post with the AI-content flag; app audit first</span></div>
+          <div class="box"><b>YouTube Shorts</b><span>100 uploads a day; AI disclosure for realistic content</span></div>
+          <div class="box"><b>Pinterest · X · Threads</b><span>Pinterest needs Standard API access</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="build">
+      <div class="card"><span class="pill todo">To build</span><h3>Channel set-up</h3><p>An agent that turns a brief and a chosen format into a complete channel playbook: cast or set, style rules, premise bank, posting plan, caption rules. The format playbooks exist for cartoons, drama and interiors; the generator over them does not.</p><div class="meta">Largest piece · the product's core</div></div>
+      <div class="card"><span class="pill todo">To build</span><h3>Budget per channel</h3><p>A hard credit cap per channel and per day, a stop when the balance is low, and a clear bill. Mirrors the floor the brands already respect, but per user instead of per team.</p><div class="meta">Small · billing and limits</div></div>
+      <div class="card"><span class="pill todo">To build</span><h3>Plan and price</h3><p>A monthly plan with included posts and overage in credits; drama as a premium tier because an episode costs ten times a cartoon.</p><div class="meta">Business decision · not engineering</div></div>
+      <div class="card warn"><span class="pill warn">To adapt</span><h3>Approval and report in the app</h3><p>Both exist as a chat message and a web page. They become two screens: a daily approval card and a weekly report, with the auto-approve switch.</p><div class="meta">Medium · product UI</div></div>
+      <div class="card warn"><span class="pill warn">To adapt</span><h3>Scheduler on Picsart's connection</h3><p>Posting moves from Zernio to Picsart's own social connect and the platform APIs, with per-account daily caps and the AI label set per platform.</p><div class="meta">Medium · plus TikTok audit and Pinterest access</div></div>
+      <div class="card warn"><span class="pill warn">To adapt</span><h3>Agents as a service</h3><p>Today the agents run as scheduled tasks on one machine. For users they run as Claude Agent SDK workers on Picsart infrastructure, one job per channel per day, with the same tools.</p><div class="meta">Medium · infrastructure</div></div>
+    </div>
+
+    <div class="runs" style="margin-top:1rem">
+      <div class="card"><h3>How a daily run works today</h3><ol>
+        <li><b>A scheduled task wakes an agent</b> with the brand's playbook and skill.</li>
+        <li>It <b>researches and writes</b> the day's posts, then <b>generates</b> keyframes and video through the Picsart GenAI API, spending credits from the team pool.</li>
+        <li>The <b>quality gate</b> scores every post; failures are regenerated once, then dropped.</li>
+        <li>Posts are <b>scheduled through Zernio</b> with the AI label and "made with Picsart"; two brands do this with no human step.</li>
+        <li>A <b>reporting task</b> reads the numbers back daily and weekly.</li>
+      </ol></div>
+      <div class="card"><h3>What changes for a user's channel</h3><ol>
+        <li>The playbook comes from the <b>set-up agent</b>, not from a hand-written skill.</li>
+        <li>Credits are drawn from <b>the user's own balance</b>, under the channel's cap.</li>
+        <li>Posting goes through <b>Picsart's connection to the user's accounts</b>.</li>
+        <li>Approval is <b>a tap in the app</b> or the user's auto-approve rule.</li>
+        <li>The report is <b>a screen in the app</b>, per channel.</li>
+      </ol></div>
+    </div>
+  </section>
+
+  <!-- 4 · ECONOMICS -->
+  <section>
+    <h2>What a channel costs to run, in credits</h2>
+    <p class="lead">Logged costs from the three formats that already run, all-in: every reroll, retake and failed job counted. Price points are left open on purpose; the cost side is exact.</p>
+    <div class="card scroll">
+      <table>
+        <thead><tr><th>Format</th><th>What the user gets</th><th class="r">Credits per post</th><th class="r">One post a day, per month</th><th>Models</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Short cartoon reel</td><td>15-second story with faces and sound effects, no dialogue</td><td class="r">110–230</td><td class="r">3,300–6,900</td><td>Gemini 3 Pro Image keyframe, Seedance 2.5 with native sound</td></tr>
+          <tr><td class="k">Interior reel or carousel</td><td>Room before/after, statement tour, trend list</td><td class="r">40–184</td><td class="r">1,200–5,500</td><td>Gemini 3 Pro Image sets, camera moves on Kling and Seedance, Lyria music</td></tr>
+          <tr><td class="k">Drama episode</td><td>30 to 60 seconds of spoken dialogue, a series with cliffhangers</td><td class="r">1,040–2,743</td><td class="r">31,000–82,000</td><td>Seedance 2.5 takes with native dialogue, face and voice references</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Ranges from the logged runs of each format. Cartoons and interiors fit a daily plan; drama is a premium tier. Machine time is not billed in credits: a 15-second Seedance reel renders in about eight minutes.</p>
+    </div>
+
+    <div class="two" style="margin-top:1rem">
+      <div class="card">
+        <div class="label" style="margin-bottom:.6rem">Where the price can sit</div>
+        <figure>
+          <svg viewBox="0 0 480 150" role="img" aria-label="Price bands per month: DIY AI tools 15 to 99 dollars, human social media management 500 to 2,500 dollars, and the open band between them for a managed autopilot" style="color:var(--ink)">
+            <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)">
+              <line x1="30" y1="110" x2="460" y2="110" stroke="var(--line)"/>
+              <text x="30" y="128" text-anchor="middle">$0</text><text x="137" y="128" text-anchor="middle">$100</text><text x="245" y="128" text-anchor="middle">$500</text><text x="352" y="128" text-anchor="middle">$1,000</text><text x="460" y="128" text-anchor="middle">$2,500</text>
+            </g>
+            <rect x="34" y="30" width="103" height="18" rx="4" fill="var(--line)"/><text x="40" y="24" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)">DIY AI tools · $15–99 a month</text>
+            <rect x="245" y="70" width="215" height="18" rx="4" fill="var(--line)"/><text x="250" y="64" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--muted)">Human manager or agency · $500–2,500</text>
+            <rect x="137" y="50" width="135" height="18" rx="4" fill="var(--accent)"/><text x="142" y="44" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" font-weight="600" fill="var(--accent-ink)">Open band · $99–499</text>
+          </svg>
+          <figcaption>Monthly prices from public pricing pages and the Sprout Social 2026 cost guide. No current tool bundles premium video generation with publishing and reporting.</figcaption>
+        </figure>
+      </div>
+      <div class="card">
+        <div class="label" style="margin-bottom:.4rem">Why it fits Picsart's model</div>
+        <ul>
+          <li><b>Credits are consumed daily</b>, not once: a cartoon channel uses 3,300 to 6,900 credits a month on Seedance and Gemini without the user opening the editor.</li>
+          <li><b>Premium models by default.</b> Every post runs on Seedance 2.5, Gemini 3 Pro Image and Nano Banana Pro; the user's channel shows the paid stack in public.</li>
+          <li><b>"Made with Picsart" on every post</b> turns each channel into distribution for Picsart.</li>
+          <li><b>Open for the business team:</b> plan price, included posts, overage in credits, and whether drama is a separate tier.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · MARKET -->
+  <section>
+    <h2>The managed, premium-video autopilot is an empty square</h2>
+    <p class="lead">Fifteen tools reviewed on 2026-10-28, placed on two axes: how much they generate, and how much they do without a human. The top-right square is empty.</p>
+    <div class="card">
+      <figure class="scroll">
+        <svg viewBox="0 0 1000 470" role="img" aria-label="Competitor map: horizontal axis from captions only to premium video generation, vertical axis from manual to runs itself; four quadrants, Picsart Social Autopilot alone in the top-right" style="color:var(--ink); min-width:720px">
+          <g stroke="var(--line)" stroke-width="1">
+            <rect x="110" y="20" width="860" height="380" fill="none"/>
+            <line x1="540" y1="20" x2="540" y2="400"/><line x1="110" y1="210" x2="970" y2="210"/>
+          </g>
+          <rect x="541" y="21" width="428" height="188" fill="var(--accent-soft)" opacity=".55"/>
+          <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" font-weight="600" fill="var(--faint)" letter-spacing="1">
+            <text x="120" y="40">SCHEDULERS WITH AI CAPTIONS</text>
+            <text x="120" y="230">COPY AND CAPTION TOOLS</text>
+            <text x="552" y="230">GENERATORS THAT DO NOT PUBLISH</text>
+            <text x="552" y="40" fill="var(--accent-ink)">MANAGED AUTOPILOT · EMPTY</text>
+          </g>
+          <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" fill="var(--faint)" letter-spacing="1.5">
+            <text x="540" y="432" text-anchor="middle">CAPTIONS ONLY  →  PREMIUM VIDEO GENERATION</text>
+            <text transform="translate(80 210) rotate(-90)" text-anchor="middle">MANUAL  →  RUNS ITSELF</text>
+          </g>
+          <g font-family="IBM Plex Sans, system-ui, sans-serif" font-size="13" fill="var(--ink)">
+            <circle cx="170" cy="120" r="6" fill="var(--faint)"/><text x="182" y="124">Vista Social</text>
+            <circle cx="300" cy="90" r="6" fill="var(--faint)"/><text x="312" y="94">Predis</text>
+            <circle cx="215" cy="160" r="6" fill="var(--faint)"/><text x="227" y="164">Hootsuite</text>
+            <circle cx="380" cy="150" r="6" fill="var(--faint)"/><text x="392" y="154">OpusClip</text>
+            <circle cx="150" cy="300" r="6" fill="var(--faint)"/><text x="162" y="304">Buffer</text>
+            <circle cx="135" cy="360" r="6" fill="var(--faint)"/><text x="147" y="364">Jasper</text>
+            <circle cx="260" cy="270" r="6" fill="var(--faint)"/><text x="272" y="274">Ocoya</text>
+            <circle cx="330" cy="330" r="6" fill="var(--faint)"/><text x="342" y="334">ContentStudio</text>
+            <circle cx="420" cy="290" r="6" fill="var(--faint)"/><text x="432" y="294">Lately</text>
+            <circle cx="620" cy="130" r="6" fill="var(--faint)"/><text x="632" y="134">Blotato · agent kit, the user wires it</text>
+            <circle cx="700" cy="330" r="6" fill="var(--faint)"/><text x="712" y="334">HeyGen</text>
+            <circle cx="800" cy="290" r="6" fill="var(--faint)"/><text x="812" y="294">Mirage</text>
+            <circle cx="880" cy="350" r="6" fill="var(--faint)"/><text x="892" y="354">Higgsfield</text>
+            <circle cx="650" cy="370" r="6" fill="var(--faint)"/><text x="662" y="374">Canva</text>
+            <circle cx="870" cy="75" r="11" fill="var(--accent)"/><text x="856" y="80" text-anchor="end" font-family="IBM Plex Mono, ui-monospace, monospace" font-weight="600" fill="var(--accent-ink)">PICSART SOCIAL AUTOPILOT</text>
+          </g>
+        </svg>
+        <figcaption>Position by what each product's pricing page and documentation say it does. Only Predis and Vista post without an approval step by default; neither generates premium video.</figcaption>
+      </figure>
+      <div class="quad">
+        <div class="q"><b>Schedulers with AI captions</b><p>Buffer, Hootsuite, Vista Social, Ocoya, ContentStudio. They post what you give them and write captions; no video generation, a human still decides.</p><small>$5–449 a month</small></div>
+        <div class="q"><b>Generators that do not publish</b><p>HeyGen, Mirage, Higgsfield, Canva, Jasper. They make the asset and stop; the user still schedules, labels and reports.</p><small>$15–149 a month</small></div>
+        <div class="q"><b>Agent kits</b><p>Blotato, Predis. Credits, APIs and automation nodes; the user designs the workflow, and quality is their problem.</p><small>$19–499 a month</small></div>
+        <div class="q hi"><b>Managed autopilot</b><p>One brief, then daily posts made on premium video models, checked by a quality gate, published to the user's accounts and reported. Nobody sells this today.</p><small>the square Picsart can take</small></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <div class="label" style="margin-bottom:.4rem">Demand signals</div>
+      <ul>
+        <li><b>54% of US small businesses</b> struggle to keep social content fresh; 28% already use AI for marketing and social (Verizon, 2025, n=600).</li>
+        <li><b>AI in social media</b>: $2.6B in 2025 to $19B by 2034, 24% a year (IMARC, June 2026).</li>
+        <li><b>95% of social professionals</b> use AI; most call themselves beginners (Metricool, 2026).</li>
+        <li><b>Money is moving into agents</b>: Nectar Social raised $30M for autonomous brand conversations (May 2026); Meta's Business Agent serves over a million businesses but does not create posts.</li>
+        <li><b>Platforms are formalising AI accounts</b>: Instagram's "AI-generated profile" label is required from Aug 31, 2026; TikTok ships an AI-content flag in its posting API.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6 · RULES -->
+  <section>
+    <h2>Posting on the user's behalf, within the rules</h2>
+    <div class="rules">
+      <div class="rule"><h3>Instagram</h3><p>Reels, carousels and Stories through the official API; up to 100 published posts per account per day. We plan for 25. The app holds the queue. An "AI-generated profile" label is required for persona accounts from Aug 31, 2026.</p></div>
+      <div class="rule"><h3>TikTok</h3><p>Direct posting needs the app to pass TikTok's audit; until then posts are private. Each post carries the AI-content flag and the creator's own privacy setting. Daily per-user caps apply.</p></div>
+      <div class="rule"><h3>YouTube Shorts</h3><p>Up to 100 uploads a day per project by default. Realistic synthetic content must be disclosed; animated content is exempt.</p></div>
+      <div class="rule"><h3>Every platform</h3><p>The AI label and "made with Picsart" on every asset, as today. Content credentials in the file. The user connects their own account; Picsart never holds their password.</p></div>
+    </div>
+  </section>
+
+  <!-- 7 · PILOT -->
+  <section>
+    <h2>Four weeks with real users before any build</h2>
+    <div class="card">
+      <figure class="scroll">
+        <svg viewBox="0 0 1000 190" role="img" aria-label="Four-week pilot timeline: week 0 set-up, weeks 1 and 2 run with human approval, weeks 3 and 4 auto-approve for users who opt in, then a go or no-go decision" style="color:var(--ink); min-width:700px">
+          <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+          <line x1="40" y1="70" x2="960" y2="70" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+          <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="12" font-weight="600" text-anchor="middle" fill="currentColor">
+            <g><circle cx="60" cy="70" r="7" fill="var(--accent)"/><text x="60" y="48">WEEK 0</text><text x="60" y="100" font-weight="500" font-size="11.5" fill="var(--muted)">5 to 10 creators</text><text x="60" y="116" font-weight="500" font-size="11.5" fill="var(--muted)">and small shops</text><text x="60" y="132" font-weight="500" font-size="11.5" fill="var(--muted)">briefed, connected</text></g>
+            <g><circle cx="330" cy="70" r="7" fill="currentColor"/><text x="330" y="48">WEEKS 1–2</text><text x="330" y="100" font-weight="500" font-size="11.5" fill="var(--muted)">one post a day each,</text><text x="330" y="116" font-weight="500" font-size="11.5" fill="var(--muted)">user approves daily,</text><text x="330" y="132" font-weight="500" font-size="11.5" fill="var(--muted)">our pipeline, our hands</text></g>
+            <g><circle cx="600" cy="70" r="7" fill="currentColor"/><text x="600" y="48">WEEKS 3–4</text><text x="600" y="100" font-weight="500" font-size="11.5" fill="var(--muted)">auto-approve for users</text><text x="600" y="116" font-weight="500" font-size="11.5" fill="var(--muted)">who opt in; measure</text><text x="600" y="132" font-weight="500" font-size="11.5" fill="var(--muted)">rejections and retention</text></g>
+            <g><rect x="800" y="52" width="140" height="36" rx="18" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/><text x="870" y="75" fill="var(--accent-ink)">GO / NO-GO</text><text x="870" y="110" font-weight="500" font-size="11.5" fill="var(--muted)">build list for the</text><text x="870" y="126" font-weight="500" font-size="11.5" fill="var(--muted)">self-serve version</text></g>
+          </g>
+          <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="11" fill="var(--faint)" text-anchor="middle"><text x="500" y="172">about 25,000 credits for the whole pilot at cartoon and interior rates, one post a day per user</text></g>
+        </svg>
+        <figcaption>Five measures decide it: users still active in week 4, posts rejected per week, views and followers gained, credits used per user, and the price users say they would pay.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Open questions</h2>
+    <div class="card">
+      <ul>
+        <li><b>Price and plan shape</b>: monthly fee with included posts, overage in credits, drama as a premium tier. Needs the business team.</li>
+        <li><b>Posting path</b>: Picsart's own social posting versus Zernio, which we use today; the TikTok app audit and Pinterest Standard access must be requested either way.</li>
+        <li><b>Who is the first user set</b>: Picsart's own creators and Earn participants are the cheapest to recruit for the pilot.</li>
+        <li><b>Attribution</b>: tagged links and an analytics view that counts sign-ups and purchases per channel still need an owner.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sources</h2>
+    <div class="card">
+      <ul class="srcs">
+        <li>Pipeline audit and credit logs: Picsart Social automation workspace, 2026-10-28.</li>
+        <li>Instagram content publishing API: <a href="https://developers.facebook.com/docs/instagram-platform/content-publishing">developers.facebook.com</a>.</li>
+        <li>Meta AI labelling policy: <a href="https://about.fb.com/news/2024/04/metas-approach-to-labeling-ai-generated-content-and-manipulated-media/">about.fb.com</a>; AI-generated profile label: <a href="https://techrepublic.com/article/news-instagram-ai-generated-profile-label-recommendations/">TechRepublic</a>.</li>
+        <li>TikTok Content Posting API: <a href="https://developers.tiktok.com/doc/content-posting-api-reference-direct-post">developers.tiktok.com</a>.</li>
+        <li>YouTube Data API quota: <a href="https://developers.google.com/youtube/v3/getting-started">developers.google.com</a>; AI disclosure: <a href="https://support.google.com/youtube/answer/14328491">support.google.com</a>.</li>
+        <li>Pinterest API access tiers: <a href="https://developers.pinterest.com/docs/key-concepts/access-tiers/">developers.pinterest.com</a>.</li>
+        <li>Competitor pricing: <a href="https://predis.ai/pricing/">Predis</a>, <a href="https://www.ocoya.com/pricing">Ocoya</a>, <a href="https://www.blotato.com/pricing.md">Blotato</a>, <a href="https://buffer.com/pricing">Buffer</a>, <a href="https://www.hootsuite.com/plans">Hootsuite</a>, <a href="https://www.opus.pro/pricing">OpusClip</a>, <a href="https://contentstudio.io/pricing">ContentStudio</a>, <a href="https://vistasocial.com/pricing/">Vista Social</a>, <a href="https://www.lately.ai/pricing">Lately</a>.</li>
+        <li>Agent audit of social tools: <a href="https://resources.rework.com/tools/ai-agents/best-ai-agents-for-social-media-2026">Rework, 2026</a>.</li>
+        <li>Managed service costs: <a href="https://sproutsocial.com/insights/social-media-management-cost/">Sprout Social, April 2026</a>.</li>
+        <li>Market size: <a href="https://www.imarcgroup.com/report/en/ai-in-social-media-market">IMARC, June 2026</a>.</li>
+        <li>Small-business survey: <a href="https://www.verizon.com/about/news/2025-state-small-business-survey">Verizon, May 2025</a>; professionals: <a href="https://metricool.com/ai-agents-for-social-media/">Metricool, 2026</a>.</li>
+        <li>Agent funding and launches: <a href="https://techstory.in/nectar-social-raises-30-million-to-help-brands-survive-the-ai-powered-social-media-era/">Nectar Social</a>, <a href="https://aibusiness.com/agentic-ai/meta-rolls-out-ai-agent-enterprises-globally">Meta Business Agent</a>, <a href="https://www.producthunt.com/products/ghostpaw/launches">Ghostpaw</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Product proposal, draft for discussion · Picsart Social automation project · 2026-10-28 · credit figures all-in; estimates marked as such</footer>
+</main>
+</body>
+</html>
