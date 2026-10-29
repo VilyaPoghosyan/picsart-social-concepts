@@ -76,6 +76,10 @@ MICRO_COST = {
     "her-father-1": dict(calls=2444, drop=None, basis="calls", note="THE INTRODUCTION 2,388 + casting 56"),
     "her-father-2": dict(calls=1964, drop=None, basis="calls", note="THE FITTING"),
     "her-father-3": dict(calls=2183, drop=None, basis="calls", note="THE DEAL"),
+    "her-father-4": dict(calls=1541, drop=1541, basis="exact", note="THE WINE CELLAR (21,800 -> 20,259); stuck 500 jobs not charged"),
+    "her-father-5": dict(calls=1396, drop=None, basis="calls", note="THE PHOTO, charged calls"),
+    "her-father-6": dict(calls=1675, drop=None, basis="calls", note="HER OR ME, charged calls (450 of stuck jobs not charged)"),
+    "her-father-7": dict(calls=1467, drop=None, basis="calls", note="THE REAL RYAN incl. Megan casting"),
 }
 
 # ALL-IN credits per brand (audited 2026-10-23 from every run log, run.json and balance drop, including work
@@ -84,13 +88,13 @@ MICRO_COST = {
 # account was shared are NOT used: they include other brands' work. Microdramas max per episode: highest
 # logged 2,743 (REMEMBER ME P7), quoted as up to 3,200 for unlogged retries (Vilya 2026-10-23).
 ALL_IN = {
-    "microdramas": dict(total=89236, waste=16123, unposted=0, per_max=3200, unit="episode",
+    "microdramas": dict(total=95315, waste=16123, unposted=0, per_max=3200, unit="episode",
         waste_note="discarded, redone and deleted episodes, standalone tests and remakes never posted, casting and look tests",
         unposted_note="made, not posted yet"),
-    "dwell": dict(total=7396, waste=302, unposted=0, per_max=560, unit="reel or carousel",
+    "dwell": dict(total=9493, waste=302, unposted=0, per_max=560, unit="reel or carousel",
         waste_note="format test reel never posted (132) and the Oct 23 realism proof, a before/after of one real-looking room made for the design review (170)",
-        extra="pins up to 10 each; 665 credits on 125 pins; the Oct 23 batch of 12 (built Oct 26) is counted at its max, 1,842, with stuck jobs as billed"),
-    "reelo": dict(total=14516, waste=3755, unposted=220, per_max=230, unit="cartoon reel",
+        extra="pins up to 10 each; 865 credits on 160 pins; the Oct 23 batch of 12 (built Oct 26) is counted at its max, 1,842, with stuck jobs as billed; the Oct 30 batch of 14 (built Oct 28) cost 1,897"),
+    "reelo": dict(total=16301, waste=3755, unposted=220, per_max=230, unit="cartoon reel",
         waste_note="7 tiny-world videos built and never posted (2,977), cartoon format test, cast sheets, a rejected reel, a failed render, loop tests, unlogged retries in the Oct 23 batch of 30 (139)",
         unposted_note="one Halloween-week reel (Weekend with Max) held for garbled lettering",
         extra="the older tiny-world videos cost up to 436 each"),
@@ -559,7 +563,7 @@ DWELL_COST = {
 }
 # Pinterest: our three pin runs (2026-10-02 x2, 2026-10-20) (dwell-content-runs.md): 70 pins, 185 + 180 = 365 credits,
 # confirmed by the balance (5,730 -> 5,545 -> 5,365). 5 credits per image; 3 pins needed one reroll (10).
-PIN_RUNS = dict(pins=125, credits=665, per_pin=[5] * 117 + [10] * 8, since="2026-10-03")  # + 2026-10-20 run: 35 pins, 180 cr; + 2026-10-26 run: 20 pins, 120 cr
+PIN_RUNS = dict(pins=160, credits=865, per_pin=[5] * 150 + [10] * 10, since="2026-10-03")  # + 2026-10-20 run: 35 pins, 180 cr; + 2026-10-26 run: 20 pins, 120 cr; + 2026-10-28 run: 35 pins, 200 cr
 
 DWELL_FORMAT = {"A": "Before / after", "B": "Statement tour", "C": "Walkthrough reveal", "D": "Variation swap",
                 "E": "Trend carousel", "F": "Photo-set carousel", "G": "Colour pairs", "H": "Mouldings"}
@@ -767,8 +771,8 @@ def build_dwell():
       <div><b>Engine</b><span>Rooms on Gemini 3 Pro Image, camera moves on MiniMax and Kling V3, beat-synced ElevenLabs music, the linen and walnut Picsart end card.</span></div>
     </div>
     <p class="note">Live on 3 of Dwell's 4 platforms; the X account is not posting and is left out. Instagram and TikTok: two posts a day
-      Oct 12–24 (four a day Oct 21–24), a pause Oct 25–26, then two a day again Oct 27 to Nov 1 with the batch built on Oct 26.
-      Pinterest keeps five pins a day through Nov 1. A design review on Oct 23 asked for readable, higher-contrast titles, a font
+      Oct 12–24 (four a day Oct 21–24), a pause Oct 25–26, then two a day again from Oct 27, scheduled through Nov 8 (batches built
+      Oct 26 and Oct 28). Pinterest keeps five pins a day through Nov 8. A design review on Oct 23 asked for readable, higher-contrast titles, a font
       per style, more realistic video, a clearer logo and before/afters of the same room; the Oct 27 batch is the first built to
       those rules.</p>
   </div>
@@ -984,8 +988,8 @@ def build_reelo():
       <div class="handle">@reelo.hq · @reelostudio · Instagram + TikTok</div>
     </div>
   </div>
-  <p class="dek">15-second Pixar-style family cartoons since Oct 17, four a day (two a day on Oct 21–22). 30 reels for Oct 28 to Nov 11 were built on Oct 23;
-    the queue is scheduled through Nov 1. Before that (from {first}): AI-trend
+  <p class="dek">15-second Pixar-style family cartoons since Oct 17, four a day (two a day on Oct 21–22). 46 reels for Oct 28 to Nov 5 were built on Oct 23 and Oct 28;
+    the queue is scheduled through Nov 5. Before that (from {first}): AI-trend
     explainers, then "tiny worlds", a ruined miniature place restored in one video a day.</p>
 
   <div class="sec-label">Key concept</div>
@@ -1045,6 +1049,11 @@ FACELESS_COST = {
     "2026-W44/1_mon_cartoon_dog-salon": 0, "2026-W44/2_tue_drama_family-portrait-p5": 0, "2026-W44/3_wed_interior_01-parisian-salon": 0,
     "2026-W44/4_thu_cartoon_remote-heist": 0, "2026-W44/5_fri_drama_family-portrait-p6": 0, "2026-W44/6_sat_interior_04-ivory-closet-reveal": 0,
     "2026-W44/7_sun_cartoon_sneeze-chain": 0,
+    # W45 = Price Tag week (reuses other brands' videos, 0 new credits)
+    "2026-W45/1_mon_cartoon_bathtime-captain": 0, "2026-W45/2_tue_drama_family-portrait-p4": 0,
+    "2026-W45/3_wed_interior_12-art-deco-apartment": 0, "2026-W45/4_thu_cartoon_tattooed-ballerina": 0,
+    "2026-W45/5_fri_drama_family-portrait-p8": 0, "2026-W45/6_sat_interior_05-japandi-headboard-swap": 0,
+    "2026-W45/7_sun_cartoon_kiss-blocker": 0,
 }
 FACELESS_KIND = {"tutorial": "How-to", "money_truth": "Does it pay?", "does_it_pay": "Does it pay?", "one_app": "One app"}
 
@@ -1282,7 +1291,7 @@ def build_listed():
                      f'it returns "sync pending" for all {len(live)} live posts, so views, likes and saves are shown as '
                      f'not synced rather than as 0.</p>')
     P = dict(name="Instagram", fmt="Reels + carousels", handle="@listed.hq", url="https://www.instagram.com/listed.hq/",
-             concept="Since Oct 27, three to four character skits a day: a funny AI character roasts a seller's bad "
+             concept="Since Oct 27, character skits (three to four a day Oct 27–29, two a day since Oct 30, made and scheduled automatically): a funny AI character roasts a seller's bad "
                      "product photo, compares a pro team (money and time) with Picsart, and shows the real result. Before "
                      "that, one post a day (Oct 5-25): a product's before/after, its tutorial, a Sunday carousel. Every "
                      "post ends on \"Comment FIX\", and the comment sends the step-by-step by DM with a button to open Picsart.")
@@ -1331,7 +1340,7 @@ def build_listed():
       <div><b>Before (Oct 5–25)</b><span>A product's before/after, then its tutorial with the exact tool path, and a Sunday carousel of the week.</span></div>
     </div>
     <p class="note">Live on Instagram only; other platforms are not connected yet. The before/after posts ran Oct 5–25 (nine products,
-      three weekly carousels); character skits since Oct 27, three to four a day{sched_note}.</p>
+      three weekly carousels); character skits since Oct 27 (three to four a day, then two a day from Oct 30, made and scheduled automatically){sched_note}.</p>
   </div>
 
   <div class="sec-label">Overall</div>

@@ -22,7 +22,7 @@ HERE = Path(__file__).resolve().parent
 SINCE = datetime(2026, 10, 3, tzinfo=timezone.utc)
 
 WHAT = ("Five social media brands run end to end on Picsart GenAI. An automated pipeline writes, generates, quality-checks "
-        "and publishes four to eight posts a day on Instagram, TikTok and Pinterest; one person reviews and approves, no "
+        "and publishes about ten new posts a day on Instagram and TikTok plus five Pinterest pins; one person reviews and approves, no "
         "production team. Every post carries \"made with Picsart\". Running since Oct 3.")
 GOAL = ("Millions of engagements, converted into Picsart users: every post is labelled \"made with Picsart\", and keyword "
         "posts send viewers the exact Picsart steps by DM. Five concepts run side by side to learn which formats earn "
@@ -33,16 +33,16 @@ BRANDS = [  # slug, name, concept, hue, platforms (name, handle, url)
     dict(slug="reelo", name="Reelo", hue="#BF3F18", concept="15-second Pixar-style family cartoons, no dialogue. Four a day.",
          plats=[("Instagram", "@reelo.hq", "https://www.instagram.com/reelo.hq/"), ("TikTok", "@reelostudio", "https://www.tiktok.com/@reelostudio")],
          since="Oct 17"),
-    dict(slug="microdramas", name="Microdramas", hue="#C40F6B", concept="Serialized AI drama: 30 to 60-second episodes with dialogue, 8 to 9 parts a series.",
+    dict(slug="microdramas", name="Microdramas", hue="#C40F6B", concept="Serialized AI drama: 30 to 60-second episodes with dialogue, 8 to 9 parts a series. One a day.",
          plats=[("Instagram", "@microdramas.ai", "https://www.instagram.com/microdramas.ai/"), ("TikTok", "@microdramas.ai", "https://www.tiktok.com/@microdramas.ai")],
          since="Oct 13"),
-    dict(slug="dwell", name="Dwell", hue="#8A6D3B", concept="Luxury interiors: before/afters, room tours and trend carousels, plus Pinterest pins.",
+    dict(slug="dwell", name="Dwell", hue="#8A6D3B", concept="Luxury interiors: before/afters, room tours and trend carousels, two a day, plus five Pinterest pins a day.",
          plats=[("Instagram", "@dwell.rooms", "https://www.instagram.com/dwell.rooms/"), ("TikTok", "@dwellrooms", "https://www.tiktok.com/@dwellrooms"),
                 ("Pinterest", "@dwellrooms", "https://www.pinterest.com/dwellrooms/")],
          since="Oct 12 · pins Oct 3"),
-    dict(slug="faceless", name="Faceless", hue="#2F6FDE", concept="Price Tag reels: our finished video, what buyers pay for it, the receipt.",
+    dict(slug="faceless", name="Faceless", hue="#2F6FDE", concept="Price Tag reels: our finished video, what buyers pay for it, the receipt. One a day.",
          plats=[("Instagram", "@faceless_monetization", "https://www.instagram.com/faceless_monetization/")], since="Oct 5"),
-    dict(slug="listed", name="Listed", hue="#0C7446", concept="Product photos for online sellers: a phone photo fixed in Picsart, then the tutorial.",
+    dict(slug="listed", name="Listed", hue="#0C7446", concept="Character skits for online sellers: an AI character roasts a bad product photo, then fixes it in Picsart. Two a day.",
          plats=[("Instagram", "@listed.hq", "https://www.instagram.com/listed.hq/")], since="Oct 5"),
 ]
 
