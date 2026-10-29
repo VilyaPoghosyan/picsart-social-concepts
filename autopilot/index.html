@@ -145,7 +145,23 @@
   .mode.ok b{color:var(--ok)} .mode.warn b{color:var(--warn)} .mode.todo b{color:var(--todo)}
   .mode p{margin:0; font-size:.84rem; color:var(--muted); line-height:1.45}
   .mode small{display:block; margin-top:.55rem; font-family:var(--mono); font-size:.78rem; font-weight:600; color:var(--ink)}
-  table.rules-t{min-width:900px; font-size:.84rem} table.rules-t td{line-height:1.4}
+
+  .nets{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:.7rem; margin-top:1rem}
+  .net{border-radius:14px; border:1px solid var(--line); background:var(--surface); padding:.95rem 1rem 1rem; min-width:0; display:flex; flex-direction:column; gap:.5rem; box-shadow:var(--shadow)}
+  .net.ok{background:linear-gradient(180deg,var(--ok-soft),var(--surface) 70%); border-color:var(--ok)}
+  .net.warn{background:linear-gradient(180deg,var(--warn-soft),var(--surface) 70%); border-color:var(--warn)}
+  .net.todo{background:linear-gradient(180deg,var(--todo-soft),var(--surface) 70%); border-color:var(--todo)}
+  .net.sys{background:var(--surface-2)}
+  .net-h{display:flex; flex-direction:column; gap:.4rem; align-items:flex-start}
+  .net-h b{font-family:var(--display); font-size:1.25rem; font-weight:700; letter-spacing:-.01em; line-height:1.1}
+  .net-api{font-size:.8rem; color:var(--muted); line-height:1.4}
+  .net-cap{display:flex; align-items:baseline; gap:.4rem; margin-top:.2rem}
+  .net-cap b{font-family:var(--display); font-size:2rem; font-weight:700; letter-spacing:-.03em; line-height:1; color:var(--ink); font-variant-numeric:tabular-nums}
+  .net-cap span{font-family:var(--mono); font-size:.76rem; color:var(--faint); line-height:1.2}
+  .net dl{margin:.2rem 0 0; display:grid; grid-template-columns:1fr; gap:.15rem .5rem; border-top:1px dashed var(--line); padding-top:.6rem}
+  .net dt{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); margin-top:.35rem}
+  .net dd{margin:0; font-size:.82rem; color:var(--ink); line-height:1.4}
+  .net.ok dt{color:var(--ok)} .net.warn dt{color:var(--warn)} .net.todo dt{color:var(--todo)}
 
   /* 4 · economics */
   .two{display:grid; grid-template-columns:1fr 1fr; gap:1rem} .two > *{min-width:0}
@@ -158,7 +174,23 @@
   .mode.ok b{color:var(--ok)} .mode.warn b{color:var(--warn)} .mode.todo b{color:var(--todo)}
   .mode p{margin:0; font-size:.84rem; color:var(--muted); line-height:1.45}
   .mode small{display:block; margin-top:.55rem; font-family:var(--mono); font-size:.78rem; font-weight:600; color:var(--ink)}
-  table.rules-t{min-width:900px; font-size:.84rem} table.rules-t td{line-height:1.4}
+
+  .nets{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:.7rem; margin-top:1rem}
+  .net{border-radius:14px; border:1px solid var(--line); background:var(--surface); padding:.95rem 1rem 1rem; min-width:0; display:flex; flex-direction:column; gap:.5rem; box-shadow:var(--shadow)}
+  .net.ok{background:linear-gradient(180deg,var(--ok-soft),var(--surface) 70%); border-color:var(--ok)}
+  .net.warn{background:linear-gradient(180deg,var(--warn-soft),var(--surface) 70%); border-color:var(--warn)}
+  .net.todo{background:linear-gradient(180deg,var(--todo-soft),var(--surface) 70%); border-color:var(--todo)}
+  .net.sys{background:var(--surface-2)}
+  .net-h{display:flex; flex-direction:column; gap:.4rem; align-items:flex-start}
+  .net-h b{font-family:var(--display); font-size:1.25rem; font-weight:700; letter-spacing:-.01em; line-height:1.1}
+  .net-api{font-size:.8rem; color:var(--muted); line-height:1.4}
+  .net-cap{display:flex; align-items:baseline; gap:.4rem; margin-top:.2rem}
+  .net-cap b{font-family:var(--display); font-size:2rem; font-weight:700; letter-spacing:-.03em; line-height:1; color:var(--ink); font-variant-numeric:tabular-nums}
+  .net-cap span{font-family:var(--mono); font-size:.76rem; color:var(--faint); line-height:1.2}
+  .net dl{margin:.2rem 0 0; display:grid; grid-template-columns:1fr; gap:.15rem .5rem; border-top:1px dashed var(--line); padding-top:.6rem}
+  .net dt{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); margin-top:.35rem}
+  .net dd{margin:0; font-size:.82rem; color:var(--ink); line-height:1.4}
+  .net.ok dt{color:var(--ok)} .net.warn dt{color:var(--warn)} .net.todo dt{color:var(--todo)}
 
   /* 4 · economics */
   .fmts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem}
@@ -194,9 +226,9 @@
   @media(max-width:900px){
     .loop{grid-template-columns:repeat(3,minmax(0,1fr))} .st:nth-child(3)::after{display:none}
     .journey{grid-template-columns:repeat(3,minmax(0,1fr))} .two,.runs,.back{grid-template-columns:1fr} .build{grid-template-columns:1fr}
-    .layer{grid-template-columns:1fr} .quad{grid-template-columns:1fr 1fr} .rules{grid-template-columns:1fr 1fr} .modes{grid-template-columns:1fr 1fr} .srcs{columns:1} .fmts{grid-template-columns:1fr} .fits{grid-template-columns:1fr 1fr}
+    .layer{grid-template-columns:1fr} .quad{grid-template-columns:1fr 1fr} .rules{grid-template-columns:1fr 1fr} .modes{grid-template-columns:1fr 1fr} .nets{grid-template-columns:1fr 1fr} .srcs{columns:1} .fmts{grid-template-columns:1fr} .fits{grid-template-columns:1fr 1fr}
   }
-  @media(max-width:560px){ .fits{grid-template-columns:1fr} .modes{grid-template-columns:1fr} .loop{grid-template-columns:1fr 1fr} .st:nth-child(3)::after{display:block} .st:nth-child(even)::after{display:none} .journey{grid-template-columns:1fr 1fr} .quad,.rules{grid-template-columns:1fr} }
+  @media(max-width:560px){ .fits{grid-template-columns:1fr} .modes{grid-template-columns:1fr} .nets{grid-template-columns:1fr} .loop{grid-template-columns:1fr 1fr} .st:nth-child(3)::after{display:block} .st:nth-child(even)::after{display:none} .journey{grid-template-columns:1fr 1fr} .quad,.rules{grid-template-columns:1fr} }
   @media(prefers-reduced-motion:no-preference){ .phone{transition:transform .25s ease} .step:hover .phone{transform:translateY(-3px)} }
 </style>
 </head>
@@ -522,24 +554,69 @@
       <div class="mode sys"><b>Partner path only</b><p>LinkedIn's API terms forbid automated posting; approved scheduling tools work because a human composes each post. Snapchat's API is allowlist-only through a Snap contact.</p><small>LinkedIn · Snapchat</small></div>
     </div>
 
-    <div class="card scroll" style="margin-top:1rem">
-      <table class="rules-t">
-        <thead><tr><th>Network</th><th>Official API</th><th>To be allowed</th><th>Consent for ongoing posting</th><th>AI label</th><th class="r">Cap per day</th><th>Autopilot</th></tr></thead>
-        <tbody>
-          <tr><td class="k">Instagram</td><td>Content Publishing API: Reels, images, carousels, Stories</td><td>App review + business verification; under a week typical</td><td>One-time; the docs expect scheduling</td><td>"AI info" auto-label; AI-persona accounts need the profile label or lose reach</td><td class="r">100 posts</td><td><span class="pill ok">auto-approve</span></td></tr>
-          <tr><td class="k">Facebook Pages</td><td>Pages, Video and Reels APIs</td><td>Same review as Instagram</td><td>One-time; native scheduling</td><td>"AI info"</td><td class="r">30 Reels</td><td><span class="pill ok">auto-approve</span></td></tr>
-          <tr><td class="k">Threads</td><td>Threads API: text, image, video, carousels</td><td>App review</td><td>One-time, renewed every 90 days</td><td>"AI info"</td><td class="r">250 posts</td><td><span class="pill ok">auto-approve</span></td></tr>
-          <tr><td class="k">Bluesky</td><td>Open protocol</td><td>None</td><td>One-time</td><td>"bot" self-label for bot accounts</td><td class="r">no practical cap</td><td><span class="pill ok">auto-approve</span></td></tr>
-          <tr><td class="k">YouTube Shorts</td><td>Data API v3 upload; a vertical video under 3 min is a Short</td><td>App verification; an audit above 100 uploads a day</td><td>"Specific and express" consent to uploads, user keeps final control</td><td>Synthetic-media field; disclosure for realistic AI</td><td class="r">100 uploads</td><td><span class="pill warn">opt-in + preview</span></td></tr>
-          <tr><td class="k">X</td><td>API v2 posts</td><td>Self-serve; pay per post, more with a link</td><td>"Show exactly what will be published"; login alone is not consent</td><td>"Automated" label on bot-run accounts</td><td class="r">10,000 per app</td><td><span class="pill warn">opt-in + preview</span></td></tr>
-          <tr><td class="k">TikTok</td><td>Content Posting API: direct post or inbox</td><td>Scope approval + content audit; private-only until passed</td><td>Preview, manual privacy choice and consent before every upload</td><td>AI-content flag on the post; required for realistic AI</td><td class="r">~15 per creator</td><td><span class="pill todo">confirm each post</span></td></tr>
-          <tr><td class="k">Pinterest</td><td>API v5 pins</td><td>Standard access after a demo video; trial is sandbox-only</td><td>"The end user must choose each Pin to be published"</td><td>none</td><td class="r">300 writes (trial)</td><td><span class="pill todo">confirm each post</span></td></tr>
-          <tr><td class="k">LinkedIn</td><td>Posts API; members self-serve, Pages via partner programme</td><td>Pages: legal organisation, screencast, weeks to months</td><td>Terms: must not "automate posting"; human composes each post</td><td>none</td><td class="r">150 per member</td><td><span class="pill sys">partner path</span></td></tr>
-          <tr><td class="k">Snapchat</td><td>Public Profile API: Stories and Spotlight</td><td>Allowlist only, through a Snap contact; business account</td><td>One-time by the profile owner</td><td>none</td><td class="r">not stated</td><td><span class="pill sys">partner path</span></td></tr>
-        </tbody>
-      </table>
-      <p class="note">Banned everywhere: logging in with the user's password, scraping, auto-likes, auto-follows and fake engagement. Everything above uses the user's own authorization through each platform's official API. Daily caps are per account unless stated; Instagram's docs show 100 in one place and 50 in another, so we plan for 25.</p>
+    <div class="nets">
+      <div class="net ok">
+        <div class="net-h"><b>Instagram</b><span class="pill ok">auto-approve</span></div>
+        <div class="net-api">Content Publishing API · Reels, images, carousels, Stories</div>
+        <div class="net-cap"><b>100</b><span>posts a day</span></div>
+        <dl><dt>To be allowed</dt><dd>App review + business verification, under a week typical</dd><dt>Consent</dt><dd>One-time; the docs expect scheduling</dd><dt>AI label</dt><dd>"AI info" auto-label; AI-persona accounts need the profile label</dd></dl>
+      </div>
+      <div class="net ok">
+        <div class="net-h"><b>Facebook Pages</b><span class="pill ok">auto-approve</span></div>
+        <div class="net-api">Pages, Video and Reels APIs</div>
+        <div class="net-cap"><b>30</b><span>Reels a day</span></div>
+        <dl><dt>To be allowed</dt><dd>Same review as Instagram</dd><dt>Consent</dt><dd>One-time; native scheduling</dd><dt>AI label</dt><dd>"AI info"</dd></dl>
+      </div>
+      <div class="net ok">
+        <div class="net-h"><b>Threads</b><span class="pill ok">auto-approve</span></div>
+        <div class="net-api">Threads API · text, image, video, carousels</div>
+        <div class="net-cap"><b>250</b><span>posts a day</span></div>
+        <dl><dt>To be allowed</dt><dd>App review</dd><dt>Consent</dt><dd>One-time, renewed every 90 days</dd><dt>AI label</dt><dd>"AI info"</dd></dl>
+      </div>
+      <div class="net ok">
+        <div class="net-h"><b>Bluesky</b><span class="pill ok">auto-approve</span></div>
+        <div class="net-api">Open protocol</div>
+        <div class="net-cap"><b>∞</b><span>no practical cap</span></div>
+        <dl><dt>To be allowed</dt><dd>None</dd><dt>Consent</dt><dd>One-time</dd><dt>AI label</dt><dd>"bot" self-label for bot accounts</dd></dl>
+      </div>
+      <div class="net warn">
+        <div class="net-h"><b>YouTube Shorts</b><span class="pill warn">opt-in + preview</span></div>
+        <div class="net-api">Data API v3 upload · a vertical video under 3 min is a Short</div>
+        <div class="net-cap"><b>100</b><span>uploads a day</span></div>
+        <dl><dt>To be allowed</dt><dd>App verification; an audit above 100 uploads a day</dd><dt>Consent</dt><dd>"Specific and express" consent, user keeps final control</dd><dt>AI label</dt><dd>Synthetic-media field; disclosure for realistic AI</dd></dl>
+      </div>
+      <div class="net warn">
+        <div class="net-h"><b>X</b><span class="pill warn">opt-in + preview</span></div>
+        <div class="net-api">API v2 posts · pay per post</div>
+        <div class="net-cap"><b>10K</b><span>posts a day per app</span></div>
+        <dl><dt>To be allowed</dt><dd>Self-serve; $0.015 a post, $0.20 with a link</dd><dt>Consent</dt><dd>"Show exactly what will be published"; login alone is not consent</dd><dt>AI label</dt><dd>"Automated" label on bot-run accounts</dd></dl>
+      </div>
+      <div class="net todo">
+        <div class="net-h"><b>TikTok</b><span class="pill todo">confirm each post</span></div>
+        <div class="net-api">Content Posting API · direct post or inbox</div>
+        <div class="net-cap"><b>~15</b><span>posts a day per creator</span></div>
+        <dl><dt>To be allowed</dt><dd>Scope approval + content audit; private-only until passed</dd><dt>Consent</dt><dd>Preview, manual privacy choice and consent before every upload</dd><dt>AI label</dt><dd>AI-content flag; required for realistic AI</dd></dl>
+      </div>
+      <div class="net todo">
+        <div class="net-h"><b>Pinterest</b><span class="pill todo">confirm each post</span></div>
+        <div class="net-api">API v5 pins</div>
+        <div class="net-cap"><b>300</b><span>writes a day on trial</span></div>
+        <dl><dt>To be allowed</dt><dd>Standard access after a demo video; trial is sandbox-only</dd><dt>Consent</dt><dd>"The end user must choose each Pin to be published"</dd><dt>AI label</dt><dd>none</dd></dl>
+      </div>
+      <div class="net sys">
+        <div class="net-h"><b>LinkedIn</b><span class="pill sys">partner path</span></div>
+        <div class="net-api">Posts API · members self-serve, Pages via partner programme</div>
+        <div class="net-cap"><b>150</b><span>requests a day per member</span></div>
+        <dl><dt>To be allowed</dt><dd>Pages: legal organisation, screencast, weeks to months</dd><dt>Consent</dt><dd>Terms forbid "automate posting"; a human composes each post</dd><dt>AI label</dt><dd>none</dd></dl>
+      </div>
+      <div class="net sys">
+        <div class="net-h"><b>Snapchat</b><span class="pill sys">partner path</span></div>
+        <div class="net-api">Public Profile API · Stories and Spotlight</div>
+        <div class="net-cap"><b>?</b><span>cap not stated</span></div>
+        <dl><dt>To be allowed</dt><dd>Allowlist only, through a Snap contact; business account</dd><dt>Consent</dt><dd>One-time by the profile owner</dd><dt>AI label</dt><dd>none</dd></dl>
+      </div>
     </div>
+    <p class="note">Banned everywhere: logging in with the user's password, scraping, auto-likes, auto-follows and fake engagement. Everything above uses the user's own authorization through each platform's official API. Instagram's docs show 100 in one place and 50 in another, so we plan for 25.</p>
 
     <div class="card" style="margin-top:1rem">
       <div class="label" style="margin-bottom:.4rem">What this means for the product</div>
