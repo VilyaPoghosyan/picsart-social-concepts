@@ -115,6 +115,32 @@
   .ch.tod{background:transparent; border:0; color:var(--muted); font-weight:500; font-size:.8rem}
   .pill.ext{background:transparent; color:var(--muted); border:1px dashed var(--faint)} .pill.tod{background:var(--line); color:var(--ink)}
 
+  /* 2b · worked example */
+  .ex-grid{display:grid; grid-template-columns:1fr 1fr; gap:.8rem}
+  .ex h3{font-family:var(--display); font-size:1.15rem; font-weight:700; margin:.2rem 0 .6rem}
+  .ex-day{font-family:var(--mono); font-size:.8rem; font-weight:600; letter-spacing:.02em; color:var(--accent-ink)}
+  .ex-p{margin:0 0 .6rem; font-size:.88rem; color:var(--muted)}
+  dl.form{margin:0; display:grid; grid-template-columns:auto 1fr; gap:.4rem .9rem; font-size:.9rem}
+  dl.form dt{font-family:var(--mono); font-size:.76rem; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); padding-top:.15rem}
+  dl.form dd{margin:0; color:var(--ink); border-bottom:1px dashed var(--line); padding-bottom:.35rem}
+  .chips{display:flex; flex-wrap:wrap; gap:.4rem}
+  .chips i{font-style:normal; font-family:var(--mono); font-size:.78rem; padding:.35em .65em; border-radius:8px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink); line-height:1.4}
+  .trace{margin:.6rem 0 0; font-family:var(--mono); font-size:.8rem; line-height:1.7; color:var(--ink); background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:.9rem 1rem; overflow-x:auto; white-space:pre}
+  .trace .t{color:var(--faint)} .trace .who{color:var(--accent-ink); font-weight:600; display:inline-block; width:7em; text-align:left} .trace .cr{color:var(--warn); font-weight:600} .trace .ok{color:var(--ok); font-weight:700}
+  .appr{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--surface-2)}
+  .appr-media{height:120px; background:linear-gradient(135deg,var(--accent-soft),var(--surface-2) 60%,var(--ok-soft)); display:flex; justify-content:space-between; align-items:flex-start; padding:.7rem .8rem}
+  .appr-chip,.appr-time{font-family:var(--mono); font-size:.74rem; font-weight:600; padding:.25em .6em; border-radius:999px; background:var(--surface); border:1px solid var(--line)}
+  .appr-body{padding:.9rem 1rem 1rem} .appr-body b{font-family:var(--display); font-size:1.1rem; font-weight:700} .appr-body p{margin:.3rem 0 0; font-size:.86rem; color:var(--muted); line-height:1.45}
+  .appr-meta{display:flex; gap:.9rem; margin-top:.6rem; font-family:var(--mono); font-size:.76rem; color:var(--faint)}
+  .appr-actions{display:flex; gap:.5rem; margin-top:.8rem; flex-wrap:wrap}
+  .btn-p,.btn-s{font-family:var(--mono); font-size:.78rem; font-weight:600; padding:.45em .9em; border-radius:8px} .btn-p{background:var(--accent); color:var(--bg)} .btn-s{border:1px solid var(--line); color:var(--muted)}
+  .rep{border:1px solid var(--line); border-radius:14px; background:var(--surface-2); padding:.4rem 1rem}
+  .rep-row{display:flex; justify-content:space-between; gap:1rem; padding:.55rem 0; border-bottom:1px dashed var(--line); font-size:.88rem} .rep-row:last-child{border-bottom:0}
+  .rep-row span{color:var(--muted); flex:none} .rep-row b{text-align:right; font-weight:600}
+  .week-strip{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem; margin-top:.6rem}
+  .week-strip div{background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:.8rem .9rem}
+  .week-strip b{display:block; font-family:var(--display); font-size:1.05rem; font-weight:700; margin-bottom:.3rem} .week-strip span{font-size:.84rem; color:var(--muted); line-height:1.45}
+
   /* 3 · architecture layers */
   .layer{display:grid; grid-template-columns:200px 1fr; gap:1rem; padding:1.1rem 0; border-top:1px solid var(--line)}
   .layer:first-child{border-top:0; padding-top:.2rem}
@@ -226,7 +252,7 @@
   @media(max-width:900px){
     .loop{grid-template-columns:repeat(3,minmax(0,1fr))} .st:nth-child(3)::after{display:none}
     .journey{grid-template-columns:repeat(3,minmax(0,1fr))} .two,.runs,.back{grid-template-columns:1fr} .build{grid-template-columns:1fr}
-    .layer{grid-template-columns:1fr} .quad{grid-template-columns:1fr 1fr} .rules{grid-template-columns:1fr 1fr} .modes{grid-template-columns:1fr 1fr} .nets{grid-template-columns:1fr 1fr} .srcs{columns:1} .fmts{grid-template-columns:1fr} .fits{grid-template-columns:1fr 1fr}
+    .layer{grid-template-columns:1fr} .quad{grid-template-columns:1fr 1fr} .rules{grid-template-columns:1fr 1fr} .modes{grid-template-columns:1fr 1fr} .nets{grid-template-columns:1fr 1fr} .ex-grid,.week-strip{grid-template-columns:1fr} .srcs{columns:1} .fmts{grid-template-columns:1fr} .fits{grid-template-columns:1fr 1fr}
   }
   @media(max-width:560px){ .fits{grid-template-columns:1fr} .modes{grid-template-columns:1fr} .nets{grid-template-columns:1fr} .loop{grid-template-columns:1fr 1fr} .st:nth-child(3)::after{display:block} .st:nth-child(even)::after{display:none} .journey{grid-template-columns:1fr 1fr} .quad,.rules{grid-template-columns:1fr} }
   @media(prefers-reduced-motion:no-preference){ .phone{transition:transform .25s ease} .step:hover .phone{transform:translateY(-3px)} }
@@ -318,6 +344,90 @@
         <div class="cell today"><i class="ch tod">Zernio analytics + public profiles</i></div>
       </div></div>
       <p class="note">Tools the agents call: the Picsart GenAI API for every generation, Picsart social connect for posting, the platform APIs for numbers. Today the agents run as scheduled Claude Code tasks on one machine; in the product, as Claude Agent SDK workers on Picsart's side, one job per channel per day.</p>
+    </div>
+  </section>
+
+  <!-- 2b · EXAMPLE END TO END -->
+  <section>
+    <h2>One channel, end to end</h2>
+    <p class="lead">A worked example. A small ceramics studio wants an Instagram and TikTok channel it never has to run. Everything below is what the product would do with that brief; the credit figures are our logged costs, the dates are illustrative.</p>
+
+    <div class="ex-grid">
+      <div class="card ex">
+        <div class="ex-day">Day 0 · 5 minutes</div>
+        <h3>The brief, as the user fills it</h3>
+        <dl class="form">
+          <dt>Channel</dt><dd>Handmade ceramics studio, Yerevan</dd>
+          <dt>Audience</dt><dd>People who collect ideas for their home, 25 to 45</dd>
+          <dt>Tone</dt><dd>Calm, warm, a little witty</dd>
+          <dt>Format</dt><dd><span class="pill agent">Interiors</span> room scenes with the studio's pieces in them</dd>
+          <dt>Platforms</dt><dd>Instagram ✓ TikTok ✓</dd>
+          <dt>Approval</dt><dd>Approve each day for week one, then auto-approve</dd>
+          <dt>Budget</dt><dd>5,000 credits a month, hard cap</dd>
+        </dl>
+      </div>
+      <div class="card ex">
+        <div class="ex-day">Day 0 · 2 minutes later</div>
+        <h3>The playbook the set-up agent writes</h3>
+        <p class="ex-p">A configuration file the user never has to read. The agents read it every day.</p>
+        <div class="chips">
+          <i>style: warm minimal, linen and oak, afternoon light</i><i>palette: clay, cream, sage</i><i>recurring set: the studio shelf, a kitchen table, a window seat</i><i>hero objects: the studio's mugs, bowls and vases, from the user's photos</i><i>formats in rotation: before/after, statement shot, 5-pair carousel</i><i>posting: 18:00 and 21:00 local</i><i>caption rules: one line, no hashtags over five, "made with Picsart"</i><i>never: competitor products, text over faces, prices</i>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:.8rem">
+      <div class="ex-day">Day 1 · 07:30 · the first daily run, as the agent logs it</div>
+      <pre class="trace"><span class="t">07:30:02</span> <span class="who">scheduler</span>  job started · channel ceramics-studio · playbook v1 · budget left 5,000
+<span class="t">07:30:41</span> <span class="who">research</span>   trends for ceramic decor: 3 angles · ledger empty · picked "the shelf that changes with the seasons"
+<span class="t">07:32:10</span> <span class="who">script</span>     before/after · hook "Same shelf. New season." · 6 shots · caption drafted · 2 sources
+<span class="t">07:33:05</span> <span class="who">generate</span>   room stills on Gemini 3 Pro Image · 4 frames · <span class="cr">20 credits</span>
+<span class="t">07:35:48</span> <span class="who">generate</span>   after = edit of before · geometry check 0.81 PASS
+<span class="t">07:36:20</span> <span class="who">generate</span>   camera move on Seedance 2.5, 5 s · music bed, beat map · <span class="cr">55 credits</span>
+<span class="t">07:44:57</span> <span class="who">generate</span>   assembled 1080x1920 · titles in the safe zone · end card · loudness -14.8 LUFS
+<span class="t">07:45:30</span> <span class="who">qa gate</span>    10 axes · min 7.5 · mean 8.4 · text contrast PASS · AI label set · <span class="ok">PASS</span>
+<span class="t">07:45:31</span> <span class="who">approval</span>   card sent to the user: "Same shelf. New season." · 18:00 today · cost 75 credits
+<span class="t">09:12:08</span> <span class="who">user</span>       approved
+<span class="t">18:00:00</span> <span class="who">publish</span>    Instagram reel + TikTok video via the user's accounts · AI flag on · ledger updated
+<span class="t">18:00:04</span> <span class="who">scheduler</span>  job done · 75 credits spent · budget left 4,925 · next run tomorrow 07:30</pre>
+      <p class="note">The same run, with the agents' names changed to ours, is what happens for Dwell every morning. A post that failed the gate at 07:45 would have been regenerated once; a second failure drops it and the user sees nothing.</p>
+    </div>
+
+    <div class="ex-grid" style="margin-top:.8rem">
+      <div class="card ex">
+        <div class="ex-day">Day 1 · 07:45 · what the user sees</div>
+        <div class="appr">
+          <div class="appr-media"><span class="appr-chip">Before / after</span><span class="appr-time">18:00 today</span></div>
+          <div class="appr-body">
+            <b>Same shelf. New season.</b>
+            <p>The studio shelf, bare in the morning light, then dressed for autumn with the clay bowls and one sage vase. 19 seconds.</p>
+            <div class="appr-meta"><span>75 credits</span><span>QA 8.4</span><span>Instagram · TikTok</span></div>
+            <div class="appr-actions"><span class="btn-p">Approve</span><span class="btn-s">Skip today</span><span class="btn-s">Edit caption</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card ex">
+        <div class="ex-day">Day 7 · Sunday 09:00 · the first weekly report</div>
+        <div class="rep">
+          <div class="rep-row"><span>Posts</span><b>7 of 7</b></div>
+          <div class="rep-row"><span>Approved without edits</span><b>6</b></div>
+          <div class="rep-row"><span>Credits used</span><b>540 of 5,000</b></div>
+          <div class="rep-row"><span>Best post</span><b>Thursday's 5-pair carousel</b></div>
+          <div class="rep-row"><span>What changes next week</span><b>two carousels instead of one; the window-seat set retired, it scored lowest</b></div>
+          <div class="rep-row"><span>Auto-approve</span><b>on from Monday, as you set</b></div>
+        </div>
+        <p class="note">Views, saves and followers appear here from the platform APIs; left out of the example on purpose.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:.8rem">
+      <div class="ex-day">Weeks 2 to 4 · nothing to do</div>
+      <div class="week-strip">
+        <div><b>Week 2</b><span>auto-approve on · 14 posts · one post failed the gate twice and was dropped, the user was not asked</span></div>
+        <div><b>Week 3</b><span>research adds a seasonal angle it found trending · the set-up agent proposes a 4th set; the user accepts in the report</span></div>
+        <div><b>Week 4</b><span>budget alert at 80% · cadence held · the month closes at 2,200 credits of 5,000</span></div>
+      </div>
+      <p class="note">The same flow with the cartoon format differs in two places only: the playbook holds a cast instead of a set, and each post costs about 115 credits instead of 75.</p>
     </div>
   </section>
 
