@@ -995,7 +995,7 @@ def build_reelo():
   <div class="sec-label">Key concept</div>
   <div class="card">
     <div class="concept">
-      <div><b>Now · cartoons</b><span>15 s micro-stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. A cast of 11, shuffled. Four a day at 12:00, 13:30, 18:00 and 19:30 Yerevan; the queue runs to Nov 1 and the next build needs a credit top-up.</span></div>
+      <div><b>Now · cartoons</b><span>15 s micro-stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. A cast of 11, shuffled. Four a day at 12:00, 13:30, 18:00 and 19:30 Yerevan; 16 more reels built Oct 28, the queue is scheduled through Nov 5.</span></div>
       <div><b>Before · tiny worlds</b><span>25–28 s restorations of a ruined miniature with a voiceover, one a day until Oct 16.</span></div>
       <div><b>Engine</b><span>Cartoons: Gemini 3 Pro Image keyframe, Seedance 2.5 with native sound. Tiny worlds: Gemini 3 Pro Image, Veo 3.1, ElevenLabs.</span></div>
     </div>
@@ -1366,7 +1366,7 @@ def build_listed():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page)
     print(f"listed summary: live {len(live)} sched {len(soon)} synced {len(num)} credits {sum(c)} threads {threads_live}")
-    return dict(brand="Listed", slug="listed", what="Product photos for sellers", platforms="Instagram",
+    return dict(brand="Listed", slug="listed", what="Character skits for online sellers", platforms="Instagram",
                 pub=len(live), sched=len(soon), reach=f"{n(tot['views'])} views" if num else "not synced yet", fol=fol.get("instagram", 0),
                 unit="skit", per=cf(round(mean(skits_all or threads_live), 1)), per_rng=rng(skits_all or threads_live, cf),
                 spent=cf(sum(c)))
