@@ -80,6 +80,7 @@ MICRO_COST = {
     "her-father-5": dict(calls=1396, drop=None, basis="calls", note="THE PHOTO, charged calls"),
     "her-father-6": dict(calls=1675, drop=None, basis="calls", note="HER OR ME, charged calls (450 of stuck jobs not charged)"),
     "her-father-7": dict(calls=1467, drop=None, basis="calls", note="THE REAL RYAN incl. Megan casting"),
+    "her-father-8": dict(calls=2677, drop=None, basis="calls", note="THE BRIDAL SUITE finale, all-in incl. retakes and re-staged OTS shots"),
 }
 
 # ALL-IN credits per brand (audited 2026-10-23 from every run log, run.json and balance drop, including work
@@ -88,7 +89,7 @@ MICRO_COST = {
 # account was shared are NOT used: they include other brands' work. Microdramas max per episode: highest
 # logged 2,743 (REMEMBER ME P7), quoted as up to 3,200 for unlogged retries (Vilya 2026-10-23).
 ALL_IN = {
-    "microdramas": dict(total=95315, waste=16123, unposted=0, per_max=3200, unit="episode",
+    "microdramas": dict(total=98058, waste=16123, unposted=0, per_max=3200, unit="episode",
         waste_note="discarded, redone and deleted episodes, standalone tests and remakes never posted, casting and look tests",
         unposted_note="made, not posted yet"),
     "dwell": dict(total=9493, waste=302, unposted=0, per_max=560, unit="reel or carousel",
