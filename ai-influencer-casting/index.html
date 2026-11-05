@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Twelve photoreal AI influencer characters for a new channel: two looks each, three first-post scenes, hooks, bits and scores.">
+<meta property="og:title" content="AI Influencer Casting">
+<meta property="og:description" content="Twelve characters. We pick one.">
+<meta property="og:image" content="https://vilyapoghosyan.github.io/picsart-social-concepts/ai-influencer-casting/img/c04-a.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<title>AI Influencer Casting</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Social Autopilot tokens: Fraunces display, IBM Plex Sans + Mono, magenta accent, green / amber / red status.
+   Layout: sticky bar, page head, shortlist, then one wide casting card per character (looks left, story right, scenes below). */
+@font-face { font-family: "Plex Sans Fallback"; src: local("Arial"), local("Helvetica"), local("Liberation Sans"); size-adjust: 101%; }
+:root {
+  --bg: #F6F5F8; --surface: #FFFFFF; --surface-2: #FAF9FC; --sunk: #EFEDF3;
+  --ink: #17161C; --muted: #5F5D6B; --faint: #6E6C7A; --line: #E6E4EC; --line-2: #D4D1DC;
+  --accent: #C40F6B; --accent-ink: #A50C59; --accent-soft: #FBE7F0; --on-accent: #FFFFFF;
+  --ok: #1E8A5A; --ok-ink: #17724A; --ok-soft: #E3F4EA;
+  --warn: #B7791F; --warn-ink: #8A5A12; --warn-soft: #FBF0DC;
+  --bad: #C8382C; --bad-ink: #A62D23; --bad-soft: #FBE6E3;
+  --scrim: rgba(17, 16, 22, .86);
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", "Plex Sans Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --shadow: 0 1px 2px rgba(20, 18, 28, .05), 0 6px 16px rgba(20, 18, 28, .06);
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111016; --surface: #191820; --surface-2: #1F1E27; --sunk: #15141B;
+    --ink: #F2F1F6; --muted: #A6A4B1; --faint: #9A98A8; --line: #2A2932; --line-2: #3A3944;
+    --accent: #F45FA6; --accent-ink: #F888BE; --accent-soft: #2C1522; --on-accent: #17161C;
+    --ok: #4CC98C; --ok-ink: #6FD9A4; --ok-soft: #14301F;
+    --warn: #E3AD4A; --warn-ink: #EDC173; --warn-soft: #332710;
+    --bad: #F0705F; --bad-ink: #F49183; --bad-soft: #3A1915;
+    --scrim: rgba(5, 5, 8, .9);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 20px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111016; --surface: #191820; --surface-2: #1F1E27; --sunk: #15141B;
+  --ink: #F2F1F6; --muted: #A6A4B1; --faint: #9A98A8; --line: #2A2932; --line-2: #3A3944;
+  --accent: #F45FA6; --accent-ink: #F888BE; --accent-soft: #2C1522; --on-accent: #17161C;
+  --ok: #4CC98C; --ok-ink: #6FD9A4; --ok-soft: #14301F;
+  --warn: #E3AD4A; --warn-ink: #EDC173; --warn-soft: #332710;
+  --bad: #F0705F; --bad-ink: #F49183; --bad-soft: #3A1915;
+  --scrim: rgba(5, 5, 8, .9);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 20px rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg) }
+::selection { background: var(--accent-soft); color: var(--ink) }
+a { color: inherit; text-underline-offset: .18em; text-decoration-thickness: 1px }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px }
+img { display: block; max-width: 100% }
+button { font: inherit; color: inherit }
+h1, h2, h3 { text-wrap: balance; margin: 0 }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.04; letter-spacing: -.02em }
+h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem, 2.4vw, 1.6rem); line-height: 1.15; letter-spacing: -.01em }
+h3 { font-family: var(--display); font-weight: 600; font-size: 1.12rem; line-height: 1.2 }
+p { margin: 0 }
+.icon { width: 1.15em; height: 1.15em; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.wrap { max-width: 1200px; margin: 0 auto; padding-block: 0 6rem; display: grid; gap: 2.4rem }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line) }
+.top-in { max-width: 1200px; margin: 0 auto; padding-block: .55rem; display: flex; align-items: center; gap: 1rem; min-height: 60px }
+.brand { display: flex; align-items: center; gap: .5rem; text-decoration: none; min-height: 44px }
+.brand b { font-family: var(--display); font-weight: 700; font-size: 1.12rem; letter-spacing: -.01em }
+.mark { width: 22px; height: 22px; border-radius: 7px; background: var(--accent); display: grid; place-items: center; color: var(--on-accent) }
+.mark svg { width: 14px; height: 14px; stroke-width: 2.2 }
+.brand small { color: var(--faint); font-size: .82rem }
+.tools { margin-left: auto; display: flex; gap: .4rem; align-items: center }
+.ibtn { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; cursor: pointer; padding: 0 .75rem; font-size: .88rem; font-weight: 500 }
+.ibtn:hover { border-color: var(--line-2); background: var(--surface-2) }
+.theme-btn .moon { display: none }
+:root[data-theme="dark"] .theme-btn .sun { display: none }
+:root[data-theme="dark"] .theme-btn .moon { display: block }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-btn .sun { display: none }
+  :root:not([data-theme="light"]) .theme-btn .moon { display: block }
+}
+.count-pill { font-family: var(--mono); font-size: .8rem; color: var(--muted); white-space: nowrap }
+
+/* head */
+.page-head { padding-top: clamp(28px, 5vw, 56px); display: grid; gap: .7rem; max-width: 780px }
+.eyebrow { font-family: var(--mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); font-weight: 600 }
+.dek { color: var(--muted); font-size: clamp(1.02rem, 1.8vw, 1.15rem); max-width: 62ch; line-height: 1.5 }
+.sec-head { display: grid; gap: .45rem }
+.sec-head p { color: var(--muted); max-width: 72ch }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow) }
+.pill { display: inline-flex; align-items: center; gap: .35rem; font-size: .78rem; font-weight: 600; padding: .2rem .6rem; border-radius: 999px; white-space: nowrap; background: var(--sunk); color: var(--muted) }
+.pill.ok { background: var(--ok-soft); color: var(--ok-ink) }
+.pill.bad { background: var(--bad-soft); color: var(--bad-ink) }
+.pill.acc { background: var(--accent-soft); color: var(--accent-ink) }
+
+/* rules */
+.rules { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem }
+.rule { padding: 1rem 1.1rem; display: grid; gap: .3rem; align-content: start; min-width: 0 }
+.rule b { font-family: var(--display); font-weight: 600; font-size: 1.02rem }
+.rule span { color: var(--muted); font-size: .9rem }
+
+/* shortlist */
+.top3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem }
+.pick { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 1rem; padding: 1rem; text-decoration: none; transition: border-color .2s var(--ease) }
+.pick:hover { border-color: var(--accent) }
+.pick img { width: 112px; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; background: var(--sunk) }
+.pick div { display: grid; gap: .35rem; align-content: start; min-width: 0 }
+.pick p { color: var(--muted); font-size: .9rem }
+
+/* controls */
+.controls { display: flex; flex-wrap: wrap; gap: .9rem 1.6rem; align-items: center }
+.group { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center }
+.group > span { font-family: var(--mono); font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; color: var(--faint); margin-right: .25rem }
+.chip { display: inline-flex; align-items: center; min-height: 40px; padding: 0 .95rem; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); cursor: pointer; font-size: .9rem; transition: background-color .15s, border-color .15s, color .15s }
+.chip:hover { border-color: var(--faint) }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); font-weight: 600 }
+
+/* character card */
+.cards { display: grid; gap: 1.4rem }
+.card { padding: 1.4rem; display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 1.2rem 1.8rem; scroll-margin-top: 80px }
+.card.is-top { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)) }
+.looks { display: grid; gap: .6rem; align-content: start }
+.look-main { position: relative; border-radius: 14px; overflow: hidden; background: var(--sunk); aspect-ratio: 3 / 4; cursor: zoom-in; border: 0; padding: 0; width: 100% }
+.look-main img { width: 100%; height: 100%; object-fit: cover }
+.look-tabs { display: flex; gap: .4rem }
+.look-tabs button { flex: 1; min-height: 40px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--surface); cursor: pointer; font-size: .86rem; font-weight: 500; display: flex; align-items: center; gap: .5rem; padding: 0 .4rem 0 .3rem }
+.look-tabs button img { width: 30px; height: 30px; object-fit: cover; border-radius: 6px }
+.look-tabs button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); font-weight: 600 }
+.story { display: grid; gap: 1rem; align-content: start; min-width: 0 }
+.headrow { display: flex; justify-content: space-between; gap: 1rem; align-items: start }
+.idrow { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center }
+.no { font-family: var(--mono); font-size: .78rem; color: var(--faint) }
+.idea { color: var(--muted); font-size: .92rem; font-weight: 500 }
+.story h2 { font-size: clamp(1.5rem, 3vw, 2rem) }
+.total { text-align: right; flex: none }
+.total b { font-family: var(--display); font-weight: 700; font-size: 2.2rem; line-height: 1; font-variant-numeric: tabular-nums }
+.total span { display: block; font-family: var(--mono); font-size: .72rem; color: var(--faint) }
+.lookline { color: var(--muted); font-size: .95rem; max-width: 68ch }
+.hook { font-family: var(--display); font-weight: 500; font-size: 1.18rem; line-height: 1.35; padding: .8rem 1rem; background: var(--surface-2); border-radius: 12px; border: 1px solid var(--line) }
+.scores { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .6rem }
+.score { display: grid; gap: .3rem; min-width: 0 }
+.score span { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; color: var(--faint); display: flex; justify-content: space-between; letter-spacing: .03em }
+.score span b { color: var(--ink) }
+.meter { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px }
+.meter i { height: 6px; border-radius: 3px; background: var(--sunk) }
+.meter i.on { background: var(--accent) }
+.cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem 1.6rem }
+.label { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--faint); font-weight: 600; margin-bottom: .35rem }
+ul { margin: 0; padding-left: 1.1rem; display: grid; gap: .35rem }
+li { font-size: .93rem }
+.esc { font-size: .93rem }
+.watch { background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent); border-radius: 12px; padding: .65rem .85rem; font-size: .9rem }
+.watch b { color: var(--warn-ink) }
+.scenes { grid-column: 1 / -1; display: grid; gap: .6rem }
+.scene-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .9rem }
+.scene { display: grid; gap: .5rem; align-content: start; min-width: 0 }
+.scene button { border: 0; padding: 0; border-radius: 12px; overflow: hidden; background: var(--sunk); aspect-ratio: 9 / 16; cursor: zoom-in; width: 100% }
+.scene img { width: 100%; height: 100%; object-fit: cover }
+.scene p { font-size: .88rem; color: var(--muted) }
+.scene p .n { font-family: var(--mono); color: var(--accent-ink); font-weight: 600; margin-right: .3rem }
+.scene p q { color: var(--ink); font-style: italic }
+
+/* table */
+.table-wrap { overflow-x: auto }
+table { border-collapse: collapse; width: 100%; min-width: 660px; font-size: .93rem }
+th, td { padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--line) }
+th { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--faint); font-weight: 600 }
+td.n, th.n { text-align: center; font-family: var(--mono); font-variant-numeric: tabular-nums }
+td.t { text-align: center; font-family: var(--display); font-weight: 700; font-size: 1.05rem }
+tr:last-child td { border-bottom: 0 }
+.tname { display: flex; gap: .7rem; align-items: center }
+.tname img { width: 36px; height: 48px; object-fit: cover; border-radius: 7px; background: var(--sunk); flex: none }
+.tname small { display: block; color: var(--muted) }
+
+/* questions */
+.qs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem }
+.q { padding: 1.1rem 1.2rem; font-family: var(--display); font-weight: 600; font-size: 1.1rem; line-height: 1.3 }
+.next { color: var(--muted); max-width: 78ch }
+footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 1rem }
+
+/* viewer */
+dialog.viewer { border: 0; padding: 0; background: transparent; max-width: min(92vw, 900px); max-height: 92vh }
+dialog.viewer::backdrop { background: var(--scrim) }
+dialog.viewer img { max-height: 84vh; width: auto; margin: 0 auto; border-radius: 14px }
+dialog.viewer p { color: #F2F1F6; text-align: center; margin-top: .7rem; font-size: .92rem }
+dialog.viewer .close { position: fixed; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.25) }
+
+@media (max-width: 960px) {
+  .rules { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .top3, .qs { grid-template-columns: minmax(0, 1fr) }
+  .card { grid-template-columns: minmax(0, 1fr) }
+  .looks { max-width: 380px }
+}
+@media (max-width: 560px) {
+  .rules, .cols { grid-template-columns: minmax(0, 1fr) }
+  .card { padding: 1rem }
+  .scene-row { gap: .5rem }
+  .scene p { font-size: .8rem }
+  .brand small { display: none }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="top-in gut">
+    <a class="brand" href="#top" aria-label="AI Influencer Casting, back to top">
+      <span class="mark" aria-hidden="true"><svg class="icon"><use href="#i-spark"/></svg></span>
+      <b>Influencer Casting</b><small>new channel</small>
+    </a>
+    <div class="tools">
+      <span class="count-pill" id="count" aria-live="polite"></span>
+      <button type="button" class="ibtn theme-btn" id="theme-btn" aria-label="Switch light or dark theme">
+        <svg class="icon sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        <svg class="icon moon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap gut" id="top">
+  <section class="page-head">
+    <div class="eyebrow">New channel · AI influencer</div>
+    <h1>Twelve characters. We pick one.</h1>
+    <p class="dek">Each idea from the shortlist as a photoreal character: two looks to choose from, three scenes from the first posts, the hook, the recurring bits, and a score on what makes an AI influencer account grow.</p>
+  </section>
+
+  <section class="rules" aria-label="Rules every character follows">
+    <div class="rule panel"><b>Real person, one strange thing</b><span>Looks like phone footage. One contradiction plus one signature detail.</span></div>
+    <div class="rule panel"><b>It has to escalate</b><span>Accounts that repeat one bit lose about 1,000× their views in two weeks.</span></div>
+    <div class="rule panel"><b>12–25 seconds, no dialogue</b><span>Reveal by about 30% of the clip, music, at most one line on screen.</span></div>
+    <div class="rule panel"><b>Always labelled as AI</b><span>Platform AI label and an AI note in every caption. No celebrity lookalikes.</span></div>
+  </section>
+
+  <section class="sec-head">
+    <div class="eyebrow">Recommended shortlist</div>
+    <h2>Three to choose between</h2>
+  </section>
+  <div class="top3" id="top3"></div>
+
+  <section class="sec-head">
+    <div class="eyebrow">All twelve</div>
+    <h2>The characters</h2>
+    <p><b>Stop</b>: stops the scroll in one second. <b>Runway</b>: how long it can keep escalating. <b>Follow</b>: a reason to come back. <b>Make</b>: easy to keep the same face and look. <b>Safe</b>: brand and platform risk (5 = none). Each 1–5, total out of 25. Tap any picture to see it large.</p>
+  </section>
+
+  <div class="controls">
+    <div class="group" role="group" aria-label="Show">
+      <span>Show</span>
+      <button class="chip" id="f-all" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" id="f-top" data-filter="top" aria-pressed="false">Top 3</button>
+      <button class="chip" id="f-keep" data-filter="keep" aria-pressed="false">Worth a look</button>
+      <button class="chip" id="f-drop" data-filter="drop" aria-pressed="false">Drop</button>
+    </div>
+    <div class="group" role="group" aria-label="Sort by">
+      <span>Sort</span>
+      <button class="chip" id="s-total" data-sort="total" aria-pressed="true">Total</button>
+      <button class="chip" id="s-stop" data-sort="stop" aria-pressed="false">Stop</button>
+      <button class="chip" id="s-runway" data-sort="runway" aria-pressed="false">Runway</button>
+      <button class="chip" id="s-follow" data-sort="follow" aria-pressed="false">Follow</button>
+      <button class="chip" id="s-list" data-sort="list" aria-pressed="false">List order</button>
+    </div>
+  </div>
+
+  <div class="cards" id="cards"></div>
+
+  <section class="sec-head">
+    <div class="eyebrow">Side by side</div>
+    <h2>Comparison</h2>
+  </section>
+  <div class="panel table-wrap">
+    <table>
+      <thead><tr><th>No.</th><th>Character</th><th class="n">Stop</th><th class="n">Runway</th><th class="n">Follow</th><th class="n">Make</th><th class="n">Safe</th><th class="n">Total</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <section class="sec-head">
+    <div class="eyebrow">To decide together</div>
+    <h2>Questions</h2>
+  </section>
+  <div class="qs">
+    <div class="q panel">Do we want the safest bet, the funniest, or the one closest to what the app does?</div>
+    <div class="q panel">One character, or two side by side for 14 days, keeping the winner?</div>
+    <div class="q panel">Views or followers? Series characters (Theo, June) are best for followers.</div>
+  </div>
+  <p class="next"><b>After the pick:</b> lock one face as a character sheet, make 3 test posts, and pre-register a 14-day test (2–3 posts a day) with kill and scale thresholds read at 48 hours. Research quoted about 290 credits per finished post; we confirm the cost before building.</p>
+
+  <footer>Built 2026-11-05. Pictures are concept stills made with Nano Banana Pro for this casting, not final posts. Faces are invented, not real people.</footer>
+</main>
+
+<dialog class="viewer" id="viewer" aria-label="Picture viewer">
+  <button type="button" class="ibtn close" id="viewer-close" aria-label="Close the picture"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+  <img id="viewer-img" alt="">
+  <p id="viewer-cap"></p>
+</dialog>
+
+<script>
+const C = [
+ {n:1, idea:"The girl who lives in the year 3026", name:"Nova", status:"keep",
+  look_text:"24, visiting 2026 “for a history class”. Razor-straight silver bob, one iridescent glove on her left hand only, a jacket that changes colour as she moves.",
+  hook:"Someone from the future finds our normal life baffling and wonderful.",
+  bits:[["Museum piece","she treats cash, a wired earphone or a door key like a priceless relic."],["Wrong technology","she waves her glove at a vending machine or a lift. Nothing happens. She tries harder."],["Future reviews","she rates 2026 things out of 10. “Stairs: 2/10, too many.”"]],
+  posts:[["At a bus stop she swipes the air at the timetable, then holds a coin up to the sun.","They paid with little metal circles."],["In a supermarket, horrified, she watches a man carry 12 plastic bags.",""],["She bites a fresh peach for the first time and freezes.","Real fruit. Unbelievable."]],
+  esc:"From objects to experiences (first rain, first concert, first handwritten letter), then the people who notice her.",
+  watch:"", s:[4,5,4,5,5]},
+ {n:2, idea:"The world’s last human", name:"Theo", status:"keep",
+  look_text:"35, a neat man in a pressed suit and tie every day, as if going to the office. Carries a small potted lemon tree everywhere.",
+  hook:"World-famous places, completely empty, and one man who still keeps his manners.",
+  bits:[["Manners for no one","he waits at red lights on an empty Times Square and holds doors for nobody."],["Empty landmark","a new famous place every day: the Eiffel Tower, a stadium, the Tube at rush hour."],["The lemon tree","wherever he goes, he sets it in the sun."]],
+  posts:[["Drone shot down to an empty Shibuya crossing. He waits for the green man, then crosses alone.",""],["He takes his own ticket at an empty cinema, sits in seat F7 and watches.",""],["He sets a table for two in an empty five-star restaurant.","Day 412. Still setting two places."]],
+  esc:"Clues that someone else is out there (a second footprint, a light in a window) turn it into a mystery serial.",
+  watch:"Sad mood. Keep it gentle and curious, never apocalyptic.", s:[4,4,5,4,5]},
+ {n:3, idea:"The AI who believes she is human", name:"Claire", status:"keep",
+  look_text:"29, the most normal-looking woman on the feed: beige coat, tote bag, iced coffee. Posts “normal girl” content.",
+  hook:"She is clearly an AI and doesn’t know it. A small glitch in every clip, which she ignores.",
+  bits:[["The glitch","her cup passes through her hand, six fingers for one frame, a scarf through her neck. She keeps smiling."],["Loading","asked her age, she freezes with a tiny spinning wheel above her head."],["Proof I’m human","a CAPTCHA she can’t pass, a mirror that lags."]],
+  posts:[["“Morning routine”: her toothbrush clips through her cheek. She carries on.",""],["Street interview: “how old are you?” She buffers for five seconds.","29. Obviously."],["She stares at a “select all the traffic lights” CAPTCHA and quietly panics.",""]],
+  esc:"Her friends start noticing; then she starts to suspect.",
+  watch:"Glitches must look deliberate, or it reads as bad AI from Picsart.", s:[4,4,4,4,4]},
+ {n:4, idea:"The 500-year-old vampire living in modern society", name:"Lord Augustin Vellaire", status:"top",
+  look_text:"Looks 40, born 1526 in Venice. Long black velvet coat with a high collar, one ruby ring, very pale, perfect posture, a black lace parasol even indoors. No fangs or cape: an original look, not Dracula.",
+  hook:"An ancient nobleman trying very hard to live a normal modern life.",
+  bits:[["No reflection","his selfie, the shop window and the car mirror show an empty coat."],["Sun management","the beach in full velvet under three umbrellas; factor-5,000 sunscreen."],["Old money, older","he pays in gold coins from 1600 and corrects the tour guide about history he lived."]],
+  posts:[["He takes a selfie in a café. The phone screen shows only a floating coffee cup.",""],["At a food festival he walks past the garlic stall at arm’s length, very dignified.",""],["In a museum he stops at a Renaissance portrait of himself and sighs.","She never liked that one."]],
+  esc:"Dating apps, the gym, a job interview, his 500th birthday party.",
+  watch:"", s:[5,5,4,5,5]},
+ {n:5, idea:"The world’s most expensive grandmother", name:"Dame Ophelia Rothwell", status:"top",
+  look_text:"84, tiny, silver chignon, oversized dark sunglasses, real pearls with every outfit, and Baron, a white miniature poodle on a diamond lead.",
+  hook:"Ordinary grandma errands, done in the most absurdly expensive way.",
+  bits:[["Luxury errand","a helicopter to the corner shop for one loaf of bread."],["Granny skill","knitting on a superyacht, jam in a gold pot, bingo in a palace."],["Baron","the poodle has his own driver, tailor and bodyguard."]],
+  posts:[["A helicopter lands in a supermarket car park. She steps out with a wicker basket.","We were out of milk."],["A grand ballroom. She sits alone at a 40-metre table, eating cereal.",""],["She feeds pigeons in a Paris square from a silver tray. Baron watches from a velvet cushion.",""]],
+  esc:"Family events (the grandchildren’s “small” party), her rivals, her 97-year-old boyfriend.",
+  watch:"Keep it playful, not wealth-flexing. No fur, no real luxury logos.", s:[5,5,4,5,4]},
+ {n:6, idea:"The little girl who owns a billion-dollar empire", name:"Maisie Gold, 23", status:"drop",
+  look_text:"Adapted to an adult: inherited a global empire at 6 and still runs it like a child. School-uniform blazer with a gold crest, a huge pink bow, and Mr Buttons, a teddy bear in a tiny business suit (the CFO).",
+  hook:"Child rules, billion-dollar budget.",
+  bits:[["Board meetings","executives wait while she finishes her colouring book."],["Impulse buys","she buys an ice-cream company because they ran out of strawberry."],["The teddy approves","every deal needs Mr Buttons’ nod."]],
+  posts:[["A glass boardroom, twelve executives in suits. She slams down a juice box.",""],["She closes a whole theme park for a quick go on the carousel.",""],["Mr Buttons signs a contract with a paw stamp.",""]],
+  esc:"A rival heiress; a hostile takeover of a toy shop.",
+  watch:"As a child: platform rules on minors and unwanted comments. Even as an adult, the weakest on safety; the joke leans on wealth.", s:[4,3,3,5,2]},
+ {n:7, idea:"The woman who travels through paintings", name:"Elodie Marchand", status:"top",
+  look_text:"27, art student, auburn hair in a loose knot, a cream trench coat, and one paint-stained yellow beret that stays the same in every world.",
+  hook:"She steps into a famous painting and the world turns into its style around her, including her.",
+  bits:[["The step-in","in a real gallery she touches the frame and the camera follows her in."],["She changes the painting","helps the Vermeer milkmaid pour, leaves with a sunflower, and the painting is missing it."],["The way back","she climbs out with paint still on her coat."]],
+  posts:[["She walks into The Starry Night; brushstrokes swirl over her coat and face.","Some nights I don’t go home."],["Hokusai’s Great Wave: she rides in the boat, one hand on her beret.",""],["Vermeer: she sits at the window and the light becomes his light.",""]],
+  esc:"A new painting every time, then followers’ requests (“go into Monet next”), then objects carried between paintings.",
+  watch:"Public-domain paintings only (Van Gogh, Vermeer, Hokusai, Monet, Klimt). Costs more per post; style shots must keep her face.", s:[5,5,5,3,5]},
+ {n:8, idea:"The alien princess pretending to be an influencer", name:"Princess Zyla", status:"keep",
+  look_text:"Looks 25, glamorous, almost human: very long white hair, pupils like tiny silver stars, and she floats 2 cm above the ground.",
+  hook:"She studied human influencers and copies them almost right.",
+  bits:[["Trend, slightly wrong","a viral dance done perfectly, upside down."],["Human food review","she eats the decorative plastic fruit. 10/10."],["Royal slips","she commands her followers in a caption, then deletes it."]],
+  posts:[["“Get ready with me”: she puts lipstick on her eyebrows with total confidence.",""],["Brunch: she photographs her avocado toast, then eats the phone.",""],["She tries the ring-light trend; the ring light floats away with her.",""]],
+  esc:"A royal guard arrives to take her home; her “manager” is a confused human she hired.",
+  watch:"", s:[4,4,3,4,5]},
+ {n:9, idea:"The girl who wakes up in a different century every day", name:"June Avery", status:"keep",
+  look_text:"26, curly dark hair, mismatched socks (one red, one green) that never change, whatever the century.",
+  hook:"Same bed, same girl, same opening shot. Every morning the door opens on a different century.",
+  bits:[["The door","every post opens the same way: she wakes and opens the door. Where is she?"],["Adapt by lunch","by the end she’s dressed for the era, red and green socks still showing."],["Souvenirs","a Roman coin, a 1920s hat, a cassette collect on her nightstand."]],
+  posts:[["She opens the door onto a 1920s Paris street. Jazz, a car honks; she’s in pyjamas.","Day 1."],["Ancient Rome: she walks into a market holding a toothbrush.",""],["A 1985 shopping mall: she’s delighted by a giant mobile phone.",""]],
+  esc:"The nightstand fills up; then a person from one century turns up in another.",
+  watch:"A new set every day costs more; the fixed opening shot keeps it cheaper.", s:[4,5,5,3,5]},
+ {n:10, idea:"The 2-metre supermodel from another dimension", name:"Vesna", status:"drop",
+  look_text:"2.4 m tall, very elegant, black hair to the floor, only ever in cobalt blue. Her shadow falls the wrong way.",
+  hook:"A giant supermodel living in a world built too small for her.",
+  bits:[["Too small","she folds into a taxi, ducks under doorways, uses a café table as a stool."],["Runway everywhere","she walks any pavement like a catwalk; people step aside."],["Wrong physics","her shadow, hair falling upwards, a reflection that moves late."]],
+  posts:[["She unfolds out of a tiny city car, one limb at a time.",""],["She walks a zebra crossing like a runway; traffic stops.",""],["She drinks an espresso from a cup the size of a thimble in her hand.",""]],
+  esc:"Hard to escalate past the size joke.",
+  watch:"Research shows “impossible body” accounts get one huge clip and then stop gaining followers. Risk of body-image comments.", s:[5,2,2,4,3]},
+ {n:11, idea:"The world’s most sophisticated criminal mastermind", name:"The Curator", status:"keep",
+  look_text:"Henri Dufresne, 60s, silver beard, tailored grey three-piece suit, white gloves, always a black violin case.",
+  hook:"A legendary thief whose heists are flawless and completely harmless. He steals absurd things and leaves things better.",
+  bits:[["The heist","lasers and ropes into a bakery for the last croissant; he leaves €20 and a thank-you card."],["The violin case","it always holds something ridiculous: a rubber duck, a sandwich."],["Reverse heist","he breaks in to return or fix things."]],
+  posts:[["Night museum, laser grid. He flips through it, reaches the display, and straightens a crooked frame.",""],["He drops from the ceiling of a toy shop and leaves a teddy bear on the counter.",""],["The violin case opens on a stolen parking ticket. He tears it up.",""]],
+  esc:"A detective who chases him and never catches him; a rival thief.",
+  watch:"Keep it comic and kind. Never real crime.", s:[4,4,4,4,3]},
+ {n:12, idea:"The angel who secretly observes humanity", name:"Seraphine", status:"keep",
+  look_text:"30s, plain grey coat, very calm face. You’d never notice her, but her reflection and shadow have huge white wings.",
+  hook:"An angel watching ordinary life and doing small, anonymous good things.",
+  bits:[["The shadow","on a platform, the sun throws a shadow with wings. Nobody notices."],["Small rescue","a falling coffee stops in the air for half a second; a lost wallet finds its owner."],["Notes on humanity","one line on what she saw today. “He gave his umbrella away. Gold star.”"]],
+  posts:[["A metro platform at sunset. Everyone walks past; her shadow on the wall has wings.",""],["A child’s balloon escapes, floats back down into her hand, and she gives it back.",""],["In the rain a stranger shelters an old man; she watches from a window, wings in the reflection.",""]],
+  esc:"Her notebook of human kindness, then a person who can see her wings.",
+  watch:"Keep it non-religious: no church imagery or scripture.", s:[5,4,4,4,4]}
+];
+
+const KEYS = ["stop","runway","follow","make","safe"];
+const LABEL = {stop:"Stop",runway:"Runway",follow:"Follow",make:"Make",safe:"Safe"};
+const STATUS = {top:["Top pick","acc"], keep:["Worth a look","ok"], drop:["Drop","bad"]};
+const WHY = {4:"Funniest", 5:"Safest bet", 7:"Most original"};
+const pad = n => String(n).padStart(2,"0");
+const esc = t => String(t).replace(/[&<>"]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const img = (c, k) => `img/c${pad(c.n)}-${k}.jpg`;
+C.forEach(c => { c.total = c.s.reduce((a,b)=>a+b,0); KEYS.forEach((k,i)=>c[k]=c.s[i]); c.look = "a"; });
+
+function card(c){
+  const [st, cls] = STATUS[c.status];
+  const meters = KEYS.map(k => `<div class="score"><span>${LABEL[k]}<b>${c[k]}</b></span><div class="meter" role="img" aria-label="${LABEL[k]} ${c[k]} of 5">${[1,2,3,4,5].map(i=>`<i class="${i<=c[k]?"on":""}"></i>`).join("")}</div></div>`).join("");
+  const bits = c.bits.map(b => `<li><b>${esc(b[0])}:</b> ${esc(b[1])}</li>`).join("");
+  const scenes = c.posts.map((p,i) => `<figure class="scene" style="margin:0">
+      <button type="button" data-view="${img(c,"s"+(i+1))}" data-cap="${esc(c.name)} · post ${i+1}: ${esc(p[0])}"><img src="${img(c,"s"+(i+1))}" alt="${esc(c.name)}, post ${i+1}: ${esc(p[0])}" loading="lazy"></button>
+      <p><span class="n">${i+1}</span>${esc(p[0])}${p[1]?` <q>${esc(p[1])}</q>`:""}</p></figure>`).join("");
+  return `<article class="card panel ${c.status==="top"?"is-top":""}" id="c${c.n}">
+    <div class="looks">
+      <button type="button" class="look-main" data-view="${img(c,c.look)}" data-cap="${esc(c.name)} · look ${c.look.toUpperCase()}"><img id="main-${c.n}" src="${img(c,c.look)}" alt="${esc(c.name)}, look ${c.look.toUpperCase()}"></button>
+      <div class="look-tabs" role="group" aria-label="Choose a look for ${esc(c.name)}">
+        ${["a","b"].map(k => `<button type="button" data-card="${c.n}" data-look="${k}" aria-pressed="${c.look===k}"><img src="${img(c,k)}" alt="" loading="lazy">Look ${k.toUpperCase()}</button>`).join("")}
+      </div>
+    </div>
+    <div class="story">
+      <div class="headrow">
+        <div style="display:grid;gap:.35rem;min-width:0">
+          <div class="idrow"><span class="no">No. ${pad(c.n)}</span><span class="pill ${cls}">${st}</span></div>
+          <div class="idea">${esc(c.idea)}</div>
+          <h2>${esc(c.name)}</h2>
+        </div>
+        <div class="total"><b>${c.total}</b><span>of 25</span></div>
+      </div>
+      <p class="lookline">${esc(c.look_text)}</p>
+      <p class="hook">${esc(c.hook)}</p>
+      <div class="scores">${meters}</div>
+      <div class="cols">
+        <div><div class="label">Recurring bits</div><ul>${bits}</ul></div>
+        <div style="display:grid;gap:.9rem;align-content:start"><div><div class="label">How it escalates</div><p class="esc">${esc(c.esc)}</p></div>
+        ${c.watch?`<p class="watch"><b>Watch:</b> ${esc(c.watch)}</p>`:""}</div>
+      </div>
+    </div>
+    <div class="scenes"><div class="label">First three posts</div><div class="scene-row">${scenes}</div></div>
+  </article>`;
+}
+
+let filter = "all", sort = "total";
+function render(){
+  let list = C.filter(c => filter==="all" || c.status===filter);
+  list = list.slice().sort((a,b) => sort==="list" ? a.n-b.n : (b[sort]-a[sort]) || (b.total-a.total) || (a.n-b.n));
+  document.getElementById("cards").innerHTML = list.map(card).join("");
+  document.getElementById("count").textContent = `${list.length} of ${C.length}`;
+  document.querySelectorAll("[data-filter]").forEach(b => b.setAttribute("aria-pressed", b.dataset.filter===filter));
+  document.querySelectorAll("[data-sort]").forEach(b => b.setAttribute("aria-pressed", b.dataset.sort===sort));
+}
+document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => { filter = b.dataset.filter; render(); }));
+document.querySelectorAll("[data-sort]").forEach(b => b.addEventListener("click", () => { sort = b.dataset.sort; render(); }));
+
+document.getElementById("cards").addEventListener("click", e => {
+  const tab = e.target.closest("[data-look]");
+  if (tab) {
+    const c = C.find(x => x.n === +tab.dataset.card); c.look = tab.dataset.look;
+    const main = document.getElementById("main-" + c.n);
+    main.src = img(c, c.look); main.alt = `${c.name}, look ${c.look.toUpperCase()}`;
+    main.parentElement.dataset.view = img(c, c.look); main.parentElement.dataset.cap = `${c.name} · look ${c.look.toUpperCase()}`;
+    tab.parentElement.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b === tab));
+  }
+});
+
+const viewer = document.getElementById("viewer");
+document.addEventListener("click", e => {
+  const v = e.target.closest("[data-view]");
+  if (!v) return;
+  document.getElementById("viewer-img").src = v.dataset.view;
+  document.getElementById("viewer-img").alt = v.dataset.cap;
+  document.getElementById("viewer-cap").textContent = v.dataset.cap;
+  viewer.showModal();
+});
+document.getElementById("viewer-close").addEventListener("click", () => viewer.close());
+viewer.addEventListener("click", e => { if (e.target === viewer) viewer.close(); });
+
+document.getElementById("top3").innerHTML = [4,5,7].map(n => { const c = C.find(x => x.n===n);
+  return `<a class="pick panel" href="#c${n}" data-pick="${n}"><img src="${img(c,"a")}" alt="${esc(c.name)}"><div><span class="pill acc" style="justify-self:start">${WHY[n]} · ${c.total}/25</span><h3>${esc(c.name)}</h3><p>${esc(c.idea)}</p></div></a>`; }).join("");
+document.getElementById("top3").addEventListener("click", () => { if (filter!=="all" && filter!=="top") { filter="all"; render(); } });
+
+document.getElementById("tbody").innerHTML = C.slice().sort((a,b)=>(b.total-a.total)||(a.n-b.n)).map(c =>
+  `<tr><td class="n">${pad(c.n)}</td><td><div class="tname"><img src="${img(c,"a")}" alt="" loading="lazy"><div><b>${esc(c.name)}</b><small>${esc(c.idea)}</small></div></div></td>${KEYS.map(k=>`<td class="n">${c[k]}</td>`).join("")}<td class="t">${c.total}</td></tr>`).join("");
+
+const root = document.documentElement;
+try { const t = localStorage.getItem("casting-theme"); if (t === "light" || t === "dark") root.setAttribute("data-theme", t); } catch (e) {}
+document.getElementById("theme-btn").addEventListener("click", () => {
+  const dark = root.getAttribute("data-theme") ? root.getAttribute("data-theme") === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = dark ? "light" : "dark"; root.setAttribute("data-theme", next);
+  try { localStorage.setItem("casting-theme", next); } catch (e) {}
+});
+render();
+</script>
+</body>
+</html>
