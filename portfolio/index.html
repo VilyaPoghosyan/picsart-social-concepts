@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Social Brands Portfolio</title>
+<meta name="description" content="Five social brands on one page: purpose, concept, the week's numbers with the change on the week before, and the totals since Oct 15.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#121212">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&display=swap">
+<link rel="preload" href="fonts/Acorn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Gilroy-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="picsart.css">
+<style>/* page-only layout for the weekly portfolio; every colour, font and corner comes from picsart.css tokens */
+.wrap { display: grid; gap: 2.6rem; padding-bottom: 3rem }
+.page-head { margin-bottom: 0 }
+small { display: block; color: var(--faint); font-family: var(--ui); font-weight: 500; font-size: .76rem; line-height: 1.3 }
+
+/* a section: week, then overall */
+.sec { display: grid; gap: 1rem; min-width: 0 }
+.sec-head { display: flex; align-items: baseline; gap: .8rem; flex-wrap: wrap; padding-bottom: .4rem; border-bottom: 1px solid var(--line) }
+.sec-head h2 { margin: 0 }
+
+/* the six classes */
+.stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .8rem }
+.stat { padding: 1rem 1.1rem; display: grid; gap: .3rem; align-content: start; min-width: 0; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--line) }
+.stat .cls { font-family: var(--ui); font-weight: 600; font-size: .8rem; color: var(--accent-ink) }
+.stat b { font-family: var(--display); font-weight: 400; font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums }
+.stat > span:not(.cls) { color: var(--muted); font-size: .86rem; line-height: 1.4 }
+.stat small .wow { margin-left: 0 }
+
+/* week-over-week mark: coloured text, never a fill */
+.wow { display: inline-block; font-family: var(--ui); font-weight: 600; font-size: .78rem; color: var(--faint); white-space: nowrap; margin-left: .3rem }
+.wow.up { color: var(--ok-ink) }
+.wow.down { color: var(--bad-ink) }
+
+/* the one chart: total reach since Oct 3 */
+.chart { padding: clamp(16px, 2.4vw, 26px); display: grid; gap: 1rem; min-width: 0 }
+.chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; flex-wrap: wrap }
+.chart-head h3 { margin: 0; font-family: var(--ui); font-weight: 600; font-size: 1rem }
+.legend { color: var(--muted); font-family: var(--ui); font-weight: 500; font-size: .8rem }
+.lc { padding: 0 3.2rem 0 2.6rem }
+.plot { position: relative; height: 240px; border-bottom: 1px solid var(--line-2) }
+.plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible }
+.plot .area { fill: #C209C1; fill-opacity: .16; stroke: none }
+.plot .line { fill: none; stroke: #C209C1; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linejoin: round }
+.plot .gap { stroke: #C209C1; stroke-width: 2; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; opacity: .7 }
+.gl { position: absolute; left: 0; right: 0; border-top: 1px solid var(--line) }
+.gl em { position: absolute; right: 100%; margin-right: .5rem; transform: translateY(-50%); font-style: normal; font-family: var(--ui); font-size: .72rem; color: var(--faint) }
+.pt { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: #C209C1; box-shadow: 0 0 0 2px var(--surface) }
+.last { position: absolute; transform: translate(.6rem, -50%); font-family: var(--ui); font-weight: 600; font-size: .9rem; color: var(--ink) }
+.xl { position: relative; height: 1.4rem; margin-top: .4rem }
+.xl span { position: absolute; transform: translateX(-50%); font-family: var(--ui); font-size: .74rem; color: var(--faint); white-space: nowrap }
+
+/* brand tables */
+.tbl { padding: clamp(16px, 2.4vw, 26px); min-width: 0 }
+.pf { width: 100%; border-collapse: collapse }
+.pf th, .pf td { text-align: left; vertical-align: top; padding: .85rem .7rem; border-top: 1px solid var(--line) }
+.pf thead th { border-top: 0; font-family: var(--ui); font-weight: 600; font-size: .85rem; color: var(--ink); padding-top: 0 }
+.pf thead th small { margin-top: .15rem; font-weight: 500 }
+.pf-all tbody th { width: 34% }
+.pf td .n { font-family: var(--ui); font-weight: 600; font-size: 1.05rem; font-variant-numeric: tabular-nums }
+.bn { font-family: var(--ui); font-weight: 600; font-size: 1rem }
+.pp { display: block; margin-top: .3rem; font-size: .88rem; line-height: 1.4; color: var(--ink) }
+.cc { display: block; margin-top: .2rem; font-size: .8rem; line-height: 1.4; color: var(--muted) }
+
+.moved { padding: clamp(16px, 2.4vw, 26px); display: grid; gap: .6rem }
+.moved h2 { margin: 0 }
+.moved ul { margin: 0; padding-left: 1.1rem; display: grid; gap: .35rem; color: var(--ink); max-width: 90ch }
+.foot { color: var(--faint); font-size: .8rem; line-height: 1.5; max-width: 110ch }
+.foot p { margin: 0 0 .4rem }
+
+@media (max-width: 1100px) { .stats { grid-template-columns: repeat(3, minmax(0, 1fr)) } }
+@media (max-width: 900px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .stat b { font-size: 1.6rem }
+  .plot { height: 190px }
+  .pf thead { display: none }
+  .pf, .pf tbody, .pf tr, .pf th, .pf td { display: block; width: auto }
+  .pf tr { border-top: 1px solid var(--line); padding: .6rem 0 }
+  .pf tbody th, .pf-all tbody th { width: auto; border: 0; padding: .4rem 0 }
+  .pf td { border: 0; padding: .35rem 0 .35rem 8rem; position: relative }
+  .pf td::before { content: attr(data-label); position: absolute; left: 0; top: .5rem; font-family: var(--ui); font-weight: 600; font-size: .8rem; color: var(--muted) }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+</svg>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#main" aria-label="Social portfolio, back to top"><b>Social portfolio</b></a>
+    <span class="chname">/ Sat 31 Oct to Fri 6 Nov</span>
+    <div class="tools">
+      <button type="button" class="ibtn theme-btn" id="theme-btn" aria-label="Switch light or dark theme">
+        <svg class="icon sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon moon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<main class="wrap" id="main">
+  <div class="page-head">
+    <h1>Five brands, one <span class="g">week.</span></h1>
+    <p class="dek">AI-made social brands that grow an audience and send it to Picsart. First the week, then everything since Oct 15.</p>
+  </div>
+
+  <section class="sec" aria-labelledby="w-h">
+    <div class="sec-head"><h2 id="w-h">This week</h2><span class="pill">Sat 31 Oct to Fri 6 Nov</span></div>
+    <div class="stats"><div class="stat"><span class="cls">Reach</span><b>234,201</b><span>views on Instagram and TikTok</span><small><span class="wow down">&darr; 4%</span> vs the week before</small></div><div class="stat"><span class="cls">Audience</span><b>154</b><span>new followers</span><small><span class="wow down">&darr; 47%</span> vs the week before</small></div><div class="stat"><span class="cls">Engagement</span><b>204</b><span>saves and shares</span><small><span class="wow down">&darr; 36%</span> vs the week before</small></div><div class="stat"><span class="cls">Visits</span><b>14</b><span>people who tapped through to Picsart</span><small><span class="wow up">&uarr; 367%</span> vs the week before</small></div><div class="stat"><span class="cls">Used AI</span><b>10</b><span>visitors who used a Picsart AI tool</span><small><span class="wow up">&uarr; 400%</span> vs the week before</small></div><div class="stat"><span class="cls">Converted</span><b>0</b><span>new sign-ups and purchases</span><small><span class="wow">no change</span> vs the week before</small></div></div>
+    <div class="panel tbl">
+      <table class="pf pf-week">
+        <thead><tr><th scope="col">Brand</th><th scope="col">Reach</th><th scope="col">Audience</th><th scope="col">Engagement</th><th scope="col">Visits</th><th scope="col">Used AI</th><th scope="col">Converted</th></tr></thead>
+        <tbody><tr><th scope="row"><span class="bn">Reelo</span></th><td data-label="Reach"><b class="n">212,184</b><span class="wow up">&uarr; 13%</span></td><td data-label="Audience"><b class="n">95</b><span class="wow up">&uarr; 2%</span></td><td data-label="Engagement"><b class="n">177</b><span class="wow up">&uarr; 43%</span></td><td data-label="Visits"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Used AI"><b class="n">1</b><span class="wow up">new</span></td><td data-label="Converted"><b class="n">0</b><span class="wow">no change</span></td></tr><tr><th scope="row"><span class="bn">Microdramas</span></th><td data-label="Reach"><b class="n">16,117</b><span class="wow down">&darr; 68%</span></td><td data-label="Audience"><b class="n">57</b><span class="wow down">&darr; 69%</span></td><td data-label="Engagement"><b class="n">22</b><span class="wow down">&darr; 87%</span></td><td data-label="Visits"><b class="n">14</b><span class="wow up">&uarr; 367%</span></td><td data-label="Used AI"><b class="n">9</b><span class="wow up">&uarr; 350%</span></td><td data-label="Converted"><b class="n">0</b><span class="wow">no change</span></td></tr><tr><th scope="row"><span class="bn">Dwell</span></th><td data-label="Reach"><b class="n">5,424</b><span class="wow down">&darr; 3%</span></td><td data-label="Audience"><b class="n">2</b><span class="wow down">&darr; 82%</span></td><td data-label="Engagement"><b class="n">5</b><span class="wow down">&darr; 75%</span></td><td data-label="Visits"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Used AI"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Converted"><b class="n">0</b><span class="wow">no change</span></td></tr><tr><th scope="row"><span class="bn">Faceless</span></th><td data-label="Reach"><b class="n">not synced</b><span class="wow">no compare</span></td><td data-label="Audience"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Engagement"><b class="n">not synced</b><span class="wow">no compare</span></td><td data-label="Visits"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Used AI"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Converted"><b class="n">0</b><span class="wow">no change</span></td></tr><tr><th scope="row"><span class="bn">Listed</span></th><td data-label="Reach"><b class="n">476</b><span class="wow down">&darr; 63%</span></td><td data-label="Audience"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Engagement"><b class="n">0</b><span class="wow down">&darr; 100%</span></td><td data-label="Visits"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Used AI"><b class="n">0</b><span class="wow">no change</span></td><td data-label="Converted"><b class="n">0</b><span class="wow">no change</span></td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="o-h">
+    <div class="sec-head"><h2 id="o-h">Overall</h2><span class="pill">since Thu 15 Oct</span></div>
+    <div class="stats"><div class="stat"><span class="cls">Reach</span><b>651,915</b><span>views on Instagram and TikTok</span><small>+234,201 this week</small></div><div class="stat"><span class="cls">Audience</span><b>637</b><span>followers today</span><small>+154 this week</small></div><div class="stat"><span class="cls">Engagement</span><b>927</b><span>saves and shares</span><small>+204 this week</small></div><div class="stat"><span class="cls">Visits</span><b>20</b><span>people who tapped through to Picsart</span><small>+14 this week</small></div><div class="stat"><span class="cls">Used AI</span><b>13</b><span>visitors who used a Picsart AI tool</span><small>+10 this week</small></div><div class="stat"><span class="cls">Converted</span><b>0</b><span>new sign-ups and purchases</span><small>nothing new this week</small></div></div>
+    <div class="panel chart">
+      <div class="chart-head"><h3>Total reach since Oct 15</h3><span class="legend">views on Instagram and TikTok, all brands. Dashed: launch to the first reading</span></div>
+      <div class="lc"><div class="plot"><span class="gl" style="top:75.00%"><em>175K</em></span><span class="gl" style="top:50.00%"><em>350K</em></span><span class="gl" style="top:25.00%"><em>525K</em></span><span class="gl" style="top:0.00%"><em>700K</em></span><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="13.64,100 13.64,93.79 18.18,93.23 36.36,75.35 50.00,65.19 54.55,58.49 63.64,46.69 68.18,40.33 81.82,24.30 100.00,6.87 100,100" class="area"/><line x1="0" y1="100" x2="13.64" y2="93.79" class="gap"/><polyline points="13.64,93.79 18.18,93.23 36.36,75.35 50.00,65.19 54.55,58.49 63.64,46.69 68.18,40.33 81.82,24.30 100.00,6.87" class="line"/></svg><i class="pt" style="left:13.64%;top:93.79%" title="Sun 18 Oct: 43,455 views since Oct 15"></i><i class="pt" style="left:18.18%;top:93.23%" title="Mon 19 Oct: 47,382 views since Oct 15"></i><i class="pt" style="left:36.36%;top:75.35%" title="Fri 23 Oct: 172,542 views since Oct 15"></i><i class="pt" style="left:50.00%;top:65.19%" title="Mon 26 Oct: 243,696 views since Oct 15"></i><i class="pt" style="left:54.55%;top:58.49%" title="Tue 27 Oct: 290,562 views since Oct 15"></i><i class="pt" style="left:63.64%;top:46.69%" title="Thu 29 Oct: 373,202 views since Oct 15"></i><i class="pt" style="left:68.18%;top:40.33%" title="Fri 30 Oct: 417,714 views since Oct 15"></i><i class="pt" style="left:81.82%;top:24.30%" title="Mon 2 Nov: 529,873 views since Oct 15"></i><i class="pt" style="left:100.00%;top:6.87%" title="Fri 6 Nov: 651,915 views since Oct 15"></i><b class="last" style="left:100.00%;top:6.87%">652K</b></div><div class="xl"><span style="left:13.64%">18 Oct</span><span style="left:36.36%">23 Oct</span><span style="left:68.18%">30 Oct</span><span style="left:100.00%">6 Nov</span></div></div>
+    </div>
+    <div class="panel tbl">
+      <table class="pf pf-all">
+        <thead><tr><th scope="col">Brand<small>purpose, concept</small></th><th scope="col">Reach</th><th scope="col">Audience</th><th scope="col">Engagement</th><th scope="col">Visits</th><th scope="col">Used AI</th><th scope="col">Converted</th></tr></thead>
+        <tbody><tr><th scope="row"><span class="bn">Reelo</span><span class="pp">Mass reach: show what Picsart video AI makes for families and pet lovers.</span><span class="cc">15-second Pixar-style family cartoons, no dialogue. Four a day. 162 posts since Oct 15.</span></th><td data-label="Reach"><b class="n">540,818</b></td><td data-label="Audience"><b class="n">258</b></td><td data-label="Engagement"><b class="n">424</b></td><td data-label="Visits"><b class="n">1</b></td><td data-label="Used AI"><b class="n">1</b></td><td data-label="Converted"><b class="n">0</b></td></tr><tr><th scope="row"><span class="bn">Microdramas</span><span class="pp">A loyal audience that follows a story, and taps through to make its own.</span><span class="cc">Serialized AI drama: 30 to 60-second episodes with dialogue, 8 to 9 parts a series. One a day. </span></th><td data-label="Reach"><b class="n">91,834</b></td><td data-label="Audience"><b class="n">334</b></td><td data-label="Engagement"><b class="n">412</b></td><td data-label="Visits"><b class="n">19</b></td><td data-label="Used AI"><b class="n">12</b></td><td data-label="Converted"><b class="n">0</b></td></tr><tr><th scope="row"><span class="bn">Dwell</span><span class="pp">Home and interior lovers who save ideas, on Instagram, TikTok and Pinterest.</span><span class="cc">Luxury interiors: before/afters, room tours and trend carousels, two a day, plus five Pinterest pins a day. Plus 317 Pinterest impressions. </span></th><td data-label="Reach"><b class="n">17,193</b></td><td data-label="Audience"><b class="n">37</b></td><td data-label="Engagement"><b class="n">90</b></td><td data-label="Visits"><b class="n">0</b></td><td data-label="Used AI"><b class="n">0</b></td><td data-label="Converted"><b class="n">0</b></td></tr><tr><th scope="row"><span class="bn">Faceless</span><span class="pp">Creators who want to earn money with AI content made in Picsart.</span><span class="cc">Price Tag reels: our finished video, what buyers pay for it, the receipt. One a day. </span></th><td data-label="Reach"><b class="n">887 (partly synced)</b></td><td data-label="Audience"><b class="n">4</b></td><td data-label="Engagement"><b class="n">not synced</b></td><td data-label="Visits"><b class="n">0</b></td><td data-label="Used AI"><b class="n">0</b></td><td data-label="Converted"><b class="n">0</b></td></tr><tr><th scope="row"><span class="bn">Listed</span><span class="pp">Online sellers who need better product photos, fixed in Picsart.</span><span class="cc">Character skits for online sellers: an AI character roasts a bad product photo, then fixes it in Picsart. Two a day. </span></th><td data-label="Reach"><b class="n">2,070</b></td><td data-label="Audience"><b class="n">4</b></td><td data-label="Engagement"><b class="n">1</b></td><td data-label="Visits"><b class="n">0</b></td><td data-label="Used AI"><b class="n">0</b></td><td data-label="Converted"><b class="n">0</b></td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel moved" aria-labelledby="m-h"><h2 id="m-h">What moved</h2><ul><li>Reelo brought 212K of this week&#x27;s 234K views (91%).</li><li>Biggest reach change: Microdramas, down 68% on the week before.</li><li>Microdramas sent 14 of the 14 real visitors to Picsart this week; 9 of them used a Picsart AI tool.</li><li>No sign-ups or purchases from any brand yet.</li><li>1 visitor opened the sign-up screen and closed it.</li><li>Dwell, Faceless and Listed: only team link tests so far, no real visits.</li><li>The Microdramas Instagram ad (Nov 5 and 6) brought 236 visits, 4 used AI. Paid, so not counted above.</li></ul></section>
+  <footer class="foot">
+    <p>Updated Fri 6 Nov 2026, 17:26 Yerevan. Refreshed every Monday at 11:30.</p>
+  </footer>
+</main>
+<script>
+document.getElementById("theme-btn").addEventListener("click", () => {
+  const r = document.documentElement; r.dataset.theme = r.dataset.theme === "light" ? "dark" : "light";
+});
+</script>
+</body>
+</html>

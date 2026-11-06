@@ -1,0 +1,218 @@
+/* Picsart product look: the starter stylesheet of the picsart-product-design skill.
+   Measured from picsart.com and Picsart's cascade design system (2026-11-04), shipped in the
+   Social Autopilot prototype. Dark by default; add data-theme="light" on <html> for light.
+   Needs: fonts/ next to this file (Acorn + Gilroy woff2) and Mulish from Google Fonts:
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&display=swap">
+   Full component CSS (meter, lanes, gallery, zoom, dialogs): references/app-reference.css. */
+
+@font-face { font-family: "Acorn"; src: url("fonts/Acorn-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap }
+@font-face { font-family: "Gilroy"; src: url("fonts/Gilroy-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap }
+@font-face { font-family: "Gilroy"; src: url("fonts/Gilroy-Medium.woff2") format("woff2"); font-weight: 500; font-display: swap }
+@font-face { font-family: "Gilroy"; src: url("fonts/Gilroy-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap }
+@font-face { font-family: "Gilroy"; src: url("fonts/Gilroy-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap }
+/* Arial scaled to Mulish's width, so text does not jump when the web font arrives */
+@font-face { font-family: "Mulish Fallback"; src: local("Arial"), local("Helvetica"), local("Liberation Sans"); size-adjust: 104% }
+
+:root {
+  /* picsart.com dark */
+  --bg: #121212; --surface: #1C1C1C; --surface-2: #232323; --sunk: #000000; --chip: #000000;
+  --ink: #FFFFFF; --muted: #B3B3B3; --faint: #8F8F8F; --line: #2A2A2A; --line-2: #3B3B3B;
+  --cream: #FFFCF8; --sel-bg: #FFFCF8; --sel-ink: #000000; --chip-ink: rgba(247, 242, 234, .72);
+  --accent: #FF47FF; --accent-ink: #FF7AFF; --accent-soft: #3C1B3C; --on-accent: #000000;
+  --accent-hover: #FF7AFF;
+  --ok: #3FD68F; --ok-ink: #6BE3AA; --ok-soft: #13301F;
+  --warn: #F5B83D; --warn-ink: #F7C969; --warn-soft: #33270F;
+  --bad: #FF6B5E; --bad-ink: #FF9389; --bad-soft: #3A1714;
+  --grad: linear-gradient(270deg, #F749F6 0%, #C209C1 100%);
+  --display: "Acorn", "Gilroy", Georgia, serif;
+  --sans: "Mulish", "Mulish Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ui: "Gilroy", "Mulish", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "Gilroy", "Mulish", -apple-system, BlinkMacSystemFont, sans-serif;
+  --code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;  /* logs and raw records only */
+  --r-panel: 24px; --r-card: 16px; --r-tile: 12px; --r-ctl: 12px; --r-chip: 8px;
+  --shadow: 0 0 #0000;
+  --shadow-lift: 0 2px 6px rgba(0, 0, 0, .35), 0 18px 40px rgba(0, 0, 0, .55);
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  color-scheme: dark;
+}
+[hidden] { display: none !important }  /* component display rules must never un-hide */
+/* Picsart light (cascade design system light theme): off-white ground, black ink, #F40BF4 brand */
+:root[data-theme="light"] {
+  --bg: #FFFCF8; --surface: #FFFFFF; --surface-2: #F7F3EE; --sunk: #F1ECE6; --chip: #FFFFFF;
+  --ink: #000000; --muted: #57534E; --faint: #6F6A64; --line: #ECE6DE; --line-2: #D9D2C8;
+  --sel-bg: #000000; --sel-ink: #FFFFFF; --chip-ink: #3A3631;
+  --accent: #F40BF4; --accent-ink: #A300A3; --accent-soft: #FCE3FC; --on-accent: #000000;
+  --accent-hover: #FF47FF;
+  --ok: #138A55; --ok-ink: #0E6E43; --ok-soft: #E1F4E9;
+  --warn: #B7791F; --warn-ink: #8A5A12; --warn-soft: #FBF0DC;
+  --bad: #D0362A; --bad-ink: #A62D23; --bad-soft: #FBE6E3;
+  --shadow: 0 1px 2px rgba(40, 30, 20, .05), 0 6px 18px rgba(40, 30, 20, .06);
+  --shadow-lift: 0 2px 6px rgba(40, 30, 20, .08), 0 16px 36px rgba(40, 30, 20, .12);
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+*, *::before, *::after { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100%; scrollbar-color: var(--line-2) var(--bg); background: var(--bg) }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans);
+  font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh; caret-color: var(--accent);
+}
+::selection { background: var(--accent); color: var(--on-accent) }
+::-webkit-scrollbar { width: 10px; height: 10px }
+::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 999px; border: 2px solid var(--bg) }
+::-webkit-scrollbar-track { background: transparent }
+a { color: inherit; text-underline-offset: .18em; text-decoration-thickness: 1px }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px }
+img, video { display: block; max-width: 100% }
+video:focus, video:focus-within { outline: 2px solid var(--accent); outline-offset: -3px }
+button, input, textarea, select { font: inherit; color: inherit }
+h1, h2, h3 { text-wrap: balance; margin: 0 }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 4.4vw, 2.75rem); line-height: 1.16; letter-spacing: -.01em }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.3rem, 2.2vw, 1.55rem); line-height: 1.25 }
+h3 { font-family: var(--ui); font-weight: 600; font-size: 1.04rem; line-height: 1.3 }
+/* picsart.com's one flourish: a phrase of the title in the brand gradient */
+.g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; padding-right: .04em }
+p { margin: 0 }
+.num, .mono { font-family: var(--mono); font-variant-numeric: tabular-nums }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0 }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; background: var(--accent); color: var(--on-accent); padding: .7rem 1.1rem; border-radius: 999px; text-decoration: none; font-family: var(--ui); font-weight: 600 }
+.skip:focus { top: 12px }
+.icon { width: 1.15em; height: 1.15em; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round }
+[x-cloak] { display: none !important }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--gutter) 6rem }
+.page-head { padding: clamp(28px, 5vw, 56px) 0 clamp(20px, 3vw, 32px); display: grid; gap: .7rem; max-width: 760px }
+.page-head.split { max-width: none; grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: 2rem }
+.page-head.split > div:first-child { display: grid; gap: .7rem; max-width: 760px }
+.dek { color: var(--muted); font-size: 1.05rem; font-weight: 500; max-width: 62ch; line-height: 1.55 }
+
+/* ---------- top bar ---------- */
+.top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line) }
+.top-in { max-width: 1200px; margin: 0 auto; padding: .7rem var(--gutter); display: flex; align-items: center; gap: 1rem; min-height: 72px }
+.brand { display: flex; align-items: center; gap: .8rem; text-decoration: none; min-height: 44px; flex: none; color: var(--ink) }
+.brand .logo { width: 86px; height: auto; color: var(--accent); display: block; margin-top: 2px }
+.brand b { font-family: var(--ui); font-weight: 600; font-size: 1rem; padding-left: .8rem; border-left: 1px solid var(--line-2); line-height: 1.1 }
+.chname { color: var(--muted); font-family: var(--ui); font-weight: 500; font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 22ch }
+.tools { margin-left: auto; display: flex; align-items: center; gap: .4rem; flex: none }
+.sim {
+  display: inline-flex; align-items: center; gap: .4rem; font-family: var(--ui); font-size: .8rem; font-weight: 600; color: var(--warn-ink);
+  background: var(--warn-soft); padding: .28rem .7rem; border-radius: 999px; white-space: nowrap;
+}
+.sim::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--warn) }
+.ibtn {
+  min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
+  border: 1px solid var(--line-2); background: transparent; border-radius: 999px; cursor: pointer; padding: 0 1rem;
+  font-family: var(--ui); font-size: .875rem; font-weight: 600; color: var(--ink); text-decoration: none;
+  transition: border-color .15s, background-color .15s, color .15s;
+}
+.ibtn:hover { border-color: var(--ink) }
+.ibtn .lbl-short { display: none }
+.ibtn[aria-expanded="true"], .ibtn[aria-current="page"] { border-color: var(--accent); color: var(--accent) }
+.theme-btn { padding: 0 }
+.theme-btn .sun { display: none }
+:root[data-theme="light"] .theme-btn .sun { display: block }
+:root[data-theme="light"] .theme-btn .moon { display: none }
+
+/* stage stepper: a real sequence, so it is numbered */
+.stages { background: var(--bg); border-bottom: 1px solid var(--line) }
+.stages ol { position: relative; list-style: none; margin: 0 auto; max-width: 1200px; padding: .75rem var(--gutter); display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: none }
+.stages li { flex: none }
+.stages a, .stages span.st {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 40px; padding: 0 .9rem 0 .6rem; text-decoration: none;
+  color: var(--chip-ink); font-family: var(--ui); font-size: .875rem; font-weight: 600; border-radius: var(--r-chip);
+  background: var(--chip); border: 1px solid var(--line-2); min-width: 44px; justify-content: center;
+  transition: border-color .15s, color .15s, background-color .15s;
+}
+.stages a:hover { color: var(--ink); border-color: var(--faint) }
+.stages .n { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-family: var(--ui); font-size: .72rem; font-weight: 700; border: 1px solid var(--line-2); flex: none; font-variant-numeric: tabular-nums }
+.stages .is-done .n { background: transparent; border-color: transparent; color: var(--ok) }
+.stages .is-current a, .stages .is-current span.st { background: var(--sel-bg); border-color: var(--sel-bg); color: var(--sel-ink) }
+.stages .is-current .n { background: var(--accent); border-color: var(--accent); color: var(--on-accent) }
+.stages .is-locked span.st { color: var(--faint); background: transparent; border-style: dashed }
+
+/* ---------- shared bits ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; padding: 0 1.25rem;
+  border-radius: 999px; border: 1px solid transparent; font-family: var(--ui); font-weight: 600; font-size: .9rem; line-height: 1.2;
+  cursor: pointer; text-decoration: none; text-align: center;
+  transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
+}
+.btn-p { background: var(--accent); color: var(--on-accent) }
+.btn-p:hover { background: var(--accent-hover) }
+.btn-p:active, .btn-s:active { transform: scale(.98) }
+.btn-s { background: transparent; border-color: var(--line-2); color: var(--ink) }
+.btn-s:hover { border-color: var(--ink) }
+.btn-q { background: transparent; color: var(--muted); padding: 0 .9rem }
+.btn-q:hover { color: var(--ink); background: var(--surface-2) }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; pointer-events: none }
+.btn .q { font-weight: 500; font-size: .82rem; opacity: .85; padding-left: .55rem; border-left: 1px solid color-mix(in srgb, currentColor 35%, transparent); font-variant-numeric: tabular-nums }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-panel); box-shadow: var(--shadow) }
+.notice { display: flex; gap: .7rem; align-items: flex-start; padding: .85rem 1.1rem; border-radius: var(--r-card); background: var(--warn-soft); color: var(--ink); border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent); margin-bottom: 1.2rem; font-size: .92rem }
+.notice .icon { color: var(--warn-ink); margin-top: .15rem }
+.notice.bad { background: var(--bad-soft); border-color: color-mix(in srgb, var(--bad) 40%, transparent) }
+.notice.bad .icon { color: var(--bad-ink) }
+.notice ul { margin: .3rem 0 0; padding-left: 1.1rem }
+.pill { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--ui); font-size: .78rem; font-weight: 600; padding: .22rem .65rem; border-radius: 999px; white-space: nowrap; background: var(--surface-2); color: var(--muted) }
+.pill.ok { background: var(--ok-soft); color: var(--ok-ink) }
+.pill.warn { background: var(--warn-soft); color: var(--warn-ink) }
+.pill.bad { background: var(--bad-soft); color: var(--bad-ink) }
+.pill.acc { background: var(--accent-soft); color: var(--accent-ink) }
+.empty { padding: 2rem 1.5rem; text-align: left; border: 1px dashed var(--line-2); border-radius: var(--r-panel); color: var(--muted); display: grid; gap: .6rem; justify-items: start }
+.empty b { color: var(--ink); font-family: var(--display); font-size: 1.3rem; font-weight: 400 }
+
+/* forms */
+.field { display: grid; gap: .4rem }
+.field > label, .legend { font-family: var(--ui); font-weight: 600; font-size: .92rem }
+.hint { color: var(--muted); font-size: .86rem; font-weight: 400 }
+.err { color: var(--bad-ink); font-size: .86rem; font-weight: 500 }
+.input, .textarea {
+  width: 100%; min-height: 46px; padding: .65rem .95rem; border-radius: var(--r-ctl); border: 1px solid var(--line-2);
+  background: var(--sunk); color: var(--ink); transition: border-color .15s, box-shadow .15s;
+}
+.textarea { min-height: 84px; resize: vertical; line-height: 1.5 }
+.input::placeholder, .textarea::placeholder { color: var(--faint) }
+.input:hover, .textarea:hover { border-color: var(--faint) }
+.input:focus-visible, .textarea:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent) }
+select.input { appearance: none; -webkit-appearance: none; padding-right: 2.4rem; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23999' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .95rem center }
+input[type="datetime-local"].input { color-scheme: inherit }
+.input[aria-invalid="true"] { border-color: var(--bad) }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0 }
+legend { padding: 0; margin-bottom: .55rem }
+
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; list-style: none; padding: 0; margin: 0 }
+.chip { position: relative; display: inline-flex }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px }
+.chip span {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0 1rem; border-radius: var(--r-chip);
+  border: 1px solid var(--line-2); background: var(--chip); color: var(--chip-ink); cursor: pointer;
+  font-family: var(--ui); font-size: .875rem; font-weight: 600; user-select: none;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.chip span .icon { display: none; width: 1em; height: 1em; stroke-width: 2.4 }
+.chip input:checked + span { background: var(--sel-bg); border-color: var(--sel-bg); color: var(--sel-ink) }
+.chip input:checked + span .icon { display: block }
+.chip input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px }
+.chip span:hover { border-color: var(--faint); color: var(--ink) }
+.chip input:checked + span:hover { color: var(--sel-ink) }
+.tag { display: inline-flex; align-items: center; min-height: 28px; padding: 0 .65rem; border-radius: var(--r-chip); background: var(--surface-2); font-family: var(--ui); font-weight: 500; font-size: .8rem; color: var(--muted) }
+
+/* ---------- small extras ---------- */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: 1rem }
+.well { background: var(--surface-2); border-radius: var(--r-tile); padding: .85rem 1rem }
+.media { background: var(--sunk); border-radius: var(--r-tile); overflow: hidden }
+.numeral { font-family: var(--display); font-weight: 400; font-size: 1.8rem; line-height: 1.05; letter-spacing: -.01em; font-variant-numeric: tabular-nums }
+.numeral small { font-family: var(--sans); font-weight: 500; font-size: .9rem; color: var(--muted); margin-left: .35rem; letter-spacing: 0 }
+.label { font-family: var(--ui); font-weight: 600; font-size: .8rem; color: var(--faint) }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important }
+}
+@media (max-width: 720px) {
+  h1 { font-size: 2rem }
+  .top-in { min-height: 56px }
+}
+
