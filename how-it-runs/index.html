@@ -204,6 +204,17 @@ dl.cmds dd { margin: 0; color: var(--muted); font-size: .86rem }
 .gap .gh { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap }
 .gap p { color: var(--muted); font-size: .9rem }
 
+/* ideas */
+.ideas-t { min-width: 900px }
+.ideas-t td:first-child { white-space: nowrap }
+.idea-cases { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem }
+.case { padding: 1.3rem; display: grid; gap: .8rem; align-content: start; min-width: 0 }
+.case q { font-style: italic }
+.scores-t { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .45rem }
+.scores-t span { font-family: var(--mono); font-size: .76rem; background: var(--sunk); border-radius: 8px; padding: .25rem .5rem }
+.scores-t span b { color: var(--accent-ink) }
+@media (max-width: 860px) { .idea-cases { grid-template-columns: minmax(0, 1fr) } }
+
 footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 1rem; display: grid; gap: .3rem }
 
 @media (max-width: 1040px) {
@@ -244,13 +255,14 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
       <li><a href="#picture"><span class="n">1</span>Big picture</a></li>
       <li><a href="#day"><span class="n">2</span>A day</a></li>
       <li><a href="#brands"><span class="n">3</span>Brands</a></li>
-      <li><a href="#models"><span class="n">4</span>Models</a></li>
-      <li><a href="#agents"><span class="n">5</span>All agents</a></li>
-      <li><a href="#engine"><span class="n">6</span>Engine</a></li>
-      <li><a href="#publish"><span class="n">7</span>Publishing</a></li>
-      <li><a href="#learn"><span class="n">8</span>Reports &amp; learning</a></li>
-      <li><a href="#rails"><span class="n">9</span>Safety &amp; people</a></li>
-      <li><a href="#gaps"><span class="n">10</span>Gaps</a></li>
+      <li><a href="#ideas"><span class="n">4</span>Ideas</a></li>
+      <li><a href="#models"><span class="n">5</span>Models</a></li>
+      <li><a href="#agents"><span class="n">6</span>All agents</a></li>
+      <li><a href="#engine"><span class="n">7</span>Engine</a></li>
+      <li><a href="#publish"><span class="n">8</span>Publishing</a></li>
+      <li><a href="#learn"><span class="n">9</span>Reports &amp; learning</a></li>
+      <li><a href="#rails"><span class="n">10</span>Safety &amp; people</a></li>
+      <li><a href="#gaps"><span class="n">11</span>Gaps</a></li>
     </ol>
   </nav>
 </header>
@@ -259,7 +271,7 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
   <section class="page-head" aria-label="Introduction">
     <div class="eyebrow">Picsart Social · system walkthrough · 6 Nov 2026</div>
     <h1>How our brands run themselves</h1>
-    <p class="dek">Five brands post every day with no production team. Scheduled AI agents decide what to make, generate it with Picsart models, check it with measured tests, schedule it, and report back. A person only vetoes, answers alerts and sets direction. This page shows every agent, every model and every step.</p>
+    <p class="dek">Five brands post every day with no production team. Scheduled AI agents decide what to make, generate it with Picsart models, check it with measured tests, schedule it, and report back. A person only vetoes, answers alerts and sets direction. This page shows every agent, where its ideas come from, every model and every step.</p>
   </section>
 
   <div class="stats" aria-label="The system in numbers">
@@ -471,9 +483,77 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
     </div>
   </section>
 
+  <!-- IDEAS -->
+  <section id="ideas" aria-labelledby="hIdeas">
+    <div class="eyebrow">4 · Where ideas come from</div>
+    <h2 id="hIdeas">How each agent decides what to make</h2>
+    <p class="lede">No brand copies other people's posts. Each agent writes original ideas inside a rule book that was built from analysing what already went viral, then leans toward what performed best on our own accounts. Only two agents search the web on their own: the Microdrama series planner (every Friday) and the Faceless agent (for prices).</p>
+
+    <div class="panel table-wrap">
+      <table class="ideas-t">
+        <thead><tr><th>Brand</th><th>Who writes the idea</th><th>What it writes from</th><th>Searches the web?</th><th>Learns from our numbers</th></tr></thead>
+        <tbody>
+          <tr><td><b>Microdramas</b></td><td>Friday series planner picks the series; the daily agent writes each episode</td><td>This week's top microdrama charts and viral AI-drama accounts → scored premises → a series bible with an 8-part mystery plan</td><td><span class="pill ok">yes, every Friday</span></td><td>each script reads which episodes held viewers</td></tr>
+          <tr><td><b>Reelo</b></td><td>Reelo autopilot, 28 story sheets a week</td><td>Story engine: a six-beat template and 12 story patterns from 32 analysed viral cartoon reels (19K–9.7M likes), a bank of original premises, the 11-character cast</td><td><span class="pill">no</span></td><td>best story pattern gets a slot every day</td></tr>
+          <tr><td><b>Dwell</b></td><td>Monday planner, 14 briefs a week</td><td>Seven proven formats, the luxury style rules, one template brief per format, the design team's review</td><td><span class="pill">no</span></td><td>moves up to 2 posts to the best format</td></tr>
+          <tr><td><b>Listed</b></td><td>Listed autopilot, up to 4 skits a run</td><td>10 locked characters × 6 specialists, 16 approved script shapes, a verified list of real Picsart tools</td><td><span class="pill">no</span></td><td>weak characters sit a batch out</td></tr>
+          <tr><td><b>Faceless</b></td><td>Faceless autopilot, 7 reels a week</td><td>Our own best videos from the other brands, plus a bank of checked market prices</td><td><span class="pill ok">yes, ≥ 1 new price a week</span></td><td>best source type gets one more slot</td></tr>
+          <tr><td><b>Pinterest</b></td><td>Pinterest autopilot</td><td>A library of luxury room prompts and the style guide; skips the last 20 pins</td><td><span class="pill">no</span></td><td>not yet (too few scored pins)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="idea-cases">
+      <article class="panel case">
+        <div class="eyebrow">Microdramas · a real run, Friday 6 Nov 2026</div>
+        <h3>From this week's charts to a new series</h3>
+        <ol class="steps">
+          <li><b>Research (web search, no credits).</b> The planner read this week's top-52 microdrama chart (the ReelShort, DramaBox and ShortMax apps), a trend ranking built from the same chart data, a report on AI vs live-action series, and the biggest AI-drama accounts. It wrote down what is on top, with links. The #1 that week was <i>Love Is A Dangerous Game</i> (~95M views).</li>
+          <li><b>What it learned.</b> "Hidden identity" stories keep viewers best (highest save rate), and "forced or contract marriage" is the strongest trope group. Episode 1 throws the couple together under a deal; each episode ends on a reveal the viewer half-knows. Our own channel's numbers were too flat to lead, so the chart evidence led.</li>
+          <li><b>Its own premises.</b> It wrote 4 original premises and the engine scored them: hook 30%, mystery 25%, conflict 20%, appeal 15%, novelty 10%. Anything too close to a premise used in the last 30 days scores zero.
+            <div class="scores-t"><span><b>IN MY SISTER'S NAME</b> 4.77</span><span>THE ALPHA'S REJECTED MATE 4.38</span><span>THE NANNY HE HIRED 4.32</span><span>THE LAST GUEST 4.16</span></div></li>
+          <li><b>Series bible for the winner.</b> Logline: <q>Her rich twin vanished a week before the wedding. Now Nora must marry the groom as her, and he has already noticed.</q> The bible fixes the cast (≤ 4), sets (≤ 3), the 8-part arc, who knows what, and a mystery plan: which secret is revealed in which part, and each part's cliffhanger.</li>
+          <li><b>Casting.</b> Looks are briefed from the most-liked leads in the research (archetype, styling, never a real face). 4 candidates per role are generated, scored by the critic for appeal and by face recognition for consistency, and the best is locked. 3 voice designs per role; the closest-sounding pair gets redone.</li>
+          <li><b>Each day after that.</b> The daily agent writes the next episode from the bible, the mystery plan, every earlier episode and what held viewers. A linter and a script critic must pass before anything is generated.</li>
+        </ol>
+        <p class="note"><b>Veto:</b> the operator gets a Slack notice; the series starts only after the Monday veto window. Rules no premise can break: own cast, no celebrity likeness, no weapons or blood, no older-man romance.</p>
+      </article>
+
+      <article class="panel case">
+        <div class="eyebrow">Reelo · a real story sheet, for 11 Nov 12:00</div>
+        <h3>"Dad's Spot": a premise invented inside the story engine</h3>
+        <ol class="steps">
+          <li><b>The rule book.</b> 32 viral cartoon reels were analysed once. That gave the six-beat template (hook, try, escalate, freeze, turn, button) and 12 patterns with their proof, e.g. P6 "Possession": the kid or pet claims one parent (336K–519K likes in the references).</li>
+          <li><b>Invent first, bank second.</b> The agent invents a fresh everyday moment that fits a pattern. The premise bank is only a check for spirit and repeats. Reference plots are banned, and no premise repeats within 60 days.</li>
+          <li><b>The sheet.</b> Memory: <q>Every dad has a spot on the sofa and every toddler sits in it the second he stands up.</q> Cast: Finn (kid), Ben (dad), Pudding the cat as the witness. Beats: Finn is already in Dad's seat → Dad sits in the middle, Finn squeezes in → every seat Dad tries, Finn is already there → freeze on Finn's sly eyes → the turn and a looping button.</li>
+          <li><b>Checks before any credit.</b> Can a stranger describe it with the sound off? Is the turn a real change? Is there a witness? Would a parent send it to their partner? Then a validator checks cast rota rules (each kid once a day, no pair two days running, a pet witness every day).</li>
+          <li><b>Leaning on our numbers.</b> The scorecard's best-median pattern gets a slot every day (currently P11), the weakest at most once a week.</li>
+        </ol>
+      </article>
+    </div>
+
+    <div class="two">
+      <div class="box panel"><h3>Dwell, Listed, Faceless, Pinterest</h3>
+        <ul class="plain">
+          <li><b>Dwell:</b> 14 different style families and rooms a week, never repeating a style + room pair, statement line or trend list within 14 days; old-money / modern luxury first, at most 2 rustic rooms a batch.</li>
+          <li><b>Listed:</b> each skit picks a character and specialist by the shuffle rules, a product and roast not used in the last 20 skits, and a real Picsart tool from the verified list for the "after".</li>
+          <li><b>Faceless:</b> picks 7 of our own videos that have been live 2+ days and have logged credits; the "people pay $X" price must come from the checked price bank, with at least one new sourced price a week.</li>
+          <li><b>Pinterest:</b> picks prompts from the pin library, skipping the last 20 pins; boards are chosen by style.</li>
+        </ul></div>
+      <div class="box panel"><h3>Where the rule books came from</h3>
+        <ul class="plain">
+          <li><b>Reelo:</b> 32 reference reels sent by the operator and analysed for story, pacing, faces and sound.</li>
+          <li><b>Dwell:</b> 8 reference interior posts, plus the design team's review of 23 Oct.</li>
+          <li><b>Listed:</b> the v3 character format chosen by the operator on 27 Oct, with the cast and scripts approved then.</li>
+          <li><b>Microdramas:</b> rebuilt every Friday from live chart research, so it follows what is viral that week.</li>
+          <li>Updating the Reelo and Dwell rule books with new winners is still done by hand.</li>
+        </ul></div>
+    </div>
+  </section>
+
   <!-- 4 -->
   <section id="models" aria-labelledby="h4s">
-    <div class="eyebrow">4 · Picsart models</div>
+    <div class="eyebrow">5 · Picsart models</div>
     <h2 id="h4s">Which model does what, per brand</h2>
     <p class="lede">All generation goes through the Picsart GenAI connector: check the model's settings, get a free price quote, generate, then poll for the result. We use premium models first (Nano Banana Pro, Seedance 2.5).</p>
     <div class="panel table-wrap">
@@ -500,7 +580,7 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
 
   <!-- 5 -->
   <section id="agents" aria-labelledby="h5s">
-    <div class="eyebrow">5 · Every agent</div>
+    <div class="eyebrow">6 · Every agent</div>
     <h2 id="h5s">17 scheduled agents, 1 critic, 7 backups</h2>
     <p class="lede">Each scheduled agent is a Claude session started on a timer with a fixed instruction file. Makers can spend credits within their brand's budget and schedule posts. Reporters only read. None of them can message anyone except the operator.</p>
     <div class="panel table-wrap">
@@ -533,7 +613,7 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
 
   <!-- 6 -->
   <section id="engine" aria-labelledby="h6s">
-    <div class="eyebrow">6 · The engine</div>
+    <div class="eyebrow">7 · The engine</div>
     <h2 id="h6s">Three in-house tools do every non-creative step</h2>
     <p class="lede">Agents are not allowed to improvise shell commands; they call these three tools. This keeps runs predictable, logged and safe to repeat.</p>
     <div class="tools3">
@@ -585,7 +665,7 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
 
   <!-- 7 -->
   <section id="publish" aria-labelledby="h7s">
-    <div class="eyebrow">7 · Scheduling and publishing</div>
+    <div class="eyebrow">8 · Scheduling and publishing</div>
     <h2 id="h7s">How a post gets out, and why it never double-posts</h2>
     <div class="two">
       <div class="box panel"><h3>Before anything is scheduled</h3>
@@ -610,7 +690,7 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
 
   <!-- 8 -->
   <section id="learn" aria-labelledby="h8s">
-    <div class="eyebrow">8 · Reports and learning</div>
+    <div class="eyebrow">9 · Reports and learning</div>
     <h2 id="h8s">How numbers flow back into what gets made</h2>
     <div class="two">
       <div class="box panel"><h3>The scorecard</h3><p>Every post 48 hours or older gets its views, likes, comments, shares and saves, joined with what the post was (format, character, story pattern). Missing numbers count as "no number", never as zero. It writes one line per brand that the planners read.</p>
@@ -633,7 +713,7 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
 
   <!-- 9 -->
   <section id="rails" aria-labelledby="h9s">
-    <div class="eyebrow">9 · Safety rails and the human role</div>
+    <div class="eyebrow">10 · Safety rails and the human role</div>
     <h2 id="h9s">What the agents can never do, and what still needs a person</h2>
     <div class="two">
       <div class="box panel"><h3>Hard rules, enforced by code</h3>
@@ -657,7 +737,7 @@ footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--lin
 
   <!-- 10 -->
   <section id="gaps" aria-labelledby="h10s">
-    <div class="eyebrow">10 · Known gaps</div>
+    <div class="eyebrow">11 · Known gaps</div>
     <h2 id="h10s">What isn't solved yet</h2>
     <div class="gaps">
       <div class="gap panel"><div class="gh"><span class="pill bad">biggest</span><h3>It runs on one laptop</h3></div><p>Tasks only run while the Mac is on and the Claude app is open. Missed runs catch up later (nothing ran on 31 Oct–1 Nov). A run that hits a permission prompt waits until someone approves it. Needs an always-on runner and service accounts.</p></div>
