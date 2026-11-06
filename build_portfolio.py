@@ -5,7 +5,7 @@ reach to conversion, with one chart of total reach over the whole run.
 
 Tigran's brief (2026-11-06): one short page as a portfolio, each brand with its purpose and concept, current numbers,
 updated and shared every week: overall numbers, week-over-week change, impressions and conversions in the product.
-Vilya (2026-11-06): week and overall as separate sections, one chart of overall reach (impressions), refreshed every Monday at 11:30.
+Vilya (2026-11-06): overall first, then the week, as separate sections (Tigran's order), one chart of overall reach (impressions), refreshed every Monday at 11:30.
 
 Numbers come from two places:
   reach, audience, engagement   the refreshed brand report (summary/<brand>/index.html via build_exec.brand_numbers).
@@ -350,19 +350,8 @@ def build(day: date) -> str:
 <main class="wrap" id="main">
   <div class="page-head">
     <h1>Five brands, one <span class="g">week.</span></h1>
-    <p class="dek">AI-made social brands that grow an audience and send it to Picsart. First the week, then everything since Oct 15.</p>
+    <p class="dek">AI-made social brands that grow an audience and send it to Picsart. First everything since Oct 15, then the week.</p>
   </div>
-
-  <section class="sec" aria-labelledby="w-h">
-    <div class="sec-head"><h2 id="w-h">This week</h2><span class="pill">{nice(start)} to {nice(end)}</span></div>
-    <div class="stats">{week_stats}</div>
-    <div class="panel tbl">
-      <table class="pf pf-week">
-        <thead><tr><th scope="col">Brand</th>{heads}</tr></thead>
-        <tbody>{"".join(week_rows)}</tbody>
-      </table>
-    </div>
-  </section>
 
   <section class="sec" aria-labelledby="o-h">
     <div class="sec-head"><h2 id="o-h">Overall</h2><span class="pill">since Thu 15 Oct</span></div>
@@ -375,6 +364,17 @@ def build(day: date) -> str:
       <table class="pf pf-all">
         <thead><tr><th scope="col">Brand<small>purpose, concept</small></th>{heads}</tr></thead>
         <tbody>{"".join(all_rows)}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="w-h">
+    <div class="sec-head"><h2 id="w-h">This week</h2><span class="pill">{nice(start)} to {nice(end)}</span></div>
+    <div class="stats">{week_stats}</div>
+    <div class="panel tbl">
+      <table class="pf pf-week">
+        <thead><tr><th scope="col">Brand</th>{heads}</tr></thead>
+        <tbody>{"".join(week_rows)}</tbody>
       </table>
     </div>
   </section>
