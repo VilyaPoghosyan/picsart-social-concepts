@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="How five AI-run social brands make, check, schedule and measure their posts: every agent, model and rule.">
+<meta property="og:title" content="How our brands run themselves">
+<meta property="og:description" content="Every agent, Picsart model, quality check and publishing rule behind five self-running social brands.">
+<meta property="og:type" content="website">
+<title>How Our Brands Run Themselves</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Social Autopilot tokens: Fraunces display, IBM Plex Sans + Mono, magenta accent, green / amber / red status.
+   Layout: sticky bar with section jumps, then the system top-down: big picture, a day, brands, models, agents, engine, publishing, learning, rails, gaps. */
+@font-face { font-family: "Plex Sans Fallback"; src: local("Arial"), local("Helvetica"), local("Liberation Sans"); size-adjust: 101%; }
+:root {
+  --bg: #F6F5F8; --surface: #FFFFFF; --surface-2: #FAF9FC; --sunk: #EFEDF3;
+  --ink: #17161C; --muted: #5F5D6B; --faint: #6E6C7A; --line: #E6E4EC; --line-2: #D4D1DC;
+  --accent: #C40F6B; --accent-ink: #A50C59; --accent-soft: #FBE7F0; --on-accent: #FFFFFF;
+  --ok: #1E8A5A; --ok-ink: #17724A; --ok-soft: #E3F4EA;
+  --warn: #B7791F; --warn-ink: #8A5A12; --warn-soft: #FBF0DC;
+  --bad: #C8382C; --bad-ink: #A62D23; --bad-soft: #FBE6E3;
+  --info: #3B5BCC; --info-ink: #2F49A8; --info-soft: #E8EDFC;
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", "Plex Sans Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --shadow: 0 1px 2px rgba(20, 18, 28, .05), 0 6px 16px rgba(20, 18, 28, .06);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111016; --surface: #191820; --surface-2: #1F1E27; --sunk: #15141B;
+    --ink: #F2F1F6; --muted: #A6A4B1; --faint: #9A98A8; --line: #2A2932; --line-2: #3A3944;
+    --accent: #F45FA6; --accent-ink: #F888BE; --accent-soft: #2C1522; --on-accent: #17161C;
+    --ok: #4CC98C; --ok-ink: #6FD9A4; --ok-soft: #14301F;
+    --warn: #E3AD4A; --warn-ink: #EDC173; --warn-soft: #332710;
+    --bad: #F0705F; --bad-ink: #F49183; --bad-soft: #3A1915;
+    --info: #7D98F5; --info-ink: #9DB1F7; --info-soft: #18203A;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 20px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111016; --surface: #191820; --surface-2: #1F1E27; --sunk: #15141B;
+  --ink: #F2F1F6; --muted: #A6A4B1; --faint: #9A98A8; --line: #2A2932; --line-2: #3A3944;
+  --accent: #F45FA6; --accent-ink: #F888BE; --accent-soft: #2C1522; --on-accent: #17161C;
+  --ok: #4CC98C; --ok-ink: #6FD9A4; --ok-soft: #14301F;
+  --warn: #E3AD4A; --warn-ink: #EDC173; --warn-soft: #332710;
+  --bad: #F0705F; --bad-ink: #F49183; --bad-soft: #3A1915;
+  --info: #7D98F5; --info-ink: #9DB1F7; --info-soft: #18203A;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 20px rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg) }
+::selection { background: var(--accent-soft); color: var(--ink) }
+a { color: inherit; text-underline-offset: .18em; text-decoration-thickness: 1px }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px }
+button { font: inherit; color: inherit }
+h1, h2, h3, h4 { text-wrap: balance; margin: 0 }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.04; letter-spacing: -.02em }
+h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.45rem, 2.8vw, 1.9rem); line-height: 1.15; letter-spacing: -.01em }
+h3 { font-family: var(--display); font-weight: 600; font-size: 1.2rem; line-height: 1.2 }
+h4 { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--faint); font-weight: 600 }
+p { margin: 0 }
+code { font-family: var(--mono); font-size: .86em; background: var(--sunk); padding: .05em .35em; border-radius: 5px; overflow-wrap: anywhere }
+.icon { width: 1.15em; height: 1.15em; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.wrap { max-width: 1200px; margin: 0 auto; padding-block: 0 6rem; display: grid; gap: 3.4rem }
+section { display: grid; gap: 1.2rem; scroll-margin-top: 120px; min-width: 0 }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line) }
+.top-in { max-width: 1200px; margin: 0 auto; padding-block: .55rem; display: flex; align-items: center; gap: 1rem; min-height: 58px }
+.brand { display: flex; align-items: center; gap: .5rem; text-decoration: none; min-height: 44px; flex: none }
+.brand b { font-family: var(--display); font-weight: 700; font-size: 1.08rem }
+.mark { width: 22px; height: 22px; border-radius: 7px; background: var(--accent); display: grid; place-items: center; color: var(--on-accent) }
+.mark svg { width: 14px; height: 14px; stroke-width: 2.2 }
+.tools { margin-left: auto; display: flex; gap: .4rem; align-items: center }
+.ibtn { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; cursor: pointer; padding: 0 .75rem }
+.ibtn:hover { border-color: var(--line-2); background: var(--surface-2) }
+.theme-btn .moon { display: none }
+:root[data-theme="dark"] .theme-btn .sun { display: none }
+:root[data-theme="dark"] .theme-btn .moon { display: block }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-btn .sun { display: none }
+  :root:not([data-theme="light"]) .theme-btn .moon { display: block }
+}
+.jumps { border-top: 1px solid var(--line) }
+.jumps ol { list-style: none; margin: 0 auto; max-width: 1200px; padding-block: 0; display: flex; gap: .2rem; overflow-x: auto; scrollbar-width: none }
+.jumps a { display: inline-flex; align-items: center; gap: .45rem; min-height: 42px; padding: 0 .6rem; text-decoration: none; color: var(--faint); font-size: .86rem; font-weight: 500; white-space: nowrap; border-bottom: 2px solid transparent }
+.jumps a:hover { color: var(--ink); border-bottom-color: var(--accent) }
+.jumps .n { font-family: var(--mono); font-size: .7rem; color: var(--accent-ink) }
+
+/* head */
+.page-head { padding-top: clamp(28px, 5vw, 56px); display: grid; gap: .8rem; max-width: 820px }
+.eyebrow { font-family: var(--mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); font-weight: 600 }
+.dek { color: var(--muted); font-size: clamp(1.02rem, 1.8vw, 1.15rem); max-width: 66ch; line-height: 1.55 }
+.lede { color: var(--muted); max-width: 72ch }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow) }
+.pill { display: inline-flex; align-items: center; gap: .35rem; font-size: .76rem; font-weight: 600; padding: .18rem .58rem; border-radius: 999px; white-space: nowrap; background: var(--sunk); color: var(--muted) }
+.pill.ok { background: var(--ok-soft); color: var(--ok-ink) }
+.pill.warn { background: var(--warn-soft); color: var(--warn-ink) }
+.pill.bad { background: var(--bad-soft); color: var(--bad-ink) }
+.pill.acc { background: var(--accent-soft); color: var(--accent-ink) }
+.pill.info { background: var(--info-soft); color: var(--info-ink) }
+
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .8rem }
+.stat { padding: 1rem 1.1rem; display: grid; gap: .15rem; align-content: start; min-width: 0 }
+.stat b { font-family: var(--display); font-weight: 700; font-size: 1.9rem; line-height: 1.05; font-variant-numeric: tabular-nums }
+.stat span { color: var(--muted); font-size: .86rem }
+
+/* flow */
+.flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .7rem; position: relative }
+.step { padding: 1rem; display: grid; gap: .45rem; align-content: start; position: relative; min-width: 0 }
+.step .k { font-family: var(--mono); font-size: .7rem; color: var(--accent-ink); font-weight: 600; letter-spacing: .05em }
+.step h3 { font-size: 1.08rem }
+.step p { font-size: .88rem; color: var(--muted) }
+.step .who { font-family: var(--mono); font-size: .74rem; color: var(--ink); background: var(--sunk); border-radius: 8px; padding: .35rem .5rem; overflow-wrap: anywhere }
+.step:not(:last-child)::after { content: "→"; position: absolute; right: -.62rem; top: 1.05rem; color: var(--accent); font-weight: 700; z-index: 1 }
+.loopback { display: flex; gap: .6rem; align-items: center; color: var(--muted); font-size: .9rem; padding: .7rem 1rem; border: 1px dashed var(--line-2); border-radius: 14px }
+.loopback b { color: var(--accent-ink) }
+.rails { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem }
+.rail { padding: 1rem 1.1rem; display: grid; gap: .35rem; align-content: start; min-width: 0 }
+.rail p { color: var(--muted); font-size: .9rem }
+
+/* timeline */
+.day { display: grid; gap: 0 }
+.slot { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 1rem; padding: .7rem 1.1rem; border-bottom: 1px solid var(--line); align-items: start }
+.slot:last-child { border-bottom: 0 }
+.slot time { font-family: var(--mono); font-size: .86rem; font-weight: 600; font-variant-numeric: tabular-nums; padding-top: .1rem }
+.slot .what { display: grid; gap: .2rem; min-width: 0 }
+.slot .what div { display: flex; flex-wrap: wrap; gap: .4rem .6rem; align-items: center }
+.slot .what b { font-weight: 600 }
+.slot .what p { color: var(--muted); font-size: .9rem }
+.slot.post time { color: var(--accent-ink) }
+
+/* brand cards */
+.brands { display: grid; gap: 1.2rem }
+.bcard { padding: 1.4rem; display: grid; gap: 1.1rem; scroll-margin-top: 120px }
+.bhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .8rem 1.2rem; align-items: start }
+.bhead > div { display: grid; gap: .35rem; min-width: 0 }
+.bhead h3 { font-size: clamp(1.35rem, 2.6vw, 1.7rem) }
+.bhead .fmt { color: var(--muted); max-width: 70ch }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem }
+.fact { background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; padding: .7rem .85rem; display: grid; gap: .2rem; min-width: 0 }
+.fact p { font-size: .9rem }
+.bgrid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.2rem 1.8rem }
+.bgrid > div { display: grid; gap: .5rem; align-content: start; min-width: 0 }
+ol.steps { margin: 0; padding-left: 1.35rem; display: grid; gap: .35rem }
+ol.steps li { font-size: .93rem; padding-left: .2rem }
+ol.steps li::marker { font-family: var(--mono); font-size: .8rem; color: var(--accent-ink); font-weight: 600 }
+ul.plain { margin: 0; padding-left: 1.1rem; display: grid; gap: .3rem }
+ul.plain li { font-size: .92rem }
+.models { display: grid; gap: .4rem }
+.model { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .2rem .8rem; padding: .5rem .7rem; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); font-size: .9rem }
+.model b { font-weight: 600 }
+.model span { color: var(--muted); font-size: .84rem; grid-column: 1 / -1 }
+.model em { font-style: normal; font-family: var(--mono); font-size: .78rem; color: var(--accent-ink); white-space: nowrap }
+.note { background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent); border-radius: 12px; padding: .65rem .85rem; font-size: .9rem }
+.note b { color: var(--warn-ink) }
+
+/* tables */
+.table-wrap { overflow-x: auto }
+table { border-collapse: collapse; width: 100%; font-size: .9rem }
+th, td { padding: .65rem .9rem; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top }
+th { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--faint); font-weight: 600; background: var(--surface-2); position: sticky; top: 0 }
+tr:last-child td { border-bottom: 0 }
+td.c { text-align: center }
+td b { font-weight: 600 }
+.matrix { min-width: 880px }
+.matrix td:first-child { min-width: 190px }
+.matrix td small { display: block; color: var(--muted); font-size: .8rem }
+.dot { display: inline-block; font-size: .8rem; line-height: 1.35; color: var(--ink) }
+.agents { min-width: 900px }
+.agents td:nth-child(1) { white-space: nowrap; font-family: var(--mono); font-size: .82rem; font-variant-numeric: tabular-nums }
+.agents td:nth-child(2) { min-width: 180px }
+.agents code { font-size: .8rem }
+
+/* engine */
+.tools3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem }
+.tool { padding: 1.2rem; display: grid; gap: .7rem; align-content: start; min-width: 0 }
+.tool .cmd { font-family: var(--mono); font-weight: 600; font-size: 1.05rem; color: var(--accent-ink) }
+.tool p { color: var(--muted); font-size: .92rem }
+dl.cmds { margin: 0; display: grid; gap: .45rem }
+dl.cmds div { display: grid; gap: .05rem }
+dl.cmds dt { font-family: var(--mono); font-size: .82rem; font-weight: 600 }
+dl.cmds dd { margin: 0; color: var(--muted); font-size: .86rem }
+
+/* two col generic */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem }
+.box { padding: 1.2rem 1.3rem; display: grid; gap: .7rem; align-content: start; min-width: 0 }
+.box p { color: var(--muted); font-size: .93rem }
+
+/* gaps */
+.gaps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem }
+.gap { padding: 1rem 1.15rem; display: grid; gap: .35rem; align-content: start; min-width: 0 }
+.gap .gh { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap }
+.gap p { color: var(--muted); font-size: .9rem }
+
+footer { color: var(--faint); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 1rem; display: grid; gap: .3rem }
+
+@media (max-width: 1040px) {
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+  .flow { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+  .step:nth-child(3)::after { display: none }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .tools3 { grid-template-columns: minmax(0, 1fr) }
+}
+@media (max-width: 760px) {
+  .flow, .rails, .bgrid, .two, .gaps { grid-template-columns: minmax(0, 1fr) }
+  .step::after { display: none }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .slot { grid-template-columns: 1fr; gap: .2rem }
+  .bcard { padding: 1rem }
+}
+@media (max-width: 420px) { .facts { grid-template-columns: minmax(0, 1fr) } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="top-in gut">
+    <a class="brand" href="#top" aria-label="Back to top"><span class="mark" aria-hidden="true"><svg class="icon"><use href="#i-spark"/></svg></span><b>Social Autopilot</b></a>
+    <div class="tools">
+      <button type="button" class="ibtn theme-btn" id="theme-btn" aria-label="Switch light or dark theme">
+        <svg class="icon sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon moon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="jumps" aria-label="Sections">
+    <ol class="gut">
+      <li><a href="#picture"><span class="n">1</span>Big picture</a></li>
+      <li><a href="#day"><span class="n">2</span>A day</a></li>
+      <li><a href="#brands"><span class="n">3</span>Brands</a></li>
+      <li><a href="#models"><span class="n">4</span>Models</a></li>
+      <li><a href="#agents"><span class="n">5</span>All agents</a></li>
+      <li><a href="#engine"><span class="n">6</span>Engine</a></li>
+      <li><a href="#publish"><span class="n">7</span>Publishing</a></li>
+      <li><a href="#learn"><span class="n">8</span>Reports &amp; learning</a></li>
+      <li><a href="#rails"><span class="n">9</span>Safety &amp; people</a></li>
+      <li><a href="#gaps"><span class="n">10</span>Gaps</a></li>
+    </ol>
+  </nav>
+</header>
+
+<main class="wrap gut" id="top">
+  <section class="page-head" aria-label="Introduction">
+    <div class="eyebrow">Picsart Social · system walkthrough · 6 Nov 2026</div>
+    <h1>How our brands run themselves</h1>
+    <p class="dek">Five brands post every day with no production team. Scheduled AI agents decide what to make, generate it with Picsart models, check it with measured tests, schedule it, and report back. A person only vetoes, answers alerts and sets direction. This page shows every agent, every model and every step.</p>
+  </section>
+
+  <div class="stats" aria-label="The system in numbers">
+    <div class="stat panel"><b>5</b><span>brands: Reelo, Dwell, Listed, Faceless, Microdramas</span></div>
+    <div class="stat panel"><b>~10</b><span>videos and carousels a day, plus 5 Pinterest pins</span></div>
+    <div class="stat panel"><b>17</b><span>agents on a schedule; 7 more kept as manual backups</span></div>
+    <div class="stat panel"><b>3</b><span>in-house tools every agent must use: <code>ops</code>, <code>qa</code>, <code>drama</code></span></div>
+    <div class="stat panel"><b>13</b><span>measured quality checks before anything can be scheduled</span></div>
+    <div class="stat panel"><b>1,500</b><span>credit floor: below it nothing new is made</span></div>
+  </div>
+
+  <!-- 1 -->
+  <section id="picture" aria-labelledby="h1s">
+    <div class="eyebrow">1 · The big picture</div>
+    <h2 id="h1s">Every post goes through the same six stages</h2>
+    <p class="lede">Each brand has its own creative recipe (a "skill") and its own scheduled agent. Everything that can be a rule is code; the AI is used only for creative and judgment work. No stage can be skipped: the scheduler refuses a post that has no passing quality record.</p>
+    <div class="flow">
+      <div class="step panel"><span class="k">STAGE 1</span><h3>Decide</h3><p>Check how many days of posts are left. Pick ideas from the brand's idea bank, its cast and what performed best.</p><span class="who">runway · scorecard · idea banks</span></div>
+      <div class="step panel"><span class="k">STAGE 2</span><h3>Write</h3><p>Story sheet, brief or script for each post, checked by a validator or a script critic.</p><span class="who">brand skill · Claude</span></div>
+      <div class="step panel"><span class="k">STAGE 3</span><h3>Make</h3><p>Picsart models make the stills, video, voices and music. Free local tools assemble, caption and add the end card.</p><span class="who">Picsart MCP · ffmpeg · compositor</span></div>
+      <div class="step panel"><span class="k">STAGE 4</span><h3>Check</h3><p>Measured tests (faces, text, end card, voice, subtitles…) plus an AI critic. A failure gets one retake, then the post is dropped.</p><span class="who">qa gate · qa-critic</span></div>
+      <div class="step panel"><span class="k">STAGE 5</span><h3>Schedule</h3><p>Preview, then publish to Instagram, TikTok or Pinterest at fixed slots, with AI labels and "made with Picsart".</p><span class="who">ops schedule → Zernio</span></div>
+      <div class="step panel"><span class="k">STAGE 6</span><h3>Measure</h3><p>Daily and weekly reports. A scorecard ranks every post 48 h after it goes live.</p><span class="who">reporting agents · ops scorecard</span></div>
+    </div>
+    <div class="loopback"><b>↺ Feedback loop</b> The scorecard is read by the next day's planners: the formats, characters and story patterns with the best median views get more slots.</div>
+    <div class="rails">
+      <div class="rail panel"><h4>Where it runs</h4><p>Scheduled tasks in the Claude desktop app on one Mac. Each run is a Claude agent with the brand's instructions, the Picsart connector and the three in-house tools.</p></div>
+      <div class="rail panel"><h4>Who publishes</h4><p>Zernio, a social publishing service, holds the connected Instagram, TikTok and Pinterest accounts. Agents never post directly on the platforms.</p></div>
+      <div class="rail panel"><h4>What the human does</h4><p>Vetoes posts from a daily 48-hour sheet, answers problem alerts, tops up credits, approves direction changes. No routine approvals.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="day" aria-labelledby="h2s">
+    <div class="eyebrow">2 · A day in the system</div>
+    <h2 id="h2s">What runs when (Yerevan time)</h2>
+    <p class="lede">Makers run in the morning so new posts land days before their slot. Reporters run after them. A watchdog checks every two hours that nothing is stuck or missed.</p>
+    <div class="day panel">
+      <div class="slot"><time>07:30</time><div class="what"><div><b>Listed autopilot</b><span class="pill acc">makes + schedules</span></div><p>Keeps 2 character skits a day with 3+ days scheduled.</p></div></div>
+      <div class="slot"><time>08:00</time><div class="what"><div><b>Reelo autopilot</b><span class="pill acc">makes + schedules</span></div><p>Keeps 4 cartoon reels a day, 7 days ahead.</p></div></div>
+      <div class="slot"><time>08:00–22:00</time><div class="what"><div><b>Ops watchdog</b><span class="pill info">every 2 h</span></div><p>Finds runs that are stuck, missed or failed; alerts only when something is wrong.</p></div></div>
+      <div class="slot"><time>Mon 08:15</time><div class="what"><div><b>Dwell planner</b><span class="pill">plans, 0 credits</span></div><p>Writes the next 14 Dwell Instagram/TikTok briefs.</p></div></div>
+      <div class="slot"><time>08:30 · 12:30</time><div class="what"><div><b>Faceless autopilot</b><span class="pill acc">makes + schedules</span></div><p>Mondays builds next week's 7 Price Tag reels; the 12:30 run only checks runway.</p></div></div>
+      <div class="slot"><time>09:00</time><div class="what"><div><b>Daily report</b><span class="pill ok">read-only</span></div><p>Reelo, Pinterest and Microdramas: runway, failures, account health, credits, top posts.</p></div></div>
+      <div class="slot"><time>09:05</time><div class="what"><div><b>Runway alert</b><span class="pill warn">alerts</span></div><p>Push + Slack DM to the operator if any brand has under 5 days queued or credits near the floor.</p></div></div>
+      <div class="slot"><time>09:30</time><div class="what"><div><b>Upcoming sheet</b><span class="pill warn">veto window</span></div><p>One picture of everything posting in the next 48 h. Reply "pull &lt;brand&gt; &lt;post&gt;" to remove one.</p></div></div>
+      <div class="slot"><time>09:30 · 09:45 · 10:00</time><div class="what"><div><b>Listed, Faceless, Dwell reports</b><span class="pill ok">read-only</span></div><p>Per-brand daily numbers; on Fridays a weekly scorecard.</p></div></div>
+      <div class="slot"><time>11:00</time><div class="what"><div><b>Dwell content agent</b><span class="pill acc">makes + schedules</span></div><p>Builds the next 14-post batch when Instagram has 7 days or less queued.</p></div></div>
+      <div class="slot"><time>11:30</time><div class="what"><div><b>Dwell Pinterest autopilot</b><span class="pill acc">makes + schedules</span></div><p>Keeps 5 pins a day, 7 days ahead.</p></div></div>
+      <div class="slot"><time>13:00</time><div class="what"><div><b>Microdrama autopilot</b><span class="pill acc">makes + schedules</span></div><p>Makes one drama episode a day while fewer than 5 are queued.</p></div></div>
+      <div class="slot"><time>Fri 10:00 · 11:00 · 13:00</time><div class="what"><div><b>Weekly page · next drama series · all-brands report</b><span class="pill">weekly</span></div><p>Refreshes the weekly pages and proposes the next microdrama series (passive veto).</p></div></div>
+      <div class="slot post"><time>12:00 – 21:00</time><div class="what"><div><b>Posts go live</b></div><p>Reelo 12:00 · 13:30 · 18:00 · 19:30 — Listed 12:00 · 18:00 — Dwell 18:00 · 21:00 — Faceless 18:00 — Microdramas 21:00 — Pinterest 5 pins 09:00–18:36.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="brands" aria-labelledby="h3s">
+    <div class="eyebrow">3 · Brand by brand</div>
+    <h2 id="h3s">Six pipelines, one shape</h2>
+    <p class="lede">Every pipeline starts the same way (open a run record, read the credit balance, check the queue, retry any failed post once) and ends the same way (quality gate, schedule, log, close the run). What changes is where ideas come from, which models make the media, and which checks apply.</p>
+
+    <div class="brands">
+
+      <article class="bcard panel" id="b-reelo">
+        <div class="bhead"><div><span class="eyebrow">Reelo · Instagram + TikTok</span><h3>15-second Pixar-style family cartoons</h3><p class="fmt">A toddler, a parent and a pet in a tiny story told with faces and sound, no dialogue, ending on the Picsart end card.</p></div>
+          <div class="tags"><span class="pill acc">reelo-autopilot · 08:00</span><span class="pill">skill: reelo-cartoon-reels</span></div></div>
+        <div class="facts">
+          <div class="fact"><h4>Cadence</h4><p>4 a day: 12:00, 13:30, 18:00, 19:30</p></div>
+          <div class="fact"><h4>Queue</h4><p>7 days ahead; builds when it drops</p></div>
+          <div class="fact"><h4>Cost</h4><p>~110–120 credits a reel · cap 700/day</p></div>
+          <div class="fact"><h4>Human</h4><p>Veto sheet only</p></div>
+        </div>
+        <div class="bgrid">
+          <div><h4>How a reel is made</h4>
+            <ol class="steps">
+              <li>Write six-beat story sheets from the story engine (12 patterns), the premise bank and the locked cast of 11; no premise repeats within 60 days.</li>
+              <li>A validator checks every sheet (up to 2 rewrite rounds).</li>
+              <li>Make the keyframe with the cast's reference images; one reroll if the look is off.</li>
+              <li>Make the 15 s reel with native sound effects in one Seedance take.</li>
+              <li>Finish locally: 1080×1920, 30 fps, loudness −14.5 LUFS, end card.</li>
+              <li>Quality gate + critic; a failed reel is held and the next sheet takes its slot.</li>
+              <li>Schedule both platforms, mark the premise used, log.</li>
+            </ol></div>
+          <div><h4>Ideas come from</h4>
+            <ul class="plain"><li>Story engine + premise bank in the skill ("invent first, bank second")</li><li>26 analysed reference reels (30K–9.7M likes)</li><li>Scorecard: the best-median story pattern gets a slot every day (now P11)</li></ul>
+            <h4>Picsart models</h4>
+            <div class="models">
+              <div class="model"><b>Nano Banana Pro</b><em>5 cr</em><span>keyframe, 9:16, 2K, with cast references</span></div>
+              <div class="model"><b>Seedance 2.5</b><em>105 cr</em><span>15 s video at 720p with generated sound</span></div>
+              <div class="model"><b>ElevenLabs SFX / Music v2</b><em>4–5 cr</em><span>optional extra sounds; music for tender stories</span></div>
+            </div></div>
+        </div>
+      </article>
+
+      <article class="bcard panel" id="b-dwell">
+        <div class="bhead"><div><span class="eyebrow">Dwell · Instagram + TikTok</span><h3>Luxury interiors: reels and carousels</h3><p class="fmt">Seven formats: before/after match cut, statement tour, walkthrough, variation swap, trend carousel, photo set, colour pairs. Old-money and modern luxury lead.</p></div>
+          <div class="tags"><span class="pill">dwell-social-planner · Mon 08:15</span><span class="pill acc">dwell-social-content · 11:00</span><span class="pill">skill: dwell-interior-content</span></div></div>
+        <div class="facts">
+          <div class="fact"><h4>Cadence</h4><p>2 a day: 18:00 reel, 21:00 reel or carousel</p></div>
+          <div class="fact"><h4>Batch</h4><p>14 posts (10 reels + 4 carousels); builds at ≤ 7 days queued</p></div>
+          <div class="fact"><h4>Cost</h4><p>~1,900 a batch · hard cap 2,100</p></div>
+          <div class="fact"><h4>Human</h4><p>Veto only</p></div>
+        </div>
+        <div class="bgrid">
+          <div><h4>How a batch is made</h4>
+            <ol class="steps">
+              <li>Monday planner writes 14 briefs, moving up to 2 posts from the weakest format to the strongest.</li>
+              <li>Up to 7 worker agents build posts in parallel from the production brief.</li>
+              <li>Hero still first, the rest of the set from it. For before/afters the after is an edit of the before, and a geometry check must score ≥ 0.60.</li>
+              <li>Camera moves and clips, music, beat analysis, scene assembly, export, loudness fix.</li>
+              <li>Quality gate + advisory critic.</li>
+              <li>Week overview picture, schedule all 14, push note to the operator.</li>
+            </ol></div>
+          <div><h4>Ideas come from</h4>
+            <ul class="plain"><li>Style families in the skill, 14-day no-repeat rule</li><li>8 analysed reference posts and template bibles</li><li>Scorecard by format (colour pairs lead now)</li><li>The design team's review of 23 Oct</li></ul>
+            <h4>Picsart models</h4>
+            <div class="models">
+              <div class="model"><b>Nano Banana Pro</b><em>5 cr</em><span>room stills, 2K</span></div>
+              <div class="model"><b>Nano Banana 2</b><em>~4 cr</em><span>small fixes in one place</span></div>
+              <div class="model"><b>MiniMax camera controls</b><em>15 cr</em><span>camera moves, 1080p, 5 s</span></div>
+              <div class="model"><b>Kling v3 Pro</b><em>24–28 cr</em><span>walkthrough glides</span></div>
+              <div class="model"><b>Seedance 2.5</b><em>28–72 cr</em><span>handheld hero moves and colour-pair clips</span></div>
+              <div class="model"><b>ElevenLabs Music v2</b><em>5 cr</em><span>track; Picsart audio analysis finds the beats</span></div>
+            </div></div>
+        </div>
+      </article>
+
+      <article class="bcard panel" id="b-pins">
+        <div class="bhead"><div><span class="eyebrow">Dwell · Pinterest</span><h3>Luxury interior pins</h3><p class="fmt">Single 2:3 room pins, sometimes stacked before/after, routed to boards by style.</p></div>
+          <div class="tags"><span class="pill acc">dwell-pinterest-autopilot · 11:30</span></div></div>
+        <div class="facts">
+          <div class="fact"><h4>Cadence</h4><p>5 pins a day, 09:00–18:36</p></div>
+          <div class="fact"><h4>Queue</h4><p>7 days ahead, up to 35 pins a run</p></div>
+          <div class="fact"><h4>Cost</h4><p>5 credits a pin · cap 220/run</p></div>
+          <div class="fact"><h4>Human</h4><p>Veto only</p></div>
+        </div>
+        <div class="bgrid">
+          <div><h4>How pins are made</h4>
+            <ol class="steps"><li>Write the pin list (prompt, caption) from the pin library, skipping the last 20 pins.</li><li>Generate, convert, stack before/afters with a geometry check.</li><li>Contact sheet: one reroll, then drop.</li><li>Schedule through the original pin scheduler (wrapped by <code>ops</code>), which adds a tracked link.</li></ol></div>
+          <div><h4>Picsart models</h4><div class="models"><div class="model"><b>Nano Banana Pro</b><em>5 cr</em><span>every pin, 2:3, 2K; the rest is local</span></div></div>
+            <p class="note"><b>Lighter check:</b> pins are checked on a contact sheet, not by the measured gate. Pinterest numbers don't reach our data feed yet.</p></div>
+        </div>
+      </article>
+
+      <article class="bcard panel" id="b-listed">
+        <div class="bhead"><div><span class="eyebrow">Listed · Instagram</span><h3>Character skits for online sellers</h3><p class="fmt">~32 s: a funny AI character roasts a specialist's bad product photo, offers a pro team (money and time) or Picsart, then shows the real Picsart result with likes.</p></div>
+          <div class="tags"><span class="pill acc">listed-content · 07:30</span><span class="pill">skill: listed-character-skits</span></div></div>
+        <div class="facts">
+          <div class="fact"><h4>Cadence</h4><p>2 a day: 12:00, 18:00</p></div>
+          <div class="fact"><h4>Queue</h4><p>3+ days; up to 4 skits a run</p></div>
+          <div class="fact"><h4>Cost</h4><p>~230–265 a skit · cap 600/day</p></div>
+          <div class="fact"><h4>Human</h4><p>New characters and format changes</p></div>
+        </div>
+        <div class="bgrid">
+          <div><h4>How a skit is made</h4>
+            <ol class="steps"><li>Plan with the shuffle rules: 10 characters × 6 specialists, no product or roast repeated in the last 20.</li><li>Make the product "before" and two start frames, checked on one sheet.</li><li>Make the real "after" with actual Picsart tools only (from a verified tools list).</li><li>Two voiced Seedance takes; a local transcript must match the script, or retake.</li><li>Build: captions, option cards, logo, sound, end card.</li><li>Quality gate + critic + eye checks; schedule with the "comment FIX" auto-DM.</li></ol></div>
+          <div><h4>Picsart models and tools</h4>
+            <div class="models">
+              <div class="model"><b>Nano Banana Pro</b><em>5 cr</em><span>product befores and start frames</span></div>
+              <div class="model"><b>Seedance 2.5</b><em>105 cr</em><span>voiced 15 s takes; 5 s video-ad "after" (35 cr)</span></div>
+              <div class="model"><b>Remove Background · Replace BG · Enhance</b><em>~4 cr</em><span>the real "after" for product photos</span></div>
+              <div class="model"><b>Relight / AI Replace (Nano Banana edits)</b><em>7–14 cr</em><span>other "after" types</span></div>
+              <div class="model"><b>ElevenLabs Music + SFX</b><em>once</em><span>a sound kit made once and reused</span></div>
+            </div></div>
+        </div>
+      </article>
+
+      <article class="bcard panel" id="b-faceless">
+        <div class="bhead"><div><span class="eyebrow">Faceless · Instagram</span><h3>Price Tag reels</h3><p class="fmt">Replays one of our own finished videos, then: "people pay $X for this", our real credit cost, and a receipt card. Teaches the side-hustle value of AI content.</p></div>
+          <div class="tags"><span class="pill acc">faceless-autopilot · Mon 08:30 + 12:30 guard</span></div></div>
+        <div class="facts">
+          <div class="fact"><h4>Cadence</h4><p>1 a day at 18:00</p></div>
+          <div class="fact"><h4>Built</h4><p>A week at a time; early if &lt; 3 days queued</p></div>
+          <div class="fact"><h4>Cost</h4><p>0 credits</p></div>
+          <div class="fact"><h4>Human</h4><p>Veto only</p></div>
+        </div>
+        <div class="bgrid">
+          <div><h4>How a week is made</h4>
+            <ol class="steps"><li>Pick 7 source videos from our other brands (live 2+ days, unused, with logged credits): 3 cartoon, 2 drama, 2 interior, shifted by the scorecard.</li><li>Prices only from a checked price bank, with at least one new sourced price a week.</li><li>Write the plan with 3 keyword posts and their auto-DMs, built from the source's real prompts.</li><li>Render locally; look at 4 frames per post.</li><li>Honesty check (prices, sources, tools, captions, DMs) until it passes, max 3 rounds; never overridden.</li><li>Schedule with the DM automations.</li></ol></div>
+          <div><h4>Picsart models</h4><p class="lede">None. It reuses media our other brands already paid for; the Price Tag layer is local (Pillow + ffmpeg).</p></div>
+        </div>
+      </article>
+
+      <article class="bcard panel" id="b-drama">
+        <div class="bhead"><div><span class="eyebrow">Microdramas · Instagram + TikTok</span><h3>Realistic serial drama episodes</h3><p class="fmt">45–60 s glossy TV-drama episodes, 14–19 shots, 10–12 spoken lines in each character's own voice, burned subtitles, a cliffhanger. Series of 8–9 parts.</p></div>
+          <div class="tags"><span class="pill acc">microdrama-autopilot · 13:00</span><span class="pill">microdrama-proposal · Fri 11:00</span><span class="pill">engine: drama</span></div></div>
+        <div class="facts">
+          <div class="fact"><h4>Cadence</h4><p>1 episode a day at 21:00</p></div>
+          <div class="fact"><h4>Queue</h4><p>5 episodes ahead</p></div>
+          <div class="fact"><h4>Cost</h4><p>Cap 2,900 an episode · 400 a proposal</p></div>
+          <div class="fact"><h4>Human</h4><p>Passive veto on the next series; unblocks a part held twice</p></div>
+        </div>
+        <div class="bgrid">
+          <div><h4>How an episode is made</h4>
+            <ol class="steps"><li>The engine says what's next: make, approve a series, or alert.</li><li>Write the episode; a script linter and a script critic must pass (2 rewrites max).</li><li>Make start frames; check every face against the cast and every gaze direction.</li><li>Make voiced Seedance takes using each character's locked voice sample.</li><li>Transcribe every take, check faces again; a critic picks the best take.</li><li>Cut, fix blinks at cuts, build the master with subtitles.</li><li>All 11 checks + a <b>gating</b> episode critic (min 7 / mean 7.3), then schedule.</li></ol></div>
+          <div><h4>Ideas come from</h4>
+            <ul class="plain"><li>Friday research: top charts of ReelShort, DramaBox, ShortMax and leading AI-drama accounts (last 60 days)</li><li>Scored premise candidates (hook, mystery, conflict, appeal, novelty)</li><li>Series bible: cast, 8-part arc, mystery plan</li></ul>
+            <h4>Picsart models</h4>
+            <div class="models">
+              <div class="model"><b>Nano Banana Pro</b><em>5 cr</em><span>start frames, 9:16, 2K</span></div>
+              <div class="model"><b>Seedance 2.5</b><em>per take</em><span>1080p voiced takes with the actor's voice reference</span></div>
+              <div class="model"><b>Seed Audio 1.0 (voice clone)</b><em>5 cr</em><span>voice-over and lines the video model refuses</span></div>
+              <div class="model"><b>Seedream 5.0 Pro</b><em>casting</em><span>4 candidates × 3 images per role (Friday)</span></div>
+              <div class="model"><b>ElevenLabs Voice Design v3</b><em>casting</em><span>3 voice designs per role (Friday)</span></div>
+              <div class="model"><b>Picsart transcribe · export</b><em>0 cr</em><span>transcripts, free crops and mirrors</span></div>
+            </div></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="models" aria-labelledby="h4s">
+    <div class="eyebrow">4 · Picsart models</div>
+    <h2 id="h4s">Which model does what, per brand</h2>
+    <p class="lede">All generation goes through the Picsart GenAI connector: check the model's settings, get a free price quote, generate, then poll for the result. We use premium models first (Nano Banana Pro, Seedance 2.5).</p>
+    <div class="panel table-wrap">
+      <table class="matrix">
+        <thead><tr><th>Model</th><th>Reelo</th><th>Dwell IG/TikTok</th><th>Pinterest</th><th>Listed</th><th>Faceless</th><th>Microdramas</th></tr></thead>
+        <tbody>
+          <tr><td><b>Nano Banana Pro</b><small>gemini-3-pro-image · images</small></td><td>keyframes</td><td>room stills</td><td>every pin</td><td>befores, start frames, edits</td><td>—</td><td>start frames</td></tr>
+          <tr><td><b>Seedance 2.5</b><small>video with sound / voice</small></td><td>15 s reels, 720p</td><td>hero moves, colour pairs</td><td>—</td><td>voiced takes, video-ad after</td><td>—</td><td>voiced takes, 1080p</td></tr>
+          <tr><td><b>Nano Banana 2</b><small>gemini-3.1-flash-image</small></td><td>—</td><td>small fixes</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td><b>Kling v3 Pro</b><small>video</small></td><td>—</td><td>walkthrough glides</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td><b>MiniMax camera controls</b><small>video</small></td><td>—</td><td>camera moves</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td><b>Seedream 5.0 Pro</b><small>images</small></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>casting faces</td></tr>
+          <tr><td><b>ElevenLabs Music v2</b><small>music</small></td><td>tender stories</td><td>every reel</td><td>—</td><td>sound kit (once)</td><td>—</td><td>—</td></tr>
+          <tr><td><b>ElevenLabs SFX</b><small>sound effects</small></td><td>optional</td><td>—</td><td>—</td><td>sound kit (once)</td><td>—</td><td>—</td></tr>
+          <tr><td><b>ElevenLabs Voice Design v3</b><small>voices</small></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>character voices</td></tr>
+          <tr><td><b>Seed Audio 1.0</b><small>voice clone</small></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>voice-over lines</td></tr>
+          <tr><td><b>Picsart image tools</b><small>Remove BG · Replace BG · Enhance</small></td><td>—</td><td>—</td><td>—</td><td>the real "after"</td><td>—</td><td>—</td></tr>
+          <tr><td><b>Picsart media tools</b><small>compositor, export, audio analysis, transcribe · 0 cr</small></td><td>—</td><td>assembly, beat sync</td><td>—</td><td>—</td><td>—</td><td>transcripts, crops</td></tr>
+          <tr><td><b>Credits per post</b><small>typical</small></td><td>~110–120</td><td>50–470 by format</td><td>5</td><td>~230–265</td><td>0</td><td>up to 2,900</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="agents" aria-labelledby="h5s">
+    <div class="eyebrow">5 · Every agent</div>
+    <h2 id="h5s">17 scheduled agents, 1 critic, 7 backups</h2>
+    <p class="lede">Each scheduled agent is a Claude session started on a timer with a fixed instruction file. Makers can spend credits within their brand's budget and schedule posts. Reporters only read. None of them can message anyone except the operator.</p>
+    <div class="panel table-wrap">
+      <table class="agents">
+        <thead><tr><th>When</th><th>Agent</th><th>Brand</th><th>What it does</th><th>Can it spend / post?</th></tr></thead>
+        <tbody>
+          <tr><td>07:30 daily</td><td><b>Listed autopilot</b><br><code>listed-content</code></td><td>Listed</td><td>Plans, makes, checks and schedules 2 skits a day; sets up the FIX auto-DMs.</td><td><span class="pill acc">600/day · posts</span></td></tr>
+          <tr><td>08:00 daily</td><td><b>Reelo autopilot</b><br><code>reelo-autopilot</code></td><td>Reelo</td><td>Writes story sheets, makes reels, gates and schedules 4 a day, 7 days ahead.</td><td><span class="pill acc">700/day · posts</span></td></tr>
+          <tr><td>08:30 + 12:30</td><td><b>Faceless autopilot</b><br><code>faceless-autopilot</code></td><td>Faceless</td><td>Builds and schedules each Price Tag week; honesty check; DM automations.</td><td><span class="pill acc">0 credits · posts</span></td></tr>
+          <tr><td>Mon 08:15</td><td><b>Dwell planner</b><br><code>dwell-social-planner</code></td><td>Dwell</td><td>Writes the next 14 briefs from the scorecard and style rules.</td><td><span class="pill">no</span></td></tr>
+          <tr><td>11:00 daily</td><td><b>Dwell content agent</b><br><code>dwell-social-content</code></td><td>Dwell</td><td>Builds a batch at ≤ 7 days runway with up to 7 parallel workers; gates and schedules it.</td><td><span class="pill acc">2,100/batch · posts</span></td></tr>
+          <tr><td>11:30 daily</td><td><b>Pinterest autopilot</b><br><code>dwell-pinterest-autopilot</code></td><td>Dwell Pinterest</td><td>Makes and schedules 5 pins a day, 7 days ahead.</td><td><span class="pill acc">220/run · posts</span></td></tr>
+          <tr><td>13:00 daily</td><td><b>Microdrama autopilot</b><br><code>microdrama-autopilot</code></td><td>Microdramas</td><td>Writes, makes, checks and schedules one episode a day, 5 ahead.</td><td><span class="pill acc">2,900/episode · posts</span></td></tr>
+          <tr><td>Fri 11:00</td><td><b>Next-series proposal</b><br><code>microdrama-proposal</code></td><td>Microdramas</td><td>Researches viral dramas, picks and casts the next series, locks voices, sends a veto notice.</td><td><span class="pill warn">400 · no posting</span></td></tr>
+          <tr><td>09:00 daily</td><td><b>Daily report</b><br><code>reporting</code></td><td>Reelo, Pinterest, Microdramas</td><td>Runway, failures, health, credits, top posts; Friday Reelo scorecard.</td><td><span class="pill ok">read-only</span></td></tr>
+          <tr><td>09:30 daily</td><td><b>Listed report</b><br><code>listed-reporting</code></td><td>Listed</td><td>Views per character and specialist, FIX DMs, link taps; Friday scale/kill read.</td><td><span class="pill ok">read-only</span></td></tr>
+          <tr><td>09:45 daily</td><td><b>Faceless report</b><br><code>faceless-reporting</code></td><td>Faceless</td><td>Posts, views, DM requests; Friday call-to-action experiment.</td><td><span class="pill ok">read-only</span></td></tr>
+          <tr><td>10:00 daily</td><td><b>Dwell report</b><br><code>dwell-social-reporting</code></td><td>Dwell</td><td>Views by format; Friday scorecard that feeds Monday's planner.</td><td><span class="pill ok">read-only</span></td></tr>
+          <tr><td>09:05 daily</td><td><b>Runway alert</b><br><code>runway-alert</code></td><td>All</td><td>Alerts when any brand has under 5 days queued or credits near the floor.</td><td><span class="pill warn">alerts only</span></td></tr>
+          <tr><td>09:30 daily</td><td><b>Upcoming sheet</b><br><code>upcoming-sheet</code></td><td>All</td><td>Draws everything posting in the next 48 h for the operator's veto.</td><td><span class="pill warn">alerts only</span></td></tr>
+          <tr><td>Every 2 h</td><td><b>Ops watchdog</b><br><code>ops-watchdog</code></td><td>All</td><td>Finds stuck, missed or failed runs; closes stuck runs and alerts.</td><td><span class="pill warn">alerts only</span></td></tr>
+          <tr><td>Fri 10:00</td><td><b>Weekly page</b><br><code>weekly-report</code></td><td>Original network channels</td><td>Rebuilds the password-protected weekly summary page from live data.</td><td><span class="pill">publishes a report page</span></td></tr>
+          <tr><td>Fri 13:00</td><td><b>All-brands report</b><br><code>brand-summary</code></td><td>All</td><td>Refreshes the team's all-brands report and executive summary with new numbers and posts.</td><td><span class="pill">publishes a report page</span></td></tr>
+          <tr><td>On demand</td><td><b>qa-critic</b><br><code>sub-agent</code></td><td>All</td><td>Scores a post against the brand's rubric (and scripts, takes, casting for dramas). Returns scores only; never fixes or posts.</td><td><span class="pill">no</span></td></tr>
+          <tr><td>Manual</td><td colspan="2"><b>7 backups</b>: hand-run builders for Reelo, Pinterest and Faceless, and hand schedulers for each brand</td><td colspan="2">Kept from before the autopilots. They only run when started by hand and wait for a typed OK before posting.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="engine" aria-labelledby="h6s">
+    <div class="eyebrow">6 · The engine</div>
+    <h2 id="h6s">Three in-house tools do every non-creative step</h2>
+    <p class="lede">Agents are not allowed to improvise shell commands; they call these three tools. This keeps runs predictable, logged and safe to repeat.</p>
+    <div class="tools3">
+      <div class="tool panel"><span class="cmd">ops</span><p>Operations: runway, scheduling, credits, logs, alerts, scorecard.</p>
+        <dl class="cmds">
+          <div><dt>status</dt><dd>Days queued, failed posts, account health, credits per brand.</dd></div>
+          <div><dt>schedule … --go</dt><dd>Uploads, creates one post per platform, verifies it, writes the ledger. Preview by default.</dd></div>
+          <div><dt>retry</dt><dd>Retries each failed post once.</dd></div>
+          <div><dt>credits record / budget</dt><dd>Logs the balance; compares today's spend to the brand's cap and the floor.</dd></div>
+          <div><dt>run start / end · watchdog</dt><dd>Records every run; finds stuck or missed ones.</dd></div>
+          <div><dt>alert</dt><dd>Records an alert and says whether to send it (same alert max once per 24 h).</dd></div>
+          <div><dt>upcoming · pull</dt><dd>The 48 h veto sheet; removes a vetoed post.</dd></div>
+          <div><dt>scorecard</dt><dd>Ranks posts 48 h+ old; writes a line for the planners.</dd></div>
+        </dl></div>
+      <div class="tool panel"><span class="cmd">qa</span><p>Quality: measured checks, all local, 0 credits. Writes <code>qa.json</code> next to each post.</p>
+        <dl class="cmds">
+          <div><dt>probe · letterbox</dt><dd>Size, fps, length; no black or white bands over 2%.</dd></div>
+          <div><dt>motion · text · endcard</dt><dd>No frozen opening; no stray text (OCR); Picsart end card present.</dd></div>
+          <div><dt>faces · strangers</dt><dd>Face recognition: same person in every shot (≥ 0.45), no strangers.</dd></div>
+          <div><dt>eyeline · blinks</dt><dd>Who looks where; no eyes closed at a cut (auto-fix).</dd></div>
+          <div><dt>voice · transcript · subs</dt><dd>Each actor's own voice; every line heard word for word; every word subtitled.</dd></div>
+          <div><dt>cast-score</dt><dd>Ranks casting candidates for consistency, novelty and appeal.</dd></div>
+          <div><dt>critic</dt><dd>The qa-critic scores the brand rubric. Blocks posts on Microdramas; advisory elsewhere until calibrated.</dd></div>
+        </dl></div>
+      <div class="tool panel"><span class="cmd">drama</span><p>Microdrama engine: a state machine for each episode of each series.</p>
+        <dl class="cmds">
+          <div><dt>next</dt><dd>planned → scripted → linted → producing → built → gated → scheduled.</dd></div>
+          <div><dt>lint</dt><dd>14–19 shots, 45–60 s, 10–12 short lines, premise in 5 s, follows the mystery plan.</dd></div>
+          <div><dt>refusal ladder</dt><dd>If the video model refuses a shot: rephrase, rephrase, restage, voice-over, then alert. Never drops a line.</dd></div>
+          <div><dt>credits · blocked</dt><dd>Stops a part at 2,900 credits or after 2 holds and asks the operator.</dd></div>
+          <div><dt>propose · approve · veto</dt><dd>Friday series pick; starts only after the Monday veto window.</dd></div>
+          <div><dt>build</dt><dd>Assembles the cut, subtitles and a 1440×2560 master.</dd></div>
+        </dl></div>
+    </div>
+    <div class="panel table-wrap">
+      <table>
+        <thead><tr><th>Checks per brand</th><th>Measured checks</th><th>Critic</th></tr></thead>
+        <tbody>
+          <tr><td><b>Reelo</b></td><td>probe, letterbox, text, end card, faces (advisory: cartoon siblings look alike)</td><td>advisory · story, memory, faces, sound, frame, novelty</td></tr>
+          <tr><td><b>Dwell</b></td><td>probe, letterbox, text, end card · plus geometry check on before/afters</td><td>advisory · 10 axes incl. realism, geometry, hook, brand</td></tr>
+          <tr><td><b>Listed</b></td><td>probe, letterbox, faces not covered by text, text, end card, transcript</td><td>advisory · comedy, clarity, product after, card, sound</td></tr>
+          <tr><td><b>Faceless</b></td><td>probe, letterbox, text · plus the honesty check (prices, sources, tools, DMs)</td><td>—</td></tr>
+          <tr><td><b>Microdramas</b></td><td>all 11: probe, letterbox, motion, text, end card, faces + strangers, eyeline, blinks, voice, subtitles, transcript</td><td><b>gating</b> · acting, clarity, realism, identity, eyelines, cut</td></tr>
+          <tr><td><b>Pinterest</b></td><td>contact sheet by eye + geometry check</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="publish" aria-labelledby="h7s">
+    <div class="eyebrow">7 · Scheduling and publishing</div>
+    <h2 id="h7s">How a post gets out, and why it never double-posts</h2>
+    <div class="two">
+      <div class="box panel"><h3>Before anything is scheduled</h3>
+        <ul class="plain">
+          <li>The media file exists and matches the brand's size, frame rate and length.</li>
+          <li>The caption contains "made with Picsart" and stays within the hashtag limit.</li>
+          <li>A passing <code>qa.json</code> exists for this exact file. If the file changed after the check, it is refused as stale.</li>
+          <li>Publishing is unlocked by two switches set by the operator; without them every publish command is blocked.</li>
+          <li>Instagram posts carry the AI-generated flag; TikTok posts carry "made with AI" and the required consents.</li>
+        </ul></div>
+      <div class="box panel"><h3>While scheduling</h3>
+        <ul class="plain">
+          <li>Every command previews first; only <code>--go</code> sends.</li>
+          <li>One upload per post, one post per platform, at the brand's fixed slots.</li>
+          <li>Each post is read back to confirm it is really scheduled.</li>
+          <li>A ledger records every post; an already-scheduled or removed post is never sent again, and each send carries a fixed request key.</li>
+          <li>A failed post is retried once the next morning; a second failure alerts the operator.</li>
+          <li>A vetoed post is deleted and marked "removed" so nothing brings it back.</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="learn" aria-labelledby="h8s">
+    <div class="eyebrow">8 · Reports and learning</div>
+    <h2 id="h8s">How numbers flow back into what gets made</h2>
+    <div class="two">
+      <div class="box panel"><h3>The scorecard</h3><p>Every post 48 hours or older gets its views, likes, comments, shares and saves, joined with what the post was (format, character, story pattern). Missing numbers count as "no number", never as zero. It writes one line per brand that the planners read.</p>
+        <ul class="plain">
+          <li><b>Reelo:</b> the best-median story pattern gets a slot every day; the worst at most once a week.</li>
+          <li><b>Dwell:</b> Monday's planner moves up to 2 posts from the weakest format to the strongest.</li>
+          <li><b>Listed:</b> characters well below the channel median sit a batch out.</li>
+          <li><b>Faceless:</b> the best source type gets one more slot a week.</li>
+          <li><b>Microdramas:</b> each script reads what held viewers; new series come from outside research.</li>
+        </ul></div>
+      <div class="box panel"><h3>The reports</h3>
+        <ul class="plain">
+          <li><b>Daily</b>, per brand: runway, failures, account health, credits, top posts. Written to the workspace; sent to nobody.</li>
+          <li><b>Friday</b>, per brand: a scorecard with the scale/kill rule (after 12 posts: scale at 3× the baseline, kill under 1.5×). It recommends; it never decides.</li>
+          <li><b>Friday</b>, team pages: the all-brands report and executive summary, plus a password-protected weekly page.</li>
+          <li>The <b>credit ledger</b> attributes every drop in balance to a brand, so reports show all-in cost per post.</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="rails" aria-labelledby="h9s">
+    <div class="eyebrow">9 · Safety rails and the human role</div>
+    <h2 id="h9s">What the agents can never do, and what still needs a person</h2>
+    <div class="two">
+      <div class="box panel"><h3>Hard rules, enforced by code</h3>
+        <ul class="plain">
+          <li>Credential files can't be opened by any agent.</li>
+          <li>Nothing publishes unless the operator's publish switches are on.</li>
+          <li>Slack: agents can only DM the operator. No channel posts, no messages to anyone else.</li>
+          <li>Every post carries the AI label, "made with Picsart" and the Picsart end card.</li>
+          <li>Each brand has a credit cap; nobody spends below the 1,500 floor.</li>
+          <li>Faceless prices must come from a checked price bank, and we only show Picsart tools that exist in the product.</li>
+        </ul></div>
+      <div class="box panel"><h3>What the operator does</h3>
+        <ul class="plain">
+          <li><b>Daily, ~5 min:</b> look at the 48 h sheet; reply "pull …" for anything wrong.</li>
+          <li><b>On alert:</b> runway low, a failed post, a stuck run, a blocked drama part, or credits near the floor (ask the credit team for a top-up).</li>
+          <li><b>Friday:</b> optional veto of the next drama series; read the weekly reports.</li>
+          <li><b>Direction:</b> new brands, formats, cadences, budgets and brand rules.</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="gaps" aria-labelledby="h10s">
+    <div class="eyebrow">10 · Known gaps</div>
+    <h2 id="h10s">What isn't solved yet</h2>
+    <div class="gaps">
+      <div class="gap panel"><div class="gh"><span class="pill bad">biggest</span><h3>It runs on one laptop</h3></div><p>Tasks only run while the Mac is on and the Claude app is open. Missed runs catch up later (nothing ran on 31 Oct–1 Nov). A run that hits a permission prompt waits until someone approves it. Needs an always-on runner and service accounts.</p></div>
+      <div class="gap panel"><div class="gh"><span class="pill bad">data</span><h3>Some numbers don't arrive</h3></div><p>Pinterest shows 0 views in our feed, Faceless has no analytics, and Microdramas TikTok numbers stopped updating on 30 Oct. Instagram lags by hours. Public-page counts fill some gaps.</p></div>
+      <div class="gap panel"><div class="gh"><span class="pill warn">quality</span><h3>The critic only blocks on dramas</h3></div><p>On Reelo, Dwell and Listed the AI critic is advisory until it is calibrated against labelled posts. There is no automatic loudness check yet; Pinterest is checked by eye.</p></div>
+      <div class="gap panel"><div class="gh"><span class="pill warn">process</span><h3>The 48 h veto isn't enforced</h3></div><p>The scheduler can book a post 15 minutes ahead, and posts booked after 09:30 skip that day's sheet.</p></div>
+      <div class="gap panel"><div class="gh"><span class="pill warn">cost</span><h3>Credit attribution overlaps</h3></div><p>When two agents run at once, the whole balance drop goes to one brand; 2,966 credits on 4 Nov were never attributed.</p></div>
+      <div class="gap panel"><div class="gh"><span class="pill warn">learning</span><h3>No formal experiments yet</h3></div><p>Planners learn from the scorecard, but the experiments log has no pre-registered tests besides Faceless's call-to-action test. Listed and Faceless are on Instagram only, with TikTok being added.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Sources: each agent's instruction file, the brand skills and playbooks, the <code>ops</code>, <code>qa</code> and <code>drama</code> tool docs and code, and the decision record for full automation (28 Oct 2026). Snapshot of 6 Nov 2026.</p>
+  </footer>
+</main>
+
+<script>
+const root = document.documentElement;
+try { const t = localStorage.getItem("autopilot-map-theme"); if (t === "light" || t === "dark") root.setAttribute("data-theme", t); } catch (e) {}
+document.getElementById("theme-btn").addEventListener("click", () => {
+  const dark = root.getAttribute("data-theme") ? root.getAttribute("data-theme") === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = dark ? "light" : "dark"; root.setAttribute("data-theme", next);
+  try { localStorage.setItem("autopilot-map-theme", next); } catch (e) {}
+});
+</script>
+</body>
+</html>
