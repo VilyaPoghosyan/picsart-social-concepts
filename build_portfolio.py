@@ -240,8 +240,10 @@ def auto_notes(week: dict, prev: dict, names: dict, tw: dict, ta: dict) -> list[
         out.append(f"Biggest reach change: {names[s]}, {'up' if m > 0 else 'down'} {abs(round(100 * m))}% on the week before.")
     if tw["visits"]:
         lead = max(week, key=lambda s: week[s]["visits"] or 0)
-        out.append(f"{names[lead]} sent {week[lead]['visits']} of the {tw['visits']} real visitors to Picsart this week; "
-                   f"{week[lead]['used_ai'] or 0} of them used a Picsart AI tool.")
+        n, ai = tw["visits"], week[lead]["used_ai"] or 0
+        who = (f"Only 1 real visitor reached Picsart this week, from {names[lead]}" if n == 1 else
+               f"{names[lead]} sent {week[lead]['visits']} of the {n} real visitors to Picsart this week")
+        out.append(f"{who}; {'nobody' if not ai else ai} used a Picsart AI tool.")
     else:
         out.append("No brand sent a real visitor to Picsart this week.")
     if ta["conv"] == 0:
