@@ -432,8 +432,8 @@ def publish(day: date) -> None:
         return
     git("commit", "-m", f"chore(portfolio): weekly refresh {day.isoformat()}", "--", *FILES)
     git("push", "origin", "HEAD")
-    stamp = f"Updated {datetime.now():%a %-d %b %Y}"
-    for _ in range(12):  # Pages usually updates within a minute or two
+    stamp = re.search(r"Updated [^<]*Yerevan", (OUT / "index.html").read_text()).group(0)  # this build's exact time
+    for _ in range(24):  # Pages usually updates within a few minutes
         time.sleep(15)
         try:
             page = urllib.request.urlopen(f"{LIVE}?v={time.time():.0f}", timeout=20).read().decode()
