@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brand-Link Visitor Behaviour</title>
+<meta name="description" content="What the 431 people who tapped a brand link did on Picsart, Oct 15 to Nov 8: where they landed, how long they stayed, what they did on the AI screen.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#121212">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&display=swap">
+<link rel="preload" href="fonts/Acorn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Gilroy-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="picsart.css">
+<style>
+  /* page-only layout for the visitor-behaviour one-pager; every colour, font and corner comes from picsart.css tokens */
+  .wrap { display: grid; gap: 1.6rem; padding-bottom: 3rem }
+  .page-head { margin-bottom: 0 }
+  .cls { font-family: var(--ui); font-weight: 600; font-size: .8rem; color: var(--accent-ink) }
+  .muted { color: var(--muted) }
+  small { color: var(--faint); font-family: var(--ui); font-weight: 500; font-size: .78rem }
+
+  .stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .8rem }
+  .stat { padding: 1rem 1.1rem; display: grid; gap: .3rem; align-content: start; min-width: 0; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--line) }
+  .stat b { font-family: var(--display); font-weight: 400; font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums }
+  .stat span:not(.cls) { color: var(--muted); font-size: .86rem; line-height: 1.4 }
+
+  .panel { padding: clamp(16px, 2.4vw, 26px); display: grid; gap: 1rem; min-width: 0 }
+  .panel h2 { margin: 0 }
+  .ph { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; flex-wrap: wrap }
+  .legend { display: flex; gap: 1rem; font-family: var(--ui); font-weight: 500; font-size: .8rem; color: var(--muted) }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 4px; margin-right: .4rem; vertical-align: -1px }
+  .k-ad { background: #C209C1 }
+  .k-bio { background: var(--faint) }
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem }
+  .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem }
+
+  /* horizontal bars: HTML, so labels never scale */
+  .bars { display: grid; gap: .55rem }
+  .row { display: grid; grid-template-columns: minmax(150px, 34%) 1fr; gap: .8rem; align-items: center }
+  .row .lab { font-size: .92rem; line-height: 1.3 }
+  .track { display: grid; gap: 4px }
+  .bar { display: flex; align-items: center; gap: .5rem; min-height: 18px }
+  .bar i { display: block; height: 16px; border-radius: 4px; background: #C209C1; min-width: 2px }
+  .bar.bio i { background: var(--faint) }
+  .bar.zero i { background: transparent; border: 1px dashed var(--line-2); width: 2px }
+  .bar em { font-style: normal; font-family: var(--ui); font-weight: 600; font-size: .85rem; white-space: nowrap; font-variant-numeric: tabular-nums }
+  .bar em small { margin-left: .3rem }
+
+  .list { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none }
+  .list li { display: flex; justify-content: space-between; gap: .8rem; border-bottom: 1px solid var(--line); padding-bottom: .4rem; font-size: .92rem }
+  .list li b { font-family: var(--ui); font-weight: 600; font-variant-numeric: tabular-nums }
+  h3 { margin: 0 0 .5rem; font-family: var(--ui); font-weight: 600; font-size: .95rem }
+
+  /* the one person who pressed Generate */
+  .steps { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 0; padding: 0; list-style: none }
+  .steps li { font-family: var(--ui); font-weight: 600; font-size: .85rem; padding: .45rem .8rem; border-radius: var(--r-chip); background: var(--chip); border: 1px solid var(--line-2) }
+  .steps li.stop { border-color: var(--bad); color: var(--bad-ink) }
+  .steps .arr { border: 0; background: none; padding: 0; color: var(--faint) }
+
+  .says { margin: 0; padding-left: 1.2rem; display: grid; gap: .5rem; max-width: 90ch }
+  .says b { font-family: var(--ui); font-weight: 600 }
+  .foot { color: var(--faint); font-size: .8rem; line-height: 1.5; max-width: 110ch; margin: 0 }
+
+  @media (max-width: 1100px) { .stats { grid-template-columns: repeat(3, minmax(0, 1fr)) } }
+  @media (max-width: 860px) {
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+    .two, .three { grid-template-columns: 1fr }
+    .row { grid-template-columns: 1fr; gap: .25rem }
+    .stat b { font-size: 1.6rem }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+</svg>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#main" aria-label="Visitor behaviour, back to top"><b>Visitor behaviour</b></a>
+    <span class="chname">/ Oct 15 to Nov 8</span>
+    <div class="tools">
+      <button type="button" class="ibtn theme-btn" id="theme-btn" aria-label="Switch light or dark theme">
+        <svg class="icon sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon moon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<main class="wrap" id="main">
+  <div class="page-head">
+    <h1>431 people came. Nobody <span class="g">made anything.</span></h1>
+    <p class="dek">What everyone who tapped one of our brand links did on Picsart: where they landed, how long they stayed and what they tried on the AI screen.</p>
+  </div>
+
+  <section class="stats" aria-label="Key numbers">
+    <div class="stat"><span class="cls">Visitors</span><b>431</b><span>411 from the Microdramas ad, 20 from bio links</span></div>
+    <div class="stat"><span class="cls">Time on site</span><b>2.2 s</b><span>median for ad visitors (bio links: 23 s)</span></div>
+    <div class="stat"><span class="cls">Left fast</span><b>88%</b><span>of ad visitors left within 10 seconds</span></div>
+    <div class="stat"><span class="cls">AI screen</span><b>81%</b><span>opened the AI tool screen (347 people)</span></div>
+    <div class="stat"><span class="cls">Generate</span><b>1</b><span>person pressed Generate, and was blocked</span></div>
+    <div class="stat"><span class="cls">Results</span><b>0</b><span>generated results, sign-ups or purchases</span></div>
+  </section>
+
+  <section class="panel" aria-labelledby="f-h">
+    <div class="ph"><h2 id="f-h">From landing to sign-up</h2><span class="legend">all 431 people, share of 431 after each number</span></div>
+    <div class="bars">
+      <div class="row"><span class="lab">Landed on AI Playground</span><div class="bar"><i style="width:80%"></i><em>431<small>100%</small></em></div></div>
+      <div class="row"><span class="lab">AI Playground loaded</span><div class="bar"><i style="width:78.7%"></i><em>424<small>98%</small></em></div></div>
+      <div class="row"><span class="lab">AI tool screen opened</span><div class="bar"><i style="width:64.4%"></i><em>347<small>81%</small></em></div></div>
+      <div class="row"><span class="lab">Did anything on the AI screen</span><div class="bar"><i style="width:3.5%"></i><em>19<small>4.4%</small></em></div></div>
+      <div class="row"><span class="lab">Typed a prompt</span><div class="bar"><i style="width:2%"></i><em>11<small>2.6%</small></em></div></div>
+      <div class="row"><span class="lab">Pressed Generate</span><div class="bar"><i style="width:.4%"></i><em>1<small>0.2%</small></em></div></div>
+      <div class="row"><span class="lab">Got a generated result</span><div class="bar zero"><i></i><em>0</em></div></div>
+      <div class="row"><span class="lab">Signed up</span><div class="bar zero"><i></i><em>0</em></div></div>
+      <div class="row"><span class="lab">Bought anything</span><div class="bar zero"><i></i><em>0</em></div></div>
+    </div>
+  </section>
+
+  <div class="two">
+    <section class="panel" aria-labelledby="l-h">
+      <div class="ph"><h2 id="l-h">How fast people left</h2>
+        <span class="legend"><span><i class="k-ad"></i>Ad link (411)</span><span><i class="k-bio"></i>Bio link (20)</span></span></div>
+      <div class="bars">
+        <div class="row"><span class="lab">Left within 10 seconds</span><div class="track">
+          <div class="bar"><i style="width:70.2%"></i><em>88%</em></div><div class="bar bio"><i style="width:12%"></i><em>15%</em></div></div></div>
+        <div class="row"><span class="lab">Left within 30 seconds</span><div class="track">
+          <div class="bar"><i style="width:76.7%"></i><em>96%</em></div><div class="bar bio"><i style="width:72%"></i><em>90%</em></div></div></div>
+        <div class="row"><span class="lab">Came back on a later day</span><div class="track">
+          <div class="bar"><i style="width:6.8%"></i><em>8.5%</em></div><div class="bar bio zero"><i></i><em>0%</em></div></div></div>
+      </div>
+    </section>
+    <section class="panel" aria-labelledby="t-h">
+      <div class="ph"><h2 id="t-h">Time on site per visit</h2><span class="legend">median, 75% and 90% of visits under</span></div>
+      <div class="bars">
+        <div class="row"><span class="lab">Ad link, median</span><div class="bar"><i style="width:7.7%"></i><em>2.2 s</em></div></div>
+        <div class="row"><span class="lab">Bio link, median</span><div class="bar bio"><i style="width:80%"></i><em>23 s</em></div></div>
+      </div>
+      <ul class="list">
+        <li><span>Ad link: 75% / 90% of visits under</span><b>5.7 s / 11.4 s</b></li>
+        <li><span>Bio link: 75% / 90% of visits under</span><b>23.6 s / 84 s</b></li>
+        <li><span>Visits per person (median)</span><b>1</b></li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="w-h">
+    <h2 id="w-h">Who they are</h2>
+    <div class="three">
+      <div><h3>Where they landed</h3>
+        <ul class="list"><li><span>AI Playground, Seedance 2.5 text to video, 15 s, 1080p</span><b>431</b></li></ul>
+        <h3 style="margin-top:1rem">Opened Picsart in</h3>
+        <ul class="list"><li><span>Instagram or Facebook app</span><b>428</b></li><li><span>A normal browser</span><b>3</b></li></ul></div>
+      <div><h3>Phone system</h3>
+        <ul class="list"><li><span>iPhone (iOS)</span><b>369</b></li><li><span>Android</span><b>61</b></li><li><span>Windows</span><b>1</b></li></ul>
+        <h3 style="margin-top:1rem">Device</h3>
+        <ul class="list"><li><span>Phone</span><b>395</b></li><li><span>Tablet</span><b>34</b></li><li><span>Desktop or unknown</span><b>2</b></li></ul></div>
+      <div><h3>Country</h3>
+        <ul class="list"><li><span>United States (all 411 ad visitors)</span><b>419</b></li><li><span>Ireland</span><b>4</b></li><li><span>Sweden</span><b>2</b></li><li><span>Armenia</span><b>2</b></li><li><span>Taiwan, Albania, Indonesia, Germany</span><b>1 each</b></li></ul></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="a-h">
+    <div class="ph"><h2 id="a-h">What the 19 did on the AI screen</h2>
+      <span class="legend"><span><i class="k-ad"></i>Ad link</span><span><i class="k-bio"></i>Bio link</span></span></div>
+    <div class="bars">
+      <div class="row"><span class="lab">Typed or edited the prompt</span><div class="track">
+        <div class="bar"><i style="width:8%"></i><em>1</em></div><div class="bar bio"><i style="width:80%"></i><em>10</em></div></div></div>
+      <div class="row"><span class="lab">Opened an example full screen, closed it</span><div class="track">
+        <div class="bar"><i style="width:48%"></i><em>6</em></div><div class="bar bio"><i style="width:16%"></i><em>2</em></div></div></div>
+      <div class="row"><span class="lab">Expanded the prompt</span><div class="track">
+        <div class="bar zero"><i></i><em>0</em></div><div class="bar bio"><i style="width:8%"></i><em>1</em></div></div></div>
+      <div class="row"><span class="lab">Pressed Generate</span><div class="track">
+        <div class="bar zero"><i></i><em>0</em></div><div class="bar bio"><i style="width:8%"></i><em>1</em></div></div></div>
+      <div class="row"><span class="lab">Page error</span><div class="track">
+        <div class="bar zero"><i></i><em>0</em></div><div class="bar bio"><i style="width:8%"></i><em>1</em></div></div></div>
+    </div>
+    <p class="muted" style="margin:0">"Used AI" on our weekly report means one of these actions. Everyone who typed kept the ready-made setup from our link (Seedance 2.5, text to video, 15 s, 1080p, 16:9). Picsart saves the prompt only on Generate, so other prompts are not recorded.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="g-h">
+    <h2 id="g-h">The one person who pressed Generate</h2>
+    <ol class="steps" aria-label="Steps, Oct 29">
+      <li>Tapped the Microdramas bio link</li><li class="arr" aria-hidden="true">→</li>
+      <li>Typed a microdrama scene prompt</li><li class="arr" aria-hidden="true">→</li>
+      <li>Pressed Generate</li><li class="arr" aria-hidden="true">→</li>
+      <li class="stop">Blocked: 15 s 1080p video needs an account and credits</li><li class="arr" aria-hidden="true">→</li>
+      <li>Saw the sign-up screen</li><li class="arr" aria-hidden="true">→</li>
+      <li class="stop">Left without an account</li>
+    </ol>
+    <p class="muted" style="margin:0">No credits screen or paywall was shown to anyone in the group.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="s-h">
+    <h2 id="s-h">What the data says</h2>
+    <ol class="says">
+      <li><b>The ad brings people, but they leave in 2 seconds.</b> 88% of ad visitors leave within 10 seconds, almost all inside the Instagram app.</li>
+      <li><b>Nobody generated anything.</b> Our link opens a 15-second 1080p Seedance video setup, which needs an account and credits. No visitor reached a result.</li>
+      <li><b>The wall comes before the result.</b> The only person who pressed Generate was blocked, saw sign-up, and left.</li>
+      <li><b>Bio-link visitors are warmer.</b> They stay 23 seconds instead of 2, and 10 of 20 typed a prompt.</li>
+    </ol>
+  </section>
+
+  <p class="foot">Picsart web events, real Instagram and Facebook taps on our brand links, Oct 15 to Nov 8 (Yerevan time). Sign-ups and purchases checked event by event: none.</p>
+</main>
+<script>
+document.getElementById("theme-btn").addEventListener("click", () => {
+  const r = document.documentElement; r.dataset.theme = r.dataset.theme === "light" ? "dark" : "light";
+});
+</script>
+</body>
+</html>
