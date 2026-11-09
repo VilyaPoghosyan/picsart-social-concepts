@@ -191,6 +191,8 @@ def change(now, before) -> str:
     if pct == 0:
         return '<span class="wow">no change</span>'
     cls, arrow = ("up", "&uarr;") if pct > 0 else ("down", "&darr;")
+    if pct >= 1000:  # "142x" reads better than "14067%"
+        return f'<span class="wow {cls}">{arrow} {now / before:.0f}x</span>'
     return f'<span class="wow {cls}">{arrow} {abs(pct)}%</span>'
 
 
