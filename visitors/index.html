@@ -49,13 +49,13 @@
   .bar em small { margin-left: .3rem }
 
   .list { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none }
-  .list li { display: flex; justify-content: space-between; gap: .8rem; border-bottom: 1px solid var(--line); padding-bottom: .4rem; font-size: .92rem }
+  .list li { display: flex; justify-content: space-between; gap: .8rem; border-bottom: 1px solid var(--line); padding-bottom: .6rem; font-size: .92rem }
   .list li b { font-family: var(--ui); font-weight: 600; font-variant-numeric: tabular-nums }
   h3 { margin: 0 0 .5rem; font-family: var(--ui); font-weight: 600; font-size: .95rem }
 
   /* the one person who pressed Generate */
   .steps { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 0; padding: 0; list-style: none }
-  .steps li { font-family: var(--ui); font-weight: 600; font-size: .85rem; padding: .45rem .8rem; border-radius: var(--r-chip); background: var(--chip); border: 1px solid var(--line-2) }
+  .steps li { font-family: var(--ui); font-weight: 600; font-size: .85rem; padding: .6rem .9rem; border-radius: var(--r-chip); background: var(--chip); border: 1px solid var(--line-2) }
   .steps li.stop { border-color: var(--bad); color: var(--bad-ink) }
   .steps .arr { border: 0; background: none; padding: 0; color: var(--faint) }
 
@@ -80,7 +80,7 @@
 <header class="top">
   <div class="top-in">
     <a class="brand" href="#main" aria-label="Visitor behaviour, back to top"><b>Visitor behaviour</b></a>
-    <span class="chname">/ Oct 15 to Nov 8</span>
+    <span class="chname">/ Oct 15 to Nov 10</span>
     <div class="tools">
       <button type="button" class="ibtn theme-btn" id="theme-btn" aria-label="Switch light or dark theme">
         <svg class="icon sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon moon" aria-hidden="true"><use href="#i-moon"/></svg>
@@ -192,6 +192,52 @@
     <p class="muted" style="margin:0">No credits screen or paywall was shown to anyone in the group.</p>
   </section>
 
+  <section class="panel" aria-labelledby="why-h">
+    <h2 id="why-h">Why nobody could make anything</h2>
+    <p class="muted" style="margin:0">Checked on Nov 9 on a phone, with no Picsart account, the way an ad visitor arrives.</p>
+    <div class="two">
+      <ul class="list">
+        <li><span>Main button for a visitor without an account, on every AI model</span><b>"Sign in"</b></li>
+        <li><span>On phones, the cookie banner covers that button until it is closed</span><b>yes</b></li>
+        <li><span>Free credits a new account gets</span><b>5</b></li>
+      </ul>
+      <ul class="list">
+        <li><span>Our old link: Seedance 2.5 video, 15 s, 1080p</span><b>270 credits</b></li>
+        <li><span>Cheapest Seedance 2.5 video (4 s, 480p)</span><b>16 credits</b></li>
+        <li><span>Kling 4.0 Flash Omni video, 5 s, 720p</span><b>5 credits</b></li>
+      </ul>
+    </div>
+    <p class="muted" style="margin:0">So even a visitor who signed up could not afford the video our link opened: it cost 54 times the free credits.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="c-h">
+    <h2 id="c-h">What the first ad cost</h2>
+    <ul class="list">
+      <li><span>Spent (billed Nov 6 to 8)</span><b>$19.65</b></li>
+      <li><span>Visits from the ad</span><b>411</b></li>
+      <li><span>Cost per visit</span><b>about $0.05</b></li>
+    </ul>
+    <p class="muted" style="margin:0">The traffic was cheap. What people found after the tap was the problem, not the price of the tap.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="n-h">
+    <h2 id="n-h">What changed: the second ad</h2>
+    <p class="muted" style="margin:0">A new Microdramas ad (ONE YEAR, NO LOVE, Part 1, $10 a day for 2 days) went live on Nov 9. It lands on a video model that a new account can afford, with a drama prompt already typed in.</p>
+    <div class="two">
+      <ul class="list">
+        <li><span>Lands on</span><b>Kling 4.0 Flash Omni, 5 s, 9:16</b></li>
+        <li><span>Cost of one video</span><b>5 credits (the free amount)</b></li>
+        <li><span>Prompt filled in for the visitor</span><b>yes, a romance drama scene</b></li>
+      </ul>
+      <ul class="list">
+        <li><span>Visitors, Nov 9 to 10 (so far)</span><b>72</b></li>
+        <li><span>Opened the AI screen</span><b>56</b></li>
+        <li><span>Pressed Generate, signed up, got a result</span><b>0 so far</b></li>
+      </ul>
+    </div>
+    <p class="muted" style="margin:0">The ad is in its second day. Of the 72, 68 came through the new ad; the rest were link tests and one tap on the old bio link. The read-out comes when the 2 days end.</p>
+  </section>
+
   <section class="panel" aria-labelledby="s-h">
     <h2 id="s-h">What the data says</h2>
     <ol class="says">
@@ -199,10 +245,11 @@
       <li><b>Nobody generated anything.</b> Our link opens a 15-second 1080p Seedance video setup, which needs an account and credits. No visitor reached a result.</li>
       <li><b>The wall comes before the result.</b> The only person who pressed Generate was blocked, saw sign-up, and left.</li>
       <li><b>Bio-link visitors are warmer.</b> They stay 23 seconds instead of 2, and 10 of 20 typed a prompt.</li>
+      <li><b>The video was out of reach even after sign-up.</b> A new account gets 5 credits; our link opened a 270-credit video. The second ad lands on a 5-credit video instead.</li>
     </ol>
   </section>
 
-  <p class="foot">Picsart web events, real Instagram and Facebook taps on our brand links, Oct 15 to Nov 8 (Yerevan time). Sign-ups and purchases checked event by event: none.</p>
+  <p class="foot">Picsart web events, real Instagram and Facebook taps on our brand links, Oct 15 to Nov 8 (Yerevan time), plus the second ad on Nov 9 to 10. Sign-ups and purchases checked event by event: none. Model prices from Picsart's public price list on Nov 9. Updated Nov 10, 2026.</p>
 </main>
 <script>
 document.getElementById("theme-btn").addEventListener("click", () => {
