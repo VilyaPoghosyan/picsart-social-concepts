@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Brand-Link Visitor Behaviour</title>
-<meta name="description" content="What the 431 people who tapped a brand link did on Picsart, Oct 15 to Nov 8: where they landed, how long they stayed, what they did on the AI screen.">
+<meta name="description" content="What the 503 people who tapped a Picsart brand link did, Oct 15 to Nov 10: two Microdramas ads and the bio links. Where they landed, how long they stayed, what they tried.">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#121212">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +25,16 @@
   .stat { padding: 1rem 1.1rem; display: grid; gap: .3rem; align-content: start; min-width: 0; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--line) }
   .stat b { font-family: var(--display); font-weight: 400; font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums }
   .period { margin: 0 0 -.8rem }
+  :root { --s1: #C209C1; --s2: #B7791F; --s3: #3FD68F; --s4: #8F8F8F }
+  :root[data-theme="light"] { --s3: #138A55; --s4: #6F6A64 }
+  .donut-wrap { display: grid; grid-template-columns: 200px 1fr; gap: 1.6rem; align-items: center }
+  .donut { width: 200px; height: 200px }
+  .donut .seg { transition: stroke-width .15s } .donut .seg:hover { stroke-width: 30 }
+  .donut .dn { font-family: var(--display); font-size: 30px; fill: var(--ink) }
+  .donut .dl { font-family: var(--ui); font-size: 12px; fill: var(--muted) }
+  .list.src li span i { display: inline-block; width: 10px; height: 10px; border-radius: 4px; margin-right: .5rem; vertical-align: -1px }
+  .list.src li b small { margin-left: .5rem }
+  @media (max-width: 860px) { .donut-wrap { grid-template-columns: 1fr; justify-items: center } .list.src { width: 100% } }
   .bar.na em { color: var(--faint); font-weight: 500 }
   .stat span:not(.cls) { color: var(--muted); font-size: .86rem; line-height: 1.4 }
 
@@ -92,12 +102,25 @@
 </header>
 <main class="wrap" id="main">
   <div class="page-head">
-    <h1>431 came, then 72 more. Nobody <span class="g">made anything.</span></h1>
-    <p class="dek">What everyone who tapped one of our brand links did on Picsart, in two periods: the first ad (Oct 15 to Nov 8) and the second ad (Nov 9 to Nov 10, up to 13:55). The periods are shown side by side, not added up, because one person can appear in both.</p>
+    <h1>503 people came. Nobody <span class="g">made anything.</span></h1>
+    <p class="dek">Everyone who tapped one of our brand links from Oct 15 to Nov 10 (13:55): the first Microdramas ad (Nov 5 to 7), the second Microdramas ad (from Nov 9) and the bio links. Where they landed, how long they stayed and what they tried on the AI screen.</p>
   </div>
 
-  <p class="cls period">First ad and bio links, Oct 15 to Nov 8</p>
-  <section class="stats" aria-label="Key numbers, Oct 15 to Nov 8">
+  <section class="panel" aria-labelledby="src-h">
+    <h2 id="src-h">Where the 503 came from</h2>
+    <div class="donut-wrap">
+      <svg class="donut" viewBox="0 0 180 180" role="img" aria-label="Sources of the 503 visitors: First Microdramas ad, Nov 5 to 7 411, Second Microdramas ad, Nov 9 to 10 67, Bio links, Oct 15 to Nov 10 21, Link tests 4">
+        <g transform="rotate(-90 90 90)"><circle class="seg" r="70" cx="90" cy="90" fill="none" style="stroke:var(--s1)" stroke-width="26" stroke-dasharray="357.38 82.44" stroke-dashoffset="0.00"><title>First Microdramas ad, Nov 5 to 7: 411 people (81.7%)</title></circle><circle class="seg" r="70" cx="90" cy="90" fill="none" style="stroke:var(--s2)" stroke-width="26" stroke-dasharray="56.58 383.24" stroke-dashoffset="-359.38"><title>Second Microdramas ad, Nov 9 to 10: 67 people (13.3%)</title></circle><circle class="seg" r="70" cx="90" cy="90" fill="none" style="stroke:var(--s3)" stroke-width="26" stroke-dasharray="16.36 423.46" stroke-dashoffset="-417.96"><title>Bio links, Oct 15 to Nov 10: 21 people (4.2%)</title></circle><circle class="seg" r="70" cx="90" cy="90" fill="none" style="stroke:var(--s4)" stroke-width="26" stroke-dasharray="1.50 438.33" stroke-dashoffset="-436.33"><title>Link tests: 4 people (0.8%)</title></circle></g>
+        <text x="90" y="88" text-anchor="middle" class="dn">503</text>
+        <text x="90" y="108" text-anchor="middle" class="dl">people</text>
+      </svg>
+      <ul class="list src"><li><span><i style="background:var(--s1)"></i>First Microdramas ad, Nov 5 to 7</span><b>411<small>81.7%</small></b></li><li><span><i style="background:var(--s2)"></i>Second Microdramas ad, Nov 9 to 10</span><b>67<small>13.3%</small></b></li><li><span><i style="background:var(--s3)"></i>Bio links, Oct 15 to Nov 10</span><b>21<small>4.2%</small></b></li><li><span><i style="background:var(--s4)"></i>Link tests</span><b>4<small>0.8%</small></b></li></ul>
+    </div>
+    <p class="muted" style="margin:0">Every visit came through Microdramas links. Reelo, Dwell, Faceless and Listed links brought no real taps in this time. Someone who came through both ads is counted in each.</p>
+  </section>
+
+  <p class="cls period">Up to Nov 8: the first ad (Nov 5 to 7) and bio links</p>
+  <section class="stats" aria-label="Key numbers up to Nov 8">
     <div class="stat"><span class="cls">Visitors</span><b>431</b><span>411 from the Microdramas ad, 20 from bio links</span></div>
     <div class="stat"><span class="cls">Time on site</span><b>2.2 s</b><span>median for ad visitors (bio links: 23 s)</span></div>
     <div class="stat"><span class="cls">Left fast</span><b>88%</b><span>of ad visitors left within 10 seconds</span></div>
@@ -106,7 +129,7 @@
     <div class="stat"><span class="cls">Results</span><b>0</b><span>generated results, sign-ups or purchases</span></div>
   </section>
 
-  <p class="cls period">Second ad, Nov 9 to Nov 10, 13:55</p>
+  <p class="cls period">Nov 9 to Nov 10, 13:55: the second ad</p>
   <section class="stats stats-b" aria-label="Key numbers, Nov 9 to Nov 10">
     <div class="stat"><span class="cls">Visitors</span><b>72</b><span>67 from the second ad, the rest link tests and 1 bio tap</span></div>
     <div class="stat"><span class="cls">Lands on</span><b>5 credits</b><span>Kling 4.0 Flash Omni video, prompt typed in</span></div>
@@ -118,7 +141,7 @@
 
   <section class="panel" aria-labelledby="f-h">
     <div class="ph"><h2 id="f-h">From landing to sign-up</h2>
-      <span class="legend"><span><i class="k-ad"></i>Oct 15 to Nov 8 (431)</span><span><i class="k-bio"></i>Nov 9 to 10 (72)</span></span></div>
+      <span class="legend"><span><i class="k-ad"></i>Up to Nov 8 (431)</span><span><i class="k-bio"></i>Nov 9 to 10 (72)</span></span></div>
     <div class="bars">
       <div class="row"><span class="lab">Landed on AI Playground</span><div class="track">
         <div class="bar"><i style="width:80.0%"></i><em>431<small>100%</small></em></div><div class="bar bio"><i style="width:80%"></i><em>72<small>100%</small></em></div></div></div>
@@ -237,7 +260,7 @@
   <section class="panel" aria-labelledby="c-h">
     <h2 id="c-h">What the first ad cost</h2>
     <ul class="list">
-      <li><span>Spent (billed Nov 6 to 8)</span><b>$19.65</b></li>
+      <li><span>Spent on the first ad (ran Nov 5 to 7)</span><b>$19.65</b></li>
       <li><span>Visits from the ad</span><b>411</b></li>
       <li><span>Cost per visit</span><b>about $0.05</b></li>
     </ul>
@@ -280,7 +303,7 @@
     </ol>
   </section>
 
-  <p class="foot">Picsart web events, real Instagram and Facebook taps on our brand links, Oct 15 to Nov 8 (Yerevan time), plus the second ad on Nov 9 to Nov 10 up to 13:55, the latest data available. Sign-ups and purchases checked event by event: none. Model prices from Picsart's public price list on Nov 9. Updated Nov 10, 2026, 14:20 Yerevan.</p>
+  <p class="foot">Picsart web events, real Instagram and Facebook taps on our brand links, Oct 15 to Nov 10 up to 13:55 (Yerevan time), the latest data available. Bio-link taps counted from Oct 15; first ad Nov 5 to 7; second ad from Nov 9. Sign-ups and purchases checked event by event: none. Model prices from Picsart's public price list on Nov 9. Updated Nov 10, 2026.</p>
 </main>
 <script>
 document.getElementById("theme-btn").addEventListener("click", () => {
