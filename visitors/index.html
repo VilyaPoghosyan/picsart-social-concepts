@@ -24,6 +24,8 @@
   .stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .8rem }
   .stat { padding: 1rem 1.1rem; display: grid; gap: .3rem; align-content: start; min-width: 0; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--line) }
   .stat b { font-family: var(--display); font-weight: 400; font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums }
+  .period { margin: 0 0 -.8rem }
+  .bar.na em { color: var(--faint); font-weight: 500 }
   .stat span:not(.cls) { color: var(--muted); font-size: .86rem; line-height: 1.4 }
 
   .panel { padding: clamp(16px, 2.4vw, 26px); display: grid; gap: 1rem; min-width: 0 }
@@ -90,11 +92,12 @@
 </header>
 <main class="wrap" id="main">
   <div class="page-head">
-    <h1>431 people came. Nobody <span class="g">made anything.</span></h1>
-    <p class="dek">What everyone who tapped one of our brand links did on Picsart: where they landed, how long they stayed and what they tried on the AI screen.</p>
+    <h1>431 came, then 72 more. Nobody <span class="g">made anything.</span></h1>
+    <p class="dek">What everyone who tapped one of our brand links did on Picsart, in two periods: the first ad (Oct 15 to Nov 8) and the second ad (Nov 9 to Nov 10, up to 13:55). The periods are shown side by side, not added up, because one person can appear in both.</p>
   </div>
 
-  <section class="stats" aria-label="Key numbers">
+  <p class="cls period">First ad and bio links, Oct 15 to Nov 8</p>
+  <section class="stats" aria-label="Key numbers, Oct 15 to Nov 8">
     <div class="stat"><span class="cls">Visitors</span><b>431</b><span>411 from the Microdramas ad, 20 from bio links</span></div>
     <div class="stat"><span class="cls">Time on site</span><b>2.2 s</b><span>median for ad visitors (bio links: 23 s)</span></div>
     <div class="stat"><span class="cls">Left fast</span><b>88%</b><span>of ad visitors left within 10 seconds</span></div>
@@ -103,19 +106,40 @@
     <div class="stat"><span class="cls">Results</span><b>0</b><span>generated results, sign-ups or purchases</span></div>
   </section>
 
+  <p class="cls period">Second ad, Nov 9 to Nov 10, 13:55</p>
+  <section class="stats stats-b" aria-label="Key numbers, Nov 9 to Nov 10">
+    <div class="stat"><span class="cls">Visitors</span><b>72</b><span>67 from the second ad, the rest link tests and 1 bio tap</span></div>
+    <div class="stat"><span class="cls">Lands on</span><b>5 credits</b><span>Kling 4.0 Flash Omni video, prompt typed in</span></div>
+    <div class="stat"><span class="cls">AI screen</span><b>78%</b><span>opened the AI tool screen (56 people)</span></div>
+    <div class="stat"><span class="cls">Generate</span><b>0</b><span>people pressed Generate so far</span></div>
+    <div class="stat"><span class="cls">Results</span><b>0</b><span>generated results or sign-ups so far</span></div>
+    <div class="stat"><span class="cls">Running</span><b>2 days</b><span>$10 a day, read-out when it ends</span></div>
+  </section>
+
   <section class="panel" aria-labelledby="f-h">
-    <div class="ph"><h2 id="f-h">From landing to sign-up</h2><span class="legend">all 431 people, share of 431 after each number</span></div>
+    <div class="ph"><h2 id="f-h">From landing to sign-up</h2>
+      <span class="legend"><span><i class="k-ad"></i>Oct 15 to Nov 8 (431)</span><span><i class="k-bio"></i>Nov 9 to 10 (72)</span></span></div>
     <div class="bars">
-      <div class="row"><span class="lab">Landed on AI Playground</span><div class="bar"><i style="width:80%"></i><em>431<small>100%</small></em></div></div>
-      <div class="row"><span class="lab">AI Playground loaded</span><div class="bar"><i style="width:78.7%"></i><em>424<small>98%</small></em></div></div>
-      <div class="row"><span class="lab">AI tool screen opened</span><div class="bar"><i style="width:64.4%"></i><em>347<small>81%</small></em></div></div>
-      <div class="row"><span class="lab">Did anything on the AI screen</span><div class="bar"><i style="width:3.5%"></i><em>19<small>4.4%</small></em></div></div>
-      <div class="row"><span class="lab">Typed a prompt</span><div class="bar"><i style="width:2%"></i><em>11<small>2.6%</small></em></div></div>
-      <div class="row"><span class="lab">Pressed Generate</span><div class="bar"><i style="width:.4%"></i><em>1<small>0.2%</small></em></div></div>
-      <div class="row"><span class="lab">Got a generated result</span><div class="bar zero"><i></i><em>0</em></div></div>
-      <div class="row"><span class="lab">Signed up</span><div class="bar zero"><i></i><em>0</em></div></div>
-      <div class="row"><span class="lab">Bought anything</span><div class="bar zero"><i></i><em>0</em></div></div>
+      <div class="row"><span class="lab">Landed on AI Playground</span><div class="track">
+        <div class="bar"><i style="width:80.0%"></i><em>431<small>100%</small></em></div><div class="bar bio"><i style="width:80%"></i><em>72<small>100%</small></em></div></div></div>
+      <div class="row"><span class="lab">AI Playground loaded</span><div class="track">
+        <div class="bar"><i style="width:78.4%"></i><em>424<small>98%</small></em></div><div class="bar bio na"><em>not counted yet</em></div></div></div>
+      <div class="row"><span class="lab">AI tool screen opened</span><div class="track">
+        <div class="bar"><i style="width:64.8%"></i><em>347<small>81%</small></em></div><div class="bar bio"><i style="width:62.2%"></i><em>56<small>78%</small></em></div></div></div>
+      <div class="row"><span class="lab">Did anything on the AI screen</span><div class="track">
+        <div class="bar"><i style="width:3.5%"></i><em>19<small>4.4%</small></em></div><div class="bar bio na"><em>not counted yet</em></div></div></div>
+      <div class="row"><span class="lab">Typed a prompt</span><div class="track">
+        <div class="bar"><i style="width:2.1%"></i><em>11<small>2.6%</small></em></div><div class="bar bio na"><em>not counted yet</em></div></div></div>
+      <div class="row"><span class="lab">Pressed Generate</span><div class="track">
+        <div class="bar"><i style="width:0.2%"></i><em>1<small>0.2%</small></em></div><div class="bar bio zero"><i></i><em>0</em></div></div></div>
+      <div class="row"><span class="lab">Got a generated result</span><div class="track">
+        <div class="bar  zero"><i></i><em>0</em></div><div class="bar bio zero"><i></i><em>0</em></div></div></div>
+      <div class="row"><span class="lab">Signed up</span><div class="track">
+        <div class="bar  zero"><i></i><em>0</em></div><div class="bar bio zero"><i></i><em>0</em></div></div></div>
+      <div class="row"><span class="lab">Bought anything</span><div class="track">
+        <div class="bar  zero"><i></i><em>0</em></div><div class="bar bio na"><em>not counted yet</em></div></div></div>
     </div>
+    <p class="muted" style="margin:0">Share of each period's visitors after each number. Steps marked "not counted yet" were not part of today's count for the second ad.</p>
   </section>
 
   <div class="two">
