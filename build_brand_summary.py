@@ -82,6 +82,8 @@ MICRO_COST = {
     "her-father-7": dict(calls=1467, drop=None, basis="calls", note="THE REAL RYAN incl. Megan casting"),
     "her-father-8": dict(calls=2677, drop=None, basis="calls", note="THE BRIDAL SUITE finale, all-in incl. retakes and re-staged OTS shots"),
     "married-to-a-nobody-1": dict(calls=2639, drop=None, basis="calls", note="THE DINNER 2,573 + casting 66"),
+    "married-to-a-nobody-2": dict(calls=2646, drop=None, basis="calls", note="THE FILE, all-in from the series state"),
+    "married-to-a-nobody-3": dict(calls=2962, drop=None, basis="calls", note="THE BOARDROOM incl. retakes (cap 2,990 approved)"),
 }
 
 # ALL-IN credits per brand (audited 2026-10-23 from every run log, run.json and balance drop, including work
@@ -90,13 +92,13 @@ MICRO_COST = {
 # account was shared are NOT used: they include other brands' work. Microdramas max per episode: highest
 # logged 2,743 (REMEMBER ME P7), quoted as up to 3,200 for unlogged retries (Vilya 2026-10-23).
 ALL_IN = {
-    "microdramas": dict(total=100631, waste=16123, unposted=0, per_max=3200, unit="episode",
-        waste_note="discarded, redone and deleted episodes, standalone tests and remakes never posted, casting and look tests",
+    "microdramas": dict(total=107987, waste=17871, unposted=0, per_max=3200, unit="episode",
+        waste_note="discarded, redone and deleted episodes, standalone tests and remakes never posted, casting and look tests, the Nov 6 cheaper-model test (1,748)",
         unposted_note="made, not posted yet"),
-    "dwell": dict(total=9493, waste=302, unposted=0, per_max=560, unit="reel or carousel",
+    "dwell": dict(total=9768, waste=302, unposted=0, per_max=560, unit="reel or carousel",
         waste_note="format test reel never posted (132) and the Oct 23 realism proof, a before/after of one real-looking room made for the design review (170)",
-        extra="pins up to 10 each; 865 credits on 160 pins; the Oct 23 batch of 12 (built Oct 26) is counted at its max, 1,842, with stuck jobs as billed; the Oct 30 batch of 14 (built Oct 28) cost 1,897"),
-    "reelo": dict(total=16301, waste=3755, unposted=220, per_max=230, unit="cartoon reel",
+        extra="pins up to 10 each; 1,140 credits on 212 pins; the Oct 23 batch of 12 (built Oct 26) is counted at its max, 1,842, with stuck jobs as billed; the Oct 30 batch of 14 (built Oct 28) cost 1,897"),
+    "reelo": dict(total=19936, waste=3755, unposted=220, per_max=230, unit="cartoon reel",
         waste_note="7 tiny-world videos built and never posted (2,977), cartoon format test, cast sheets, a rejected reel, a failed render, loop tests, unlogged retries in the Oct 23 batch of 30 (139)",
         unposted_note="one Halloween-week reel (Weekend with Max) held for garbled lettering",
         extra="the older tiny-world videos cost up to 436 each"),
@@ -104,7 +106,7 @@ ALL_IN = {
         waste_note="no remakes logged; Price Tag posts reuse other brands' videos (0 extra)"),
     # Listed: v2 threads 137 (Oct 5-25) + v3 character skits 4,143 (2026-10-27: 25 sketches, 5 examples 1,051,
     # their fixes 206, cast options 60, the cat CEO post 229, batch 2 of 10 posts 2,572 incl. one redone take)
-    "listed": dict(total=4280, waste=209, unposted=1257, per_max=290, unit="skit",
+    "listed": dict(total=10734, waste=209, unposted=1257, per_max=340, unit="skit",
         waste_note="v2 tests and redone steps (11), character and look options (85), a redone take and redone after images in the skit batch (113)",
         unposted_note="the five first example skits, kept as references",
         extra="v2 before/after threads cost up to 28 per product"),
@@ -565,7 +567,7 @@ DWELL_COST = {
 }
 # Pinterest: our three pin runs (2026-10-02 x2, 2026-10-20) (dwell-content-runs.md): 70 pins, 185 + 180 = 365 credits,
 # confirmed by the balance (5,730 -> 5,545 -> 5,365). 5 credits per image; 3 pins needed one reroll (10).
-PIN_RUNS = dict(pins=160, credits=865, per_pin=[5] * 150 + [10] * 10, since="2026-10-03")  # + 2026-10-20 run: 35 pins, 180 cr; + 2026-10-26 run: 20 pins, 120 cr; + 2026-10-28 run: 35 pins, 200 cr
+PIN_RUNS = dict(pins=212, credits=1140, per_pin=[5] * 196 + [10] * 16, since="2026-10-03")  # + 2026-10-20 run: 35 pins, 180 cr; + 2026-10-26 run: 20 pins, 120 cr; + 2026-10-28 run: 35 pins, 200 cr
 
 DWELL_FORMAT = {"A": "Before / after", "B": "Statement tour", "C": "Walkthrough reveal", "D": "Variation swap",
                 "E": "Trend carousel", "F": "Photo-set carousel", "G": "Colour pairs", "H": "Mouldings"}
@@ -773,8 +775,8 @@ def build_dwell():
       <div><b>Engine</b><span>Rooms on Gemini 3 Pro Image, camera moves on MiniMax and Kling V3, beat-synced ElevenLabs music, the linen and walnut Picsart end card.</span></div>
     </div>
     <p class="note">Live on 3 of Dwell's 4 platforms; the X account is not posting and is left out. Instagram and TikTok: two posts a day
-      Oct 12–24 (four a day Oct 21–24), a pause Oct 25–26, then two a day again from Oct 27, scheduled through Nov 8 (batches built
-      Oct 26 and Oct 28). Pinterest keeps five pins a day through Nov 8. A design review on Oct 23 asked for readable, higher-contrast titles, a font
+      Oct 12–24 (four a day Oct 21–24), a pause Oct 25–26, then two a day again Oct 27 to Nov 8 (batches built
+      Oct 26 and Oct 28); the next batch is planned and waits for a credit top-up. Pinterest keeps five pins a day, made daily by the autopilot, through Nov 19. A design review on Oct 23 asked for readable, higher-contrast titles, a font
       per style, more realistic video, a clearer logo and before/afters of the same room; the Oct 27 batch is the first built to
       those rules.</p>
   </div>
@@ -855,6 +857,10 @@ REELO_OUT = OUT / "reelo"
 CARTOON_SRC: dict[str, Path] = {}
 
 
+# autopilot reels whose credits were logged in out/ops/credits.jsonl (max-based)
+REELO_LOGGED = {"flower-hat": 176}
+
+
 def cartoon_ledger():
     """Scheduled cartoon reels: [(when_utc, slug, credits)] from out/reelo/schedule.json + each run.json."""
     rows = {}
@@ -866,9 +872,14 @@ def cartoon_ledger():
             d = next((x for x in REELO_OUT.glob(f"*/{e['dir']}") if x.is_dir()), d)
         run = sched(d / "run.json")
         cr = run.get("credits")
+        if cr is None:
+            cr = run.get("credits_total")
         cr = cr.get("total") if isinstance(cr, dict) else cr
         if cr is None:
             cr = run.get("credits_quoted")
+        if cr is None:
+            # autopilot reels without a run.json: logged re-dispatch if any, else the story's estimate with one reroll
+            cr = REELO_LOGGED.get(slug) or (sched(d / "story.json").get("credits") or {}).get("estimate_with_one_reroll")
         if cr is None:
             gap(f"reelo: no credits in {d.relative_to(REELO_OUT)}/run.json")
         rows[slug] = (when_of(e).astimezone(timezone.utc), slug, cr)
@@ -990,14 +1001,14 @@ def build_reelo():
       <div class="handle">@reelo.hq · @reelostudio · Instagram + TikTok</div>
     </div>
   </div>
-  <p class="dek">15-second Pixar-style family cartoons since Oct 17, four a day (two a day on Oct 21–22). 46 reels for Oct 28 to Nov 5 were built on Oct 23 and Oct 28;
-    the queue is scheduled through Nov 5. Before that (from {first}): AI-trend
+  <p class="dek">15-second Pixar-style family cartoons since Oct 17, four a day (two a day on Oct 21–22). Since Nov 2 an autopilot builds and schedules the reels every day;
+    the queue is scheduled through Nov 14. Before that (from {first}): AI-trend
     explainers, then "tiny worlds", a ruined miniature place restored in one video a day.</p>
 
   <div class="sec-label">Key concept</div>
   <div class="card">
     <div class="concept">
-      <div><b>Now · cartoons</b><span>15 s micro-stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. A cast of 11, shuffled. Four a day at 12:00, 13:30, 18:00 and 19:30 Yerevan; 16 more reels built Oct 28, the queue is scheduled through Nov 5.</span></div>
+      <div><b>Now · cartoons</b><span>15 s micro-stories about a toddler, a parent and a pet, told with faces and sound effects, no dialogue. A cast of 11, shuffled. Four a day at 12:00, 13:30, 18:00 and 19:30 Yerevan; built and scheduled daily by the autopilot, the queue runs through Nov 14.</span></div>
       <div><b>Before · tiny worlds</b><span>25–28 s restorations of a ruined miniature with a voiceover, one a day until Oct 16.</span></div>
       <div><b>Engine</b><span>Cartoons: Gemini 3 Pro Image keyframe, Seedance 2.5 with native sound. Tiny worlds: Gemini 3 Pro Image, Veo 3.1, ElevenLabs.</span></div>
     </div>
@@ -1056,6 +1067,11 @@ FACELESS_COST = {
     "2026-W45/3_wed_interior_12-art-deco-apartment": 0, "2026-W45/4_thu_cartoon_tattooed-ballerina": 0,
     "2026-W45/5_fri_drama_family-portrait-p8": 0, "2026-W45/6_sat_interior_05-japandi-headboard-swap": 0,
     "2026-W45/7_sun_cartoon_kiss-blocker": 0,
+    # W46 = Price Tag week (reuse, 0 new credits)
+    "2026-W46/1_mon_cartoon_airplane-spoon": 0, "2026-W46/2_tue_interior_05-midcentury-conversation-pit": 0,
+    "2026-W46/3_wed_cartoon_hiccup-cure": 0, "2026-W46/4_thu_drama_family-portrait-p7": 0,
+    "2026-W46/5_fri_cartoon_phone-hostage": 0, "2026-W46/6_sat_interior_04-scandi-fireplace-swap": 0,
+    "2026-W46/7_sun_cartoon_blanket-bandit": 0,
 }
 FACELESS_KIND = {"tutorial": "How-to", "money_truth": "Does it pay?", "does_it_pay": "Does it pay?", "one_app": "One app"}
 
