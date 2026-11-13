@@ -13,6 +13,9 @@ Numbers come from two places:
                                 Past days are read from this repo's git history (last report commit on or before that day).
   visits, used AI, converted    Argus only, written by the Monday task to
                                 ~/vilya-ai/context/reports/conversion/weekly/<report day>.json (shape: see the 2026-11-06 file)
+  AI influencers                onepagers/influencers.json (bin/influencer_stats.py: live reel views, broker followers).
+                                Same rows, totals and chart as the brands; their link taps read the conversion file
+                                under the utm_campaign key (granny_ofik, ...) and show "-" until Argus has counted them.
 
 Run (after bin/brand_summary_weekly.py and the conversion file): python3 onepagers/build_portfolio.py --png [--publish]
 Reads local files and git history. --publish commits only the portfolio files, pushes to GitHub Pages
@@ -50,7 +53,23 @@ PURPOSE = {
     "dwell": "Home and interior lovers who save ideas, on Instagram, TikTok and Pinterest.",
     "faceless": "Creators who want to earn money with AI content made in Picsart.",
     "listed": "Online sellers who need better product photos, fixed in Picsart.",
+    "granny_ofik": "Reach through a character people follow for her: a savage 84-year-old with her dog Baron.",
+    "aisha_hadid": "Reach through a character people follow for her: a fishing-town girl who turns every trend into a runway.",
+    "rich_ronnie": "Reach through a character people follow for him: a loud, gold-covered uncle who shows off his money.",
 }
+
+# The AI influencer accounts (Instagram only, no Picsart branding, ADR 0006). slug = their bio-link utm_campaign.
+INFLUENCERS = [
+    dict(slug="granny_ofik", handle="granny.ofik", name="Granny Ofik", launched=date(2026, 11, 10),
+         concept="AI influencer @granny.ofik: black-humour granny lifestyle reels, recasts of viral clips."),
+    dict(slug="aisha_hadid", handle="aishahadid.ai", name="Aisha Hadid", launched=date(2026, 11, 12),
+         concept="AI influencer @aishahadid.ai: street-runway and trend reels, recasts of viral clips."),
+    dict(slug="rich_ronnie", handle="richronnie.ai", name="Rich Ronnie", launched=date(2026, 11, 12),
+         concept="AI influencer @richronnie.ai: over-the-top rich-uncle reels, recasts of viral clips."),
+]
+def accounts() -> list[dict]:
+    return be.BRANDS + INFLUENCERS
+
 
 # The six classes, top of the funnel first. (key, label, meaning for the week, meaning overall)
 CLASSES = [
@@ -131,6 +150,13 @@ def snapshot(root: Path) -> dict:
                                   posts=None if old["undated"] else max(n["published"] - old["posts"], 0), pins=max(be.num(n["pins"]) - old["pins"], 0))
     finally:
         be.HERE = HERE
+    inf = root / "influencers.json"
+    data = json.loads(inf.read_text())["accounts"] if inf.exists() else {}
+    for b in INFLUENCERS:
+        a = data.get(b["handle"])
+        if a is not None:
+            views = sum(a.get("reels", {}).values())
+            out[b["slug"]] = dict(views=views, raw_views=views, fol=a.get("followers"), eng=a.get("eng"), posts=a.get("posts"), pins=0)
     return out
 
 
@@ -147,9 +173,11 @@ def report_commits() -> list[tuple[date, str]]:
 
 
 def snapshot_at(sha: str) -> dict:
+    has_inf = subprocess.run(["git", "-C", str(HERE), "cat-file", "-e", f"{sha}:influencers.json"], capture_output=True).returncode == 0
     with tempfile.TemporaryDirectory() as tmp:
         tar = subprocess.run(["git", "-C", str(HERE), "archive", sha, "summary", "reelo/feed.json",
-                              *(f"{s}/stats.json" for s in ("microdramas", "dwell", "faceless", "listed")), "dwell/pinterest.json"], capture_output=True, check=True)
+                              *(f"{s}/stats.json" for s in ("microdramas", "dwell", "faceless", "listed")), "dwell/pinterest.json",
+                              *(["influencers.json"] if has_inf else [])], capture_output=True, check=True)
         subprocess.run(["tar", "-x", "-C", tmp], input=tar.stdout, check=True)
         return snapshot(Path(tmp))
 
@@ -157,7 +185,11 @@ def snapshot_at(sha: str) -> dict:
 def snapshot_on(day: date, commits: list[tuple[date, str]]) -> dict:
     """The brand numbers as the last report commit on or before `day` left them."""
     before = [sha for d, sha in commits if d <= day]
-    return snapshot_at(before[-1]) if before else {}
+    snap = snapshot_at(before[-1]) if before else {}
+    for b in INFLUENCERS:  # an account that did not exist yet on that day had nothing yet
+        if b["slug"] not in snap and b["launched"] > day:
+            snap[b["slug"]] = dict(views=0, raw_views=0, fol=0, eng=0, posts=0, pins=0)
+    return snap
 
 
 def diff(a: dict, b: dict, key: str):
@@ -169,7 +201,7 @@ def diff(a: dict, b: dict, key: str):
 def fmt(n, k: str = "") -> str:
     """A number not known yet says why, never 0."""
     if n is None:
-        return "not synced" if k in ("views", "eng") else "pending"
+        return "not synced" if k in ("views", "eng") else "-"
     return f"{max(n, 0):,}"
 
 
@@ -251,8 +283,21 @@ def auto_notes(week: dict, prev: dict, names: dict, tw: dict, ta: dict) -> list[
     if ta["conv"] == 0:
         out.append("No sign-ups or purchases from any brand yet.")
     elif tw["conv"]:
-        out.append(f"{tw['conv']} new sign-ups and purchases this week, {ta['conv']} since Oct 15.")
+        n = tw["conv"]
+        out.append(f"{n} new {'sign-up or purchase' if n == 1 else 'sign-ups and purchases'} this week, {ta['conv']} since Oct 15.")
     return out
+
+
+def since_line(b: dict, n: dict) -> str:
+    if n.get("posts") is None:
+        return ""
+    if b.get("launched"):
+        return f'{n["posts"]:,} reels since {b["launched"].day} {b["launched"]:%b}.'
+    return f'{n["posts"]:,} posts since Oct 15.'
+
+
+def count_word(n: int) -> str:
+    return ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"][n] if n <= 10 else str(n)
 
 
 def stat_cards(vals: dict, meanings: dict, sub: dict) -> str:
@@ -270,8 +315,10 @@ def build(day: date) -> str:
     start, end = (date.fromisoformat(conv["week"][k]) for k in ("start", "end"))
 
     week, prev, alltime = {}, {}, {}
-    for b in be.BRANDS:
-        s, c = b["slug"], conv["brands"][b["slug"]]
+    none = {k: None for k in ("real", "used_ai", "signups", "purchases")}
+    for b in accounts():
+        s = b["slug"]
+        c = conv["brands"].get(s) or {"this": none, "prev": none, "all": none}  # not counted yet: shows "-"
         week[s] = {k: diff(now[s], wk1.get(s, {}), k) for k in ("views", "fol", "eng")}
         prev[s] = {k: diff(wk1.get(s, {}), wk2.get(s, {}), k) for k in ("views", "fol", "eng")}
         alltime[s] = {k: now[s][k] for k in ("views", "fol", "eng")}
@@ -282,9 +329,8 @@ def build(day: date) -> str:
 
     def total(table: dict, k: str):
         vals = [table[s][k] for s in table]
-        if k in ("views", "eng"):  # a brand that has not synced is left out, and says so in its row
-            return sum(v for v in vals if v is not None)
-        return add(*vals)
+        known = [v for v in vals if v is not None]  # an account not counted yet is left out, and says so in its row
+        return sum(known) if known else None
 
     tw = {k: total(week, k) for k, *_ in CLASSES}
     tp = {k: total(prev, k) for k, *_ in CLASSES}
@@ -296,7 +342,7 @@ def build(day: date) -> str:
 
     heads = "".join(f'<th scope="col">{E(label)}</th>' for _, label, *_ in CLASSES)
     week_rows, all_rows = [], []
-    for b in be.BRANDS:
+    for b in accounts():
         s = b["slug"]
         week_rows.append(f'<tr><th scope="row"><span class="bn">{E(b["name"])}</span></th>' + "".join(
             f'<td data-label="{E(label)}"><b class="n">{fmt(week[s][k], k)}</b>{change(week[s][k], prev[s][k])}</td>'
@@ -305,7 +351,7 @@ def build(day: date) -> str:
         views_all = fmt(alltime[s]["views"], "views") if alltime[s]["views"] is not None else f'{now[s]["raw_views"]:,} (partly synced)'
         all_rows.append(
             f'<tr><th scope="row"><span class="bn">{E(b["name"])}</span><span class="pp">{E(PURPOSE[s])}</span>'
-            f'<span class="cc">{E(b["concept"])}{E(pins)} {f'{now[s]["posts"]:,} posts since Oct 15.' if now[s]["posts"] is not None else ""}</span></th>'
+            f'<span class="cc">{E(b["concept"])}{E(pins)} {since_line(b, now[s])}</span></th>'
             f'<td data-label="Reach"><b class="n">{views_all}</b></td>' + "".join(
                 f'<td data-label="{E(label)}"><b class="n">{fmt(alltime[s][k], k)}</b></td>' for k, label, *_ in CLASSES[1:]) + "</tr>")
 
@@ -315,8 +361,10 @@ def build(day: date) -> str:
             history.append((d, sum(v["views"] or 0 for v in snapshot_at(sha).values())))  # same rule as the cards
     history.append((day, sum(v["views"] or 0 for v in now.values())))
 
-    names = {b["slug"]: b["name"] for b in be.BRANDS}
-    notes = "".join(f"<li>{E(n)}</li>" for n in auto_notes(week, prev, names, tw, ta) + conv.get("notes", []))
+    names = {b["slug"]: b["name"] for b in accounts()}
+    pending = [b["name"] for b in INFLUENCERS if b["slug"] not in conv["brands"]]
+    extra = [f"Bio-link taps of {', '.join(pending[:-1]) + ' and ' + pending[-1] if len(pending) > 1 else pending[0]} are not counted yet, so their visits show -."] if pending else []
+    notes = "".join(f"<li>{E(n)}</li>" for n in auto_notes(week, prev, names, tw, ta) + conv.get("notes", []) + extra)
     css = (OUT / "page.css").read_text()
     return f"""<!doctype html>
 <html lang="en">
@@ -324,7 +372,7 @@ def build(day: date) -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Social Brands Portfolio</title>
-<meta name="description" content="Five social brands on one page: purpose, concept, the week's numbers with the change on the week before, and the totals since Oct 15.">
+<meta name="description" content="{count_word(len(accounts()))} social brands and AI influencers on one page: purpose, concept, the week's numbers with the change on the week before, and the totals since Oct 15.">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#121212">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -353,8 +401,8 @@ def build(day: date) -> str:
 </header>
 <main class="wrap" id="main">
   <div class="page-head">
-    <h1>Five brands, one <span class="g">week.</span></h1>
-    <p class="dek">AI-made social brands that grow an audience and send it to Picsart. First everything since Oct 15, then the week.</p>
+    <h1>{count_word(len(accounts()))} brands, one <span class="g">week.</span></h1>
+    <p class="dek">AI-made social brands and AI influencers that grow an audience and send it to Picsart. First everything since Oct 15, then the week.</p>
   </div>
 
   <section class="sec" aria-labelledby="o-h">
@@ -420,7 +468,7 @@ def png(page: Path) -> Path:
 
 
 LIVE = "https://vilyapoghosyan.github.io/picsart-social-concepts/portfolio/"
-FILES = ["build_portfolio.py", "portfolio/index.html", "portfolio/page.css", "portfolio/picsart.css", "portfolio/fonts",
+FILES = ["build_portfolio.py", "influencers.json", "portfolio/index.html", "portfolio/page.css", "portfolio/picsart.css", "portfolio/fonts",
          "portfolio/portfolio.png"]
 
 
