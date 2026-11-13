@@ -27,6 +27,27 @@
   .period { margin: 0 0 -.8rem }
   :root { --s1: #C209C1; --s2: #B7791F; --s3: #3FD68F; --s4: #8F8F8F }
   :root[data-theme="light"] { --s3: #138A55; --s4: #6F6A64 }
+  .chart { padding: clamp(16px, 2.4vw, 26px); display: grid; gap: 1rem; min-width: 0 }
+  .chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; flex-wrap: wrap }
+  .chart-head h3 { margin: 0; font-family: var(--ui); font-weight: 600; font-size: 1rem }
+  .lc { padding: 0 3.2rem 0 2.6rem }
+  .plot { position: relative; height: 240px; border-bottom: 1px solid var(--line-2) }
+  .plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible }
+  .plot .area { fill: #C209C1; fill-opacity: .16; stroke: none }
+  .plot .line { fill: none; stroke: #C209C1; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linejoin: round }
+  .plot .gap { stroke: #C209C1; stroke-width: 2; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; opacity: .7 }
+  .gl { position: absolute; left: 0; right: 0; border-top: 1px solid var(--line) }
+  .gl em { position: absolute; right: 100%; margin-right: .5rem; transform: translateY(-50%); font-style: normal; font-family: var(--ui); font-size: .72rem; color: var(--faint) }
+  .pt { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: #C209C1; box-shadow: 0 0 0 2px var(--surface) }
+  .last { position: absolute; transform: translate(.6rem, -50%); font-family: var(--ui); font-weight: 600; font-size: .9rem; color: var(--ink) }
+  .xl { position: relative; height: 1.4rem; margin-top: .4rem }
+  .xl span { position: absolute; transform: translateX(-50%); font-family: var(--ui); font-size: .74rem; color: var(--faint); white-space: nowrap }
+  .chart .legend { display: block }
+  @media (max-width: 860px) { .plot { height: 190px } }
+
+  .stats-inf { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+  .stat small { line-height: 1.4 }
+  @media (max-width: 860px) { .stats-inf { grid-template-columns: 1fr } }
   .donut-wrap { display: grid; grid-template-columns: 200px 1fr; gap: 1.6rem; align-items: center }
   .donut { width: 200px; height: 200px }
   .donut .seg { transition: stroke-width .15s } .donut .seg:hover { stroke-width: 30 }
@@ -116,7 +137,27 @@
       </svg>
       <ul class="list src"><li><span><i style="background:var(--s1)"></i>First Microdramas ad, Nov 5 to 7</span><b>411<small>81.7%</small></b></li><li><span><i style="background:var(--s2)"></i>Second Microdramas ad, Nov 9 to 10</span><b>67<small>13.3%</small></b></li><li><span><i style="background:var(--s3)"></i>Bio links, Oct 15 to Nov 10</span><b>21<small>4.2%</small></b></li><li><span><i style="background:var(--s4)"></i>Link tests</span><b>4<small>0.8%</small></b></li></ul>
     </div>
-    <p class="muted" style="margin:0">Every visit came through Microdramas links. Reelo, Dwell, Faceless and Listed links brought no real taps in this time. Someone who came through both ads is counted in each.</p>
+    <p class="muted" style="margin:0">Every visit came through Microdramas links. Reelo, Dwell, Faceless, Listed and the AI influencer links brought no real taps in this time. Someone who came through both ads is counted in each.</p>
+  </section>
+
+<section class="panel chart" aria-label="Total reach since Oct 15">
+      <div class="chart-head"><h3>Total reach since Oct 15</h3><span class="legend">views on Instagram and TikTok, all brands and AI influencers, to Nov 13. Dashed: launch to the first reading</span></div>
+      <div class="lc"><div class="plot"><span class="gl" style="top:75.00%"><em>250K</em></span><span class="gl" style="top:50.00%"><em>500K</em></span><span class="gl" style="top:25.00%"><em>750K</em></span><span class="gl" style="top:0.00%"><em>1.0M</em></span><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="10.34,100 10.34,95.65 13.79,95.26 27.59,82.75 37.93,75.63 41.38,70.94 48.28,62.68 51.72,58.23 62.07,47.01 75.86,34.81 86.21,29.20 96.55,24.23 100.00,2.83 100,100" class="area"/><line x1="0" y1="100" x2="10.34" y2="95.65" class="gap"/><polyline points="10.34,95.65 13.79,95.26 27.59,82.75 37.93,75.63 41.38,70.94 48.28,62.68 51.72,58.23 62.07,47.01 75.86,34.81 86.21,29.20 96.55,24.23 100.00,2.83" class="line"/></svg><i class="pt" style="left:10.34%;top:95.65%" title="Sun 18 Oct: 43,455 views since Oct 15"></i><i class="pt" style="left:13.79%;top:95.26%" title="Mon 19 Oct: 47,382 views since Oct 15"></i><i class="pt" style="left:27.59%;top:82.75%" title="Fri 23 Oct: 172,542 views since Oct 15"></i><i class="pt" style="left:37.93%;top:75.63%" title="Mon 26 Oct: 243,696 views since Oct 15"></i><i class="pt" style="left:41.38%;top:70.94%" title="Tue 27 Oct: 290,562 views since Oct 15"></i><i class="pt" style="left:48.28%;top:62.68%" title="Thu 29 Oct: 373,202 views since Oct 15"></i><i class="pt" style="left:51.72%;top:58.23%" title="Fri 30 Oct: 417,714 views since Oct 15"></i><i class="pt" style="left:62.07%;top:47.01%" title="Mon 2 Nov: 529,873 views since Oct 15"></i><i class="pt" style="left:75.86%;top:34.81%" title="Fri 6 Nov: 651,929 views since Oct 15"></i><i class="pt" style="left:86.21%;top:29.20%" title="Mon 9 Nov: 707,983 views since Oct 15"></i><i class="pt" style="left:96.55%;top:24.23%" title="Thu 12 Nov: 757,683 views since Oct 15"></i><i class="pt" style="left:100.00%;top:2.83%" title="Fri 13 Nov: 971,696 views since Oct 15"></i><b class="last" style="left:100.00%;top:2.83%">972K</b></div><div class="xl"><span style="left:10.34%">18 Oct</span><span style="left:27.59%">23 Oct</span><span style="left:51.72%">30 Oct</span><span style="left:75.86%">6 Nov</span><span style="left:100.00%">13 Nov</span></div></div>
+    </section>
+
+  <section class="panel" aria-labelledby="inf-h">
+    <div class="ph"><h2 id="inf-h">AI influencers</h2><span class="legend">Instagram only, no Picsart branding, bio link to the AI Playground</span></div>
+    <div class="stats stats-inf">
+      <div class="stat"><span class="cls">Granny Ofik</span><b>185K</b><span>views on 12 reels since Nov 10; 44 followers</span><small>@granny.ofik · bio link from Nov 9 · taps to Picsart: 0</small></div>
+      <div class="stat"><span class="cls">Aisha Hadid</span><b>459</b><span>views on 3 reels since Nov 12; 8 followers</span><small>@aishahadid.ai · bio link from Nov 13 · taps to Picsart: 0</small></div>
+      <div class="stat"><span class="cls">Rich Ronnie</span><b>5.2K</b><span>views on 4 reels since Nov 12; 10 followers</span><small>@richronnie.ai · bio link from Nov 13 · taps to Picsart: 0</small></div>
+    </div>
+    <ul class="list">
+      <li><span>Views on all three accounts, Nov 10 to Nov 13</span><b>about 191K</b></li>
+      <li><span>Most-watched reel (Granny Ofik, the yacht recast)</span><b>163K</b></li>
+      <li><span>People who tapped an influencer bio link to Picsart, up to Nov 12</span><b>0</b></li>
+    </ul>
+    <p class="muted" style="margin:0">Granny Ofik's bio link has been up since Nov 9 and has not brought a visit yet. Aisha's and Ronnie's links went up on Nov 13, so their first taps will show in the next count. Saves and shares are not synced yet for these accounts. Instagram rounds large view counts (163K), so totals are approximate.</p>
   </section>
 
   <p class="cls period">Up to Nov 8: the first ad (Nov 5 to 7) and bio links</p>
