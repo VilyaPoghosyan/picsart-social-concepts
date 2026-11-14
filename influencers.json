@@ -1,22 +1,22 @@
 {
- "pulledAt": "2026-11-13 16:38",
+ "pulledAt": "2026-11-14 11:37",
  "accounts": {
   "granny.ofik": {
    "followers": 44,
    "followersAt": "2026-11-13T11:05:22.248Z",
    "reels": {
-    "DfrTp5bR6vn": 240,
-    "Dfpp1IZjkND": 6368,
-    "DfpjBogn9Tl": 13000,
-    "Dfpb-D4En58": 163000,
-    "DfpVO16COyz": 409,
-    "DfpOgpHCNas": 417,
-    "DfmerPZsbtE": 548,
-    "Dfl-qFSsXK8": 310,
-    "DfkuVi7R84F": 265,
-    "DfklEnKRlvo": 186,
-    "DfkIocYMRc4": 234,
-    "DfkHZbmsAPM": 314
+    "DfsHs_rDb9R": 429,
+    "Dfr59eFjXBX": 5435,
+    "DfrTp5bR6vn": 1654,
+    "Dfpp1IZjkND": 9721,
+    "DfpjBogn9Tl": 13900,
+    "Dfpb-D4En58": 329000,
+    "DfpVO16COyz": 931,
+    "DfpOgpHCNas": 898,
+    "DfmerPZsbtE": 896,
+    "Dfl-qFSsXK8": 636,
+    "DfkuVi7R84F": 539,
+    "DfklEnKRlvo": 442
    },
    "posts": 12,
    "eng": null
@@ -25,23 +25,31 @@
    "followers": 8,
    "followersAt": "2026-11-13T11:39:00.220Z",
    "reels": {
-    "DfrjifpETd1": 9,
-    "DfrdPbmjCl3": 301,
-    "DfpYknjAHoB": 149
+    "DfsLKbKjqD5": 822,
+    "DfsA-SiDZ66": 1006,
+    "Dfr2ge2Emhj": 29,
+    "DfrsTnqCt2W": 2358,
+    "DfrjifpETd1": 294,
+    "DfrdPbmjCl3": 1499,
+    "DfpYknjAHoB": 165
    },
-   "posts": 3,
+   "posts": 7,
    "eng": null
   },
   "richronnie.ai": {
    "followers": 10,
    "followersAt": "2026-11-13T11:39:17.525Z",
    "reels": {
-    "Dfra_R2jGWg": 1829,
-    "DfrUIzpkdME": 156,
-    "DfrOXPnFSgN": 2140,
-    "DfpfZBYDCgY": 1111
+    "DfsHt-CEgfZ": 1569,
+    "Dfr9VrKjrgT": 292,
+    "DfrzI8bIEYP": 240,
+    "DfrsQVjlOot": 1614,
+    "Dfra_R2jGWg": 80700,
+    "DfrUIzpkdME": 606,
+    "DfrOXPnFSgN": 2587,
+    "DfpfZBYDCgY": 1259
    },
-   "posts": 4,
+   "posts": 8,
    "eng": null
   }
  }
