@@ -233,6 +233,12 @@
   "views": null,
   "sync": "http 202"
  },
+ "6ae84cb8e3c3c6b5286cab20": {
+  "platform": "instagram",
+  "url": "https://www.instagram.com/reel/DfrzKGEgjTg/",
+  "views": null,
+  "sync": "http 202"
+ },
  "_followers": {
   "instagram": 4
  }
