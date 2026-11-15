@@ -409,7 +409,7 @@ def build(day: date) -> str:
     <div class="sec-head"><h2 id="o-h">Overall</h2><span class="pill">since Thu 15 Oct</span></div>
     <div class="stats">{all_stats}</div>
     <div class="panel chart">
-      <div class="chart-head"><h3>Total reach since Oct 15</h3><span class="legend">views on Instagram and TikTok, all brands. Dashed: launch to the first reading</span></div>
+      <div class="chart-head"><h3>Total reach since Oct 15</h3><span class="legend">views on Instagram and TikTok, all brands and AI influencers. Dashed: launch to the first reading</span></div>
       {overall_chart(history)}
     </div>
     <div class="panel tbl">
