@@ -47,7 +47,8 @@ small { display: block; color: var(--faint); font-family: var(--ui); font-weight
 .pf thead th small { margin-top: .15rem; font-weight: 500 }
 .pf-all tbody th { width: 34% }
 .pf td .n { font-family: var(--ui); font-weight: 600; font-size: 1.05rem; font-variant-numeric: tabular-nums }
-.bn { font-family: var(--ui); font-weight: 600; font-size: 1rem }
+.bn { display: flex; align-items: center; gap: .6rem; font-family: var(--ui); font-weight: 600; font-size: 1rem }
+.bn img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; flex: none; border: 1px solid var(--line-2) }
 .pp { display: block; margin-top: .3rem; font-size: .88rem; line-height: 1.4; color: var(--ink) }
 .cc { display: block; margin-top: .2rem; font-size: .8rem; line-height: 1.4; color: var(--muted) }
 

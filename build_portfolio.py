@@ -13,7 +13,8 @@ Numbers come from two places:
                                 Past days are read from this repo's git history (last report commit on or before that day).
   visits, used AI, converted    Argus only, written by the Monday task to
                                 ~/vilya-ai/context/reports/conversion/weekly/<report day>.json (shape: see the 2026-11-06 file)
-  AI influencers                onepagers/influencers.json (bin/influencer_stats.py: live reel views, broker followers).
+  AI influencers                onepagers/influencers.json (bin/influencer_stats.py: Instagram insights views and saves +
+                                shares; followers only from a logged-in profile read, else pending).
                                 Same rows, totals and chart as the brands; their link taps read the conversion file
                                 under the utm_campaign key (granny_ofik, ...) and show "-" until Argus has counted them.
 
@@ -76,7 +77,7 @@ CLASSES = [
     ("views", "Reach", "views on Instagram and TikTok", "views on Instagram and TikTok"),
     ("fol", "Audience", "new followers", "followers today"),
     ("eng", "Engagement", "saves and shares", "saves and shares"),
-    ("visits", "Visits", "people who tapped through to Picsart", "people who tapped through to Picsart"),
+    ("visits", "Visits", "people from the Instagram app who reached Picsart", "people from the Instagram app who reached Picsart"),
     ("used_ai", "Used AI", "visitors who used a Picsart AI tool", "visitors who used a Picsart AI tool"),
     ("conv", "Converted", "new sign-ups and purchases", "new sign-ups and purchases"),
 ]
@@ -155,7 +156,8 @@ def snapshot(root: Path) -> dict:
     for b in INFLUENCERS:
         a = data.get(b["handle"])
         if a is not None:
-            views = sum(a.get("reels", {}).values())
+            # Instagram insights since launch (exact). Snapshots before 2026-11-15 only had the rounded reel-grid counts.
+            views = a.get("views") if "views" in a else sum(a.get("reels", {}).values())
             out[b["slug"]] = dict(views=views, raw_views=views, fol=a.get("followers"), eng=a.get("eng"), posts=a.get("posts"), pins=0)
     return out
 
@@ -201,7 +203,7 @@ def diff(a: dict, b: dict, key: str):
 def fmt(n, k: str = "") -> str:
     """A number not known yet says why, never 0."""
     if n is None:
-        return "not synced" if k in ("views", "eng") else "-"
+        return "not synced" if k in ("views", "eng") else "pending"
     return f"{max(n, 0):,}"
 
 
@@ -276,7 +278,7 @@ def auto_notes(week: dict, prev: dict, names: dict, tw: dict, ta: dict) -> list[
         lead = max(week, key=lambda s: week[s]["visits"] or 0)
         n, ai = tw["visits"], week[lead]["used_ai"] or 0
         who = (f"Only 1 real visitor reached Picsart this week, from {names[lead]}" if n == 1 else
-               f"{names[lead]} sent {week[lead]['visits']} of the {n} real visitors to Picsart this week")
+               f"{names[lead]} sent {week[lead]['visits']} of the {n} visitors from the Instagram app to Picsart this week")
         out.append(f"{who}; {'nobody' if not ai else ai} used a Picsart AI tool.")
     else:
         out.append("No brand sent a real visitor to Picsart this week.")
@@ -342,15 +344,23 @@ def build(day: date) -> str:
 
     heads = "".join(f'<th scope="col">{E(label)}</th>' for _, label, *_ in CLASSES)
     week_rows, all_rows = [], []
-    for b in accounts():
+    def name_cell(b):  # profile picture + name, as on the executive summary
+        return f'<span class="bn"><img src="img/{b["slug"]}.jpg" alt="">{E(b["name"])}</span>'
+
+    def by_reach(table):  # highest reach first, unknown last
+        return sorted(accounts(), key=lambda b: -(table[b["slug"]]["views"] if table[b["slug"]]["views"] is not None else -1))
+
+    for b in by_reach(week):
         s = b["slug"]
-        week_rows.append(f'<tr><th scope="row"><span class="bn">{E(b["name"])}</span></th>' + "".join(
+        week_rows.append(f'<tr><th scope="row">{name_cell(b)}</th>' + "".join(
             f'<td data-label="{E(label)}"><b class="n">{fmt(week[s][k], k)}</b>{change(week[s][k], prev[s][k])}</td>'
             for k, label, *_ in CLASSES) + "</tr>")
+    for b in by_reach(alltime):
+        s = b["slug"]
         pins = f' Plus {now[s]["pins"]:,} Pinterest impressions.' if now[s]["pins"] else ""
         views_all = fmt(alltime[s]["views"], "views") if alltime[s]["views"] is not None else f'{now[s]["raw_views"]:,} (partly synced)'
         all_rows.append(
-            f'<tr><th scope="row"><span class="bn">{E(b["name"])}</span><span class="pp">{E(PURPOSE[s])}</span>'
+            f'<tr><th scope="row">{name_cell(b)}<span class="pp">{E(PURPOSE[s])}</span>'
             f'<span class="cc">{E(b["concept"])}{E(pins)} {since_line(b, now[s])}</span></th>'
             f'<td data-label="Reach"><b class="n">{views_all}</b></td>' + "".join(
                 f'<td data-label="{E(label)}"><b class="n">{fmt(alltime[s][k], k)}</b></td>' for k, label, *_ in CLASSES[1:]) + "</tr>")
@@ -469,7 +479,7 @@ def png(page: Path) -> Path:
 
 LIVE = "https://vilyapoghosyan.github.io/picsart-social-concepts/portfolio/"
 FILES = ["build_portfolio.py", "influencers.json", "portfolio/index.html", "portfolio/page.css", "portfolio/picsart.css", "portfolio/fonts",
-         "portfolio/portfolio.png"]
+         "portfolio/portfolio.png", "portfolio/img"]
 
 
 def git(*args: str) -> str:
