@@ -86,6 +86,7 @@ MICRO_COST = {
     "married-to-a-nobody-3": dict(calls=2962, drop=None, basis="calls", note="THE BOARDROOM incl. retakes (cap 2,990 approved)"),
     "married-to-a-nobody-4": dict(calls=2867, drop=None, basis="calls", note="THE KEYS, all-in from the series state"),
     "married-to-a-nobody-5": dict(calls=2713, drop=None, basis="calls", note="THE PRICE, all-in from the series state"),
+    "married-to-a-nobody-6": dict(calls=2858, drop=None, basis="calls", note="THE GALA, all-in from the series state"),
 }
 
 # ALL-IN credits per brand (audited 2026-10-23 from every run log, run.json and balance drop, including work
