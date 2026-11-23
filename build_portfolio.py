@@ -38,11 +38,13 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import build_exec as be
+import funnel
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "portfolio"
 KIT = Path.home() / ".claude/skills/picsart-product-design/assets"
 CONV = Path.home() / "vilya-ai/context/reports/conversion/weekly"
+FUNNEL = Path.home() / "vilya-ai/context/reports/conversion/funnel"  # Instagram + Argus funnel steps per report day
 START = date(2026, 10, 15)  # official start of the run (Vilya, 2026-11-06); earlier posts are left out of every number
 CUT = datetime(2026, 10, 14, 20, 0, tzinfo=timezone.utc)  # Oct 15 00:00 Yerevan
 E = html.escape
@@ -57,6 +59,9 @@ PURPOSE = {
     "granny_ofik": "Reach through a character people follow for her: a savage 84-year-old with her dog Baron.",
     "aisha_hadid": "Reach through a character people follow for her: a fishing-town girl who turns every trend into a runway.",
     "rich_ronnie": "Reach through a character people follow for him: a loud, gold-covered uncle who shows off his money.",
+    "ballerina": "Reach through a character people follow for her: a stunning ballerina who finishes giant food.",
+    "pingi": "Reach through a character people follow for her: a cute-but-angry baby penguin living relatable adult life.",
+    "rich_lolita": "Reach through a character people follow for her: Rich Ronnie's trillionaire red-haired wife and her luxury life.",
 }
 
 # The AI influencer accounts (Instagram only, no Picsart branding, ADR 0006). slug = their bio-link utm_campaign.
@@ -67,6 +72,12 @@ INFLUENCERS = [
          concept="AI influencer @aishahadid.ai: street-runway and trend reels, recasts of viral clips."),
     dict(slug="rich_ronnie", handle="richronnie.ai", name="Rich Ronnie", launched=date(2026, 11, 12),
          concept="AI influencer @richronnie.ai: over-the-top rich-uncle reels, recasts of viral clips."),
+    dict(slug="ballerina", handle="ballerina.ai", name="The Hungry Ballerina", launched=date(2026, 11, 17),
+         concept="AI influencer @ballerina.ai: a ballerina in tutu and pointe shoes taking on eating challenges."),
+    dict(slug="pingi", handle="pingi.ai", name="Pingi", launched=date(2026, 11, 18),
+         concept="AI influencer @pingi.ai: a baby penguin girl in everyday office, gym and money moments."),
+    dict(slug="rich_lolita", handle="richlolita.ai", name="Rich Lolita", launched=date(2026, 11, 19),
+         concept="AI influencer @richlolita.ai: Rich Ronnie's wife, a red-haired trillionaire, recasts of viral luxury clips."),
 ]
 def accounts() -> list[dict]:
     return be.BRANDS + INFLUENCERS
@@ -197,6 +208,8 @@ def snapshot_on(day: date, commits: list[tuple[date, str]]) -> dict:
 def diff(a: dict, b: dict, key: str):
     if a.get(key) is None or b.get(key) is None:
         return None
+    if a[key] < b[key] * 0.99:  # a real drop means the two readings came from different sources: no honest weekly number
+        return None
     return max(a[key] - b[key], 0)  # platforms revise counts down a little; a week never adds negative views
 
 
@@ -309,6 +322,48 @@ def stat_cards(vals: dict, meanings: dict, sub: dict) -> str:
         for k, label, *_ in CLASSES)
 
 
+FUNNEL_STEPS = [  # top of the funnel first; key, label, what it counts, source
+    ("views", "Views", "Views of our reels and posts on Instagram and TikTok.", "Instagram + TikTok"),
+    ("profile_visits", "Profile visits", "Times people opened one of our Instagram profiles.", "Instagram insights"),
+    ("link_taps", "Link taps", "Taps on the Picsart link in our bios, plus clicks on the Microdramas ads. Story link-sticker taps are only in the Instagram app and are not included.", "Instagram insights + Meta Ads"),
+    ("visits", "People on Picsart", "People from the Instagram app who opened picsart.com through one of our links, each counted once. Our own link checks are left out.", "Picsart data (Argus)"),
+    ("ai_screen", "Opened the AI screen", "Of those, people who opened an AI tool screen on Picsart.", "Picsart data (Argus)"),
+    ("used_ai", "Used AI", "People who did any action on the AI screen, including the prompt that opens on its own from our ad and message links.", "Picsart data (Argus)"),
+    ("generate", "Pressed Generate", "People who pressed Generate. Without an account, the sign-in screen stops them here.", "Picsart data (Argus)"),
+    ("signups", "Created an account", "People who signed up for a new Picsart account after coming through our link.", "Picsart data (Argus)"),
+    ("credits_users", "Spent credits", "Signed-in people who spent Picsart credits on AI after coming through our link.", "Picsart data (Argus)"),
+    ("purchases", "Paid", "People who bought a subscription or credits after coming through our link.", "Picsart data (Argus)"),
+]
+
+
+def funnel_data(f: dict, now: dict, wk1: dict, week: dict, alltime: dict, conv: dict, start: date, end: date) -> dict:
+    """The funnel section's data: views from the same snapshots as the cards, the rest from the funnel and conversion files."""
+    def views(s, table):
+        if table[s]["views"] is not None:
+            return table[s]["views"]
+        raw = now[s].get("raw_views")
+        return raw if table is alltime else max((raw or 0) - (wk1.get(s, {}).get("raw_views") or 0), 0)
+    values = {}
+    for w, table, c in (("all", alltime, "all"), ("week", week, "this")):
+        values[w] = {}
+        for b in accounts():
+            s = b["slug"]
+            cv = (conv["brands"].get(s) or {}).get(c) or {}
+            fs = f[w].get(s, {})
+            values[w][s] = {"views": views(s, table), "visits": cv.get("real"), "used_ai": cv.get("used_ai"),
+                            "signups": cv.get("signups"), "purchases": cv.get("purchases"), **fs}
+    order = sorted(accounts(), key=lambda b: -(values["all"][b["slug"]]["views"] or 0))
+    credits = f" {f['credits_note']}" if f.get("credits_note") else ""
+    return {
+        "windows": [{"key": "all", "label": "Since Oct 15", "note": f"Since Oct 15: views and Instagram numbers to {nice(date.fromisoformat(f['day']))}, Picsart numbers to {nice(end)}.{credits}"},
+                    {"key": "week", "label": "This week", "note": f"{nice(start)} to {nice(end)}.{credits}"}],
+        "steps": [{"key": k, "label": l, "def": d, "source": src} for k, l, d, src in FUNNEL_STEPS],
+        "accounts": [{"slug": b["slug"], "name": b["name"], "img": f"img/{b['slug']}.jpg"} for b in order],
+        "values": values,
+        "pending": f.get("pending", {}),
+    }
+
+
 def build(day: date) -> str:
     commits = report_commits()
     now = snapshot(HERE)
@@ -376,6 +431,10 @@ def build(day: date) -> str:
     extra = [f"Bio-link taps of {', '.join(pending[:-1]) + ' and ' + pending[-1] if len(pending) > 1 else pending[0]} are not counted yet, so their visits show -."] if pending else []
     notes = "".join(f"<li>{E(n)}</li>" for n in auto_notes(week, prev, names, tw, ta) + conv.get("notes", []) + extra)
     css = (OUT / "page.css").read_text()
+    fn_css = fn_html = fn_js = ""
+    fpath = FUNNEL / f"{day.isoformat()}.json"
+    if fpath.exists():
+        fn_css, fn_html, fn_js = funnel.render(funnel_data(json.loads(fpath.read_text()), now, wk1, week, alltime, conv, start, end))
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -391,7 +450,7 @@ def build(day: date) -> str:
 <link rel="preload" href="fonts/Acorn-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Gilroy-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="picsart.css">
-<style>{css}</style>
+<style>{css}{fn_css}</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -430,6 +489,8 @@ def build(day: date) -> str:
     </div>
   </section>
 
+  {fn_html}
+
   <section class="sec" aria-labelledby="w-h">
     <div class="sec-head"><h2 id="w-h">This week</h2><span class="pill">{nice(start)} to {nice(end)}</span></div>
     <div class="stats">{week_stats}</div>
@@ -446,6 +507,7 @@ def build(day: date) -> str:
     <p>Updated {datetime.now():%a %-d %b %Y, %H:%M} Yerevan. Refreshed every Monday at 11:30.</p>
   </footer>
 </main>
+<script>{fn_js}</script>
 <script>
 document.getElementById("theme-btn").addEventListener("click", () => {{
   const r = document.documentElement; r.dataset.theme = r.dataset.theme === "light" ? "dark" : "light";
