@@ -1,0 +1,83 @@
+/* page-only layout for the performance dashboard; every colour, font and corner comes from picsart.css tokens */
+.wrap { display: grid; gap: 1.4rem; padding-bottom: 3rem }
+.page-head { margin-bottom: 0 }
+small { color: var(--faint); font-family: var(--ui); font-weight: 500; font-size: .76rem; line-height: 1.35 }
+.legend { font-family: var(--ui); font-weight: 500; font-size: .8rem; color: var(--muted) }
+.fine { margin: 0; color: var(--faint); font-size: .78rem; line-height: 1.5 }
+h2 { margin: 0 }
+
+/* key numbers */
+.kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .8rem }
+.kpi { display: grid; gap: .3rem; align-content: start; padding: 1rem 1.1rem; min-width: 0; border-radius: var(--r-card);
+  background: var(--surface); border: 1px solid var(--line) }
+.kpi .kl { font: 600 .8rem var(--ui); color: var(--accent-ink) }
+.kpi b { font: 400 2.1rem/1.05 var(--display); font-variant-numeric: tabular-nums }
+.kpi .kc { font: 500 .78rem var(--ui); color: var(--faint) }
+.kpi .ks { display: block }
+.wow { font: 600 .78rem var(--ui); color: var(--faint); white-space: nowrap }
+.wow.up { color: var(--ok-ink) }
+.wow.down { color: var(--bad-ink) }
+
+/* chart panels */
+.two { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.4rem }
+.ch, .lb { padding: clamp(16px, 2.4vw, 26px); display: grid; gap: 1rem; min-width: 0; align-content: start }
+.chh { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; flex-wrap: wrap }
+
+.bars { display: flex; align-items: flex-end; gap: .7rem; height: 240px; padding-top: 1.4rem }
+.col { flex: 1; display: grid; grid-template-rows: auto 1fr auto; height: 100%; min-width: 0; text-align: center; gap: .35rem }
+.col .tot { font: 600 .78rem var(--ui); color: var(--ink) }
+.stack { display: flex; flex-direction: column-reverse; justify-content: flex-start; height: 100%; border-radius: var(--r-chip) var(--r-chip) 0 0; overflow: hidden; border-bottom: 1px solid var(--line-2) }
+.stack i:last-child { border-radius: var(--r-chip) var(--r-chip) 0 0 }
+.stack i { display: block; width: 100%; min-height: 1px }
+.col .x { font: 500 .7rem var(--ui); color: var(--faint); white-space: nowrap }
+.lg { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font: 500 .78rem var(--ui); color: var(--muted) }
+.lg i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: .4rem; vertical-align: -1px }
+
+.hb { display: grid; gap: .9rem }
+.hr { display: grid; grid-template-columns: 1fr; gap: .3rem }
+.hr span { font: 500 .82rem var(--ui); color: var(--muted) }
+.hr .tr { height: 18px; border-radius: var(--r-chip); background: var(--sunk); overflow: hidden }
+.hr .tr i { display: block; height: 100%; border-radius: var(--r-chip); background: var(--grad) }
+.hr b { font: 400 1.4rem/1 var(--display); font-variant-numeric: tabular-nums }
+
+/* total reach (same chart as the portfolio) */
+.chart { padding: clamp(16px, 2.4vw, 26px); display: grid; gap: 1rem; min-width: 0 }
+.chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; flex-wrap: wrap }
+.chart-head h3 { margin: 0; font-family: var(--ui); font-weight: 600; font-size: 1rem }
+.legend { color: var(--muted); font-family: var(--ui); font-weight: 500; font-size: .8rem }
+.lc { padding: 0 3.2rem 0 2.6rem }
+.plot { position: relative; height: 240px; border-bottom: 1px solid var(--line-2) }
+.plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible }
+.plot .area { fill: #C209C1; fill-opacity: .16; stroke: none }
+.plot .line { fill: none; stroke: #C209C1; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linejoin: round }
+.plot .gap { stroke: #C209C1; stroke-width: 2; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; opacity: .7 }
+.gl { position: absolute; left: 0; right: 0; border-top: 1px solid var(--line) }
+.gl em { position: absolute; right: 100%; margin-right: .5rem; transform: translateY(-50%); font-style: normal; font-family: var(--ui); font-size: .72rem; color: var(--faint) }
+.pt { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: #C209C1; box-shadow: 0 0 0 2px var(--surface) }
+.last { position: absolute; transform: translate(.6rem, -50%); font-family: var(--ui); font-weight: 600; font-size: .9rem; color: var(--ink) }
+.xl { position: relative; height: 1.4rem; margin-top: .4rem }
+.xl span { position: absolute; transform: translateX(-50%); font-family: var(--ui); font-size: .74rem; color: var(--faint); white-space: nowrap }
+
+/* leaderboard */
+.tblw { overflow-x: auto }
+.lbt { width: 100%; border-collapse: collapse; min-width: 760px }
+.lbt th, .lbt td { padding: .7rem .6rem; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums }
+.lbt thead th { font: 600 .76rem var(--ui); color: var(--muted) }
+.lbt th:first-child, .lbt td:first-child { text-align: left }
+.lbt td b { font: 600 .95rem var(--ui) }
+.lbt td .wow { display: block }
+.bn { display: flex; align-items: center; gap: .6rem; font: 600 .95rem var(--ui) }
+.bn img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex: none; border: 1px solid var(--line-2) }
+.sp { width: 110px; height: 26px; overflow: visible }
+.sp polyline, .sp line { fill: none; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linejoin: round }
+.sp line { stroke: var(--line-2) }
+
+.foot p { margin: 0; color: var(--faint); font-size: .78rem; line-height: 1.55; max-width: 120ch }
+
+@media (max-width: 1100px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)) } .two { grid-template-columns: 1fr } }
+@media (max-width: 720px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .kpi b { font-size: 1.7rem }
+  .bars { height: 190px; gap: .4rem }
+  .col .x { font-size: .62rem }
+}
