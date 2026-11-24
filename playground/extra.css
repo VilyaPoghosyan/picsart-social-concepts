@@ -1,0 +1,5 @@
+/* AI Playground page: additions on top of the dashboard's page.css */
+.pgt td small { display: block; margin-top: .15rem }
+.pgt { min-width: 1080px }
+.says { margin: 0; padding-left: 1.2rem; display: grid; gap: .6rem; color: var(--muted); font-size: .92rem; line-height: 1.5 }
+.says li::marker { color: var(--accent-ink); font-family: var(--ui); font-weight: 600 }
