@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI characters</title>
+<title>AI Characters</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&display=swap">
@@ -302,408 +302,184 @@ legend { padding: 0; margin-bottom: .55rem }
     .hero .photo img { aspect-ratio: 3 / 4; height: auto }
   }
 </style>
+
+<style>
+.wrap{max-width:1180px;margin:0 auto;padding:32px var(--gutter) 56px}
+.hero h1{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);margin:0 0 8px;line-height:1.05}
+.hero p{color:var(--muted);margin:0;max-width:62ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-top:28px}
+.ch{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-panel);padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ch-head{display:flex;gap:14px;align-items:center}
+.pfp img{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;border:2px solid var(--line-2)}
+.ch h2{font-family:var(--ui);font-size:1.15rem;margin:0}
+.handle{color:var(--accent-ink);text-decoration:none;font-weight:600}
+.handle:hover,.handle:focus-visible{text-decoration:underline}
+.live{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.pill{font:600 .78rem/1 var(--ui);padding:5px 9px;border-radius:999px}
+.pill.on{background:var(--ok-soft);color:var(--ok-ink)}
+.pill.new{background:var(--accent-soft);color:var(--accent-ink)}
+.since{color:var(--faint);font-size:.82rem}
+.desc{margin:0;color:var(--ink);line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0}
+.stats div{background:var(--surface-2);border-radius:var(--r-tile);padding:8px 6px;text-align:center;min-width:0}
+.stats dt{color:var(--faint);font-size:.72rem}
+.stats dd{margin:2px 0 0;font:700 .95rem/1.2 var(--ui);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.ch video{width:100%;aspect-ratio:9/16;background:var(--sunk);border-radius:var(--r-card);display:block;object-fit:cover}
+.cap{margin:0;color:var(--muted);font-size:.85rem}
+.cap a{color:var(--ink)}
+.sources{margin-top:32px;color:var(--faint);font-size:.8rem;line-height:1.55;max-width:90ch}
+</style>
+
+<style>
+.wrap{max-width:1180px;margin:0 auto;padding:32px var(--gutter) 56px}
+.hero h1{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);margin:0 0 8px;line-height:1.05}
+.hero p{color:var(--muted);margin:0;max-width:62ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:20px;margin-top:28px}
+.ch{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-panel);padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ch-head{display:flex;gap:14px;align-items:center}
+.pfp img{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;border:2px solid var(--line-2)}
+.ch h2{font-family:var(--ui);font-size:1.15rem;margin:0}
+.handle{color:var(--accent-ink);text-decoration:none;font-weight:600}
+.handle:hover,.handle:focus-visible{text-decoration:underline}
+.live{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.pill{font:600 .78rem/1 var(--ui);padding:5px 9px;border-radius:999px}
+.pill.on{background:var(--ok-soft);color:var(--ok-ink)}
+.pill.new{background:var(--accent-soft);color:var(--accent-ink)}
+.since{color:var(--faint);font-size:.82rem}
+.desc{margin:0;color:var(--ink);line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:0}
+.stats div{background:var(--surface-2);border-radius:var(--r-tile);padding:8px 12px;min-width:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.stats dt{color:var(--faint);font-size:.78rem}
+.stats dd{margin:0;font:700 1rem/1.2 var(--ui);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ch video{width:100%;aspect-ratio:9/16;background:var(--sunk);border-radius:var(--r-card);display:block;object-fit:cover}
+.cap{margin:0;color:var(--muted);font-size:.85rem}
+.cap a{color:var(--ink)}
+.sources{margin-top:32px;color:var(--faint);font-size:.8rem;line-height:1.55;max-width:90ch}
+</style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
-  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17.5 14.5a5 5 0 0 1 4 5.5"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></symbol>
-  <symbol id="i-share" viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 15V3M7.5 7.5L12 3l4.5 4.5"/></symbol>
-  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4z"/></symbol>
-  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
-  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></symbol>
-  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5"/></symbol>
-  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
-  <symbol id="i-film" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9h17M3.5 15h17M8 4.5v15M16 4.5v15"/></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
-</svg>
-<a class="skip" href="#main">Skip to content</a>
-<header class="top">
-  <div class="top-in">
-    <span class="brand"><b>AI characters</b></span>
-    <span class="chname">/ Aisha, Ronnie, Ofik</span>
-    <div class="tools">
-      <button type="button" class="ibtn theme-btn" id="theme" aria-label="Switch light or dark theme"><svg class="icon sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
-    </div>
-  </div>
-</header>
-
-<main class="wrap" id="main">
-  <div class="page-head">
-    <h1>Three AI characters, <span class="g">three worlds.</span></h1>
-    <p class="dek">Each one gets its own Instagram and TikTok account, a look you recognise in half a second, and its own kind of video.</p>
-  </div>
-
-  <nav class="cast" aria-label="The characters">
-    <a class="card who" href="#aisha">
-      <img src="img/aisha/face.jpg" alt="Aisha Hadid close-up: green eyes, high cheekbones, soft smile, sleek low bun" width="900" height="1200">
-      <div class="who-top"><span class="who-name">Aisha Hadid</span><span class="pill">Concept</span></div>
-      <p>Supermodel beauty, everyday life in a Senegalese fishing town.</p>
-      <span class="go">See Aisha <svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
-    </a>
-    <a class="card who" href="#ronnie">
-      <img src="img/ronnie/stairs.jpg" alt="Rat-tail Ronnie waving from the stairs of a private jet" width="900" height="1200">
-      <div class="who-top"><span class="who-name">Rat-tail Ronnie</span><span class="pill">Concept</span></div>
-      <p>The loudest uncle, dropped into famous luxury videos.</p>
-      <span class="go">See Ronnie <svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
-    </a>
-    <a class="card who" href="#ofik">
-      <img src="img/ofik/C1.jpg" alt="Granny Ofik in ivory silk and pearls with Baron the poodle in a palace hall" width="900" height="1200">
-      <div class="who-top"><span class="who-name">Granny Ofik</span><span class="pill ok">@granny.ofik</span></div>
-      <p>A 2.5-metre dame with giant ears and the spiciest dating advice.</p>
-      <span class="go">See Ofik <svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
-    </a>
-  </nav>
-
-  <!-- ============ AISHA ============ -->
-  <section class="char" id="aisha" aria-labelledby="aisha-name">
-    <div class="char-head">
-      <span class="num">1 of 3</span>
-      <h2 id="aisha-name">Aisha Hadid</h2>
-      <p class="dek">A 21-year-old with Miss Universe looks in a small fishing town on Senegal's coast, doing the big beauty and fashion trends in her own world.</p>
-    </div>
-
-    <div class="hero">
-      <div class="photo"><img src="img/aisha/1.jpg" alt="Aisha walking down a colourful street carrying a basin on her head, long voluminous hair" width="900" height="1200"></div>
-      <section class="panel section" style="margin-bottom:0">
-        <h3>The character</h3>
-        <dl class="facts">
-          <dt>Format</dt><dd>Recasts of trending model videos, plus generated videos of her everyday life</dd>
-          <dt>Platforms</dt><dd>Instagram Reels and TikTok</dd>
-          <dt>Her world</dt><dd>A fishing town: water, laundry, cooking, the boats, her grandmother</dd>
-          <dt>Signature</dt><dd>Green eyes, a soft smile, very long hair in a new style every post</dd>
-          <dt>Labels</dt><dd>Platform AI label on. No Picsart branding on the account for now.</dd>
-        </dl>
-      </section>
-    </div>
-
-    <section class="panel section">
-      <h3>Example: an Aisha recast</h3>
-      <div class="example">
-        <video src="img/aisha/aisha-test.mp4" poster="img/aisha/test-poster.jpg" controls playsinline preload="metadata" width="720" height="1280"></video>
-        <div class="example-text">
-          <p>A test made from a real model-walk video: the street and the walk stay as filmed, only the girl is swapped for Aisha.</p>
-          <p class="cap">Not posted. Aisha is a concept for now.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>The idea behind Aisha</h3>
-      <div class="qgrid">
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span><h4 class="q-k">Who it's for</h4></div>
-          <span class="pill acc">Proposal</span>
-          <p class="q-a">18–34 who follow fashion, beauty and model content.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></span><h4 class="q-k">Why watch</h4></div>
-          <p class="q-a">Runway beauty in the most ordinary moments. The contrast is the hook.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-share"/></svg></span><h4 class="q-k">Why share</h4></div>
-          <p class="q-a">“She outshines the original.” Made to send next to the runway version.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-bookmark"/></svg></span><h4 class="q-k">Why save</h4></div>
-          <p class="q-a">Her hair: a new long style in every post.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span><h4 class="q-k">What makes people act</h4></div>
-          <div class="tags"><span class="tag">Pick her next trend</span><span class="tag">Rate the hairstyle</span><span class="tag">Duet the original</span></div>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></span><h4 class="q-k">Why come back</h4></div>
-          <p class="q-a">Her days, her family, and her grandmother: the harshest critic in town.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></span><h4 class="q-k">Long-term goal</h4></div>
-          <span class="pill acc">Proposal</span>
-          <p class="q-a">A beauty icon from a place fashion rarely shows.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-trend"/></svg></span><h4 class="q-k">Trends she fits</h4></div>
-          <div class="tags"><span class="tag">Runway walks</span><span class="tag">Get ready with me</span><span class="tag">Hair transformations</span><span class="tag">Day in my life</span><span class="tag">Dances</span><span class="tag">Fit checks</span></div>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-film"/></svg></span><h4 class="q-k">How posts are made</h4></div>
-          <div class="tags"><span class="tag">Recast: trending model clips</span><span class="tag">Generated: her everyday life</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>Every part of the look has a job</h3>
-      <div class="grid3">
-        <article class="card">
-          <div class="media"><img src="img/aisha/face.jpg" alt="Close-up of Aisha: green eyes, high cheekbones, sleek low bun, wax-print top" loading="lazy"></div>
-          <h4>One locked face</h4>
-          <p>Green eyes, high cheekbones, a soft smile. Every photo and video starts from this one image.</p>
-        </article>
-        <article class="card">
-          <div class="media"><img src="img/aisha/6.jpg" alt="Aisha sweeping the yard with a waist-length high ponytail" loading="lazy"></div>
-          <h4>Very long hair, always new</h4>
-          <p>Blowout, curls, braids, a waist-length ponytail: the hairstyle changes every post, the face never does.</p>
-        </article>
-        <article class="card">
-          <div class="media"><img src="img/aisha/7.jpg" alt="Aisha mending fishing nets with her grandmother beside painted boats" loading="lazy"></div>
-          <h4>Her world, warm and real</h4>
-          <p>Painted boats, the market, her grandmother. Shown with pride and joy, never pity.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>Same girl, every hairstyle</h3>
-      <div class="roll">
-        <img src="img/aisha/2.jpg" alt="Washing clothes in a basin, long straight hair" loading="lazy">
-        <img src="img/aisha/3.jpg" alt="Pounding millet, long waves" loading="lazy">
-        <img src="img/aisha/4.jpg" alt="Cooking over a charcoal stove, long curls" loading="lazy">
-        <img src="img/aisha/5.jpg" alt="Hanging laundry, long box braids" loading="lazy">
-        <img src="img/aisha/8.jpg" alt="With her baby cousin, long side-swept blowout" loading="lazy">
-        <img src="img/aisha/1.jpg" alt="Carrying water, long voluminous blowout" loading="lazy">
-      </div>
-      <p class="cap">All photos are AI-generated from one face reference, so she stays the same in every shot.</p>
-    </section>
+<main class="wrap">
+  <section class="hero">
+    <h1>Our AI characters</h1>
+    <p>10 AI influencers on Instagram, each built around one strange, memorable character. 7 are live,
+    3 launch today. Tap a name to open the profile.</p>
   </section>
-
-  <!-- ============ RONNIE ============ -->
-  <section class="char" id="ronnie" aria-labelledby="ronnie-name">
-    <div class="char-head">
-      <span class="num">2 of 3</span>
-      <h2 id="ronnie-name">Rat-tail Ronnie</h2>
-      <p class="dek">A 58-year-old show-off uncle with a sunburnt bald head, a rat-tail down to his knees, a gold tooth and far too much gold, dropped into the luxury moments everyone has already watched.</p>
-    </div>
-
-    <div class="hero">
-      <div class="photo"><img src="img/ronnie/stairs.jpg" alt="Ronnie waving from the stairs of a private jet in a turquoise sequin jacket and hot-pink flares" width="900" height="1200"></div>
-      <section class="panel section" style="margin-bottom:0">
-        <h3>The character</h3>
-        <dl class="facts">
-          <dt>Format</dt><dd>Recast: a real viral video, unchanged, with only the person swapped for Ronnie</dd>
-          <dt>Platforms</dt><dd>Instagram Reels and TikTok</dd>
-          <dt>Length</dt><dd>6–25 seconds, no dialogue of his own, one deadpan caption</dd>
-          <dt>Signature</dt><dd>Turquoise sequins, hot-pink flares, leopard, gold everywhere</dd>
-          <dt>Labels</dt><dd>Platform AI label on. No Picsart branding on the account for now.</dd>
-        </dl>
-      </section>
-    </div>
-
-    <section class="panel section">
-      <h3>Example: a Ronnie recast</h3>
-      <div class="example">
-        <video src="img/ronnie/ronnie-recast-seedance.mp4" poster="img/ronnie/recast-poster.jpg" controls playsinline preload="metadata" width="720" height="1280"></video>
-        <div class="example-text">
-          <p>A test made from a real viral hotel-arrival video: everything stays as filmed, only the man is swapped for Ronnie.</p>
-          <p class="cap">Not posted. Ronnie is a concept for now. Press play for sound.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>The idea behind Ronnie</h3>
-      <div class="qgrid">
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span><h4 class="q-k">Who it's for</h4></div>
-          <span class="pill acc">Proposal</span>
-          <p class="q-a">18–34 who watch luxury-flex videos, and love to roast them.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></span><h4 class="q-k">Why watch</h4></div>
-          <p class="q-a">A famous luxury moment, and the loudest man in it. The joke lands in frame one.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-share"/></svg></span><h4 class="q-k">Why share</h4></div>
-          <p class="q-a">“That's my uncle at the wedding.” Made to tag a friend.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-bookmark"/></svg></span><h4 class="q-k">Why save</h4></div>
-          <p class="q-a">His outfits: every post is a “rate the fit”.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span><h4 class="q-k">What makes people act</h4></div>
-          <div class="tags"><span class="tag">Nominate the next video</span><span class="tag">Rate the fit 1–10</span><span class="tag">Duet the original</span></div>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></span><h4 class="q-k">Why come back</h4></div>
-          <p class="q-a">A weekly “Ronnie tries luxury”, and one mystery: where does his money come from?</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></span><h4 class="q-k">Long-term goal</h4></div>
-          <span class="pill acc">Proposal</span>
-          <p class="q-a">The face of an ugly-rich universe, recognised from the back alone.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-trend"/></svg></span><h4 class="q-k">Trends he fits</h4></div>
-          <div class="tags"><span class="tag">Hotel arrivals</span><span class="tag">Jet stairs</span><span class="tag">Supercar reveals</span><span class="tag">Yacht days</span><span class="tag">Fit checks</span><span class="tag">Shopping hauls</span><span class="tag">Dances</span></div>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span><h4 class="q-k">Why him</h4></div>
-          <div class="tags"><span class="tag">Ugly, not pretty</span><span class="tag">Real footage around him</span><span class="tag">No words, works everywhere</span><span class="tag">A colour code you spot instantly</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>Every part of the look has a job</h3>
-      <div class="grid3">
-        <article class="card">
-          <div class="media"><img src="img/ronnie/back.jpg" alt="From behind: rat-tail to the knees, gold lion embroidered on the jacket" loading="lazy"></div>
-          <h4>The rat-tail</h4>
-          <p>Recognisable from behind. Viral clips often show people walking away; the rat-tail swings with every move and reads at thumbnail size.</p>
-        </article>
-        <article class="card">
-          <div class="media"><img src="img/ronnie/face.jpg" alt="Close-up: peeling sunburnt bald head, gold tooth, yellow-tinted gold glasses" loading="lazy"></div>
-          <h4>Sunburn, gold tooth, tinted glasses</h4>
-          <p>Permanently on holiday, permanently new money. One expression only: the gold-tooth grin.</p>
-        </article>
-        <article class="card">
-          <div class="media"><img src="img/ronnie/master.jpg" alt="Full outfit: turquoise sequin jacket, leopard shirt, hot-pink flares, snakeskin boots" loading="lazy"></div>
-          <h4>Turquoise, pink, leopard, gold</h4>
-          <p>A colour code, like a cartoon: the same palette everywhere, so he is spotted in half a second. The beer belly inside luxury clothes is the contrast joke. No real brand logos, ever.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>Same man, every luxury place</h3>
-      <div class="roll">
-        <img src="img/ronnie/jet.jpg" alt="Lounging in a private jet with champagne" loading="lazy">
-        <img src="img/ronnie/tennis.jpg" alt="Swinging a gold racket on a clay tennis court" loading="lazy">
-        <img src="img/ronnie/yacht.jpg" alt="On a superyacht deck in a leopard robe with a cocktail" loading="lazy">
-        <img src="img/ronnie/shopping.jpg" alt="Strutting down a shopping street with bags" loading="lazy">
-        <img src="img/ronnie/casino.jpg" alt="Pushing a tower of chips onto red at a roulette table" loading="lazy">
-        <img src="img/ronnie/stairs.jpg" alt="Waving from the private jet stairs" loading="lazy">
-      </div>
-      <p class="cap">All photos are AI-generated from one reference image, so his face, body and outfit stay the same in every shot.</p>
-    </section>
+  <section class="grid">
+<article class="ch" id="granny.ofik">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/granny.ofik/" target="_blank" rel="noopener"><img src="img/live/granny.ofik-pfp.jpg" alt="Granny Ofik profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Granny Ofik</h2><a class="handle" href="https://www.instagram.com/granny.ofik/" target="_blank" rel="noopener">@granny.ofik</a>
+    <div class="live"><span class="pill on">Live 16 days</span><span class="since">since 9 Nov</span></div></div>
+  </header>
+  <p class="desc">An 84-year-old, 2.5-metre glamorous granny with seashell ears and her evil poodle Baron, doing wild rich-lady things with black humour.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>166</dd></div><div><dt>Posts</dt><dd>42</dd></div><div><dt>Views</dt><dd>416,538</dd></div><div><dt>Reach</dt><dd>243,077</dd></div></dl>
+  <video src="img/live/granny.ofik-top.mp4" poster="img/live/granny.ofik-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>342K views</b> · <a href="https://www.instagram.com/reel/Dfpb-D4En58/" target="_blank" rel="noopener">open on Instagram</a></p>
+</article>
+<article class="ch" id="aishahadid.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/aishahadid.ai/" target="_blank" rel="noopener"><img src="img/live/aishahadid.ai-pfp.jpg" alt="Aisha Hadid profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Aisha Hadid</h2><a class="handle" href="https://www.instagram.com/aishahadid.ai/" target="_blank" rel="noopener">@aishahadid.ai</a>
+    <div class="live"><span class="pill on">Live 13 days</span><span class="since">since 12 Nov</span></div></div>
+  </header>
+  <p class="desc">A Miss-Universe-level girl from a small African town who does every big fashion trend with what she has, and outclasses the original.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>449</dd></div><div><dt>Posts</dt><dd>45</dd></div><div><dt>Views</dt><dd>929,609</dd></div><div><dt>Reach</dt><dd>547,960</dd></div></dl>
+  <video src="img/live/aishahadid.ai-top.mp4" poster="img/live/aishahadid.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>924K views</b> · <a href="https://www.instagram.com/reel/Dfw3bM4ALYe/" target="_blank" rel="noopener">open on Instagram</a></p>
+</article>
+<article class="ch" id="richronnie.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/richronnie.ai/" target="_blank" rel="noopener"><img src="img/live/richronnie.ai-pfp.jpg" alt="Rich Ronnie profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Rich Ronnie</h2><a class="handle" href="https://www.instagram.com/richronnie.ai/" target="_blank" rel="noopener">@richronnie.ai</a>
+    <div class="live"><span class="pill on">Live 13 days</span><span class="since">since 12 Nov</span></div></div>
+  </header>
+  <p class="desc">A loud, absurdly rich uncle with a knee-length rat-tail who shows off even while doing the most ordinary things.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>12,196</dd></div><div><dt>Posts</dt><dd>48</dd></div><div><dt>Views</dt><dd>19,917,185</dd></div><div><dt>Reach</dt><dd>10,561,626</dd></div></dl>
+  <video src="img/live/richronnie.ai-top.mp4" poster="img/live/richronnie.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>20.1M views</b> · <a href="https://www.instagram.com/reel/DfuX1m7jpn5/" target="_blank" rel="noopener">open on Instagram</a></p>
+</article>
+<article class="ch" id="ballerina.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/ballerina.ai/" target="_blank" rel="noopener"><img src="img/live/ballerina.ai-pfp.jpg" alt="The Hungry Ballerina profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>The Hungry Ballerina</h2><a class="handle" href="https://www.instagram.com/ballerina.ai/" target="_blank" rel="noopener">@ballerina.ai</a>
+    <div class="live"><span class="pill on">Live 8 days</span><span class="since">since 17 Nov</span></div></div>
+  </header>
+  <p class="desc">A delicate ballerina in a tutu and pointe shoes who eats like ten men, elegantly, back straight.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>259</dd></div><div><dt>Posts</dt><dd>30</dd></div><div><dt>Views</dt><dd>290,866</dd></div><div><dt>Reach</dt><dd>187,755</dd></div></dl>
+  <video src="img/live/ballerina.ai-top.mp4" poster="img/live/ballerina.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>218K views</b> · <a href="https://www.instagram.com/reel/DgAuH8cDt46/" target="_blank" rel="noopener">open on Instagram</a></p>
+</article>
+<article class="ch" id="pingi.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/pingi.ai/" target="_blank" rel="noopener"><img src="img/live/pingi.ai-pfp.jpg" alt="Pingi profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Pingi</h2><a class="handle" href="https://www.instagram.com/pingi.ai/" target="_blank" rel="noopener">@pingi.ai</a>
+    <div class="live"><span class="pill on">Live 7 days</span><span class="since">since 18 Nov</span></div></div>
+  </header>
+  <p class="desc">A baby emperor penguin girl, cute but aggressive, living every relatable adult moment: the office, Mondays, the gym, dating.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>28</dd></div><div><dt>Posts</dt><dd>36</dd></div><div><dt>Views</dt><dd>65,737</dd></div><div><dt>Reach</dt><dd>49,198</dd></div></dl>
+  <video src="img/live/pingi.ai-top.mp4" poster="img/live/pingi.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>29.4K views</b> · <a href="https://www.instagram.com/reel/DgKMkR1CLTe/" target="_blank" rel="noopener">open on Instagram</a></p>
+</article>
+<article class="ch" id="richlolita.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/richlolita.ai/" target="_blank" rel="noopener"><img src="img/live/richlolita.ai-pfp.jpg" alt="Rich Lolita profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Rich Lolita</h2><a class="handle" href="https://www.instagram.com/richlolita.ai/" target="_blank" rel="noopener">@richlolita.ai</a>
+    <div class="live"><span class="pill on">Live 6 days</span><span class="since">since 19 Nov</span></div></div>
+  </header>
+  <p class="desc">A trillionaire red-haired girl, Rich Ronnie&#x27;s wife: supercars, jets and diamonds, told with a spoiled wink.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>60</dd></div><div><dt>Posts</dt><dd>17</dd></div><div><dt>Views</dt><dd>55,086</dd></div><div><dt>Reach</dt><dd>33,621</dd></div></dl>
+  <video src="img/live/richlolita.ai-top.mp4" poster="img/live/richlolita.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>25.3K views</b> · <a href="https://www.instagram.com/reel/DgILP2TgdbC/" target="_blank" rel="noopener">open on Instagram</a></p>
+</article>
+<article class="ch" id="richjohnny.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/richjohnny.ai/" target="_blank" rel="noopener"><img src="img/live/richjohnny.ai-pfp.jpg" alt="Rich Johnny profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Rich Johnny</h2><a class="handle" href="https://www.instagram.com/richjohnny.ai/" target="_blank" rel="noopener">@richjohnny.ai</a>
+    <div class="live"><span class="pill on">Live 1 day</span><span class="since">since 24 Nov</span></div></div>
+  </header>
+  <p class="desc">A super-rich, very loud show-off with wild orange eyebrows and a gold lion chain. The flex never stops.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>1</dd></div><div><dt>Posts</dt><dd>7</dd></div><div><dt>Views</dt><dd>1,323</dd></div><div><dt>Reach</dt><dd>1,043</dd></div></dl>
+  <video src="img/live/richjohnny.ai-top.mp4" poster="img/live/richjohnny.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>500 views</b> · <a href="https://www.instagram.com/reel/DgKHUukSBaq/" target="_blank" rel="noopener">open on Instagram</a></p>
+</article>
+<article class="ch" id="dollylucy.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/dollylucy.ai/" target="_blank" rel="noopener"><img src="img/live/dollylucy.ai-pfp.jpg" alt="Dolly Lucy profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Dolly Lucy</h2><a class="handle" href="https://www.instagram.com/dollylucy.ai/" target="_blank" rel="noopener">@dollylucy.ai</a>
+    <div class="live"><span class="pill new">Launching today</span><span class="since">first reel 25 Nov, 17:00</span></div></div>
+  </header>
+  <p class="desc">A living doll who does every girl trend perfectly (make-up, hair, lip-syncs, get-ready-with-me) and never blinks.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>0</dd></div><div><dt>Posts</dt><dd>0</dd></div><div><dt>Views</dt><dd>–</dd></div><div><dt>Reach</dt><dd>–</dd></div></dl>
+  <video src="img/live/dollylucy.ai-top.mp4" poster="img/live/dollylucy.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">First reel, scheduled for today. No views yet.</p>
+</article>
+<article class="ch" id="strongarthur.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/strongarthur.ai/" target="_blank" rel="noopener"><img src="img/live/strongarthur.ai-pfp.jpg" alt="Strong Arthur profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Strong Arthur</h2><a class="handle" href="https://www.instagram.com/strongarthur.ai/" target="_blank" rel="noopener">@strongarthur.ai</a>
+    <div class="live"><span class="pill new">Launching today</span><span class="since">first reel 25 Nov, 19:00</span></div></div>
+  </header>
+  <p class="desc">A 90-year-old grandpa on a champion bodybuilder&#x27;s body who out-lifts, out-pulls and out-wrestles everyone, calmly.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>0</dd></div><div><dt>Posts</dt><dd>0</dd></div><div><dt>Views</dt><dd>–</dd></div><div><dt>Reach</dt><dd>–</dd></div></dl>
+  <video src="img/live/strongarthur.ai-top.mp4" poster="img/live/strongarthur.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">First reel, scheduled for today. No views yet.</p>
+</article>
+<article class="ch" id="bigboris.ai">
+  <header class="ch-head">
+    <a class="pfp" href="https://www.instagram.com/bigboris.ai/" target="_blank" rel="noopener"><img src="img/live/bigboris.ai-pfp.jpg" alt="Big Hands Boris profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Big Hands Boris</h2><a class="handle" href="https://www.instagram.com/bigboris.ai/" target="_blank" rel="noopener">@bigboris.ai</a>
+    <div class="live"><span class="pill new">Launching today</span><span class="since">first reel 25 Nov, 18:00</span></div></div>
+  </header>
+  <p class="desc">A deadpan street-food cook whose hands are as big as his head, cooking, serving and eating at full speed.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>0</dd></div><div><dt>Posts</dt><dd>0</dd></div><div><dt>Views</dt><dd>–</dd></div><div><dt>Reach</dt><dd>–</dd></div></dl>
+  <video src="img/live/bigboris.ai-top.mp4" poster="img/live/bigboris.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">First reel, scheduled for today. No views yet.</p>
+</article>
   </section>
-
-  <!-- ============ OFIK ============ -->
-  <section class="char" id="ofik" aria-labelledby="ofik-name">
-    <div class="char-head">
-      <span class="num">3 of 3</span>
-      <h2 id="ofik-name">Granny Ofik</h2>
-      <p class="dek">An 84-year-old, 2.5-metre-tall dame with giant ears and a poodle called Baron. She buried three husbands, kept three villas, and gives the spiciest dating advice from the most glamorous places on earth.</p>
-    </div>
-
-    <div class="hero">
-      <div class="photo"><img src="img/ofik/C1.jpg" alt="Granny Ofik in ivory silk and pearls with Baron the poodle in a palace hall, a butler looking up at her" width="900" height="1200"></div>
-      <section class="panel section" style="margin-bottom:0">
-        <h3>The character</h3>
-        <dl class="facts">
-          <dt>Format</dt><dd>Generated now: 12-second lounge advice, she turns to the lens, says one line, Baron barks. Recasts of viral videos coming soon.</dd>
-          <dt>Platforms</dt><dd>Instagram Reels (@granny.ofik) and TikTok</dd>
-          <dt>Voice</dt><dd>Slow, posh British, deadpan. Black humour and ego, never angry.</dd>
-          <dt>Signature</dt><dd>Pearls, ivory silk, red lips, and Baron in a matching outfit</dd>
-          <dt>Labels</dt><dd>Platform AI label on. No Picsart branding on the account for now.</dd>
-        </dl>
-      </section>
-    </div>
-
-    <section class="panel section">
-      <h3>Example: a Granny Ofik video</h3>
-      <div class="example">
-        <video src="img/ofik/ofik-breakfast.mp4" poster="img/ofik/breakfast-poster.jpg" controls playsinline preload="metadata" width="720" height="1280"></video>
-        <div class="example-text">
-          <p class="quote">“I haven't woken up next to a man since 1987. … Best sleep of my life. Theirs too. Eternal.”</p>
-          <p class="cap">Breakfast in bed, one line, one bark. Press play for sound.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>The idea behind Ofik</h3>
-      <div class="qgrid">
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span><h4 class="q-k">Who it's for</h4></div>
-          <span class="pill acc">Proposal</span>
-          <p class="q-a">18–34 women who send each other dating memes.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></span><h4 class="q-k">Why watch</h4></div>
-          <p class="q-a">A giant granny in a glamorous place, saying what nobody dares. The punchline lands in the last two seconds.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-share"/></svg></span><h4 class="q-k">Why share</h4></div>
-          <p class="q-a">One line a friend needs after a breakup. Made for the group chat.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-bookmark"/></svg></span><h4 class="q-k">Why save</h4></div>
-          <p class="q-a">“Steal this line”: comebacks to use on the next man.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span><h4 class="q-k">What makes people act</h4></div>
-          <div class="tags"><span class="tag">Ask Granny a question</span><span class="tag">Pick her next place</span><span class="tag">Rate Baron's outfit</span></div>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></span><h4 class="q-k">Why come back</h4></div>
-          <p class="q-a">A new place and a new outfit every video, and three dead husbands, one story at a time.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></span><h4 class="q-k">Long-term goal</h4></div>
-          <span class="pill acc">Proposal</span>
-          <p class="q-a">The most quoted granny online.</p>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-trend"/></svg></span><h4 class="q-k">Formats</h4></div>
-          <div class="tags"><span class="tag">Lounge advice around the world</span><span class="tag">One-liners</span><span class="tag">Steal this line</span><span class="tag">Rapid-fire interview</span><span class="tag">Dead husbands storytime</span><span class="tag">Recasts of viral videos (soon)</span></div>
-        </article>
-        <article class="card q">
-          <div class="q-top"><span class="ic"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span><h4 class="q-k">Why her</h4></div>
-          <div class="tags"><span class="tag">Black humour, never angry</span><span class="tag">Baron in every video</span><span class="tag">Lines people reuse</span><span class="tag">Same face, any place</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>Every part of the look has a job</h3>
-      <div class="grid3">
-        <article class="card">
-          <div class="media"><img src="img/ofik/A1.jpg" alt="Close-up: silver hair, pearls, red lips and huge translucent pink ears" loading="lazy"></div>
-          <h4>The ears</h4>
-          <p>Bigger than her head and readable at thumbnail size. They flutter at every punchline: her signature move.</p>
-        </article>
-        <article class="card">
-          <div class="media"><img src="img/ofik/B4.jpg" alt="Full body: 2.5 metres tall in ivory silk, a butler looking up at her" loading="lazy"></div>
-          <h4>2.5 metres tall</h4>
-          <p>She literally looks down on everyone. The ego joke is built into the body.</p>
-        </article>
-        <article class="card">
-          <div class="media"><img src="img/ofik/D3.jpg" alt="Baron the white poodle snarling in a tiara and pearls" loading="lazy"></div>
-          <h4>Baron</h4>
-          <p>Her bodyguard poodle hates every man on sight and barks once after each punchline.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <h3>Same dame, every glamorous place</h3>
-      <div class="roll">
-        <img src="img/ofik/C2.jpg" alt="Pink tweed suit on a Paris shopping street" loading="lazy">
-        <img src="img/ofik/C3.jpg" alt="Black sequin gown on a gala staircase with photographers" loading="lazy">
-        <img src="img/ofik/C4.jpg" alt="Tennis whites on a clay court above Monaco" loading="lazy">
-        <img src="img/ofik/C5.jpg" alt="Coral kaftan and straw hat on a yacht deck" loading="lazy">
-        <img src="img/ofik/C6.jpg" alt="Silk pyjamas, breakfast in bed in a palace bedroom" loading="lazy">
-        <img src="img/ofik/C7.jpg" alt="Red suit with a gold microphone on a Paris street" loading="lazy">
-      </div>
-      <p class="cap">All photos are AI-generated from one reference pack, so her face, ears and height stay the same in every shot.</p>
-    </section>
-  </section>
+  <p class="sources">Sources. Followers, posts and the most-viewed reel: logged-in Instagram profiles, 25 Nov 2026, 16:21–16:28 (Yerevan). Views and reach:
+  Instagram account insights since each account's first post, read 25 Nov 2026, 16:27–16:28 (Yerevan); Instagram can still add up to 48 h of data, so an account's total can trail its top
+  reel's live count (Rich Ronnie). Days live count from the first post. Dolly Lucy, Strong Arthur and Big Hands Boris post their first reels on
+  25 Nov; their videos here are those first reels.</p>
 </main>
-<script>
-  (function () {
-    var b = document.getElementById("theme");
-    if (!b) return;
-    b.addEventListener("click", function () {
-      var r = document.documentElement;
-      var dark = r.getAttribute("data-theme") ? r.getAttribute("data-theme") === "dark"
-        : !window.matchMedia("(prefers-color-scheme: light)").matches;
-      r.setAttribute("data-theme", dark ? "light" : "dark");
-    });
-  })();
-</script>
 </body>
 </html>
