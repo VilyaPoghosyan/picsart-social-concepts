@@ -133,15 +133,17 @@ def build():
     head = old[: old.index("</head>")]
     head = re.sub(r"<title>.*?</title>", "<title>AI Characters</title>", head, flags=re.S)
     live = [d for d in DATA if d[3]]
+    # most popular first (Vilya 2026-11-25): total views from insights; accounts with no posts yet go last
+    order = sorted(DATA, key=lambda d: d[7] if d[7] is not None else -1, reverse=True)
     body = f"""<body>
 <main class="wrap">
   <section class="hero">
     <h1>Our AI characters</h1>
     <p>{len(DATA)} AI influencers on Instagram, each built around one strange, memorable character. {len(live)} are live,
-    3 launch today. Tap a name to open the profile.</p>
+    3 launch today. Most viewed first. Tap a name to open the profile.</p>
   </section>
   <section class="grid">
-{chr(10).join(card(*d) for d in DATA)}
+{chr(10).join(card(*d) for d in order)}
   </section>
   <p class="sources">Sources. Followers, posts and the most-viewed reel: {READ['profile']} (Yerevan). Views and reach:
   {READ['insights']} (Yerevan); Instagram can still add up to 48 h of data, so an account's total can trail its top

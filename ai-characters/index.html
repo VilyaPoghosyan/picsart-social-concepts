@@ -356,25 +356,52 @@ legend { padding: 0; margin-bottom: .55rem }
 .cap a{color:var(--ink)}
 .sources{margin-top:32px;color:var(--faint);font-size:.8rem;line-height:1.55;max-width:90ch}
 </style>
+
+<style>
+.wrap{max-width:1180px;margin:0 auto;padding:32px var(--gutter) 56px}
+.hero h1{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);margin:0 0 8px;line-height:1.05}
+.hero p{color:var(--muted);margin:0;max-width:62ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:20px;margin-top:28px}
+.ch{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-panel);padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ch-head{display:flex;gap:14px;align-items:center}
+.pfp img{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;border:2px solid var(--line-2)}
+.ch h2{font-family:var(--ui);font-size:1.15rem;margin:0}
+.handle{color:var(--accent-ink);text-decoration:none;font-weight:600}
+.handle:hover,.handle:focus-visible{text-decoration:underline}
+.live{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.pill{font:600 .78rem/1 var(--ui);padding:5px 9px;border-radius:999px}
+.pill.on{background:var(--ok-soft);color:var(--ok-ink)}
+.pill.new{background:var(--accent-soft);color:var(--accent-ink)}
+.since{color:var(--faint);font-size:.82rem}
+.desc{margin:0;color:var(--ink);line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:0}
+.stats div{background:var(--surface-2);border-radius:var(--r-tile);padding:8px 12px;min-width:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.stats dt{color:var(--faint);font-size:.78rem}
+.stats dd{margin:0;font:700 1rem/1.2 var(--ui);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ch video{width:100%;aspect-ratio:9/16;background:var(--sunk);border-radius:var(--r-card);display:block;object-fit:cover}
+.cap{margin:0;color:var(--muted);font-size:.85rem}
+.cap a{color:var(--ink)}
+.sources{margin-top:32px;color:var(--faint);font-size:.8rem;line-height:1.55;max-width:90ch}
+</style>
 </head>
 <body>
 <main class="wrap">
   <section class="hero">
     <h1>Our AI characters</h1>
     <p>10 AI influencers on Instagram, each built around one strange, memorable character. 7 are live,
-    3 launch today. Tap a name to open the profile.</p>
+    3 launch today. Most viewed first. Tap a name to open the profile.</p>
   </section>
   <section class="grid">
-<article class="ch" id="granny.ofik">
+<article class="ch" id="richronnie.ai">
   <header class="ch-head">
-    <a class="pfp" href="https://www.instagram.com/granny.ofik/" target="_blank" rel="noopener"><img src="img/live/granny.ofik-pfp.jpg" alt="Granny Ofik profile picture" width="72" height="72" loading="lazy"></a>
-    <div><h2>Granny Ofik</h2><a class="handle" href="https://www.instagram.com/granny.ofik/" target="_blank" rel="noopener">@granny.ofik</a>
-    <div class="live"><span class="pill on">Live 16 days</span><span class="since">since 9 Nov</span></div></div>
+    <a class="pfp" href="https://www.instagram.com/richronnie.ai/" target="_blank" rel="noopener"><img src="img/live/richronnie.ai-pfp.jpg" alt="Rich Ronnie profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Rich Ronnie</h2><a class="handle" href="https://www.instagram.com/richronnie.ai/" target="_blank" rel="noopener">@richronnie.ai</a>
+    <div class="live"><span class="pill on">Live 13 days</span><span class="since">since 12 Nov</span></div></div>
   </header>
-  <p class="desc">An 84-year-old, 2.5-metre glamorous granny with seashell ears and her evil poodle Baron, doing wild rich-lady things with black humour.</p>
-  <dl class="stats"><div><dt>Followers</dt><dd>166</dd></div><div><dt>Posts</dt><dd>42</dd></div><div><dt>Views</dt><dd>416,538</dd></div><div><dt>Reach</dt><dd>243,077</dd></div></dl>
-  <video src="img/live/granny.ofik-top.mp4" poster="img/live/granny.ofik-top.jpg" controls playsinline preload="none"></video>
-  <p class="cap">Most viewed reel: <b>342K views</b> · <a href="https://www.instagram.com/reel/Dfpb-D4En58/" target="_blank" rel="noopener">open on Instagram</a></p>
+  <p class="desc">A loud, absurdly rich uncle with a knee-length rat-tail who shows off even while doing the most ordinary things.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>12,196</dd></div><div><dt>Posts</dt><dd>48</dd></div><div><dt>Views</dt><dd>19,917,185</dd></div><div><dt>Reach</dt><dd>10,561,626</dd></div></dl>
+  <video src="img/live/richronnie.ai-top.mp4" poster="img/live/richronnie.ai-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>20.1M views</b> · <a href="https://www.instagram.com/reel/DfuX1m7jpn5/" target="_blank" rel="noopener">open on Instagram</a></p>
 </article>
 <article class="ch" id="aishahadid.ai">
   <header class="ch-head">
@@ -387,16 +414,16 @@ legend { padding: 0; margin-bottom: .55rem }
   <video src="img/live/aishahadid.ai-top.mp4" poster="img/live/aishahadid.ai-top.jpg" controls playsinline preload="none"></video>
   <p class="cap">Most viewed reel: <b>924K views</b> · <a href="https://www.instagram.com/reel/Dfw3bM4ALYe/" target="_blank" rel="noopener">open on Instagram</a></p>
 </article>
-<article class="ch" id="richronnie.ai">
+<article class="ch" id="granny.ofik">
   <header class="ch-head">
-    <a class="pfp" href="https://www.instagram.com/richronnie.ai/" target="_blank" rel="noopener"><img src="img/live/richronnie.ai-pfp.jpg" alt="Rich Ronnie profile picture" width="72" height="72" loading="lazy"></a>
-    <div><h2>Rich Ronnie</h2><a class="handle" href="https://www.instagram.com/richronnie.ai/" target="_blank" rel="noopener">@richronnie.ai</a>
-    <div class="live"><span class="pill on">Live 13 days</span><span class="since">since 12 Nov</span></div></div>
+    <a class="pfp" href="https://www.instagram.com/granny.ofik/" target="_blank" rel="noopener"><img src="img/live/granny.ofik-pfp.jpg" alt="Granny Ofik profile picture" width="72" height="72" loading="lazy"></a>
+    <div><h2>Granny Ofik</h2><a class="handle" href="https://www.instagram.com/granny.ofik/" target="_blank" rel="noopener">@granny.ofik</a>
+    <div class="live"><span class="pill on">Live 16 days</span><span class="since">since 9 Nov</span></div></div>
   </header>
-  <p class="desc">A loud, absurdly rich uncle with a knee-length rat-tail who shows off even while doing the most ordinary things.</p>
-  <dl class="stats"><div><dt>Followers</dt><dd>12,196</dd></div><div><dt>Posts</dt><dd>48</dd></div><div><dt>Views</dt><dd>19,917,185</dd></div><div><dt>Reach</dt><dd>10,561,626</dd></div></dl>
-  <video src="img/live/richronnie.ai-top.mp4" poster="img/live/richronnie.ai-top.jpg" controls playsinline preload="none"></video>
-  <p class="cap">Most viewed reel: <b>20.1M views</b> · <a href="https://www.instagram.com/reel/DfuX1m7jpn5/" target="_blank" rel="noopener">open on Instagram</a></p>
+  <p class="desc">An 84-year-old, 2.5-metre glamorous granny with seashell ears and her evil poodle Baron, doing wild rich-lady things with black humour.</p>
+  <dl class="stats"><div><dt>Followers</dt><dd>166</dd></div><div><dt>Posts</dt><dd>42</dd></div><div><dt>Views</dt><dd>416,538</dd></div><div><dt>Reach</dt><dd>243,077</dd></div></dl>
+  <video src="img/live/granny.ofik-top.mp4" poster="img/live/granny.ofik-top.jpg" controls playsinline preload="none"></video>
+  <p class="cap">Most viewed reel: <b>342K views</b> · <a href="https://www.instagram.com/reel/Dfpb-D4En58/" target="_blank" rel="noopener">open on Instagram</a></p>
 </article>
 <article class="ch" id="ballerina.ai">
   <header class="ch-head">
