@@ -9,6 +9,9 @@ bin/real_stats.py (views, reach). Each run reads them again and passes them in D
     python3 onepagers/build_ai_characters.py
 Keeps the <head> (Picsart tokens + embedded fonts) of the current page and replaces the body.
 Assets: ai-characters/img/live/<handle>-pfp.jpg, <handle>-top.mp4/.jpg (720p, ffmpeg crf 27).
+Also published on GitLab Pages (Vilya 2026-11-25): https://ai-characters-4f442c.gitlab.io (project
+gitlab.com/vilya.poghosyan/ai-characters, local repo projects/ai-characters-site): copy index.html (+ noindex) and
+img/live/ into its public/, commit, push.
 """
 
 import html
