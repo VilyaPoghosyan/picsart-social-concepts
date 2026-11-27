@@ -1,0 +1,74 @@
+/* Social link visitors page: additions on top of the dashboard's page.css; colours and corners from picsart.css tokens */
+.kpis { grid-template-columns: repeat(6, minmax(0, 1fr)) }
+.two.eq { grid-template-columns: 1fr 1fr }
+.fine { margin: 0 }
+
+/* horizontal bars: label above, bar with its number at the end */
+.vb { display: grid; gap: .85rem }
+.vr { display: grid; gap: .3rem }
+.vl { font: 500 .84rem var(--ui); color: var(--muted) }
+.vt { display: flex; align-items: center; gap: .6rem; min-height: 16px }
+.vt i { display: block; height: 14px; border-radius: var(--r-chip); min-width: 3px; flex: none }
+.vt i.m { background: var(--grad) }
+.vt i.r { background: var(--muted) }
+.vt b { font: 600 .86rem var(--ui); font-variant-numeric: tabular-nums; white-space: nowrap }
+.vr .vt + .vt { margin-top: -.1rem }
+.vt { max-width: 100% }
+.vt i { max-width: calc(100% - 4.5rem) }
+
+.lgd { display: inline-flex; align-items: center; gap: .35rem; margin-left: .8rem; font: 500 .78rem var(--ui); color: var(--muted) }
+.lgd i { width: 10px; height: 10px; border-radius: 50%; display: inline-block }
+.lgd i.m { background: var(--grad) }
+.lgd i.r { background: var(--muted) }
+
+/* accounts list */
+.accl { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem }
+.accl li { display: flex; align-items: center; gap: .65rem; padding: .45rem .2rem; border-bottom: 1px solid var(--line) }
+.accl img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line-2) }
+.accl span { font: 600 .92rem var(--ui) }
+.accl b { margin-left: auto; font: 400 1.3rem/1 var(--display); font-variant-numeric: tabular-nums }
+
+/* who */
+.who { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem }
+.whoc { display: grid; gap: .75rem; padding: 1.1rem; border-radius: var(--r-card); background: var(--sunk); border: 1px solid var(--line) }
+.whoh { display: flex; align-items: center; gap: .6rem }
+.whoh img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line-2) }
+.whoh b { font: 600 1rem var(--ui) }
+.whoh small { margin-left: auto }
+.wr { display: grid; grid-template-columns: 7.5rem 1fr; align-items: center; gap: .6rem }
+.wr span { font: 500 .84rem var(--ui); color: var(--muted) }
+
+.alert { padding: .8rem 1rem; border-radius: var(--r-tile); background: var(--warn-soft); border: 1px solid var(--warn); color: var(--ink); font-size: .92rem }
+.alert b { font-family: var(--ui); color: var(--warn-ink); margin-right: .35rem }
+
+/* weekday columns */
+.days { display: grid; grid-template-columns: repeat(7, 1fr); gap: .5rem; height: 170px; align-items: end }
+.dc { display: grid; grid-template-rows: 1fr auto auto; grid-template-columns: 1fr 1fr; column-gap: 3px; height: 100%; text-align: center }
+.dbar { display: flex; align-items: flex-end; height: 100% }
+.dbar i { display: block; width: 100%; border-radius: var(--r-chip) var(--r-chip) 0 0; min-height: 2px }
+.dbar i.m { background: var(--grad) }
+.dbar i.r { background: var(--muted) }
+.dc span { grid-column: 1 / -1; font: 600 .76rem var(--ui); margin-top: .35rem }
+.dc small { grid-column: 1 / -1; font-size: .66rem }
+
+.kv { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem }
+.kv li { display: flex; justify-content: space-between; gap: .8rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line); font-size: .9rem }
+.kv li b { font: 600 .92rem var(--ui); font-variant-numeric: tabular-nums; white-space: nowrap }
+.kv.big li b { font: 400 1.5rem/1 var(--display) }
+
+/* prompt cards */
+.pcs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .9rem }
+.pc { display: grid; gap: .5rem; align-content: start; padding: 1rem; border-radius: var(--r-card); background: var(--sunk); border: 1px solid var(--line) }
+.ph2 { display: flex; align-items: baseline; gap: .55rem }
+.ph2 b { font: 400 1.7rem/1 var(--display); color: var(--accent-ink) }
+.ph2 span { font: 600 .86rem var(--ui) }
+.pc .q { margin: 0; font-size: .9rem; line-height: 1.45; color: var(--ink); font-style: italic }
+
+.says { margin: 0; padding-left: 1.2rem; display: grid; gap: .6rem; color: var(--muted); font-size: .94rem; line-height: 1.5; max-width: 90ch }
+.says li::marker { color: var(--accent-ink); font-family: var(--ui); font-weight: 600 }
+
+@media (max-width: 1100px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)) } .two.eq, .who { grid-template-columns: 1fr } }
+@media (max-width: 720px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)) } .wr { grid-template-columns: 6rem 1fr } .days { height: 140px } }
+
+.page-head h1 { max-width: 22ch }
+@media (min-width: 1100px) { .page-head h1 { max-width: none } }
